@@ -12,7 +12,7 @@
 | --- | --- |
 | **Project Name** | Scriptorium (`elix/scriptorium`) |
 | **Project Type** | Hệ thống tạo / kiểm định chất lượng / audit bảo mật / quản lý danh mục cho Agent Skill portable |
-| **Core Philosophy** | Skill-first, không xây harness. Elicit → research → skill_creator → quality eval → security audit → registry, thứ tự không đảo. |
+| **Core Philosophy** | Skill-first, không xây harness. Elicit → research → skill-creator → quality eval → security audit → registry, thứ tự không đảo. |
 | **Tiền nhiệm** | EduStation (`D:/elix/edustation`) — pivot vì governance-trước-traction, không phải vì kiến trúc sai. Xem `docs/specs/STRATEGY_SPEC.md` §1. |
 | **Vertical thử nghiệm** | Pháp lý Việt Nam, định vị lớp meta (sản xuất + audit skill), không phải chatbot tra luật. |
 | **AI backend** | Không có, theo thiết kế — Scriptorium không gọi AI API nào; skill artifact chạy bằng backend của agent tiêu thụ nó. Xem `docs/specs/STRATEGY_SPEC.md` §2, §6. |

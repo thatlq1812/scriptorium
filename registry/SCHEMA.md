@@ -6,7 +6,7 @@ Tham chiếu quyết định: `docs/specs/STRATEGY_SPEC.md` §3 (bước 9) và 
 
 ## Bốn trục tag (mọi skill gắn ≥1 tag mỗi trục)
 
-- **domain** — trục ngành/nghề. Tham khảo trực tiếp occupation group của SkillsMP thay vì tự nghĩ taxonomy riêng. Giá trị đặc biệt `meta` cho skill vận hành chính Scriptorium (skill_creator, quality-eval, security-audit...) — các skill này không thuộc một ngành cụ thể.
+- **domain** — trục ngành/nghề. Tham khảo trực tiếp occupation group của SkillsMP thay vì tự nghĩ taxonomy riêng. Giá trị đặc biệt `meta` cho skill vận hành chính Scriptorium (skill-creator, quality-eval, security-audit...) — các skill này không thuộc một ngành cụ thể.
 - **task-type** — trục loại tác vụ, cắt ngang mọi ngành: `research`, `document-conversion`, `drafting`, `review-qa`, `coordination`.
 - **risk-tier** — kế thừa tinh thần N1–N5 của EduStation, tái áp dụng thành mức rủi ro đầu ra/liability: `N1` (thấp, ví dụ tra cứu/chuyển đổi định dạng) đến `N5` (cao, ví dụ soạn hợp đồng/duyệt luật — bắt buộc human gate).
 - **harness-compatibility** — danh sách harness đã **verify chạy sạch thật**, không phải suy đoán từ showcase vendor. Giá trị hợp lệ chỉ được thêm sau khi test trực tiếp (xem `docs/archive/pre-spec-2026-07-26/handoff.md` mục 5).
@@ -30,4 +30,4 @@ Tham chiếu quyết định: `docs/specs/STRATEGY_SPEC.md` §3 (bước 9) và 
 
 ## Nguyên tắc dedup/novelty-check
 
-Trước khi khởi động skill_creator cho một ứng viên mới, tra `registry/skills.json` theo `tags` liên quan. Nếu một skill hiện có phủ ≥80% phạm vi ứng viên mới, ưu tiên mở rộng/versioning skill đó thay vì tạo entry song song.
+Trước khi khởi động skill-creator cho một ứng viên mới, tra `registry/skills.json` theo `tags` liên quan. Nếu một skill hiện có phủ ≥80% phạm vi ứng viên mới, ưu tiên mở rộng/versioning skill đó thay vì tạo entry song song.

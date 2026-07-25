@@ -1,5 +1,5 @@
 ---
-name: skill_creator
+name: skill-creator
 description: Chuẩn hóa tri thức thủ tục đã được elicit từ một nguồn thật (chuyên gia, hoặc tacit knowledge của owner) cộng với research đã grounding, thành một Agent Skill portable tuân đúng spec mở agentskills.io (6-field frontmatter). Dùng khi input elicited-process + research đã sẵn sàng cho một quy trình lặp lại, cụ thể. KHÔNG dùng để tự suy luận ra một skill mới khi chưa có input elicited/research — self-generated skill không qua elicit đã được đo là "no benefit on average" (SkillsBench).
 license: MIT
 compatibility: Portable theo spec mở agentskills.io (frontmatter 6 field, không mở rộng). Verify chạy sạch: Claude Code (2026-07-26). Chưa verify: OpenAI Codex CLI, Kimi Code CLI, Antigravity CLI — không được đánh dấu compatible cho tới khi test trực tiếp.
@@ -13,7 +13,7 @@ metadata:
   version: 0.1.0
 ---
 
-# skill_creator
+# skill-creator
 
 Meta-skill sinh ra `SKILL.md` cho một skill khác trong Scriptorium. Đây là bước 3 trong pipeline bootstrap (`docs/specs/STRATEGY_SPEC.md` §3) — đứng SAU research và elicit tacit process, KHÔNG đứng trước.
 
@@ -43,13 +43,13 @@ Frontmatter chỉ có đúng 6 key: `name`, `description`, `license`, `compatibi
 - Phần instructions (thân bài sau frontmatter) < 5000 token — nếu quy trình dài, tách phần chi tiết ra file phụ trong cùng thư mục skill và reference từ SKILL.md (progressive disclosure), không nhồi hết vào một file.
 - Không viết theo lối kể chuyện — viết theo lối instruction agent khác có thể theo mà không cần hỏi lại.
 
-## Việc skill_creator KHÔNG làm
+## Việc skill-creator KHÔNG làm
 
 - Không tự chấm chất lượng skill vừa tạo — đó là bước 4 (quality evaluation loop), chạy riêng, trên ≥2 harness đã verify.
 - Không tự audit bảo mật skill vừa tạo — đó là bước 5 (security audit), một pipeline stage riêng biệt, không gộp chung với bước 4 (`docs/specs/STRATEGY_SPEC.md` §7 điểm 2).
 - Không tự quyết định skill đã "sẵn sàng dùng" — trạng thái đó chỉ được set khi `registry/skills.json` có `quality_score` khác null VÀ `security_audit.status = "passed"`.
 
-## Output của skill_creator
+## Output của skill-creator
 
 1. Thư mục `skills/<name>/SKILL.md` (và file phụ nếu cần progressive disclosure) đúng 6-field spec.
 2. Một entry nháp cho `registry/skills.json` theo đúng field trong `registry/SCHEMA.md`, với `quality_score: null` và `security_audit.status: "pending"` — không được tự set các field này thành đã pass.

@@ -33,14 +33,14 @@ EduStation (`D:/elix/edustation`) — app agentic "Claude Code cho giáo viên V
 | # | Bước | Mục đích | Trạng thái (2026-07-26) |
 | --- | --- | --- | --- |
 | 1 | Research | Thu thập thông tin, source grounding | Đã chạy 1 lần cho chính Scriptorium (kết quả: file này + archive) |
-| 2 | Elicit tacit process | Rút quy trình từ nguồn thật (chuyên gia hoặc owner) | Đã làm cho `skill_creator` (elicited từ owner qua EduStation postmortem) |
-| 3 | **skill_creator** | Sinh `SKILL.md` đúng 6-field spec từ input (1)+(2) | Tự thân đã tồn tại: `skills/skill_creator/SKILL.md` |
+| 2 | Elicit tacit process | Rút quy trình từ nguồn thật (chuyên gia hoặc owner) | Đã làm cho `skill-creator` (elicited từ owner qua EduStation postmortem) |
+| 3 | **skill-creator** | Sinh `SKILL.md` đúng 6-field spec từ input (1)+(2) | Tự thân đã tồn tại: `skills/skill-creator/SKILL.md` |
 | 4 | Quality evaluation loop | Chấm chất lượng bằng cách chạy skill thật trên ≥2 harness đã verify (mỗi harness dùng model/backend của chính nó — Scriptorium không gọi AI API nào, xem §2) | Chưa xây skill cho bước này |
 | 5 | Security / injection audit | Stage riêng biệt, đa lớp (static + LLM semantic + runtime), đối chiếu OWASP Agentic Skills Top 10 | Chưa xây skill cho bước này |
 | 6 | Skill scout/harvester | Tìm + phân tích sâu skill có sẵn trong hệ sinh thái ngoài | Chưa xây skill cho bước này |
 | 7 | License-compliance check | Bắt buộc ngay sau (6), trước khi vào (3) cho skill harvested | Chưa xây skill cho bước này |
 | 8 | Dedup / novelty-check | Tra registry trước khi tạo skill mới | Quy tắc đã ghi trong `registry/SCHEMA.md`, chưa có skill tự động hóa |
-| 9 | Registry đa trục | Xương sống định danh | `registry/SCHEMA.md` + `registry/skills.json` đã tồn tại, 1 entry (`skill_creator`) |
+| 9 | Registry đa trục | Xương sống định danh | `registry/SCHEMA.md` + `registry/skills.json` đã tồn tại, 1 entry (`skill-creator`) |
 
 Không đảo thứ tự (1)→(2)→(3). Một skill chưa qua đủ (4) và (5) không được coi là "sẵn sàng dùng", bất kể deadline.
 
@@ -66,8 +66,8 @@ Owner đã xác nhận (2026-07-26): Scriptorium không có kế hoạch tích h
 1. Bám đúng 6-field spec mở agentskills.io (`name`, `description`, `license`, `compatibility`, `metadata`, `allowed-tools`) — field riêng của Scriptorium luôn nằm trong `metadata`.
 2. Quality evaluation và security audit là hai gate khác nhau — không gộp một bước review (pattern-matching scanner đơn lớp đã được Snyk chứng minh bỏ sót phần lớn tấn công nghiêm trọng).
 3. Không đánh dấu harness-compatible dựa trên tuyên bố vendor/showcase — chỉ verify trực tiếp.
-4. Không tự động hóa hoàn toàn khâu tạo skill — bắt buộc elicit từ nguồn thật trước `skill_creator` (self-generated skill "no benefit on average" — SkillsBench).
-5. Harvest từ nguồn ngoài luôn qua license-compliance check trước khi chạm skill_creator, không có ngoại lệ "chỉ tham khảo nội bộ".
+4. Không tự động hóa hoàn toàn khâu tạo skill — bắt buộc elicit từ nguồn thật trước `skill-creator` (self-generated skill "no benefit on average" — SkillsBench).
+5. Harvest từ nguồn ngoài luôn qua license-compliance check trước khi chạm skill-creator, không có ngoại lệ "chỉ tham khảo nội bộ".
 6. Một skill chạy tốt, audit sạch, dùng thật — quan trọng hơn mười skill nằm trong registry chưa ai dùng.
 
 ## 8. Nguồn — số liệu đã xác thực (không dùng số trong archive nếu khác ở đây)

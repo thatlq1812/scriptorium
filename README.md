@@ -12,7 +12,7 @@ Bắt đầu từ [docs/README.md](docs/README.md) — navigation hub, dẫn và
 
 ## Pipeline bootstrap (đang triển khai)
 
-Research → Elicit tacit process → **skill_creator** → Quality evaluation (≥2 harness) → Security audit (stage riêng) → Skill scout/harvester → License-compliance check → Dedup/novelty-check → Registry.
+Research → Elicit tacit process → **skill-creator** → Quality evaluation (≥2 harness) → Security audit (stage riêng) → Skill scout/harvester → License-compliance check → Dedup/novelty-check → Registry.
 
 Không đảo thứ tự. Không để agent tự sinh skill mà không có input elicited từ nguồn thật — SkillsBench đo self-generated skill "no benefit on average".
 
