@@ -21,6 +21,27 @@
       },
       "dependencies": [],
       "elicited_from": "Owner tacit knowledge từ EduStation postmortem (docs/archive/pre-spec-2026-07-26/handoff.md) + deep research session 2026-07-26, chưng cất vào docs/specs/STRATEGY_SPEC.md"
+    },
+    {
+      "skill_id": "document-ai-structurer",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": ["general"],
+        "task_type": ["document-conversion"],
+        "risk_tier": "N1",
+        "harness_compatibility": ["claude-code"]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "pending",
+        "date": null
+      },
+      "dependencies": ["docling==2.115.0"],
+      "elicited_from": "Owner (2026-07-26): ý tưởng chuyển mọi loại tài liệu thành cấu trúc tối ưu AI (thư mục + JSON mục lục) dùng Python; grounded bằng research Docling/MinerU/unstructured.io/llms.txt convention + chunking best practice"
     }
   ]
 }
