@@ -1,0 +1,26 @@
+{
+  "$schema_ref": "registry/SCHEMA.md",
+  "skills": [
+    {
+      "skill_id": "skill_creator",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": ["meta"],
+        "task_type": ["skill-authoring"],
+        "risk_tier": "N2",
+        "harness_compatibility": ["claude-code"]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "pending",
+        "date": null
+      },
+      "dependencies": [],
+      "elicited_from": "Owner tacit knowledge từ EduStation postmortem (docs/handoff.md) + deep research session 2026-07-26 (docs/raw_research.md, docs/full_content_and_research.md)"
+    }
+  ]
+}
