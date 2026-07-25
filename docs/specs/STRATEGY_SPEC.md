@@ -3,6 +3,7 @@
 | Version | Date | Author | Description |
 | --- | --- | --- | --- |
 | 1.0.0 | 2026-07-26 | Claude (chưng cất từ thảo luận + research với owner) | Bản SPEC gốc đầu tiên, chưng cất từ `docs/archive/pre-spec-2026-07-26/` (transcript thảo luận + báo cáo nghiên cứu sâu), đã sửa số liệu lỗi thời và một mô tả sai về Elixverse (xác nhận bằng cách đọc trực tiếp code `D:/elix/platform`). |
+| 1.1.0 | 2026-07-26 | Claude | Owner xác nhận: Scriptorium không tích hợp bất kỳ AI backend nào (kể cả Elixverse) — thêm vào §2 non-goals, viết lại §6 từ "gate trước khi dùng" thành "không nằm trong kế hoạch". |
 
 ---
 
@@ -25,6 +26,7 @@ EduStation (`D:/elix/edustation`) — app agentic "Claude Code cho giáo viên V
 - Không tự xây app/CLI/harness agent riêng — skill chạy trên hệ sinh thái ~44 platform sẵn có.
 - Không làm "chatbot tra luật" ở vertical pháp lý — thị trường VN đã đông (aitracuuluat.vn, AI Luật LuatVietnam, LEXcentra, CLS/CMC, Trợ Lý Luật, EmLaw). Scriptorium định vị ở **lớp meta**: sản xuất + kiểm định + audit skill pháp lý portable.
 - Không để agent tự sinh skill mà không có input elicited từ nguồn thật — SkillsBench (arXiv 2602.12670) đo self-generated skill "no benefit on average", trong khi curated skill (có human-curated input) đạt +16.2pp pass rate trung bình.
+- **Không tích hợp bất kỳ AI backend/API nào vào Scriptorium** (kể cả Elixverse) — output của Scriptorium là skill artifact thuần túy (`SKILL.md` + registry entry). Agent nào chạy skill đó dùng model/backend của chính agent đó; Scriptorium không đứng giữa như một service gọi LLM hộ ai cả. Quyết định 2026-07-26 (owner, `docs/DECISIONS_PENDING.md` lịch sử).
 
 ## 3. Bootstrap pipeline (9 bước, thứ tự không đảo)
 
@@ -33,7 +35,7 @@ EduStation (`D:/elix/edustation`) — app agentic "Claude Code cho giáo viên V
 | 1 | Research | Thu thập thông tin, source grounding | Đã chạy 1 lần cho chính Scriptorium (kết quả: file này + archive) |
 | 2 | Elicit tacit process | Rút quy trình từ nguồn thật (chuyên gia hoặc owner) | Đã làm cho `skill_creator` (elicited từ owner qua EduStation postmortem) |
 | 3 | **skill_creator** | Sinh `SKILL.md` đúng 6-field spec từ input (1)+(2) | Tự thân đã tồn tại: `skills/skill_creator/SKILL.md` |
-| 4 | Quality evaluation loop | Chấm chất lượng qua tác vụ thật, ≥2 harness đã verify | Chưa xây skill cho bước này |
+| 4 | Quality evaluation loop | Chấm chất lượng bằng cách chạy skill thật trên ≥2 harness đã verify (mỗi harness dùng model/backend của chính nó — Scriptorium không gọi AI API nào, xem §2) | Chưa xây skill cho bước này |
 | 5 | Security / injection audit | Stage riêng biệt, đa lớp (static + LLM semantic + runtime), đối chiếu OWASP Agentic Skills Top 10 | Chưa xây skill cho bước này |
 | 6 | Skill scout/harvester | Tìm + phân tích sâu skill có sẵn trong hệ sinh thái ngoài | Chưa xây skill cho bước này |
 | 7 | License-compliance check | Bắt buộc ngay sau (6), trước khi vào (3) cho skill harvested | Chưa xây skill cho bước này |
@@ -52,11 +54,12 @@ Flagship dự kiến, phân theo risk-tier: tra luật + chuyển statute→mark
 
 Bắt buộc kèm theo: citation-grounding (verify entity + relation preservation về văn bản gốc trước khi trả lời; dưới ngưỡng → re-retrieve hoặc human review) và versioning văn bản luật (theo dõi outdated norms — luật bị bãi bỏ). Căn cứ: Stanford RegLab/HAI "Hallucination-Free?" (arXiv 2405.20362) — Lexis+ AI hallucinate ~17%, Westlaw AI-Assisted Research ~33%, GPT-4 ~43% trên 202 truy vấn preregistered; tiền lệ *Mata v. Avianca, Inc.*, 678 F. Supp. 3d 443 (S.D.N.Y. 2023) — phạt $5,000 theo Rule 11 vì 6 vụ án bịa do ChatGPT sinh.
 
-## 6. Elixverse (`D:/elix/platform`) — gate trước khi dùng làm backend agent loop
+## 6. Elixverse (`D:/elix/platform`) — không nằm trong kế hoạch tích hợp
 
-**Sửa mô tả cũ**: Elixverse KHÔNG phải "OpenAI-compatible API" — là API riêng, đa provider (Gemini/OpenAI/Anthropic), router tự thiết kế cấu trúc kiểu OpenAI-style, không theo schema OpenAI chuẩn. Xác nhận trực tiếp từ code + doc ngày 2026-07-26 (xem memory `project-platform-elixverse-status`).
+Owner đã xác nhận (2026-07-26): Scriptorium không có kế hoạch tích hợp bất kỳ AI backend nào, kể cả Elixverse (xem §2). Mục này giữ lại chỉ để tham khảo — nếu hướng đổi trong tương lai và một skill vận hành của Scriptorium (vd. quality-eval loop) thật sự cần tự gọi AI API, đọc lại trước khi quyết:
 
-**Xác nhận đúng và vẫn là blocker thật**: không có spend cap/scope riêng theo key (`elix_sk_...` toàn quyền như tài khoản chủ). Track 2 (multi-tenancy cost isolation, RPM/TPM theo token) bị hoãn, phụ thuộc Redis chưa triển khai đủ. → Trước khi cho bất kỳ skill nào của Scriptorium (vd. quality-eval loop) gọi Elixverse trong một agent loop tự động dài hơi, cần platform team giải quyết spend-cap + scoped key trước — điều kiện tiên quyết, không phải nice-to-have.
+- **Sửa mô tả cũ**: Elixverse KHÔNG phải "OpenAI-compatible API" — là API riêng, đa provider (Gemini/OpenAI/Anthropic), router tự thiết kế cấu trúc kiểu OpenAI-style, không theo schema OpenAI chuẩn. Xác nhận trực tiếp từ code + doc ngày 2026-07-26 (xem memory `project-platform-elixverse-status`).
+- **Gap thật nếu sau này cần**: không có spend cap/scope riêng theo key (`elix_sk_...` toàn quyền như tài khoản chủ). Track 2 (multi-tenancy cost isolation, RPM/TPM theo token) bị hoãn, phụ thuộc Redis chưa triển khai đủ. Nếu tình huống này phát sinh, cần platform team giải quyết spend-cap + scoped key trước khi dùng cho bất kỳ agent loop tự động nào.
 
 ## 7. Nguyên tắc không thương lượng
 

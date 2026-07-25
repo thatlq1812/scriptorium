@@ -15,7 +15,7 @@
 | **Core Philosophy** | Skill-first, không xây harness. Elicit → research → skill_creator → quality eval → security audit → registry, thứ tự không đảo. |
 | **Tiền nhiệm** | EduStation (`D:/elix/edustation`) — pivot vì governance-trước-traction, không phải vì kiến trúc sai. Xem `docs/specs/STRATEGY_SPEC.md` §1. |
 | **Vertical thử nghiệm** | Pháp lý Việt Nam, định vị lớp meta (sản xuất + audit skill), không phải chatbot tra luật. |
-| **AI backend (chưa dùng)** | Elixverse (`D:/elix/platform`) — xem gate ở `docs/specs/STRATEGY_SPEC.md` §6 trước khi tích hợp. |
+| **AI backend** | Không có, theo thiết kế — Scriptorium không gọi AI API nào; skill artifact chạy bằng backend của agent tiêu thụ nó. Xem `docs/specs/STRATEGY_SPEC.md` §2, §6. |
 
 ---
 

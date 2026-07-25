@@ -29,4 +29,4 @@ Nguồn: `registry/skills.json`. Nếu số liệu ở đây khác `registry/ski
 ## Hạ tầng
 
 - Git repo: khởi tạo 2026-07-26, chưa có remote.
-- Elixverse (`D:/elix/platform`) integration: **chưa dùng**. Gate trước khi dùng: `docs/specs/STRATEGY_SPEC.md` §6.
+- AI backend: không có, theo thiết kế — Scriptorium không tích hợp Elixverse hay bất kỳ AI API nào (`docs/specs/STRATEGY_SPEC.md` §2, §6).
