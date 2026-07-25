@@ -5,6 +5,7 @@
 | 1.0.0 | 2026-07-26 | Claude (chưng cất từ thảo luận + research với owner) | Bản SPEC gốc đầu tiên, chưng cất từ `docs/archive/pre-spec-2026-07-26/` (transcript thảo luận + báo cáo nghiên cứu sâu), đã sửa số liệu lỗi thời và một mô tả sai về Elixverse (xác nhận bằng cách đọc trực tiếp code `D:/elix/platform`). |
 | 1.1.0 | 2026-07-26 | Claude | Owner xác nhận: Scriptorium không tích hợp bất kỳ AI backend nào (kể cả Elixverse) — thêm vào §2 non-goals, viết lại §6 từ "gate trước khi dùng" thành "không nằm trong kế hoạch". |
 | 1.2.0 | 2026-07-26 | Claude | Skill thứ hai: `document-ai-structurer` (Docling-based, MIT). Thêm nguyên tắc §7 điểm 7: không commit venv vào skill (portability), python-env bootstrap dùng chung để sau khi có ≥2 skill Python. |
+| 1.3.0 | 2026-07-26 | Claude | Owner yêu cầu xây ngay skill hạ tầng thứ 3: `python-env-bootstrap` (dựa trên `uv`), sớm hơn ngưỡng "≥2 skill Python" đã đề ở 1.2.0 — ghi đè quyết định hoãn, §7 điểm 7 cập nhật thành đã xây xong. |
 
 ---
 
@@ -70,7 +71,7 @@ Owner đã xác nhận (2026-07-26): Scriptorium không có kế hoạch tích h
 4. Không tự động hóa hoàn toàn khâu tạo skill — bắt buộc elicit từ nguồn thật trước `skill-creator` (self-generated skill "no benefit on average" — SkillsBench).
 5. Harvest từ nguồn ngoài luôn qua license-compliance check trước khi chạm skill-creator, không có ngoại lệ "chỉ tham khảo nội bộ".
 6. Một skill chạy tốt, audit sạch, dùng thật — quan trọng hơn mười skill nằm trong registry chưa ai dùng.
-7. Không bao giờ commit venv/binary environment vào một skill — venv gắn OS/kiến trúc cụ thể, phá portability. Skill cần Python khai báo `requirements.txt` (hoặc lockfile tương đương) + hướng dẫn bootstrap venv tại runtime; `.venv/` luôn nằm trong `.gitignore`. Một skill hạ tầng dùng chung kiểu "python-env bootstrap" (ý tưởng gốc: `docs/archive/pre-spec-2026-07-26/note.md` mục 3) đáng cân nhắc khi có ≥2 skill cần Python — chưa xây, tránh trừu tượng hóa sớm khi mới có 1 (`document-ai-structurer`).
+7. Không bao giờ commit venv/binary environment vào một skill — venv gắn OS/kiến trúc cụ thể, phá portability. Skill cần Python khai báo `requirements.txt` (hoặc lockfile tương đương) + hướng dẫn bootstrap venv tại runtime; `.venv/` luôn nằm trong `.gitignore`. Skill hạ tầng dùng chung `python-env-bootstrap` (dựa trên `uv`, không giả định máy đã có Python) đã xây 2026-07-26 — mọi skill Python mới nên phụ thuộc vào nó qua `registry` field `dependencies` thay vì tự viết lại logic tạo venv.
 
 ## 8. Nguồn — số liệu đã xác thực (không dùng số trong archive nếu khác ở đây)
 

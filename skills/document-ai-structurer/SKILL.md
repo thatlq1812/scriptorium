@@ -25,7 +25,14 @@ Không dùng khi: tài liệu đã là markdown/text sạch và ngắn (không c
 
 ## Bootstrap môi trường (bắt buộc, chạy 1 lần mỗi máy)
 
-**Không dùng `.venv` đã commit sẵn — không có, vì venv là binary gắn OS/kiến trúc, không portable.** Luôn tạo venv tại chỗ:
+**Không dùng `.venv` đã commit sẵn — không có, vì venv là binary gắn OS/kiến trúc, không portable.** Cách khuyến nghị: dùng skill `python-env-bootstrap` (không giả định máy đã có Python):
+
+```bash
+bash ../python-env-bootstrap/scripts/bootstrap.sh . 3.12          # từ trong skills/document-ai-structurer
+# Windows: ..\python-env-bootstrap\scripts\bootstrap.ps1 -SkillDir . -PyVersion 3.12
+```
+
+Fallback nếu máy đã có Python sẵn và không muốn cài `uv`:
 
 ```bash
 cd skills/document-ai-structurer

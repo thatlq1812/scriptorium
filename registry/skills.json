@@ -40,8 +40,29 @@
         "status": "pending",
         "date": null
       },
-      "dependencies": ["docling==2.115.0"],
+      "dependencies": ["docling==2.115.0", "python-env-bootstrap"],
       "elicited_from": "Owner (2026-07-26): ý tưởng chuyển mọi loại tài liệu thành cấu trúc tối ưu AI (thư mục + JSON mục lục) dùng Python; grounded bằng research Docling/MinerU/unstructured.io/llms.txt convention + chunking best practice"
+    },
+    {
+      "skill_id": "python-env-bootstrap",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": ["meta"],
+        "task_type": ["coordination"],
+        "risk_tier": "N1",
+        "harness_compatibility": ["claude-code"]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "pending",
+        "date": null
+      },
+      "dependencies": ["uv"],
+      "elicited_from": "Owner (docs/archive/pre-spec-2026-07-26/note.md mục 3): skill 'chứa đầy đủ một phiên bản python' để người dùng phổ thông chạy được skill Python phức tạp không cần tự cài đặt trước; grounded bằng uv (Astral) làm bootstrap tool"
     }
   ]
 }

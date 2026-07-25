@@ -2,14 +2,15 @@
 
 | Last Updated | Status |
 | --- | --- |
-| 2026-07-26 | 2 skill đã viết (`skill-creator` từ stage 3, `document-ai-structurer` — skill domain/task-type thật đầu tiên). Cả hai chưa qua stage 4/5. Mọi thứ dưới đây verify trực tiếp từ `registry/skills.json` + `skills/`. |
+| 2026-07-26 | 3 skill đã viết (`skill-creator` từ stage 3, `document-ai-structurer` + `python-env-bootstrap` — 2 skill domain/task-type/hạ tầng thật đầu tiên). Cả ba chưa qua stage 4/5. Mọi thứ dưới đây verify trực tiếp từ `registry/skills.json` + `skills/`. |
 
 ## Skill đã tồn tại
 
 | skill_id | version | risk_tier | quality_score | security_audit | Sẵn sàng dùng? |
 | --- | --- | --- | --- | --- | --- |
 | `skill-creator` | 0.1.0 | N2 | `null` | `pending` | **Chưa** — chưa qua stage 4 (quality eval ≥2 harness) và stage 5 (security audit). Chỉ mới verify chạy trên Claude Code. |
-| `document-ai-structurer` | 0.1.0 | N1 | `null` | `pending` | **Chưa** — smoke test 1 PDF thật thành công (Claude Code), chưa qua stage 4/5 chính thức, chưa test DOCX/PPTX/XLSX/ảnh scan. Cần Python + `docling` (bootstrap venv riêng, xem `skills/document-ai-structurer/SKILL.md`). |
+| `document-ai-structurer` | 0.1.0 | N1 | `null` | `pending` | **Chưa** — smoke test 1 PDF thật thành công (Claude Code, Windows), chưa qua stage 4/5 chính thức, chưa test DOCX/PPTX/XLSX/ảnh scan. Phụ thuộc `docling` + `python-env-bootstrap` (xem `skills/document-ai-structurer/SKILL.md`). |
+| `python-env-bootstrap` | 0.1.0 | N1 | `null` | `pending` | **Chưa** — verify chạy đúng trên Windows qua PowerShell thật (dùng để bootstrap `document-ai-structurer`). Đã phát hiện + ghi lại lỗi thật: chạy qua Git Bash/MSYS2 trên Windows khiến `uv` detect nhầm platform Linux — xem `skills/python-env-bootstrap/SKILL.md`. |
 
 Nguồn: `registry/skills.json`. Nếu số liệu ở đây khác `registry/skills.json`, registry thắng — file này có thể lỗi thời.
 
