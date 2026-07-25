@@ -20,7 +20,7 @@
         "date": null
       },
       "dependencies": [],
-      "elicited_from": "Owner tacit knowledge từ EduStation postmortem (docs/handoff.md) + deep research session 2026-07-26 (docs/raw_research.md, docs/full_content_and_research.md)"
+      "elicited_from": "Owner tacit knowledge từ EduStation postmortem (docs/archive/pre-spec-2026-07-26/handoff.md) + deep research session 2026-07-26, chưng cất vào docs/specs/STRATEGY_SPEC.md"
     }
   ]
 }

@@ -9,13 +9,13 @@ metadata:
   risk_tier: N2
   pipeline_stage: 3
   source: self-authored
-  elicited_from: "Owner tacit knowledge từ EduStation postmortem (docs/handoff.md) + deep research session 2026-07-26 (docs/raw_research.md, docs/full_content_and_research.md)"
+  elicited_from: "Owner tacit knowledge từ EduStation postmortem (docs/archive/pre-spec-2026-07-26/handoff.md) + deep research session 2026-07-26, chưng cất vào docs/specs/STRATEGY_SPEC.md"
   version: 0.1.0
 ---
 
 # skill_creator
 
-Meta-skill sinh ra `SKILL.md` cho một skill khác trong Scriptorium. Đây là bước 3 trong pipeline bootstrap (`docs/full_content_and_research.md` A.5) — đứng SAU research và elicit tacit process, KHÔNG đứng trước.
+Meta-skill sinh ra `SKILL.md` cho một skill khác trong Scriptorium. Đây là bước 3 trong pipeline bootstrap (`docs/specs/STRATEGY_SPEC.md` §3) — đứng SAU research và elicit tacit process, KHÔNG đứng trước.
 
 ## Precondition — kiểm tra trước khi chạy
 
@@ -33,7 +33,7 @@ Frontmatter chỉ có đúng 6 key: `name`, `description`, `license`, `compatibi
 - `name` — bắt buộc, ≤64 ký tự, chỉ chữ thường/số/hyphen, PHẢI trùng tên thư mục cha trong `skills/`.
 - `description` — bắt buộc, ≤1024 ký tự. Nêu rõ CẢ hai: skill làm gì, VÀ khi nào nên dùng / khi nào không nên dùng (giúp agent chọn đúng skill giữa nhiều skill có sẵn).
 - `license` — SPDX identifier. Nếu skill harvested từ nguồn ngoài, license phải khớp license gốc và đã qua license-compliance check (bước 7 pipeline) — không tự ý đổi sang MIT.
-- `compatibility` — ≤500 ký tự. Chỉ liệt kê harness ĐÃ verify chạy thật. Harness chưa test thì không được liệt kê, kể cả khi vendor showcase nói có hỗ trợ (xem `docs/raw_research.md` §1 — Kimi Code CLI không có trong showcase chính thức dù nhiều nguồn thứ cấp nói có).
+- `compatibility` — ≤500 ký tự. Chỉ liệt kê harness ĐÃ verify chạy thật. Harness chưa test thì không được liệt kê, kể cả khi vendor showcase nói có hỗ trợ (xem `docs/archive/pre-spec-2026-07-26/raw_research.md` §1 — Kimi Code CLI không có trong showcase chính thức dù nhiều nguồn thứ cấp nói có).
 - `metadata` — map key-value tự do, dùng tối thiểu 5 field chuẩn của Scriptorium: `domain`, `task_type`, `risk_tier` (N1–N5, theo `registry/SCHEMA.md`), `source` (`self-authored` hoặc `harvested`), `elicited_from` (mô tả ngắn nguồn tri thức đã elicit — trường này không được để rỗng).
 - `allowed-tools` — đánh dấu Experimental trong spec. Chỉ thêm khi có lý do an toàn cụ thể để giới hạn tool (ví dụ skill risk-tier cao không nên có quyền ghi file tùy ý). Không thêm mặc định "cho chắc".
 
@@ -46,7 +46,7 @@ Frontmatter chỉ có đúng 6 key: `name`, `description`, `license`, `compatibi
 ## Việc skill_creator KHÔNG làm
 
 - Không tự chấm chất lượng skill vừa tạo — đó là bước 4 (quality evaluation loop), chạy riêng, trên ≥2 harness đã verify.
-- Không tự audit bảo mật skill vừa tạo — đó là bước 5 (security audit), một pipeline stage riêng biệt, không gộp chung với bước 4 (`docs/handoff.md` mục 4).
+- Không tự audit bảo mật skill vừa tạo — đó là bước 5 (security audit), một pipeline stage riêng biệt, không gộp chung với bước 4 (`docs/specs/STRATEGY_SPEC.md` §7 điểm 2).
 - Không tự quyết định skill đã "sẵn sàng dùng" — trạng thái đó chỉ được set khi `registry/skills.json` có `quality_score` khác null VÀ `security_audit.status = "passed"`.
 
 ## Output của skill_creator

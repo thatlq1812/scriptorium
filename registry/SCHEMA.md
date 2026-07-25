@@ -2,14 +2,14 @@
 
 Đăng ký (registry) là xương sống định danh của Scriptorium: mọi skill đi qua pipeline bootstrap đều phải có một entry trong `registry/skills.json` trước khi coi là "phát hành nội bộ". Registry dùng tag đa trục, không ép vào một category cứng — một skill có thể mang nhiều tag trên cùng một trục và trên nhiều trục cùng lúc.
 
-Tham chiếu quyết định: `docs/raw_research.md` §4, `docs/full_content_and_research.md` A.5 bước 9.
+Tham chiếu quyết định: `docs/specs/STRATEGY_SPEC.md` §3 (bước 9) và §4.
 
 ## Bốn trục tag (mọi skill gắn ≥1 tag mỗi trục)
 
 - **domain** — trục ngành/nghề. Tham khảo trực tiếp occupation group của SkillsMP thay vì tự nghĩ taxonomy riêng. Giá trị đặc biệt `meta` cho skill vận hành chính Scriptorium (skill_creator, quality-eval, security-audit...) — các skill này không thuộc một ngành cụ thể.
 - **task-type** — trục loại tác vụ, cắt ngang mọi ngành: `research`, `document-conversion`, `drafting`, `review-qa`, `coordination`.
 - **risk-tier** — kế thừa tinh thần N1–N5 của EduStation, tái áp dụng thành mức rủi ro đầu ra/liability: `N1` (thấp, ví dụ tra cứu/chuyển đổi định dạng) đến `N5` (cao, ví dụ soạn hợp đồng/duyệt luật — bắt buộc human gate).
-- **harness-compatibility** — danh sách harness đã **verify chạy sạch thật**, không phải suy đoán từ showcase vendor. Giá trị hợp lệ chỉ được thêm sau khi test trực tiếp (xem `docs/handoff.md` mục 5).
+- **harness-compatibility** — danh sách harness đã **verify chạy sạch thật**, không phải suy đoán từ showcase vendor. Giá trị hợp lệ chỉ được thêm sau khi test trực tiếp (xem `docs/archive/pre-spec-2026-07-26/handoff.md` mục 5).
 
 ## Field bắt buộc của một entry
 
@@ -26,7 +26,7 @@ Tham chiếu quyết định: `docs/raw_research.md` §4, `docs/full_content_and
 | `quality_score` | object \| null | Kết quả từ quality-eval loop (bước 4 pipeline). `null` nếu chưa chạy. |
 | `security_audit` | object | `{ "status": "pending" \| "passed" \| "failed", "date": string \| null }`. Không có skill nào được coi là sẵn sàng dùng khi `status != "passed"`. |
 | `dependencies` | string[] | Script/tool đi kèm skill (nếu có). |
-| `elicited_from` | string | Nguồn tri thức ngầm đã elicit trước khi tạo skill — bắt buộc khác rỗng, theo nguyên tắc "no self-generated-only" (`docs/raw_research.md` §7). |
+| `elicited_from` | string | Nguồn tri thức ngầm đã elicit trước khi tạo skill — bắt buộc khác rỗng, theo nguyên tắc "no self-generated-only" (`docs/specs/STRATEGY_SPEC.md` §7 điểm 4). |
 
 ## Nguyên tắc dedup/novelty-check
 

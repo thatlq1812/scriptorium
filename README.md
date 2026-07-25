@@ -2,11 +2,11 @@
 
 Hệ thống tạo, kiểm định chất lượng, audit bảo mật, và quản lý danh mục cho Agent Skill portable — không khóa vào một harness (Claude Code, Codex CLI, Kimi Code CLI, ...). Kế thừa bài học từ EduStation, không kế thừa khuôn của nó.
 
-Bối cảnh và toàn bộ quyết định/nghiên cứu đã dẫn tới kiến trúc này: xem `docs/`.
+Bắt đầu từ [docs/README.md](docs/README.md) — navigation hub, dẫn vào kiến trúc, trạng thái thật, và SPEC chiến lược.
 
 ## Cấu trúc
 
-- `docs/` — tài liệu nền: bài học EduStation (`handoff.md`, `note.md`), thảo luận định hướng và báo cáo nghiên cứu sâu (`conservation.md`, `raw_research.md`, `full_content_and_research.md`). Đọc trước khi làm việc trên bất kỳ skill nào.
+- `docs/` — `MASTER_CONTEXT.md` (kiến trúc + quy chế tài liệu), `STATUS.md` (trạng thái thật), `DECISIONS_PENDING.md`, `specs/` (SPEC chính thức), `archive/` (lịch sử thảo luận/research thô).
 - `skills/` — từng skill là một thư mục con chứa `SKILL.md` đúng 6-field spec của agentskills.io (`name`, `description`, `license`, `compatibility`, `metadata`, `allowed-tools`).
 - `registry/` — xương sống định danh đa trục (domain, task-type, risk-tier, harness-compatibility). Schema: `registry/SCHEMA.md`. Dữ liệu: `registry/skills.json`.
 
@@ -23,4 +23,4 @@ Không đảo thứ tự. Không để agent tự sinh skill mà không có inpu
 3. Không đánh dấu harness-compatible dựa trên tuyên bố của vendor — chỉ verify trực tiếp.
 4. Một skill chạy tốt, audit sạch, dùng thật — quan trọng hơn mười skill nằm trong registry chưa ai dùng.
 
-Chi tiết đầy đủ: `docs/handoff.md`.
+Chi tiết đầy đủ: `docs/specs/STRATEGY_SPEC.md`.
