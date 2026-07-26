@@ -1,22 +1,22 @@
 # Documentation — Scriptorium
 
-Navigation hub. Đọc `MASTER_CONTEXT.md` trước nếu chưa quen dự án.
+Navigation hub. Read `MASTER_CONTEXT.md` first if you're new to the project.
 
-## Đọc theo thứ tự
+## Read in this order
 
-1. [MASTER_CONTEXT.md](MASTER_CONTEXT.md) — Scriptorium là gì, cấu trúc repo, quy chế tài liệu.
-2. [STATUS.md](STATUS.md) — trạng thái thật hiện tại (skill nào đã có, stage nào chưa xây), verify theo `registry/skills.json`.
-3. [DECISIONS_PENDING.md](DECISIONS_PENDING.md) — quyết định kiến trúc đang chờ owner xác nhận trước khi tiếp tục.
-4. [specs/STRATEGY_SPEC.md](specs/STRATEGY_SPEC.md) — nguồn xác thực cho định hướng chiến lược, pipeline, taxonomy, vertical pháp lý, gate Elixverse.
-5. [ROADMAP.md](ROADMAP.md) — backlog mở rộng skill (nguồn ngoài đã verify license, thứ tự thực thi).
+1. [MASTER_CONTEXT.md](MASTER_CONTEXT.md) — what Scriptorium is, repo structure, documentation convention.
+2. [STATUS.md](STATUS.md) — real current status (which skills exist, which stages aren't built yet), verified against `registry/skills.json`.
+3. [DECISIONS_PENDING.md](DECISIONS_PENDING.md) — architectural decisions awaiting owner confirmation before proceeding.
+4. [specs/STRATEGY_SPEC.md](specs/STRATEGY_SPEC.md) — source of truth for strategic direction, pipeline, taxonomy, legal vertical, Elixverse gate.
+5. [ROADMAP.md](ROADMAP.md) — skill-expansion backlog (external sources already license-verified, execution order).
 
-## Thư mục
+## Directories
 
-| Path | Nội dung |
+| Path | Content |
 | --- | --- |
-| `specs/` | SPEC chính thức, đang active. Viết SPEC mới ở đây khi có quyết định/tính năng đủ lớn cần chưng cất thành nguồn xác thực. |
-| `archive/` | Lịch sử — transcript thảo luận, research thô đã chưng cất vào `specs/`. Xem `archive/README.md`. Không trích số liệu/quyết định trực tiếp từ đây nếu `specs/` đã có bản đã sửa. |
+| `specs/` | Official, active specs. Write a new spec here when a decision/feature is big enough to distill into a source of truth. |
+| `archive/` | History — discussion transcripts, raw research already distilled into `specs/`. See `archive/README.md`. Don't cite figures/decisions directly from here if `specs/` already has a corrected version. |
 
-## Quy tắc khi mâu thuẫn
+## Rule when things conflict
 
-`skills/` và `registry/` (code/skill thật) thắng mọi doc. Trong docs, `specs/` thắng `archive/`. `STATUS.md` phải verify được từ `registry/skills.json` — nếu lệch, sửa `STATUS.md`, không sửa registry để khớp doc.
+`skills/` and `registry/` (real code/skills) beat every doc. Within docs, `specs/` beats `archive/`. `STATUS.md` must be verifiable against `registry/skills.json` — if they diverge, fix `STATUS.md`, not the registry, to match the doc.

@@ -1,26 +1,24 @@
 # Scriptorium
 
-Hệ thống tạo, kiểm định chất lượng, audit bảo mật, và quản lý danh mục cho Agent Skill portable — không khóa vào một harness (Claude Code, Codex CLI, Kimi Code CLI, ...). Kế thừa bài học từ EduStation, không kế thừa khuôn của nó.
+Start at [docs/README.md](docs/README.md) — navigation hub into the architecture, real status, and strategy spec.
 
-Bắt đầu từ [docs/README.md](docs/README.md) — navigation hub, dẫn vào kiến trúc, trạng thái thật, và SPEC chiến lược.
+## Structure
 
-## Cấu trúc
+- `docs/` — `MASTER_CONTEXT.md` (architecture + documentation convention), `STATUS.md` (real status), `DECISIONS_PENDING.md`, `specs/` (official specs), `archive/` (historical discussion/raw research).
+- `skills/` — each skill is a subfolder containing a `SKILL.md` matching the agentskills.io 6-field spec (`name`, `description`, `license`, `compatibility`, `metadata`, `allowed-tools`).
+- `registry/` — the multi-axis identity backbone (domain, task-type, risk-tier, harness-compatibility). Schema: `registry/SCHEMA.md`. Data: `registry/skills.json`.
 
-- `docs/` — `MASTER_CONTEXT.md` (kiến trúc + quy chế tài liệu), `STATUS.md` (trạng thái thật), `DECISIONS_PENDING.md`, `specs/` (SPEC chính thức), `archive/` (lịch sử thảo luận/research thô).
-- `skills/` — từng skill là một thư mục con chứa `SKILL.md` đúng 6-field spec của agentskills.io (`name`, `description`, `license`, `compatibility`, `metadata`, `allowed-tools`).
-- `registry/` — xương sống định danh đa trục (domain, task-type, risk-tier, harness-compatibility). Schema: `registry/SCHEMA.md`. Dữ liệu: `registry/skills.json`.
+## Bootstrap pipeline (in progress)
 
-## Pipeline bootstrap (đang triển khai)
+Research → Elicit tacit process → **skill-creator** → Quality evaluation (≥2 harnesses) → Security audit (separate stage) → Skill scout/harvester → License-compliance check → Dedup/novelty-check → Registry.
 
-Research → Elicit tacit process → **skill-creator** → Quality evaluation (≥2 harness) → Security audit (stage riêng) → Skill scout/harvester → License-compliance check → Dedup/novelty-check → Registry.
+Order is not negotiable. Never let an agent self-generate a skill without input elicited from a real source — SkillsBench measured self-generated skills as "no benefit on average."
 
-Không đảo thứ tự. Không để agent tự sinh skill mà không có input elicited từ nguồn thật — SkillsBench đo self-generated skill "no benefit on average".
+## Non-negotiable principles
 
-## Nguyên tắc không thương lượng
+1. Stick to the agentskills.io open spec — never invent extra frontmatter fields.
+2. Quality and security are two different gates — never merge into one review pass.
+3. Never mark a skill harness-compatible based on a vendor claim — only direct verification counts.
+4. One skill that runs well, audits clean, and gets real use beats ten skills sitting unused in the registry.
 
-1. Bám đúng spec mở agentskills.io — không tự chế thêm field frontmatter ngoài chuẩn.
-2. Quality và security là hai gate khác nhau, không gộp một bước review.
-3. Không đánh dấu harness-compatible dựa trên tuyên bố của vendor — chỉ verify trực tiếp.
-4. Một skill chạy tốt, audit sạch, dùng thật — quan trọng hơn mười skill nằm trong registry chưa ai dùng.
-
-Chi tiết đầy đủ: `docs/specs/STRATEGY_SPEC.md`.
+Full detail: `docs/specs/STRATEGY_SPEC.md`.

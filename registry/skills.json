@@ -15,25 +15,20 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": [
-          "meta"
-        ],
-        "task_type": [
-          "skill-authoring"
-        ],
+        "domain": ["meta"],
+        "task_type": ["skill-authoring"],
         "risk_tier": "N2",
-        "harness_compatibility": [
-          "claude-code"
-        ]
+        "harness_compatibility": ["claude-code"]
       },
       "quality_score": null,
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
-        "note": "Thuần instructional, không script. Không finding."
+        "note": "Pure instructional, no script. No finding."
       },
       "dependencies": [],
-      "elicited_from": "Owner tacit knowledge từ EduStation postmortem (docs/archive/pre-spec-2026-07-26/handoff.md) + deep research session 2026-07-26, chưng cất vào docs/specs/STRATEGY_SPEC.md"
+      "license_debt": null,
+      "elicited_from": "Owner tacit knowledge from the EduStation postmortem (docs/archive/pre-spec-2026-07-26/handoff.md) + deep research session 2026-07-26, distilled into docs/specs/STRATEGY_SPEC.md"
     },
     {
       "skill_id": "document-ai-structurer",
@@ -43,28 +38,23 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": [
-          "general"
-        ],
-        "task_type": [
-          "document-conversion"
-        ],
+        "domain": ["general"],
+        "task_type": ["document-conversion"],
         "risk_tier": "N1",
-        "harness_compatibility": [
-          "claude-code"
-        ]
+        "harness_compatibility": ["claude-code"]
       },
       "quality_score": null,
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
-        "note": "structure_doc.py: external fetch (Docling tai model) co khai bao ro trong SKILL.md. Khong secret/dangerous command."
+        "note": "structure_doc.py: external fetch (Docling downloading models) is declared clearly in SKILL.md. No secret/dangerous command."
       },
       "dependencies": [
         "docling==2.115.0",
         "python-env-bootstrap"
       ],
-      "elicited_from": "Owner (2026-07-26): ý tưởng chuyển mọi loại tài liệu thành cấu trúc tối ưu AI (thư mục + JSON mục lục) dùng Python; grounded bằng research Docling/MinerU/unstructured.io/llms.txt convention + chunking best practice"
+      "license_debt": null,
+      "elicited_from": "Owner (2026-07-26): idea of turning any document type into an AI-optimized structure (folder + JSON index) using Python; grounded in research on Docling/MinerU/unstructured.io/the llms.txt convention + chunking best practice"
     },
     {
       "skill_id": "python-env-bootstrap",
@@ -74,27 +64,22 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": [
-          "meta"
-        ],
-        "task_type": [
-          "coordination"
-        ],
+        "domain": ["meta"],
+        "task_type": ["coordination"],
         "risk_tier": "N1",
-        "harness_compatibility": [
-          "claude-code"
-        ]
+        "harness_compatibility": ["claude-code"]
       },
       "quality_score": null,
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
-        "note": "bootstrap.sh/.ps1 dung pattern curl|sh, irm|iex tu astral.sh (nguon uy tin, chinh chu) de cai uv -- blind-trust pattern chap nhan co ghi chu."
+        "note": "bootstrap.sh/.ps1 use the curl|sh, irm|iex pattern from astral.sh (reputable, verified source) to install uv -- blind-trust pattern accepted with a note."
       },
       "dependencies": [
         "uv"
       ],
-      "elicited_from": "Owner (docs/archive/pre-spec-2026-07-26/note.md mục 3): skill 'chứa đầy đủ một phiên bản python' để người dùng phổ thông chạy được skill Python phức tạp không cần tự cài đặt trước; grounded bằng uv (Astral) làm bootstrap tool"
+      "license_debt": null,
+      "elicited_from": "Owner (docs/archive/pre-spec-2026-07-26/note.md point 3): a skill 'containing a full python version inside it' so ordinary users can run complex Python skills without installing anything first; grounded in uv (Astral) as the bootstrap tool"
     },
     {
       "skill_id": "license-compliance-check",
@@ -104,25 +89,20 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": [
-          "meta"
-        ],
-        "task_type": [
-          "review-qa"
-        ],
+        "domain": ["meta"],
+        "task_type": ["review-qa"],
         "risk_tier": "N2",
-        "harness_compatibility": [
-          "claude-code"
-        ]
+        "harness_compatibility": ["claude-code"]
       },
       "quality_score": null,
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
-        "note": "Thuan doc (gh api), khong script. Khong finding."
+        "note": "Pure read-only (gh api), no script. No finding."
       },
       "dependencies": [],
-      "elicited_from": "Case thật 2026-07-26: kiểm tra license github.com/anthropics/skills qua gh api — phát hiện license hỗn hợp (Apache-2.0 cho skill-creator, điều khoản độc quyền cấm redistribute cho docx/pdf/pptx/xlsx)"
+      "license_debt": null,
+      "elicited_from": "Real case 2026-07-26: checked the license of github.com/anthropics/skills via gh api -- found mixed licensing (Apache-2.0 for skill-creator, an exclusive no-redistribute clause for docx/pdf/pptx/xlsx)"
     },
     {
       "skill_id": "quality-eval",
@@ -138,12 +118,8 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": [
-          "meta"
-        ],
-        "task_type": [
-          "review-qa"
-        ],
+        "domain": ["meta"],
+        "task_type": ["review-qa"],
         "risk_tier": "N2",
         "harness_compatibility": []
       },
@@ -151,11 +127,11 @@
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
-        "note": "Thuan quy trinh, chua co script (v0.1.0). Khong finding."
+        "note": "Pure process, no script yet (v0.1.0). No finding."
       },
       "dependencies": [],
       "license_debt": null,
-      "elicited_from": "Grounded từ SkillsBench (arXiv 2602.12670) + baseline-comparison pattern adapted từ Apache-2.0 skill-creator, generalized harness-agnostic"
+      "elicited_from": "Grounded in SkillsBench (arXiv 2602.12670) + a baseline-comparison pattern adapted from the Apache-2.0 skill-creator, generalized to be harness-agnostic"
     },
     {
       "skill_id": "security-audit",
@@ -165,26 +141,20 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": [
-          "meta"
-        ],
-        "task_type": [
-          "review-qa"
-        ],
+        "domain": ["meta"],
+        "task_type": ["review-qa"],
         "risk_tier": "N2",
-        "harness_compatibility": [
-          "claude-code"
-        ]
+        "harness_compatibility": ["claude-code"]
       },
       "quality_score": null,
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
-        "note": "Tự áp dụng lên chính 5 skill hiện có (self-audit) làm case thật. Không script riêng."
+        "note": "Self-applied to the 5 existing skills at the time (self-audit) as the real case. No dedicated script."
       },
       "dependencies": [],
       "license_debt": null,
-      "elicited_from": "Grounded từ Snyk ToxicSkills, 8-point checklist kiểu Agensi, OWASP Agentic Skills Top 10 — áp dụng thật lên 5 skill hiện có 2026-07-26"
+      "elicited_from": "Grounded in Snyk ToxicSkills, an Agensi-style 8-point checklist, the OWASP Agentic Skills Top 10 -- applied for real to 5 existing skills 2026-07-26"
     },
     {
       "skill_id": "scout-harvester",
@@ -194,26 +164,20 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": [
-          "meta"
-        ],
-        "task_type": [
-          "research"
-        ],
+        "domain": ["meta"],
+        "task_type": ["research"],
         "risk_tier": "N1",
-        "harness_compatibility": [
-          "claude-code"
-        ]
+        "harness_compatibility": ["claude-code"]
       },
       "quality_score": null,
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
-        "note": "Thuần quy trình research, không script. Không finding."
+        "note": "Pure research process, no script. No finding."
       },
       "dependencies": [],
       "license_debt": null,
-      "elicited_from": "Chưng cất từ 3 lần chạy thật trong phiên 2026-07-26: scout Docling/MinerU trước document-ai-structurer, scout uv trước python-env-bootstrap, scout anthropics/skills theo yêu cầu owner"
+      "elicited_from": "Distilled from 3 real runs in the 2026-07-26 session: scouting Docling/MinerU before document-ai-structurer, scouting uv before python-env-bootstrap, scouting anthropics/skills at owner's request"
     },
     {
       "skill_id": "office-doc-creator",
@@ -223,22 +187,16 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": [
-          "general"
-        ],
-        "task_type": [
-          "drafting"
-        ],
+        "domain": ["general"],
+        "task_type": ["drafting"],
         "risk_tier": "N1",
-        "harness_compatibility": [
-          "claude-code"
-        ]
+        "harness_compatibility": ["claude-code"]
       },
       "quality_score": null,
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
-        "note": "3 script chỉ đọc JSON local, ghi file Office local, không network call, không secret handling. Không finding."
+        "note": "3 scripts only read local JSON, write local Office files, no network calls, no secret handling. No finding."
       },
       "dependencies": [
         "python-docx==1.2.0",
@@ -247,7 +205,7 @@
         "python-env-bootstrap"
       ],
       "license_debt": null,
-      "elicited_from": "Owner (2026-07-26): mở rộng scout ra ngoài Anthropic cho office skills; scout-harvester tìm python-docx/python-pptx/openpyxl (MIT, verify trực tiếp), tự viết implementation"
+      "elicited_from": "Owner (2026-07-26): extend scouting beyond Anthropic for office skills; scout-harvester found python-docx/python-pptx/openpyxl (MIT, verified directly), implementation written from scratch"
     },
     {
       "skill_id": "dedup-novelty-check",
@@ -257,26 +215,20 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": [
-          "meta"
-        ],
-        "task_type": [
-          "review-qa"
-        ],
+        "domain": ["meta"],
+        "task_type": ["review-qa"],
         "risk_tier": "N1",
-        "harness_compatibility": [
-          "claude-code"
-        ]
+        "harness_compatibility": ["claude-code"]
       },
       "quality_score": null,
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
-        "note": "check_dedup.py: stdlib thuan (argparse/json/re), chi doc registry/skills.json local, khong ghi/network/secret. Khong finding."
+        "note": "check_dedup.py: pure stdlib (argparse/json/re), only reads local registry/skills.json, no writes/network/secrets. No finding."
       },
       "dependencies": [],
       "license_debt": null,
-      "elicited_from": "Chưng cất từ quy tắc dedup/novelty-check đã có sẵn trong registry/SCHEMA.md, formalize thành script tính overlap thật, verify trên 8 skill hiện có 2026-07-26"
+      "elicited_from": "Distilled from the dedup/novelty-check rule already in registry/SCHEMA.md, formalized into a real overlap-scoring script, verified against the 8 existing skills 2026-07-26"
     },
     {
       "skill_id": "mermaid-diagram-designer",
@@ -286,26 +238,20 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": [
-          "general"
-        ],
-        "task_type": [
-          "drafting"
-        ],
+        "domain": ["general"],
+        "task_type": ["drafting"],
         "risk_tier": "N1",
-        "harness_compatibility": [
-          "claude-code"
-        ]
+        "harness_compatibility": ["claude-code"]
       },
       "quality_score": null,
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
-        "note": "lint_mermaid.py: stdlib thuan, chi doc file/stdin local, khong network/secret. Khong finding."
+        "note": "lint_mermaid.py: pure stdlib, only reads a local file/stdin, no network/secrets. No finding."
       },
       "dependencies": [],
       "license_debt": null,
-      "elicited_from": "Owner (2026-07-26, docs/ROADMAP.md): scout mermaid-js/mermaid (MIT, verify gh api). Cheatsheet + quy tac chon diagram tu viet lai bang loi rieng"
+      "elicited_from": "Owner (2026-07-26, docs/ROADMAP.md): scouted mermaid-js/mermaid (MIT, verified via gh api). Cheatsheet + diagram-type decision rules rewritten from scratch in our own words"
     },
     {
       "skill_id": "translator-en-vi",
@@ -315,26 +261,20 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": [
-          "general"
-        ],
-        "task_type": [
-          "drafting"
-        ],
+        "domain": ["general"],
+        "task_type": ["drafting"],
         "risk_tier": "N2",
-        "harness_compatibility": [
-          "claude-code"
-        ]
+        "harness_compatibility": ["claude-code"]
       },
       "quality_score": null,
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
-        "note": "Thuan instructional, khong script/dependency. Khong finding."
+        "note": "Pure instructional, no script/dependency. No finding."
       },
       "dependencies": [],
       "license_debt": null,
-      "elicited_from": "Owner (2026-07-26): khong can glossary co dinh, van phong tu nhien linh hoat theo ngu canh nguon"
+      "elicited_from": "Owner (2026-07-26): no fixed glossary needed, natural register that flexes with the source context"
     },
     {
       "skill_id": "latex-project-bootstrap",
@@ -344,29 +284,23 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": [
-          "general"
-        ],
-        "task_type": [
-          "drafting"
-        ],
+        "domain": ["general"],
+        "task_type": ["drafting"],
         "risk_tier": "N1",
-        "harness_compatibility": [
-          "claude-code"
-        ]
+        "harness_compatibility": ["claude-code"]
       },
       "quality_score": null,
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
-        "note": "init_project.py: stdlib thuan, chi ghi file local. build.sh/.ps1 chi goi xelatex/biber local, khong network/secret. Khong finding."
+        "note": "init_project.py: pure stdlib, only writes local files. build.sh/.ps1 only call local xelatex/biber, no network/secrets. No finding."
       },
       "dependencies": [
         "xelatex",
         "biber"
       ],
       "license_debt": null,
-      "elicited_from": "Grounded tu du an LaTeX that cua owner (D:/elix/researches/textbooks) -- XeLaTeX + polyglossia/fontspec, build sequence xelatex->biber->xelatex->xelatex"
+      "elicited_from": "Grounded in the owner's real LaTeX project (D:/elix/researches/textbooks) -- XeLaTeX + polyglossia/fontspec, build sequence xelatex->biber->xelatex->xelatex"
     },
     {
       "skill_id": "image-generator-gemini",
@@ -376,22 +310,16 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": [
-          "general"
-        ],
-        "task_type": [
-          "drafting"
-        ],
+        "domain": ["general"],
+        "task_type": ["drafting"],
         "risk_tier": "N2",
-        "harness_compatibility": [
-          "claude-code"
-        ]
+        "harness_compatibility": ["claude-code"]
       },
       "quality_score": null,
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
-        "note": "generate_image.py + analyze_style.py: doc GEMINI_API_KEY tu env (bring-your-own-key, khong hardcode), goi API ngoai co khai bao ro trong SKILL.md, khong ghi/luu key ra file. extract_pdf_page.py: khong goi API, chi render local qua pypdfium2. Khong finding."
+        "note": "generate_image.py + analyze_style.py: read GEMINI_API_KEY from env (bring-your-own-key, never hardcoded), external API calls are clearly declared in SKILL.md, never write/persist the key to a file. extract_pdf_page.py: no API calls, purely local rendering via pypdfium2. No finding."
       },
       "dependencies": [
         "google-genai==2.14.0",
@@ -399,7 +327,7 @@
         "python-env-bootstrap"
       ],
       "license_debt": null,
-      "elicited_from": "Grounded tu D:/elix/platform/scripts/gen/gen_illustrations.py + D:/UNI/S9_SP26/MLN131/project/scripts/gen-images-v2.mjs + gen-slide-images.mjs (du an rieng cua owner): batch + skip-if-exists + style-ref anchoring + double-base64-decode fallback. Verify that bang API call thuc te (model gemini-3.1-flash-lite-image)."
+      "elicited_from": "Grounded in D:/elix/platform/scripts/gen/gen_illustrations.py + D:/UNI/S9_SP26/MLN131/project/scripts/gen-images-v2.mjs + gen-slide-images.mjs (owner's own projects): batch + skip-if-exists + style-ref anchoring + double-base64-decode fallback. Verified for real via actual API calls (model gemini-3.1-flash-lite-image)."
     }
   ]
 }
