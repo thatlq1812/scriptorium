@@ -294,6 +294,29 @@
       "dependencies": [],
       "license_debt": null,
       "elicited_from": "Owner (2026-07-26, docs/ROADMAP.md): scout mermaid-js/mermaid (MIT, verify gh api). Cheatsheet + quy tac chon diagram tu viet lai bang loi rieng"
+    },
+    {
+      "skill_id": "translator-en-vi",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": ["general"],
+        "task_type": ["drafting"],
+        "risk_tier": "N2",
+        "harness_compatibility": ["claude-code"]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "Thuan instructional, khong script/dependency. Khong finding."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Owner (2026-07-26): khong can glossary co dinh, van phong tu nhien linh hoat theo ngu canh nguon"
     }
   ]
 }
