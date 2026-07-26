@@ -1,0 +1,17 @@
+{
+  "contract_title": "<contract being reviewed>",
+  "reviewed_by": "<reviewer name/role>",
+  "review_date": "<YYYY-MM-DD>",
+  "clauses_reviewed": ["Điều 1", "Điều 2", "Điều 3", "Điều 5"],
+  "no_issues_found_after_review": false,
+  "issues": [
+    {
+      "id": "R1",
+      "clause_location": "Điều 5",
+      "risk_category": "payment",
+      "severity": "medium",
+      "concern": "<what is concerning about this clause, in plain terms>",
+      "recommended_action": "<a specific, actionable fix or negotiation point -- not just 'review this'>"
+    }
+  ]
+}

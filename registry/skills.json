@@ -1002,6 +1002,29 @@
       "dependencies": [],
       "license_debt": null,
       "elicited_from": "Elicited from survey item 2 (outside_research/research_01_survey.md), whose own note flags automatic hiệu-lực (in-effect) status tracking as hard ('hơi khó vì VBPL thay đổi liên tục'). Deliberately does NOT attempt hiệu-lực verification -- no free Vietnamese legal-document API exists for this project to query, unlike CrossRef for citation-management's academic identifiers -- and is instead scoped to what's honestly deterministic without external data: citation format validation against known Vietnamese legal-document numbering conventions (with-year and công-văn-style without-year), plus flagging the same document cited under two different titles. Full gap rationale: docs/ROADMAP.md."
+    },
+    {
+      "skill_id": "contract-risk-log",
+      "version": "0.1.0",
+      "source": {"type": "self-authored"},
+      "license": "MIT",
+      "tags": {
+        "domain": ["legal"],
+        "task_type": ["review-qa"],
+        "risk_tier": "N3",
+        "harness_compatibility": ["claude-code"],
+        "grounding": "not_applicable",
+        "object_type": ["contract", "risk-log"]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "validate_risk_log.py: local-only, stdlib only (json/argparse), zero network calls, no dynamic execution, no secret handling. N3 reflects subject-matter risk (contract risk assessment reaching a client/decision-maker), not a tooling finding. No finding."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Elicited from survey item 6 (outside_research/research_01_survey.md: contract risk review, flagging unfavorable clauses, proposing amendments). Deliberately does NOT attempt automated risk detection -- identifying a clause as risky requires legal judgment this project does not automate. Structured instead as a completeness/consistency validator over a human-or-agent-authored risk log, mirroring this repo's peer-review claim-evidence-matrix pattern (validate structure of analysis, not the analysis itself). The explicit-not-ambiguous no-issues-found requirement is new to this skill: a silently-empty issues list in a legal risk log is a genuinely dangerous ambiguity between 'reviewed, clean' and 'not reviewed.'"
     }
   ]
 }
