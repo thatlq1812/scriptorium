@@ -5,6 +5,15 @@ deterministic. Produces a SCAFFOLD, not a finished preregistration — the
 design/analysis-plan section (§5) is intentionally left as <TODO> for a
 human/agent to fill in before touching outcome data.
 
+Refuses to run unless the record passes validate_hypothesis_schema.py. That
+gate is not optional and has no bypass flag: this script writes the document
+that gets shared, so a record whose candidate is labeled "confirmed", that
+has no rival, or that names no accountable human must never reach a
+preregistration through it.
+
+Exit codes: 0 = written, 1 = record rejected by the validator, 2 = malformed
+input / refused to overwrite.
+
 Usage:
     python generate_preregistration_scaffold.py record.json -o preregistration.md
 """
@@ -19,6 +28,9 @@ from pathlib import Path
 for _stream in (sys.stdout, sys.stderr):
     if hasattr(_stream, "reconfigure"):
         _stream.reconfigure(encoding="utf-8")
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from validate_hypothesis_schema import load_record, validate  # noqa: E402
 
 TEMPLATE_PATH = Path(__file__).resolve().parent.parent / "assets" / "preregistration_scaffold_template.md"
 
@@ -77,22 +89,38 @@ def main() -> int:
     parser.add_argument("record", type=Path, help="Path to a hypothesis record JSON file")
     parser.add_argument("-o", "--output", type=Path, required=True)
     parser.add_argument("--force", action="store_true")
+    parser.add_argument("--allow-class", action="append", default=[],
+                        help="Passed through to the validator: accept an additional candidate class (repeatable)")
     args = parser.parse_args()
-
-    try:
-        record = json.loads(args.record.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
-        print(f"MALFORMED: {exc}", file=sys.stderr)
-        return 2
-
-    template = TEMPLATE_PATH.read_text(encoding="utf-8")
-    scaffold = fill_scaffold(record, template)
 
     if args.output.exists() and not args.force:
         print(f"REFUSED: {args.output} already exists, use --force to overwrite", file=sys.stderr)
         return 2
 
-    args.output.write_text(scaffold, encoding="utf-8")
+    try:
+        record = load_record(args.record)
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
+        print(f"MALFORMED: {exc}", file=sys.stderr)
+        return 2
+
+    errors = validate(record, set(args.allow_class))
+    if errors:
+        print("REFUSED: record is not structurally valid — fix it before generating a preregistration:", file=sys.stderr)
+        for err in errors:
+            print(f"  - {err}", file=sys.stderr)
+        return 1
+
+    try:
+        template = TEMPLATE_PATH.read_text(encoding="utf-8")
+    except OSError as exc:
+        print(f"MALFORMED: cannot read the bundled template ({exc})", file=sys.stderr)
+        return 2
+
+    try:
+        args.output.write_text(fill_scaffold(record, template), encoding="utf-8")
+    except OSError as exc:
+        print(f"FAILED to write {args.output}: {exc}", file=sys.stderr)
+        return 2
     print(f"OK: wrote scaffold to {args.output}")
     return 0
 

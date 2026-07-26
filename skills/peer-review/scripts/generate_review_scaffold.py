@@ -19,19 +19,26 @@ for _stream in (sys.stdout, sys.stderr):
         _stream.reconfigure(encoding="utf-8")
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from validate_review_intake import validate as validate_intake  # noqa: E402
+from validate_review_intake import is_filled, validate as validate_intake  # noqa: E402
 
 TEMPLATE_PATH = Path(__file__).resolve().parent.parent / "assets" / "review_scaffold_template.md"
 
 
+def _value(raw: object) -> str:
+    """Anything empty or still holding a template placeholder becomes
+    <missing>, so lint_review.py catches it instead of it slipping through."""
+    return raw.strip() if is_filled(raw) else "<missing>"
+
+
 def fill_scaffold(intake: dict, template: str) -> str:
     acc = intake.get("accountability", {})
+    areas = [a for a in acc.get("competence_areas", []) if is_filled(a)]
     out = template
-    out = out.replace("<target_venue>", intake.get("target_venue", "<missing>"))
-    out = out.replace("<submission_type>", intake.get("submission_type", "<missing>"))
-    out = out.replace("<review_question>", intake.get("review_question", "<missing>"))
-    out = out.replace("<competence_areas>", ", ".join(acc.get("competence_areas", [])) or "<missing>")
-    out = out.replace("<competence_limits>", acc.get("competence_limits", "<missing>"))
+    out = out.replace("<target_venue>", _value(intake.get("target_venue")))
+    out = out.replace("<submission_type>", _value(intake.get("submission_type")))
+    out = out.replace("<review_question>", _value(intake.get("review_question")))
+    out = out.replace("<competence_areas>", ", ".join(areas) or "<missing>")
+    out = out.replace("<competence_limits>", _value(acc.get("competence_limits")))
     return out
 
 
@@ -42,10 +49,17 @@ def main() -> int:
     parser.add_argument("--force", action="store_true")
     args = parser.parse_args()
 
+    if args.output.exists() and not args.force:
+        print(f"REFUSED: {args.output} already exists, use --force to overwrite", file=sys.stderr)
+        return 2
+
     try:
         intake = json.loads(args.intake.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
+    except (OSError, json.JSONDecodeError, UnicodeDecodeError) as exc:
         print(f"MALFORMED: {exc}", file=sys.stderr)
+        return 2
+    if not isinstance(intake, dict):
+        print("MALFORMED: top-level JSON must be an object", file=sys.stderr)
         return 2
 
     reasons = validate_intake(intake)
@@ -55,14 +69,17 @@ def main() -> int:
             print(f"  - {r}", file=sys.stderr)
         return 1
 
-    template = TEMPLATE_PATH.read_text(encoding="utf-8")
-    scaffold = fill_scaffold(intake, template)
-
-    if args.output.exists() and not args.force:
-        print(f"REFUSED: {args.output} already exists, use --force to overwrite", file=sys.stderr)
+    try:
+        template = TEMPLATE_PATH.read_text(encoding="utf-8")
+    except OSError as exc:
+        print(f"MALFORMED: cannot read the bundled template ({exc})", file=sys.stderr)
         return 2
 
-    args.output.write_text(scaffold, encoding="utf-8")
+    try:
+        args.output.write_text(fill_scaffold(intake, template), encoding="utf-8")
+    except OSError as exc:
+        print(f"FAILED to write {args.output}: {exc}", file=sys.stderr)
+        return 2
     print(f"OK: wrote private review scaffold to {args.output}")
     return 0
 

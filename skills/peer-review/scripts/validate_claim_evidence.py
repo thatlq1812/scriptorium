@@ -17,6 +17,7 @@ Usage:
 """
 from __future__ import annotations
 
+import argparse
 import csv
 import sys
 from pathlib import Path
@@ -43,7 +44,13 @@ def validate(rows: list[dict]) -> tuple[list[str], dict]:
     aligned = 0
     misaligned = 0
 
+    counted = 0
     for i, row in enumerate(rows, start=1):
+        if not any((value or "").strip() for key, value in row.items() if isinstance(key, str)):
+            continue  # blank line at the end of the file, not a claim
+        counted += 1
+        if None in row:
+            errors.append(f"row {i}: more fields than the header declares (unquoted comma or stray delimiter)")
         claim_id = (row.get("claim_id") or "").strip()
         if not claim_id:
             errors.append(f"row {i}: claim_id is required")
@@ -71,26 +78,29 @@ def validate(rows: list[dict]) -> tuple[list[str], dict]:
             if not (row.get("requested_action") or "").strip():
                 errors.append(f"claim {claim_id}: alignment_ok=false requires requested_action")
 
-    summary = {"total_claims": len(rows), "aligned": aligned, "misaligned": misaligned}
+    summary = {"total_claims": counted, "aligned": aligned, "misaligned": misaligned}
     return errors, summary
 
 
 def main() -> int:
-    if len(sys.argv) != 2:
-        print("Usage: python validate_claim_evidence.py local-claim-matrix.csv", file=sys.stderr)
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("matrix", type=Path, help="Path to a claim-evidence matrix CSV")
+    args = parser.parse_args()
+
+    if not args.matrix.is_file():
+        print(f"MALFORMED: file not found: {args.matrix}", file=sys.stderr)
         return 2
 
-    path = Path(sys.argv[1])
-    if not path.is_file():
-        print(f"MALFORMED: file not found: {path}", file=sys.stderr)
+    try:
+        with args.matrix.open("r", encoding="utf-8-sig", newline="") as fh:
+            reader = csv.DictReader(fh)
+            if reader.fieldnames is None or not REQUIRED_COLUMNS.issubset(set(reader.fieldnames)):
+                print(f"MALFORMED: CSV must have columns {sorted(REQUIRED_COLUMNS)}", file=sys.stderr)
+                return 2
+            rows = list(reader)
+    except (OSError, UnicodeDecodeError, csv.Error) as exc:
+        print(f"MALFORMED: cannot read the matrix ({exc})", file=sys.stderr)
         return 2
-
-    with path.open("r", encoding="utf-8", newline="") as fh:
-        reader = csv.DictReader(fh)
-        if reader.fieldnames is None or not REQUIRED_COLUMNS.issubset(set(reader.fieldnames)):
-            print(f"MALFORMED: CSV must have columns {sorted(REQUIRED_COLUMNS)}", file=sys.stderr)
-            return 2
-        rows = list(reader)
 
     errors, summary = validate(rows)
 

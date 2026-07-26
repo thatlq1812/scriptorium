@@ -2,3 +2,4 @@ important.md
 .venv/
 __pycache__/
 *.pyc
+/outside_research

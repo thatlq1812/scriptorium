@@ -11,9 +11,11 @@ Exit codes: 0 = structurally valid, 1 = validation errors found,
 
 Usage:
     python validate_hypothesis_schema.py record.json
+    python validate_hypothesis_schema.py record.json --allow-class my_new_class
 """
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -31,8 +33,9 @@ CANDIDATE_CLASSES = {
 FORBIDDEN_STATUS_VALUES = {"confirmed", "true", "proven", "established", "fact"}
 
 
-def validate(record: dict) -> list[str]:
+def validate(record: dict, extra_classes: set[str] | None = None) -> list[str]:
     errors: list[str] = []
+    allowed_classes = CANDIDATE_CLASSES | (extra_classes or set())
 
     observation = record.get("observation")
     if not isinstance(observation, dict) or not observation.get("description"):
@@ -64,8 +67,11 @@ def validate(record: dict) -> list[str]:
             candidate_ids.add(cid)
         if not cand.get("statement"):
             errors.append(f"candidates[{i}].statement is required")
-        if cand.get("class") not in CANDIDATE_CLASSES:
-            errors.append(f"candidates[{i}].class must be one of {sorted(CANDIDATE_CLASSES)}, got {cand.get('class')!r}")
+        if cand.get("class") not in allowed_classes:
+            errors.append(
+                f"candidates[{i}].class must be one of {sorted(allowed_classes)}, got {cand.get('class')!r} "
+                f"(pass --allow-class <name> if this rival genuinely belongs to a class not listed)"
+            )
         status = str(cand.get("status", "")).strip().lower()
         if status in FORBIDDEN_STATUS_VALUES:
             errors.append(
@@ -87,6 +93,7 @@ def validate(record: dict) -> list[str]:
         errors.append("predictions must be a non-empty list")
         predictions = []
 
+    predicted_candidates: set[str] = set()
     for i, pred in enumerate(predictions):
         if not isinstance(pred, dict):
             errors.append(f"predictions[{i}] must be an object")
@@ -94,6 +101,8 @@ def validate(record: dict) -> list[str]:
         cid = pred.get("candidate_id")
         if cid not in candidate_ids:
             errors.append(f"predictions[{i}].candidate_id {cid!r} does not match any candidate id")
+        else:
+            predicted_candidates.add(cid)
         for field in ("observable", "expected_pattern", "falsifying_result"):
             if not pred.get(field):
                 errors.append(f"predictions[{i}].{field} is required")
@@ -104,6 +113,18 @@ def validate(record: dict) -> list[str]:
             for rival in contrasted:
                 if rival not in candidate_ids:
                     errors.append(f"predictions[{i}].contrasted_with references unknown candidate id {rival!r}")
+                elif rival == cid:
+                    errors.append(
+                        f"predictions[{i}].contrasted_with lists its own candidate {rival!r} — a prediction "
+                        f"discriminates between RIVALS, contrasting a candidate with itself proves nothing"
+                    )
+
+    uncovered = sorted(candidate_ids - predicted_candidates)
+    if candidate_ids and uncovered:
+        errors.append(
+            f"no prediction is stated for candidate(s) {uncovered} — every candidate needs at least one "
+            f"discriminating prediction, otherwise it can never be tested against its rivals"
+        )
 
     authorization = record.get("authorization")
     if not isinstance(authorization, dict) or not authorization.get("accountable_human"):
@@ -112,23 +133,28 @@ def validate(record: dict) -> list[str]:
     return errors
 
 
-def main() -> int:
-    if len(sys.argv) != 2:
-        print("Usage: python validate_hypothesis_schema.py record.json", file=sys.stderr)
-        return 2
+def load_record(path: Path) -> dict:
+    """Shared by the scaffold generator so both tools read a record the same way."""
+    record = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(record, dict):
+        raise ValueError("top-level JSON must be an object")
+    return record
 
-    path = Path(sys.argv[1])
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("record", type=Path, help="Path to a hypothesis record JSON file")
+    parser.add_argument("--allow-class", action="append", default=[],
+                        help="Accept an additional candidate class beyond the 8 standard ones (repeatable)")
+    args = parser.parse_args()
+
     try:
-        record = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
+        record = load_record(args.record)
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
         print(f"MALFORMED: {exc}", file=sys.stderr)
         return 2
 
-    if not isinstance(record, dict):
-        print("MALFORMED: top-level JSON must be an object", file=sys.stderr)
-        return 2
-
-    errors = validate(record)
+    errors = validate(record, set(args.allow_class))
     if errors:
         print(f"INVALID: {len(errors)} error(s)")
         for err in errors:
