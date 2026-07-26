@@ -1,0 +1,7 @@
+{
+  "procedure_name": "<name of the administrative/legal procedure this checklist is for -- caller-supplied, not built in>",
+  "required_documents": [
+    "<document 1, e.g. CMND/CCCD bản sao công chứng>",
+    "<document 2>"
+  ]
+}

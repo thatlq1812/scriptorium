@@ -1,0 +1,5 @@
+{
+  "documents_provided": [
+    "<document name, must match a checklist entry exactly (case/whitespace-normalized) to count>"
+  ]
+}

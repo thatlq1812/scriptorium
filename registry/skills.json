@@ -1025,6 +1025,29 @@
       "dependencies": [],
       "license_debt": null,
       "elicited_from": "Elicited from survey item 6 (outside_research/research_01_survey.md: contract risk review, flagging unfavorable clauses, proposing amendments). Deliberately does NOT attempt automated risk detection -- identifying a clause as risky requires legal judgment this project does not automate. Structured instead as a completeness/consistency validator over a human-or-agent-authored risk log, mirroring this repo's peer-review claim-evidence-matrix pattern (validate structure of analysis, not the analysis itself). The explicit-not-ambiguous no-issues-found requirement is new to this skill: a silently-empty issues list in a legal risk log is a genuinely dangerous ambiguity between 'reviewed, clean' and 'not reviewed.'"
+    },
+    {
+      "skill_id": "legal-form-filler",
+      "version": "0.1.0",
+      "source": {"type": "self-authored"},
+      "license": "MIT",
+      "tags": {
+        "domain": ["legal"],
+        "task_type": ["drafting"],
+        "risk_tier": "N2",
+        "harness_compatibility": ["claude-code"],
+        "grounding": "required",
+        "object_type": ["dossier", "form"]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "check_dossier.py + fill_form.py: local-only, stdlib only (json/argparse), zero network calls, no dynamic execution, no secret handling. No finding."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Elicited from survey items 3, 4, 5 (outside_research/research_01_survey.md: form filling, form suggestion, dossier completeness). Item 4's form-SUGGESTION capability (deciding which form applies to a procedure) is explicitly out of scope -- this project has no real Vietnamese government checklist/template database to ground that judgment call in, so it is not attempted or guessed. Items 3 and 5 (filling a known form, checking a known checklist) are scoped down to a generic engine where the checklist and form template are always caller-supplied input, never hard-coded, mirroring grade-book-builder's refusal to hardcode unverified official numbers. Full gap rationale: docs/ROADMAP.md."
     }
   ]
 }

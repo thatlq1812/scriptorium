@@ -1,0 +1,8 @@
+{
+  "form_name": "<name of the form/template, caller-supplied>",
+  "fields": [
+    {"name": "ho_ten", "label": "Họ và tên", "required": true},
+    {"name": "ngay_sinh", "label": "Ngày sinh", "required": true},
+    {"name": "ghi_chu", "label": "Ghi chú", "required": false}
+  ]
+}
