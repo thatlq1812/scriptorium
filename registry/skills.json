@@ -386,6 +386,35 @@
       "dependencies": ["citation-management"],
       "license_debt": null,
       "elicited_from": "Grounded in K-Dense-AI/scientific-agent-skills literature-review (MIT, cleared via license-compliance-check) for the overall workflow shape (plan -> search -> screen -> synthesize -> verify -> generate); rewritten from scratch dropping the OPENROUTER_API_KEY-gated parallel-web CLI, mandatory AI-generated figures (scientific-schematics), and biology-specific database skills (gget/bioservices) -- replaced with 3 free no-key APIs (arXiv/PubMed/CrossRef) covering any field, citation verification delegated to citation-management, PDF generation delegated to office-doc-creator/document-ai-structurer"
+    },
+    {
+      "skill_id": "exploratory-data-analysis",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored",
+        "adapted_from": {
+          "repo_url": "https://github.com/K-Dense-AI/scientific-agent-skills",
+          "path": "skills/exploratory-data-analysis",
+          "license": "MIT",
+          "cleared_by": "license-compliance-check 2026-07-26"
+        }
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": ["general"],
+        "task_type": ["research"],
+        "risk_tier": "N1",
+        "harness_compatibility": ["claude-code"]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "eda_analyzer.py: local-only, stdlib only, zero network calls, no pickle/eval/dynamic execution, path confined to --root with symlink/traversal rejection, never prints raw row values. No finding."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Grounded in K-Dense-AI/scientific-agent-skills exploratory-data-analysis (MIT, cleared via license-compliance-check) for the safety posture and EDA-rigor checklist; scoped down to only the 'automated core' tier (CSV/TSV/JSON, stdlib-only), dropping the optional NumPy/h5py/Biopython/Pillow/tifffile inspectors and 6 domain-specific reference docs as specialized-tier, out of scope for this general-tier harvest round"
     }
   ]
 }
