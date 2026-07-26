@@ -357,6 +357,35 @@
       "dependencies": [],
       "license_debt": null,
       "elicited_from": "Grounded in K-Dense-AI/scientific-agent-skills citation-management (MIT, cleared via license-compliance-check) for problem shape; rewritten from scratch dropping their OPENROUTER_API_KEY/image-gen dependency, using free CrossRef/PubMed/arXiv APIs instead"
+    },
+    {
+      "skill_id": "literature-review",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored",
+        "adapted_from": {
+          "repo_url": "https://github.com/K-Dense-AI/scientific-agent-skills",
+          "path": "skills/literature-review",
+          "license": "MIT",
+          "cleared_by": "license-compliance-check 2026-07-26"
+        }
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": ["general"],
+        "task_type": ["research"],
+        "risk_tier": "N1",
+        "harness_compatibility": ["claude-code"]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "search_literature.py: network calls only to arXiv/PubMed/CrossRef (factual bibliographic APIs, no AI backend), no secret handling, no dangerous command. No finding."
+      },
+      "dependencies": ["citation-management"],
+      "license_debt": null,
+      "elicited_from": "Grounded in K-Dense-AI/scientific-agent-skills literature-review (MIT, cleared via license-compliance-check) for the overall workflow shape (plan -> search -> screen -> synthesize -> verify -> generate); rewritten from scratch dropping the OPENROUTER_API_KEY-gated parallel-web CLI, mandatory AI-generated figures (scientific-schematics), and biology-specific database skills (gget/bioservices) -- replaced with 3 free no-key APIs (arXiv/PubMed/CrossRef) covering any field, citation verification delegated to citation-management, PDF generation delegated to office-doc-creator/document-ai-structurer"
     }
   ]
 }

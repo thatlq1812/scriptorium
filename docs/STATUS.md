@@ -2,7 +2,7 @@
 
 | Last Updated | Status |
 | --- | --- |
-| 2026-07-26 | 13 skills written. All have passed `security-audit` (all `passed`), none have a `quality_score` yet (stage 4 hasn't run on any skill) — so no skill is officially "ready to use" yet, even though several have already seen real use this session. See `docs/ROADMAP.md` for the running expansion backlog. Everything below is verified directly against `registry/skills.json` + `skills/`. |
+| 2026-07-26 | 15 skills written. All have passed `security-audit` (all `passed`), none have a `quality_score` yet (stage 4 hasn't run on any skill) — so no skill is officially "ready to use" yet, even though several have already seen real use this session. Harvesting the "general tier" from K-Dense-AI/scientific-agent-skills (MIT) is in progress: `citation-management`, `literature-review` done; `exploratory-data-analysis`, `hypothesis-generation`, `peer-review` remaining. See `docs/ROADMAP.md` for the running expansion backlog. Everything below is verified directly against `registry/skills.json` + `skills/`. |
 
 ## Existing skills
 
@@ -22,6 +22,7 @@
 | `latex-project-bootstrap` | 0.1.0 | N1 | `null` | `passed` | **Not yet official** — grounded in the owner's real LaTeX project. Real 4-pass build smoke test (xelatex→biber→xelatex→xelatex), 5-page PDF with correctly-rendered Vietnamese diacritics. Hasn't passed stage 4. |
 | `image-generator-gemini` | 0.3.0 | N2 | `null` | `passed` | **Not yet official** — expanded into a full designer toolkit (owner request): added batch auto-anchor, vision-analysis (image→text style), PDF-page-extraction (no AI needed). All 4 capabilities verified for REAL via actual API calls/renders (owner-authorized test key, lightweight model). Grounded in a full survey of `D:/elix/platform/scripts/gen/` (9 scripts) + `D:/UNI/S9_SP26/MLN131/project`. Hasn't passed stage 4. |
 | `citation-management` | 0.1.0 | N1 | `null` | `passed` | **Not yet official** — first harvested skill (from K-Dense-AI/scientific-agent-skills, MIT). DOI/PMID/arXiv → BibTeX via free CrossRef/PubMed/arXiv APIs, no AI backend. Verified real: 3 real lookups correct (AlphaFold DOI, a PMID, an arXiv ID) + 1 correct failure case. Hasn't passed stage 4. |
+| `literature-review` | 0.1.0 | N1 | `null` | `passed` | **Not yet official** — second harvested skill (from K-Dense-AI/scientific-agent-skills, MIT). Keyword search across arXiv/PubMed/CrossRef with dedup, PRISMA-lite screening template, thematic synthesis; dropped the paid parallel-web CLI, mandatory AI-figure-generation, and biology-specific databases from the original. Depends on `citation-management` for verification. Verified real: combined 3-source search for "CRISPR sickle cell" returned 15 correctly deduplicated results. Hasn't passed stage 4. |
 
 Source: `registry/skills.json`. If the numbers here differ from `registry/skills.json`, the registry wins — this file may be stale.
 
