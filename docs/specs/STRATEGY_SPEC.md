@@ -6,6 +6,7 @@
 | 1.1.0 | 2026-07-26 | Claude | Owner xác nhận: Scriptorium không tích hợp bất kỳ AI backend nào (kể cả Elixverse) — thêm vào §2 non-goals, viết lại §6 từ "gate trước khi dùng" thành "không nằm trong kế hoạch". |
 | 1.2.0 | 2026-07-26 | Claude | Skill thứ hai: `document-ai-structurer` (Docling-based, MIT). Thêm nguyên tắc §7 điểm 7: không commit venv vào skill (portability), python-env bootstrap dùng chung để sau khi có ≥2 skill Python. |
 | 1.3.0 | 2026-07-26 | Claude | Owner yêu cầu xây ngay skill hạ tầng thứ 3: `python-env-bootstrap` (dựa trên `uv`), sớm hơn ngưỡng "≥2 skill Python" đã đề ở 1.2.0 — ghi đè quyết định hoãn, §7 điểm 7 cập nhật thành đã xây xong. |
+| 1.4.0 | 2026-07-26 | Claude | Owner ghi đè có chủ đích nguyên tắc "không ngoại lệ license-check" (§7 điểm 5, gốc từ `handoff.md` mục 6): giai đoạn bootstrap hiện tại được phép "nợ pháp lý" có kiểm soát — xem §7 điểm 5 bản mới + `registry/SCHEMA.md` field `license_debt`. |
 
 ---
 
@@ -69,7 +70,7 @@ Owner đã xác nhận (2026-07-26): Scriptorium không có kế hoạch tích h
 2. Quality evaluation và security audit là hai gate khác nhau — không gộp một bước review (pattern-matching scanner đơn lớp đã được Snyk chứng minh bỏ sót phần lớn tấn công nghiêm trọng).
 3. Không đánh dấu harness-compatible dựa trên tuyên bố vendor/showcase — chỉ verify trực tiếp.
 4. Không tự động hóa hoàn toàn khâu tạo skill — bắt buộc elicit từ nguồn thật trước `skill-creator` (self-generated skill "no benefit on average" — SkillsBench).
-5. Harvest từ nguồn ngoài luôn qua license-compliance check trước khi chạm skill-creator, không có ngoại lệ "chỉ tham khảo nội bộ".
+5. Harvest từ nguồn ngoài luôn qua license-compliance-check trước khi chạm skill-creator. **Sửa 2026-07-26 (owner, ghi đè có chủ đích)**: ở giai đoạn bootstrap hiện tại, cho phép "nợ pháp lý" có kiểm soát — harvest/adapt từ nguồn chưa rõ license hoặc license hạn chế (KHÔNG áp dụng cho nguồn có điều khoản hợp đồng tường minh cấm redistribute, vd Anthropic docx/pdf/pptx/xlsx — loại này vẫn BLOCKED tuyệt đối, không phải nợ được), miễn: (a) `registry/skills.json` ghi rõ `license_debt` cho skill đó (nguồn, lý do, kế hoạch thay thế), (b) skill đó KHÔNG được phân phối/công khai ra ngoài trong lúc còn nợ, (c) rà lại toàn bộ nợ trước khi hệ thống rời giai đoạn bootstrap (trước Phase 2 vertical pháp lý). Đây là quyết định rủi ro có ý thức của owner, không phải sơ suất — không tự ý "sửa lại cho đúng" ở phiên sau mà không hỏi owner trước.
 6. Một skill chạy tốt, audit sạch, dùng thật — quan trọng hơn mười skill nằm trong registry chưa ai dùng.
 7. Không bao giờ commit venv/binary environment vào một skill — venv gắn OS/kiến trúc cụ thể, phá portability. Skill cần Python khai báo `requirements.txt` (hoặc lockfile tương đương) + hướng dẫn bootstrap venv tại runtime; `.venv/` luôn nằm trong `.gitignore`. Skill hạ tầng dùng chung `python-env-bootstrap` (dựa trên `uv`, không giả định máy đã có Python) đã xây 2026-07-26 — mọi skill Python mới nên phụ thuộc vào nó qua `registry` field `dependencies` thay vì tự viết lại logic tạo venv.
 

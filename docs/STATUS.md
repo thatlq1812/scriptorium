@@ -29,6 +29,13 @@ Nguồn: `registry/skills.json`. Nếu số liệu ở đây khác `registry/ski
 | 8. Dedup/novelty-check | — | Chưa xây (quy tắc có trong `registry/SCHEMA.md`, chưa tự động hóa) |
 | 9. Registry | `registry/SCHEMA.md` + `registry/skills.json` | Có, 4 entry |
 
+## Sổ nợ pháp lý (license debt)
+
+Trống — chưa skill nào có `license_debt != null`. Bắt buộc rà lại toàn bộ bảng này trước khi rời giai đoạn bootstrap (trước Phase 2 vertical pháp lý). Xem `docs/specs/STRATEGY_SPEC.md` §7 điểm 5, `registry/SCHEMA.md`.
+
+| skill_id | Nguồn | Lý do nợ | Kế hoạch thay thế | Ngày |
+| --- | --- | --- | --- | --- |
+
 ## Hạ tầng
 
 - Git repo: khởi tạo 2026-07-26, chưa có remote.

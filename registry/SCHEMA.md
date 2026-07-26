@@ -27,7 +27,12 @@ Tham chiếu quyết định: `docs/specs/STRATEGY_SPEC.md` §3 (bước 9) và 
 | `security_audit` | object | `{ "status": "pending" \| "passed" \| "failed", "date": string \| null }`. Không có skill nào được coi là sẵn sàng dùng khi `status != "passed"`. |
 | `dependencies` | string[] | Script/tool đi kèm skill (nếu có). |
 | `elicited_from` | string | Nguồn tri thức ngầm đã elicit trước khi tạo skill — bắt buộc khác rỗng, theo nguyên tắc "no self-generated-only" (`docs/specs/STRATEGY_SPEC.md` §7 điểm 4). |
+| `license_debt` | object \| null | `null` nếu license đã cleared sạch. Nếu skill dùng pattern/code từ nguồn chưa rõ license hoặc license hạn chế (giai đoạn bootstrap, `docs/specs/STRATEGY_SPEC.md` §7 điểm 5): `{ "source": string, "reason": string, "remediation_plan": string, "acknowledged_by": "owner", "date": string }`. KHÔNG BAO GIỜ dùng field này cho nguồn có điều khoản hợp đồng tường minh cấm redistribute (vd Anthropic docx/pdf/pptx/xlsx) — loại đó BLOCKED tuyệt đối, không phải nợ được. Skill có `license_debt != null` không được phân phối/công khai ra ngoài repo nội bộ. |
 
 ## Nguyên tắc dedup/novelty-check
 
 Trước khi khởi động skill-creator cho một ứng viên mới, tra `registry/skills.json` theo `tags` liên quan. Nếu một skill hiện có phủ ≥80% phạm vi ứng viên mới, ưu tiên mở rộng/versioning skill đó thay vì tạo entry song song.
+
+## Sổ nợ pháp lý (license debt ledger)
+
+Mọi skill có `license_debt != null` phải xuất hiện trong bảng này của `docs/STATUS.md` — để rà lại toàn bộ trước khi hệ thống rời giai đoạn bootstrap (trước Phase 2 vertical pháp lý, `docs/specs/STRATEGY_SPEC.md` §7 điểm 5).

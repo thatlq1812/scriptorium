@@ -9,7 +9,7 @@ metadata:
   risk_tier: N2
   source: self-authored
   elicited_from: "Elicited từ một case thật 2026-07-26: kiểm tra license của github.com/anthropics/skills (dùng gh api đọc trực tiếp LICENSE.txt từng skill + THIRD_PARTY_NOTICES.md) — phát hiện license hỗn hợp trong cùng 1 repo, là bằng chứng cụ thể cho lý do bước này phải tách riêng, không suy đoán theo lô"
-  version: 0.1.0
+  version: 0.2.0
 ---
 
 # license-compliance-check
@@ -27,9 +27,9 @@ Trả lời đúng 1 câu cho mỗi ứng viên harvest: **được phép dùng 
 3. **Phân loại** license tìm được vào 1 trong 4 nhóm:
    - **Permissive** (MIT, Apache-2.0, BSD-2/3-Clause, ISC) → **SAFE**: được adapt/harvest, giữ attribution; nếu Apache-2.0, phải thêm change-notice khi sửa đổi (§4(b)).
    - **Copyleft** (GPL/AGPL/LGPL bất kỳ bản) → **BLOCKED cho việc nhúng trực tiếp** vào skill của Scriptorium (MIT) — copyleft lan truyền nghĩa vụ mở nguồn. Chỉ chấp nhận nếu gọi như dependency/subprocess tách biệt (không tĩnh-link, không copy code), và phải flag cho owner duyệt case-by-case, không tự quyết.
-   - **Source-available / proprietary có điều khoản hạn chế riêng** (như `pdf/LICENSE.txt` của Anthropic) → **BLOCKED tuyệt đối**. Đọc kỹ điều khoản — nếu có dòng cấm "extract/copy/retain/derive/distribute", không được chạm dù chỉ để "xem cách họ làm rồi viết lại từ đầu bằng lời văn khác" (đó vẫn là derivative work theo điều khoản).
-   - **Ambiguous/dual-license/chưa rõ** → **BLOCKED**, báo lại cho owner, không tự chọn diễn giải có lợi.
-4. **Ghi provenance** cho mỗi quyết định: `{candidate, repo_url, path, commit, license_found, classification, decision, date}`. Đây là input trực tiếp cho field `source` + `license` của `registry/skills.json` (xem `registry/SCHEMA.md`) nếu quyết định là SAFE và tiếp tục harvest.
+   - **Source-available / proprietary có điều khoản hợp đồng tường minh cấm redistribute** (như `pdf/LICENSE.txt` của Anthropic — cấm "extract/copy/retain/derive/distribute") → **BLOCKED tuyệt đối, không phải nợ được**. Loại này khác bản chất "chưa rõ license" — đây là ràng buộc hợp đồng cụ thể, dùng `license_debt` để hợp thức hóa việc vi phạm nó là sai, không áp dụng ngoại lệ owner ở dưới.
+   - **Ambiguous/không có license file/chưa rõ** → mặc định BLOCKED, nhưng **owner đã cho phép "nợ pháp lý" có kiểm soát ở giai đoạn bootstrap** (`docs/specs/STRATEGY_SPEC.md` §7 điểm 5, quyết định 2026-07-26): nếu owner xác nhận muốn dùng dù chưa rõ license, ghi `license_debt` vào registry entry (`source`, `reason`, `remediation_plan`, `acknowledged_by: "owner"`, `date` — xem `registry/SCHEMA.md`), thêm vào sổ nợ ở `docs/STATUS.md`, và skill đó không được phân phối/công khai ra ngoài trong lúc còn nợ. Không tự quyết định thay owner — luôn hỏi trước khi ghi nợ, đây là quyết định rủi ro có ý thức, không phải mặc định.
+4. **Ghi provenance** cho mỗi quyết định: `{candidate, repo_url, path, commit, license_found, classification, decision, date}`. Đây là input trực tiếp cho field `source`/`license`/`license_debt` của `registry/skills.json` (xem `registry/SCHEMA.md`).
 5. Nếu SAFE: bàn giao cho bước tiếp theo (dedup/novelty-check, bước 8) rồi mới tới skill-creator (bước 3) — license-compliance-check không tự viết SKILL.md.
 
 ## Output
