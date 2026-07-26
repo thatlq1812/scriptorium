@@ -15,15 +15,22 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": ["meta"],
-        "task_type": ["skill-authoring"],
+        "domain": [
+          "meta"
+        ],
+        "task_type": [
+          "skill-authoring"
+        ],
         "risk_tier": "N2",
-        "harness_compatibility": ["claude-code"]
+        "harness_compatibility": [
+          "claude-code"
+        ]
       },
       "quality_score": null,
       "security_audit": {
-        "status": "pending",
-        "date": null
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "Thuần instructional, không script. Không finding."
       },
       "dependencies": [],
       "elicited_from": "Owner tacit knowledge từ EduStation postmortem (docs/archive/pre-spec-2026-07-26/handoff.md) + deep research session 2026-07-26, chưng cất vào docs/specs/STRATEGY_SPEC.md"
@@ -36,17 +43,27 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": ["general"],
-        "task_type": ["document-conversion"],
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "document-conversion"
+        ],
         "risk_tier": "N1",
-        "harness_compatibility": ["claude-code"]
+        "harness_compatibility": [
+          "claude-code"
+        ]
       },
       "quality_score": null,
       "security_audit": {
-        "status": "pending",
-        "date": null
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "structure_doc.py: external fetch (Docling tai model) co khai bao ro trong SKILL.md. Khong secret/dangerous command."
       },
-      "dependencies": ["docling==2.115.0", "python-env-bootstrap"],
+      "dependencies": [
+        "docling==2.115.0",
+        "python-env-bootstrap"
+      ],
       "elicited_from": "Owner (2026-07-26): ý tưởng chuyển mọi loại tài liệu thành cấu trúc tối ưu AI (thư mục + JSON mục lục) dùng Python; grounded bằng research Docling/MinerU/unstructured.io/llms.txt convention + chunking best practice"
     },
     {
@@ -57,22 +74,92 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": ["meta"],
-        "task_type": ["coordination"],
+        "domain": [
+          "meta"
+        ],
+        "task_type": [
+          "coordination"
+        ],
         "risk_tier": "N1",
-        "harness_compatibility": ["claude-code"]
+        "harness_compatibility": [
+          "claude-code"
+        ]
       },
       "quality_score": null,
       "security_audit": {
-        "status": "pending",
-        "date": null
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "bootstrap.sh/.ps1 dung pattern curl|sh, irm|iex tu astral.sh (nguon uy tin, chinh chu) de cai uv -- blind-trust pattern chap nhan co ghi chu."
       },
-      "dependencies": ["uv"],
+      "dependencies": [
+        "uv"
+      ],
       "elicited_from": "Owner (docs/archive/pre-spec-2026-07-26/note.md mục 3): skill 'chứa đầy đủ một phiên bản python' để người dùng phổ thông chạy được skill Python phức tạp không cần tự cài đặt trước; grounded bằng uv (Astral) làm bootstrap tool"
     },
     {
       "skill_id": "license-compliance-check",
       "version": "0.2.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "meta"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "Thuan doc (gh api), khong script. Khong finding."
+      },
+      "dependencies": [],
+      "elicited_from": "Case thật 2026-07-26: kiểm tra license github.com/anthropics/skills qua gh api — phát hiện license hỗn hợp (Apache-2.0 cho skill-creator, điều khoản độc quyền cấm redistribute cho docx/pdf/pptx/xlsx)"
+    },
+    {
+      "skill_id": "quality-eval",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored",
+        "adapted_from": {
+          "repo_url": "https://github.com/anthropics/skills",
+          "path": "skills/skill-creator",
+          "license": "Apache-2.0",
+          "cleared_by": "license-compliance-check 2026-07-26"
+        }
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "meta"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": []
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "Thuan quy trinh, chua co script (v0.1.0). Khong finding."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Grounded từ SkillsBench (arXiv 2602.12670) + baseline-comparison pattern adapted từ Apache-2.0 skill-creator, generalized harness-agnostic"
+    },
+    {
+      "skill_id": "security-audit",
+      "version": "0.1.0",
       "source": {
         "type": "self-authored"
       },
@@ -85,11 +172,13 @@
       },
       "quality_score": null,
       "security_audit": {
-        "status": "pending",
-        "date": null
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "Tự áp dụng lên chính 5 skill hiện có (self-audit) làm case thật. Không script riêng."
       },
       "dependencies": [],
-      "elicited_from": "Case thật 2026-07-26: kiểm tra license github.com/anthropics/skills qua gh api — phát hiện license hỗn hợp (Apache-2.0 cho skill-creator, điều khoản độc quyền cấm redistribute cho docx/pdf/pptx/xlsx)"
+      "license_debt": null,
+      "elicited_from": "Grounded từ Snyk ToxicSkills, 8-point checklist kiểu Agensi, OWASP Agentic Skills Top 10 — áp dụng thật lên 5 skill hiện có 2026-07-26"
     }
   ]
 }
