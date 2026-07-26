@@ -179,6 +179,29 @@
       "dependencies": [],
       "license_debt": null,
       "elicited_from": "Grounded từ Snyk ToxicSkills, 8-point checklist kiểu Agensi, OWASP Agentic Skills Top 10 — áp dụng thật lên 5 skill hiện có 2026-07-26"
+    },
+    {
+      "skill_id": "scout-harvester",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": ["meta"],
+        "task_type": ["research"],
+        "risk_tier": "N1",
+        "harness_compatibility": ["claude-code"]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "Thuần quy trình research, không script. Không finding."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Chưng cất từ 3 lần chạy thật trong phiên 2026-07-26: scout Docling/MinerU trước document-ai-structurer, scout uv trước python-env-bootstrap, scout anthropics/skills theo yêu cầu owner"
     }
   ]
 }

@@ -2,7 +2,7 @@
 
 | Last Updated | Status |
 | --- | --- |
-| 2026-07-26 | 6 skill đã viết. Toàn bộ 5 skill trước đã qua `security-audit` (đều `passed`), chưa skill nào có `quality_score` (stage 4 chưa chạy trên skill nào) — nên chưa skill nào "sẵn sàng dùng" chính thức dù đã dùng thật trong session. Mọi thứ dưới đây verify trực tiếp từ `registry/skills.json` + `skills/`. |
+| 2026-07-26 | 7 skill đã viết. Toàn bộ 5 skill trước đã qua `security-audit` (đều `passed`), chưa skill nào có `quality_score` (stage 4 chưa chạy trên skill nào) — nên chưa skill nào "sẵn sàng dùng" chính thức dù đã dùng thật trong session. Mọi thứ dưới đây verify trực tiếp từ `registry/skills.json` + `skills/`. |
 
 ## Skill đã tồn tại
 
@@ -14,6 +14,7 @@
 | `license-compliance-check` | 0.2.0 | N2 | `null` | `passed` | **Chưa chính thức** — verify chạy thật trên anthropics/skills, security-audit sạch, chưa qua stage 4. |
 | `quality-eval` | 0.1.0 | N2 | `null` | `passed` | **Chưa chính thức** — thiết kế xong (v0.1.0), chưa áp dụng lên skill thật nào, security-audit sạch (chưa có script). |
 | `security-audit` | 0.1.0 | N2 | `null` | `passed` (self-audit) | **Chưa chính thức** — đã áp dụng thật lên 5 skill trên (self-audit), chưa qua stage 4. |
+| `scout-harvester` | 0.1.0 | N1 | `null` | `passed` | **Chưa chính thức** — chưng cất từ 3 lần chạy thật trong phiên (Docling, uv, anthropics/skills), chưa qua stage 4. |
 
 Nguồn: `registry/skills.json`. Nếu số liệu ở đây khác `registry/skills.json`, registry thắng — file này có thể lỗi thời.
 
@@ -26,12 +27,12 @@ Nguồn: `registry/skills.json`. Nếu số liệu ở đây khác `registry/ski
 | 3. skill-creator | `skills/skill-creator/SKILL.md` | Có |
 | 4. Quality evaluation | `skills/quality-eval/SKILL.md` | Có — thiết kế xong, chưa áp dụng lên skill thật nào |
 | 5. Security audit | `skills/security-audit/SKILL.md` | Có — đã áp dụng thật lên 5 skill (self-audit) |
-| 6. Scout/harvester | — | Chưa xây |
+| 6. Scout/harvester | `skills/scout-harvester/SKILL.md` | Có |
 | 7. License-compliance check | `skills/license-compliance-check/SKILL.md` | Có |
 | 8. Dedup/novelty-check | — | Chưa xây (quy tắc có trong `registry/SCHEMA.md`, chưa tự động hóa) |
-| 9. Registry | `registry/SCHEMA.md` + `registry/skills.json` | Có, 6 entry |
+| 9. Registry | `registry/SCHEMA.md` + `registry/skills.json` | Có, 7 entry |
 
-Bộ xương pipeline (stage 3-5, 7, 9) đã đủ skill vận hành. Còn thiếu: stage 1/2 (chưa cần skill hóa, vẫn làm thủ công tốt), stage 6 (scout/harvester), stage 8 (dedup tự động).
+Bộ xương pipeline (stage 3-7, 9) đã đủ skill vận hành. Còn thiếu: stage 1/2 (chưa cần skill hóa, vẫn làm thủ công tốt), stage 8 (dedup tự động).
 
 ## Sổ nợ pháp lý (license debt)
 
