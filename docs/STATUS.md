@@ -33,7 +33,7 @@ Nguồn: `registry/skills.json`. Nếu số liệu ở đây khác `registry/ski
 | 6. Scout/harvester | `skills/scout-harvester/SKILL.md` | Có |
 | 7. License-compliance check | `skills/license-compliance-check/SKILL.md` | Có |
 | 8. Dedup/novelty-check | `skills/dedup-novelty-check/SKILL.md` | Có |
-| 9. Registry | `registry/SCHEMA.md` + `registry/skills.json` | Có, 9 entry |
+| 9. Registry | `registry/SCHEMA.md` + `registry/skills.json` | Có, 10 entry |
 
 Bộ xương pipeline (stage 3-9) đầy đủ 7/7 skill vận hành. Còn thiếu duy nhất: stage 1/2 (Research, Elicit tacit process) — chưa skill hóa, vẫn làm thủ công tốt, chưa rõ cần thiết phải skill hóa hay không.
 
