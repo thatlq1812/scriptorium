@@ -1,0 +1,15 @@
+{
+  "_note": "A starting curated list of common English<->Vietnamese contract/legal term pairs, not an official government-published standard (no such free Vietnamese legal-terminology standard was found or supplied this session). Extend by editing this file directly and adding a source note per new term when one exists -- never invented to look complete.",
+  "terms": [
+    {"id": "representations_and_warranties", "en": "Representations and Warranties", "vi": "Cam đoan và Bảo đảm", "aliases_vi": []},
+    {"id": "indemnification", "en": "Indemnification", "vi": "Bồi hoàn", "aliases_vi": ["Bồi thường"]},
+    {"id": "governing_law", "en": "Governing Law", "vi": "Luật áp dụng", "aliases_vi": []},
+    {"id": "force_majeure", "en": "Force Majeure", "vi": "Bất khả kháng", "aliases_vi": []},
+    {"id": "confidentiality", "en": "Confidentiality", "vi": "Bảo mật", "aliases_vi": []},
+    {"id": "termination", "en": "Termination", "vi": "Chấm dứt hợp đồng", "aliases_vi": ["Chấm dứt"]},
+    {"id": "liability_cap", "en": "Limitation of Liability", "vi": "Giới hạn trách nhiệm", "aliases_vi": []},
+    {"id": "dispute_resolution", "en": "Dispute Resolution", "vi": "Giải quyết tranh chấp", "aliases_vi": []},
+    {"id": "effective_date", "en": "Effective Date", "vi": "Ngày có hiệu lực", "aliases_vi": []},
+    {"id": "entire_agreement", "en": "Entire Agreement", "vi": "Toàn bộ thỏa thuận", "aliases_vi": []}
+  ]
+}

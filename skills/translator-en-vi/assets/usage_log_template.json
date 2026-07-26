@@ -1,0 +1,16 @@
+{
+  "entries": [
+    {
+      "term_id": "indemnification",
+      "document": "Hop_dong_dich_vu_A.docx",
+      "context_en": "Party A shall indemnify Party B against any losses arising from...",
+      "translated_as": "Bồi hoàn"
+    },
+    {
+      "term_id": "governing_law",
+      "document": "Hop_dong_dich_vu_A.docx",
+      "context_en": "This Agreement shall be governed by the laws of Vietnam.",
+      "translated_as": "Luật áp dụng"
+    }
+  ]
+}

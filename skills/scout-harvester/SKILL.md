@@ -1,16 +1,17 @@
 ---
 name: scout-harvester
-description: Finds and preliminarily evaluates outside candidates (GitHub repos, libraries, papers, existing skills) for a specific Scriptorium skill need, before any content touches license-compliance-check (step 7). Use when starting a new skill and wanting to know "has anyone already solved this, and how" before designing from scratch. Does NOT decide harvest/use on its own — only proposes candidates with a preliminary evaluation; the legal go/no-go decision always belongs to license-compliance-check.
+description: Finds and preliminarily evaluates outside candidates (GitHub repos, libraries, papers, existing skills) for a specific Scriptorium skill need, before any content touches license-compliance-check (step 7). Can also shallow-clone a chosen candidate for closer reading. Use when starting a new skill and wanting to know "has anyone already solved this, and how" before designing from scratch. Does NOT decide harvest/use on its own — only proposes candidates with a preliminary evaluation (and, if cloned, a local copy to read); the legal go/no-go decision always belongs to license-compliance-check.
 license: MIT
-compatibility: A research process (web search + reading code/docs), no harness dependency for the process itself. `scripts/github_scout.py` requires the `gh` CLI on PATH; `scripts/pypi_license_check.py` is stdlib-only. Verified running clean: Claude Code (2026-07-26) — process run for real 3 times while building `document-ai-structurer`, `python-env-bootstrap`, and evaluating anthropics/skills; both scripts tested for real against mermaid-js/mermaid and 3 PyPI packages, output matched prior manual checks.
+compatibility: A research process (web search + reading code/docs), no harness dependency for the process itself. `scripts/github_scout.py` and `scripts/clone_candidate.py` require the `gh` CLI / `git` on PATH respectively; `scripts/pypi_license_check.py` is stdlib-only. Verified running clean: Claude Code (2026-07-26) — process run for real 3 times while building `document-ai-structurer`, `python-env-bootstrap`, and evaluating anthropics/skills; both scripts tested for real against mermaid-js/mermaid and 3 PyPI packages, output matched prior manual checks. 2026-07-27: `clone_candidate.py` verified with a real clone of `octocat/Hello-World`, plus 3 refusal paths (invalid slug, destination inside this repo, destination already non-empty).
 metadata:
   domain: meta
   task_type: research
   risk_tier: N1
   pipeline_stage: 6
   source: self-authored
-  elicited_from: "Distilled from 3 real runs in the 2026-07-26 session: researching document-parsing tools before building document-ai-structurer, researching a python bootstrap tool before building python-env-bootstrap, and scouting anthropics/skills at owner's request — all three followed the same pattern that had never been written down as a process before"
-  version: 0.2.0
+  elicited_from: "Distilled from 3 real runs in the 2026-07-26 session: researching document-parsing tools before building document-ai-structurer, researching a python bootstrap tool before building python-env-bootstrap, and scouting anthropics/skills at owner's request — all three followed the same pattern that had never been written down as a process before. Owner (2026-07-27): raised a candidate 'git handler' skill idea in important.md, then directed folding it into scout-harvester instead of a separate skill once discussion confirmed the only missing piece was actually cloning a chosen candidate (search/inspection was already covered by github_scout.py)."
+  version: 0.3.0
+  changelog_0_3_0: "Added clone_candidate.py: shallow git clone (--depth 1) of a scouted GitHub candidate by owner/repo slug, subprocess with a fixed argument list (no shell=True, same safety shape as github_scout.py's gh wrapper). Refuses to clone into a destination inside the Scriptorium repo tree itself (would nest a second .git and risk accidentally committing third-party code) and refuses an already-non-empty destination."
 ---
 
 # scout-harvester
@@ -48,7 +49,17 @@ python scripts/pypi_license_check.py <package1> <package2>  # PyPI-declared lice
 
 Both print a rough license signal for step 2 — NOT a substitute for license-compliance-check reading the real LICENSE file at the correct level (a PyPI classifier or a GitHub API `license` field can be stale or wrong; both scripts print a stderr reminder of this every run).
 
-### 3. Handoff
+### 3. (Optional) Clone a chosen candidate for closer reading
+
+Once a candidate is worth reading in full rather than just its metadata (step 2 isn't a deep audit), shallow-clone it into a directory OUTSIDE this repo (the scratchpad, not `skills/` or anywhere under the repo root — the script refuses that destination):
+
+```bash
+python scripts/clone_candidate.py <owner/repo> <dest_dir> [--ref <branch-or-tag>]
+```
+
+Cloning is for reference/evaluation only, same as everything else in this skill — it is not a license decision, and the reminder printed after every clone says so.
+
+### 4. Handoff
 
 The output is a candidate table (not a SKILL.md, not a harvest decision) passed to `license-compliance-check` (step 7) for candidates that might use real code/patterns, or straight to `skill-creator` (step 3) with a "grounded in research X" note if it's purely methodology reference material (no code to license-check).
 
@@ -56,12 +67,14 @@ The output is a candidate table (not a SKILL.md, not a harvest decision) passed 
 
 - `scripts/github_scout.py` — wraps `gh api`/`gh search`, stdlib only, requires the `gh` CLI.
 - `scripts/pypi_license_check.py` — wraps the PyPI JSON API license lookup, stdlib only (urllib).
+- `scripts/clone_candidate.py` — shallow git clone of a chosen candidate for closer reading, requires `git` on PATH.
 
 ## What scout-harvester does NOT do
 
 - Doesn't decide SAFE/BLOCKED on licenses itself — always hands off to license-compliance-check.
 - Doesn't write SKILL.md itself — that's skill-creator.
-- Doesn't deeply investigate each candidate (reading all the source, testing every feature) — that's the next step's job if a candidate is selected to continue.
+- Doesn't deeply investigate each candidate (reading all the source, testing every feature) — cloning it (step 3) enables that, but the reading/investigation itself is the agent's job, not automated here.
+- `clone_candidate.py` doesn't do anything beyond `git clone --depth 1` — no automatic dependency install, no running the cloned code, no license decision.
 
 ## Real cases run (2026-07-26)
 

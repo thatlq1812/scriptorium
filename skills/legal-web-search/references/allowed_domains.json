@@ -1,0 +1,11 @@
+{
+  "_note": "Domain allowlist for legal-web-search. Adding a domain here is a deliberate, reviewable decision (edit this file directly) -- never silently accepted just because a search engine returned it. 'primary' = government-published source (the closest thing to an original text this project can reach without an official API). 'secondary' = commercial/aggregator legal-database sites that display a hiệu lực status but are not the government source itself -- useful for triangulation, never treated as more authoritative than a primary source when the two disagree.",
+  "domains": [
+    {"domain": "vanban.chinhphu.vn", "tier": "primary", "note": "Cổng thông tin điện tử Chính phủ - văn bản quy phạm pháp luật gốc"},
+    {"domain": "chinhphu.vn", "tier": "primary", "note": "Cổng thông tin điện tử Chính phủ"},
+    {"domain": "dichvucong.gov.vn", "tier": "primary", "note": "Cổng dịch vụ công quốc gia - thủ tục hành chính, biểu mẫu"},
+    {"domain": "moj.gov.vn", "tier": "primary", "note": "Bộ Tư pháp"},
+    {"domain": "thuvienphapluat.vn", "tier": "secondary", "note": "Tổng hợp thương mại, hiển thị tình trạng hiệu lực nhưng không phải nguồn chính phủ gốc"},
+    {"domain": "luatvietnam.vn", "tier": "secondary", "note": "Tổng hợp thương mại, tương tự thuvienphapluat.vn"}
+  ]
+}

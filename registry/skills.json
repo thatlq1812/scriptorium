@@ -41,8 +41,31 @@
       "elicited_from": "Owner tacit knowledge from the EduStation postmortem (docs/archive/pre-spec-2026-07-26/handoff.md) + deep research session 2026-07-26, distilled into docs/specs/STRATEGY_SPEC.md"
     },
     {
+      "skill_id": "skill-exporter",
+      "version": "0.1.0",
+      "source": {"type": "self-authored"},
+      "license": "MIT",
+      "tags": {
+        "domain": ["meta"],
+        "task_type": ["coordination"],
+        "risk_tier": "N1",
+        "harness_compatibility": ["claude-code"],
+        "grounding": "not_applicable",
+        "object_type": ["skill-package"]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-27",
+        "note": "list_candidates.py + export_bundle.py: local-only, stdlib only (json/argparse/zipfile/shutil), zero network calls, no dynamic execution, no secret handling."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Owner (2026-07-27): the distribution half of the pipeline was missing -- everything else creates/audits/catalogs skills, nothing packages them for someone outside the repo. Skill-importer judged unnecessary (scout-harvester + license-compliance-check + skill-creator already form the import pipeline). Owner directive: intake/interview is free-form, up to the calling agent's own judgment, not a fixed script this skill dictates; explicitly declined a quality_score caveat in the output ('tôi kiểm soát được nó') -- the hard license_debt/security_audit exclusion is kept regardless as a distinct written registry rule, not a quality judgment."
+    },
+    {
       "skill_id": "document-ai-structurer",
-      "version": "0.1.1",
+      "version": "0.3.1",
       "source": {
         "type": "self-authored"
       },
@@ -70,15 +93,169 @@
       "quality_score": null,
       "security_audit": {
         "status": "passed",
-        "date": "2026-07-26",
-        "note": "structure_doc.py: external fetch (Docling downloading models) is declared clearly in SKILL.md. No secret/dangerous command."
+        "date": "2026-07-27",
+        "note": "Re-audited at 0.3.1: build_catalog.py now also propagates each Điều's khoan list into catalog.json (consumed by legal-form-filler's checklist_from_catalog.py) -- still stdlib-only (re/json/pathlib/argparse/sys), no eval/exec/subprocess/os.system/network calls. structure_doc.py's external fetch (Docling downloading models) remains declared clearly in SKILL.md, unchanged. suggest_legal_boundaries.py/apply_legal_structure.py unchanged."
       },
       "dependencies": [
         "docling==2.115.0",
         "python-env-bootstrap"
       ],
       "license_debt": null,
-      "elicited_from": "Owner (2026-07-26): idea of turning any document type into an AI-optimized structure (folder + JSON index) using Python; grounded in research on Docling/MinerU/unstructured.io/the llms.txt convention + chunking best practice"
+      "elicited_from": "Owner (2026-07-26): idea of turning any document type into an AI-optimized structure (folder + JSON index) using Python; grounded in research on Docling/MinerU/unstructured.io/the llms.txt convention + chunking best practice. Owner (2026-07-27): legal-article structuring mode, agent-reviewed boundaries instead of hardcoded chunk logic, built for the Legal-cluster's 2 flagged real gaps in docs/STATUS.md; same session, directed a multi-document catalog next so legal-citation-checker could verify Điều existence against a real corpus."
+    },
+    {
+      "skill_id": "pii-masking",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "document-conversion"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": []
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-27",
+        "note": "Self-audit: 3 scripts (scan_sensitive_patterns.py, mask_terms.py, unmask.py), stdlib-only (re/json/unicodedata/argparse/pathlib/sys), no eval/exec/subprocess/os.system/network calls. map.json output is explicitly documented as sensitive/local-only, never sent anywhere by this skill's own scripts."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Owner (2026-07-27): explicit request for a 'mask sensitive info' skill for the Legal cluster. Generalizes 2 existing precedents already in this repo: grading-and-feedback/anonymize_roster.py's local-only mapping pattern (Quy chế AI Điều 6 discipline) and peer-review's confidentiality-gate pattern. docs/ROADMAP.md had already flagged this exact gap, deliberately deferred until actually needed — this is that promotion, built domain: general (foundation-tier) since the need applies beyond Legal."
+    },
+    {
+      "skill_id": "deep-research",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "research"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": []
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-27",
+        "note": "Self-audit: validate_research_brief.py is stdlib-only (json/argparse/re), no eval/exec/subprocess/os.system/network calls. The skill itself calls no AI/LLM API (Scriptorium non-negotiable, STRATEGY_SPEC.md §2) -- it is a protocol + validator only, no scaffold generator (deliberately, per the v0.2.0 hardening round's ungated-generator finding in hypothesis-generation/peer-review)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Owner (2026-07-27): explicit request for a deep-research capability, clarified during discussion that it must not mean Scriptorium holding an AI provider key -- the calling agent does the research with its own tools/backend, this skill supplies the decomposition/grounding discipline + a citation validator. Schema and validator pattern directly reused from legal-research-brief (itself elicited from outside_research/research_01_result_01.md + Stanford RegLab/HAI's hallucination findings, STRATEGY_SPEC.md §5.2), generalized past the legal domain."
+    },
+    {
+      "skill_id": "xelatex-bootstrap",
+      "version": "0.1.0",
+      "source": {"type": "self-authored"},
+      "license": "MIT",
+      "tags": {
+        "domain": ["general"],
+        "task_type": ["coordination"],
+        "risk_tier": "N1",
+        "harness_compatibility": ["claude-code"],
+        "grounding": "not_applicable",
+        "object_type": []
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-27",
+        "note": "check_toolchain.py: subprocess used only via fixed argument lists (xelatex/biber/kpsewhich --version-style calls), no shell=True, no dynamic execution. install_toolchain.ps1/.sh invoke winget/brew/apt directly, no secret handling, not executed for real this session (heavy system change, no toolchain-less test machine available)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Owner (2026-07-27), reviewing another agent's request.md proposal: accepted as a real gap -- latex-project-bootstrap assumes XeLaTeX/biber already installed, doesn't install them itself, same relationship python-env-bootstrap has to Python. Detect/install split follows python-env-bootstrap's own established pattern of never silently taking a heavy system action."
+    },
+    {
+      "skill_id": "pandoc-bootstrap",
+      "version": "0.1.0",
+      "source": {"type": "self-authored"},
+      "license": "MIT",
+      "tags": {
+        "domain": ["general"],
+        "task_type": ["coordination"],
+        "risk_tier": "N1",
+        "harness_compatibility": ["claude-code"],
+        "grounding": "not_applicable",
+        "object_type": []
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-27",
+        "note": "check_pandoc.py: subprocess used only via a fixed argument list (pandoc --version), no shell=True. install_pandoc.ps1/.sh invoke winget/brew/apt directly, no secret handling, not executed for real this session (pandoc already present on the only available test machine)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Owner (2026-07-27), reviewing another agent's request.md proposal: accepted as a real gap -- document-format conversion (.tex/.docx/.pdf/.html) has no bootstrap skill yet, distinct from office-doc-creator (python-docx/pptx/openpyxl, not pandoc). Same detect/install-only-when-explicit pattern as xelatex-bootstrap/python-env-bootstrap."
+    },
+    {
+      "skill_id": "legal-web-search",
+      "version": "0.2.1",
+      "source": {"type": "self-authored"},
+      "license": "MIT",
+      "tags": {
+        "domain": ["legal"],
+        "task_type": ["research"],
+        "risk_tier": "N3",
+        "harness_compatibility": ["claude-code"],
+        "grounding": "required",
+        "object_type": ["legal-document", "citation"]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-27",
+        "note": "Re-audited at 0.2.0: js_shell_detected/snippet_note fields added to validate_search_record.py, still stdlib-only (json/argparse/urllib.parse), zero network calls, no dynamic execution, no secret handling."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Owner (2026-07-27), reviewing and reframing another agent's request.md proposal: the original 'legal-web-search' idea (scrape thuvienphapluat.vn/luatvietnam.vn/vanban.chinhphu.vn to assert hiệu lực status) was rejected as functionally the 'legal-lookup chatbot' STRATEGY_SPEC.md §2 rules out as a non-goal, and as the same fabrication risk legal-citation-checker/document-ai-structurer already declined without a real official API. Owner clarified the real intent: a rules-based search discipline mimicking how a lawyer actually searches (official sources first, recency noted, never one source treated as ground truth), not a lookup service -- reframed to match deep-research's precedent from earlier this session: the calling agent searches with its own tools, this skill supplies the discipline (domain allowlist, mandatory 'as displayed by source' framing, contradiction surfacing) and a validator only. N3 reflects real legal risk in this domain even with the reframing (a disciplined process can still be misused if the caveats are ignored)."
+    },
+    {
+      "skill_id": "browser-web-renderer",
+      "version": "0.1.0",
+      "source": {"type": "self-authored"},
+      "license": "MIT",
+      "tags": {
+        "domain": ["general"],
+        "task_type": ["document-conversion"],
+        "risk_tier": "N2",
+        "harness_compatibility": ["claude-code"],
+        "grounding": "not_applicable",
+        "object_type": []
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-27",
+        "note": "playwright itself scouted via scout-harvester before building (Apache-2.0, microsoft/playwright-python, 14.8k stars, actively maintained). This skill's 3 scripts add no eval/exec/subprocess/os.system beyond what playwright's own API does internally. Read-only navigation + extraction only -- no form submission, no JS execution, no auth, no WAF-evasion logic."
+      },
+      "dependencies": ["python-env-bootstrap"],
+      "license_debt": null,
+      "elicited_from": "Proposed by another agent via request.md (2026-07-27) to close legal-web-search's dichvucong.gov.vn JS-rendering gap. Owner approved a 2-step plan (static code, then explicit approval for real install+test) after Dev Agent flagged this as heavier/riskier than prior bootstrap skills. Both steps approved and executed same session. Real testing found the flagged risk correct and worse than assumed: dichvucong.gov.vn WAF-blocks a real headless browser too, confirming this is bot-detection, not JS-rendering -- browser-web-renderer deliberately does not attempt evasion."
     },
     {
       "skill_id": "python-env-bootstrap",
@@ -221,7 +398,7 @@
     },
     {
       "skill_id": "scout-harvester",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "source": {
         "type": "self-authored"
       },
@@ -245,12 +422,12 @@
       "quality_score": null,
       "security_audit": {
         "status": "passed",
-        "date": "2026-07-26",
-        "note": "Pure research process, no script. No finding."
+        "date": "2026-07-27",
+        "note": "Re-audited at 0.3.0 for clone_candidate.py (added this version): subprocess used only via a fixed argument list (git clone --depth 1 <url> <dest>), no shell=True, no string interpolation into a shell command -- same shape as github_scout.py's pre-existing gh wrapper. Refuses to clone inside this repo's own tree. github_scout.py (gh CLI wrapper) and pypi_license_check.py (stdlib urllib) unchanged this version, no dynamic execution or secret handling in either."
       },
       "dependencies": [],
       "license_debt": null,
-      "elicited_from": "Distilled from 3 real runs in the 2026-07-26 session: scouting Docling/MinerU before document-ai-structurer, scouting uv before python-env-bootstrap, scouting anthropics/skills at owner's request"
+      "elicited_from": "Distilled from 3 real runs in the 2026-07-26 session: scouting Docling/MinerU before document-ai-structurer, scouting uv before python-env-bootstrap, scouting anthropics/skills at owner's request. Owner (2026-07-27): folded a candidate 'git handler' skill idea into this one instead of a separate skill, once discussion confirmed the only missing piece was cloning a chosen candidate for closer reading -- search/inspection was already covered."
     },
     {
       "skill_id": "office-doc-creator",
@@ -360,7 +537,7 @@
     },
     {
       "skill_id": "translator-en-vi",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "source": {
         "type": "self-authored"
       },
@@ -382,12 +559,12 @@
       "quality_score": null,
       "security_audit": {
         "status": "passed",
-        "date": "2026-07-26",
-        "note": "Pure instructional, no script/dependency. No finding."
+        "date": "2026-07-27",
+        "note": "Re-audited at 0.2.0: check_terminology_consistency.py (added this version) is local-only, stdlib only (json/argparse), zero network calls, no dynamic execution. Core translation remains pure instructional, no script."
       },
       "dependencies": [],
       "license_debt": null,
-      "elicited_from": "Owner (2026-07-26): no fixed glossary needed, natural register that flexes with the source context"
+      "elicited_from": "Owner (2026-07-26): no fixed glossary needed for general translation, natural register that flexes with the source context. Owner (2026-07-27): directed completing the previously-planned legal-glossary extension (last item on the Legal-cluster shortlist, docs/ROADMAP.md) -- a fixed EN-VI legal-term glossary + consistency checker, same discipline as legal-citation-checker's title-consistency / contract-consistency-linter's party-label checks. Considered and declined renaming skill_id to a bare 'translator' in the same session -- registry/SCHEMA.md declares skill_id immutable, and actual capability (EN-VI contrastive linguistics) doesn't generalize to other language pairs without real work."
     },
     {
       "skill_id": "latex-project-bootstrap",
@@ -982,7 +1159,7 @@
     },
     {
       "skill_id": "legal-citation-checker",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "source": {"type": "self-authored"},
       "license": "MIT",
       "tags": {
@@ -996,12 +1173,12 @@
       "quality_score": null,
       "security_audit": {
         "status": "passed",
-        "date": "2026-07-26",
-        "note": "validate_citation_format.py: local-only, stdlib only (re/json/argparse), zero network calls, no dynamic execution, no secret handling. No finding."
+        "date": "2026-07-27",
+        "note": "Re-audited at 0.2.0: new --catalog code path adds only json/re stdlib usage, still local-only, zero network calls, no dynamic execution, no secret handling. No finding."
       },
-      "dependencies": [],
+      "dependencies": ["document-ai-structurer"],
       "license_debt": null,
-      "elicited_from": "Elicited from survey item 2 (outside_research/research_01_survey.md), whose own note flags automatic hiệu-lực (in-effect) status tracking as hard ('hơi khó vì VBPL thay đổi liên tục'). Deliberately does NOT attempt hiệu-lực verification -- no free Vietnamese legal-document API exists for this project to query, unlike CrossRef for citation-management's academic identifiers -- and is instead scoped to what's honestly deterministic without external data: citation format validation against known Vietnamese legal-document numbering conventions (with-year and công-văn-style without-year), plus flagging the same document cited under two different titles. Full gap rationale: docs/ROADMAP.md."
+      "elicited_from": "Elicited from survey item 2 (outside_research/research_01_survey.md), whose own note flags automatic hiệu-lực (in-effect) status tracking as hard ('hơi khó vì VBPL thay đổi liên tục'). Deliberately does NOT attempt hiệu-lực verification -- no free Vietnamese legal-document API exists for this project to query, unlike CrossRef for citation-management's academic identifiers -- and is instead scoped to what's honestly deterministic without external data: citation format validation against known Vietnamese legal-document numbering conventions (with-year and công-văn-style without-year), plus flagging the same document cited under two different titles. Full gap rationale: docs/ROADMAP.md. Owner (2026-07-27): directed wiring in document-ai-structurer's new catalog capability for an optional Điều-existence check, still explicitly not a hiệu lực claim."
     },
     {
       "skill_id": "contract-risk-log",
@@ -1028,7 +1205,7 @@
     },
     {
       "skill_id": "legal-form-filler",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "source": {"type": "self-authored"},
       "license": "MIT",
       "tags": {
@@ -1042,12 +1219,12 @@
       "quality_score": null,
       "security_audit": {
         "status": "passed",
-        "date": "2026-07-26",
-        "note": "check_dossier.py + fill_form.py: local-only, stdlib only (json/argparse), zero network calls, no dynamic execution, no secret handling. No finding."
+        "date": "2026-07-27",
+        "note": "Re-audited at 0.2.0: checklist_from_catalog.py (added this version) is local-only, stdlib only (json/argparse), zero network calls, no dynamic execution. check_dossier.py + fill_form.py unchanged this version. No finding."
       },
-      "dependencies": [],
+      "dependencies": ["document-ai-structurer"],
       "license_debt": null,
-      "elicited_from": "Elicited from survey items 3, 4, 5 (outside_research/research_01_survey.md: form filling, form suggestion, dossier completeness). Item 4's form-SUGGESTION capability (deciding which form applies to a procedure) is explicitly out of scope -- this project has no real Vietnamese government checklist/template database to ground that judgment call in, so it is not attempted or guessed. Items 3 and 5 (filling a known form, checking a known checklist) are scoped down to a generic engine where the checklist and form template are always caller-supplied input, never hard-coded, mirroring grade-book-builder's refusal to hardcode unverified official numbers. Full gap rationale: docs/ROADMAP.md."
+      "elicited_from": "Elicited from survey items 3, 4, 5 (outside_research/research_01_survey.md: form filling, form suggestion, dossier completeness). Item 4's form-SUGGESTION capability (deciding which form applies to a procedure) is explicitly out of scope -- this project has no real Vietnamese government checklist/template database to ground that judgment call in, so it is not attempted or guessed. Items 3 and 5 (filling a known form, checking a known checklist) are scoped down to a generic engine where the checklist and form template are always caller-supplied input, never hard-coded, mirroring grade-book-builder's refusal to hardcode unverified official numbers. Full gap rationale: docs/ROADMAP.md. Owner (2026-07-27): directed wiring this skill into document-ai-structurer's catalog so a checklist can be extracted from a real Điều's Khoản list -- still doesn't decide which Điều/document is right for a given procedure, same domain-judgment gap as before."
     }
   ]
 }

@@ -1,0 +1,26 @@
+{
+  "question": "What is the primary research question being answered?",
+  "sub_questions": [
+    "First sub-question the research decomposes into",
+    "Second sub-question"
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Title or short description of the source",
+      "url": "https://example.com/source-1 (or 'local:<path>' for a local file)",
+      "accessed": "2026-07-27"
+    }
+  ],
+  "findings": [
+    {
+      "claim": "A specific factual claim the research supports",
+      "cites": ["S1"]
+    }
+  ],
+  "gaps": "What the research could not answer, or 'none identified'",
+  "contradictions": "Any conflict found between sources, or 'none identified'",
+  "confidence": "medium",
+  "confidence_rationale": "Why this confidence level, e.g. 'only 1 source found, no independent corroboration'",
+  "synthesis": "The final narrative answer to 'question', with inline [S1] citation markers on every claim it makes."
+}

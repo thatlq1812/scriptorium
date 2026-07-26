@@ -15,6 +15,7 @@ Navigation hub. Read `MASTER_CONTEXT.md` first if you're new to the project.
 | Path | Content |
 | --- | --- |
 | `specs/` | Official, active specs. Write a new spec here when a decision/feature is big enough to distill into a source of truth. |
+| `templates/` | Reusable operational templates — e.g. `CLUSTER_SURVEY_TEMPLATE.md`, the standard shape for eliciting a new audience-tier/specializer cluster before `skill-creator` runs. |
 | `archive/` | History — discussion transcripts, raw research already distilled into `specs/`. See `archive/README.md`. Don't cite figures/decisions directly from here if `specs/` already has a corrected version. |
 | `../outside_research/` (repo root) | Living input — owner-authored surveys and external AI-assisted analysis on candidate audiences/verticals, gathered before a tier is built. Distilled into `ROADMAP.md`/`specs/STRATEGY_SPEC.md`; its brainstormed skill lists are ideation only, not elicited input. |
 

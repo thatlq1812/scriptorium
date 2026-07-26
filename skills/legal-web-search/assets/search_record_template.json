@@ -1,0 +1,19 @@
+{
+  "query": "The legal question that drove this search",
+  "search_date": "2026-07-27",
+  "results": [
+    {
+      "url": "https://vanban.chinhphu.vn/?pageid=27160&docid=...",
+      "title": "Title of the page/document as displayed",
+      "document_ref": "30/2020/NĐ-CP",
+      "accessed_date": "2026-07-27",
+      "as_displayed_status": {
+        "text": "Còn hiệu lực (as literally shown on the page)",
+        "as_of": "Ngày cập nhật hiển thị trên trang, nếu có"
+      },
+      "excerpt": "Short relevant excerpt from the page, for context"
+    }
+  ],
+  "contradiction_notes": "Any disagreement between sources on a document's displayed status, or 'none identified'",
+  "caveat_acknowledged": true
+}

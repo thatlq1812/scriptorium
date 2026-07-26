@@ -5,6 +5,7 @@
 | 1.0.0 | 2026-07-26 | Claude | First version, written alongside setting up the project's documentation convention (referencing `D:/elix/platform`'s docs structure). |
 | 1.1.0 | 2026-07-26 | Claude | Translated to English per owner directive: the whole system (excluding `docs/archive/` and content brought in from outside) must be in English. Refreshed stale references (`ROADMAP.md` now exists). |
 | 1.2.0 | 2026-07-26 | Claude | Added `outside_research/` as a recognized input directory (owner-authored active research on verticals/audiences, distilled into `docs/specs/`+`docs/ROADMAP.md`, kept verbatim like `docs/archive/` but living rather than frozen). See `docs/ROADMAP.md` §"Audience-tier expansion model" and `docs/specs/STRATEGY_SPEC.md` §5. |
+| 1.3.0 | 2026-07-27 | Claude | Added `docs/templates/` (reusable operational templates, e.g. `CLUSTER_SURVEY_TEMPLATE.md`) and `outside_agy/` (external LegalTech reference material surveyed via a cross-agent `request.md` discussion) to the repo structure diagram — both existed on disk already this session, diagram was stale. |
 
 ---
 
@@ -47,10 +48,13 @@ scriptorium/
 │   ├── ROADMAP.md              # Skill-expansion backlog
 │   ├── specs/                  # Official specs — current source of truth
 │   │   └── STRATEGY_SPEC.md
+│   ├── templates/               # Reusable operational templates (e.g. CLUSTER_SURVEY_TEMPLATE.md)
 │   └── archive/                # History, not current state — see archive/README.md
 ├── outside_research/           # Owner-authored active research (surveys, external AI analysis)
 │                                # on verticals/audiences — living input, kept verbatim (like
 │                                # docs/archive/), distilled into docs/specs/ + docs/ROADMAP.md
+├── outside_agy/                 # External LegalTech reference material (playbooks/skill models
+│                                # from other products), comparison only, not copied
 ├── skills/
 │   └── <skill_id>/SKILL.md     # Each skill is its own subfolder
 ├── registry/

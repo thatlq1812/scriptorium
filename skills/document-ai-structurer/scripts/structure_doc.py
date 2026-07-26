@@ -13,6 +13,7 @@ import argparse
 import json
 import re
 import sys
+import unicodedata
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -23,8 +24,13 @@ DOCLING_VERSION = "2.115.0"
 HEADING_RE = re.compile(r"^(#{1,6})\s+(.*)$", re.MULTILINE)
 
 
+def strip_diacritics(text: str) -> str:
+    text = text.replace("đ", "d").replace("Đ", "D")
+    return "".join(c for c in unicodedata.normalize("NFD", text) if not unicodedata.combining(c))
+
+
 def slugify(text: str, max_len: int = 60) -> str:
-    slug = re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
+    slug = re.sub(r"[^a-z0-9]+", "-", strip_diacritics(text).lower()).strip("-")
     return (slug or "section")[:max_len]
 
 
@@ -57,6 +63,10 @@ def main() -> int:
     parser.add_argument("input_file", type=Path)
     parser.add_argument("output_dir", type=Path)
     args = parser.parse_args()
+
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8")
 
     input_path: Path = args.input_file
     output_dir: Path = args.output_dir

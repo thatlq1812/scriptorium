@@ -1,0 +1,16 @@
+{
+  "query": "mẫu đơn đăng ký thành lập doanh nghiệp dichvucong.gov.vn",
+  "search_date": "2026-07-27",
+  "results": [
+    {
+      "url": "https://dichvucong.gov.vn/p/home/dvc-chi-tiet-thu-tuc-nganh-doc.html?ma_thu_tuc=2.001610",
+      "title": "Đăng ký thành lập doanh nghiệp tư nhân",
+      "accessed_date": "2026-07-27",
+      "js_shell_detected": true,
+      "snippet_note": "Direct WebFetch on this URL returned only a JS-rendered header shell (no procedure/form content reachable) -- content below is from the WebSearch result summary only, not a literal page quote. Confirms the procedure exists and is listed on the official portal at ma_thu_tuc=2.001610; actual form download link not obtained this round.",
+      "excerpt": "WebSearch summary: portal lists business-registration procedures (private enterprise, LLC 1/2+ members, joint-stock) with online submission via dangkykinhdoanh.gov.vn; digital-signature authentication supported."
+    }
+  ],
+  "contradiction_notes": "none identified",
+  "caveat_acknowledged": true
+}

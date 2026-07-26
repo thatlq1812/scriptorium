@@ -1,0 +1,15 @@
+{
+  "query": "Nghị định 30/2020/NĐ-CP - số hiệu, ngày ban hành, cơ quan ban hành",
+  "search_date": "2026-07-27",
+  "results": [
+    {
+      "url": "https://vanban.chinhphu.vn/default.aspx?pageid=27160&docid=199378",
+      "title": "Nghị định số 30/2020/NĐ-CP của Chính phủ: Về công tác văn thư",
+      "document_ref": "30/2020/NĐ-CP",
+      "accessed_date": "2026-07-27",
+      "excerpt": "Document Number: 30/2020/NĐ-CP; Issue Date: 05-03-2020; Issuing Authority: Chính phủ; Signatory: Nguyễn Xuân Phúc. No hiệu lực/status field was displayed on this government source page -- not recorded as_displayed_status because it wasn't actually shown, not invented."
+    }
+  ],
+  "contradiction_notes": "none identified -- only 1 usable result this round: thuvienphapluat.vn (secondary tier) returned HTTP 403 on direct fetch, so no second source's displayed status was available to cross-check against.",
+  "caveat_acknowledged": true
+}
