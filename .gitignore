@@ -3,3 +3,4 @@ important.md
 __pycache__/
 *.pyc
 /outside_research
+/outside_agy
