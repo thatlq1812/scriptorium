@@ -35,7 +35,7 @@ Một skill chỉ có `SKILL.md` là CHƯA đạt chuẩn. Skill chất lượng
 | 3 | `translator-en-vi` | Không cần scout repo ngoài — elicit trực tiếp từ owner về kiểm soát chất lượng dịch (thuật ngữ, văn phong), mở rộng ngôn ngữ sau | **Xong** — `skills/translator-en-vi/` |
 | 4 | LaTeX/research skill(s) từ `D:\elix\researches` | Cần đọc sâu hơn cấu trúc thật (`textbooks/document_engineering/`, `docs/methodology/idea_to_book_series.md`, `elix-textbook.cls`) để elicit đúng quy trình, không suy đoán — tốn thời gian hơn 3 mục trên | **Xong** — `skills/latex-project-bootstrap/` (scaffold generic, không copy `.cls` đặc thù) |
 | 5 | Scout sâu `scientific-agent-skills` (148 skill) + duyệt catalog `awesome-agent-skills` (1000+ entry) | Khối lượng lớn nhất, nên làm sau khi có thêm 3-4 skill mẫu chất lượng cao để đối chiếu chuẩn, tránh harvest hàng loạt rồi phát hiện sai chuẩn phải làm lại | **Scouting xong, harvest chưa làm** — xem "Kết quả scout mục 5" dưới |
-| 6 (tùy chọn) | Image-generation skill (dùng API key riêng của user) | Owner đánh dấu optional, tham khảo `D:/elix/platform/scripts`, `D:/UNI/S9_SP26/MLN131/project` | Chưa lên lịch cụ thể |
+| 6 (tùy chọn) | Image-generation skill (dùng API key riêng của user) | Owner đánh dấu optional, tham khảo `D:/elix/platform/scripts`, `D:/UNI/S9_SP26/MLN131/project` | **Xong (structural)** — `skills/image-generator-gemini/`, grounded từ `D:/elix/platform/scripts/gen/gen_illustrations.py`. CHƯA verify gọi API thật (cần key + owner cho phép phát sinh chi phí). Chưa xem `D:/UNI/S9_SP26/MLN131/project`. |
 
 ## Kết quả scout mục 5 (2026-07-26)
 

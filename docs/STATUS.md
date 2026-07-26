@@ -2,7 +2,7 @@
 
 | Last Updated | Status |
 | --- | --- |
-| 2026-07-26 | 12 skill đã viết. Toàn bộ đã qua `security-audit` (đều `passed`), chưa skill nào có `quality_score` (stage 4 chưa chạy trên skill nào) — nên chưa skill nào "sẵn sàng dùng" chính thức dù đã dùng thật trong session. Xem `docs/ROADMAP.md` cho backlog mở rộng đang chạy. Mọi thứ dưới đây verify trực tiếp từ `registry/skills.json` + `skills/`. |
+| 2026-07-26 | 13 skill đã viết. Toàn bộ đã qua `security-audit` (đều `passed`), chưa skill nào có `quality_score` (stage 4 chưa chạy trên skill nào) — nên chưa skill nào "sẵn sàng dùng" chính thức dù đã dùng thật trong session. Xem `docs/ROADMAP.md` cho backlog mở rộng đang chạy. Mọi thứ dưới đây verify trực tiếp từ `registry/skills.json` + `skills/`. |
 
 ## Skill đã tồn tại
 
@@ -20,6 +20,7 @@
 | `mermaid-diagram-designer` | 0.1.0 | N1 | `null` | `passed` | **Chưa chính thức** — 2 file reference + script lint (stdlib), test cả diagram hợp lệ và lỗi. Chưa qua stage 4. |
 | `translator-en-vi` | 0.1.0 | N2 | `null` | `passed` | **Chưa chính thức** — elicited từ owner (không glossary cố định, văn phong linh hoạt), 2 file reference. Chưa qua stage 4. |
 | `latex-project-bootstrap` | 0.1.0 | N1 | `null` | `passed` | **Chưa chính thức** — grounded từ dự án LaTeX thật của owner. Smoke test build thật 4-pass (xelatex→biber→xelatex→xelatex), PDF 5 trang tiếng Việt có dấu render đúng. Chưa qua stage 4. |
+| `image-generator-gemini` | 0.1.0 | N2 | `null` | `passed` | **Chưa chính thức, CHƯA verify gọi API thật** — grounded từ `D:/elix/platform/scripts/gen/gen_illustrations.py`. Chỉ test structural (thiếu key → lỗi rõ ràng, exit 1). Chưa gọi API thật vì cần key + owner cho phép phát sinh chi phí. `harness_compatibility` để trống cho tới khi verify thật. |
 
 Nguồn: `registry/skills.json`. Nếu số liệu ở đây khác `registry/skills.json`, registry thắng — file này có thể lỗi thời.
 
@@ -35,7 +36,7 @@ Nguồn: `registry/skills.json`. Nếu số liệu ở đây khác `registry/ski
 | 6. Scout/harvester | `skills/scout-harvester/SKILL.md` | Có |
 | 7. License-compliance check | `skills/license-compliance-check/SKILL.md` | Có |
 | 8. Dedup/novelty-check | `skills/dedup-novelty-check/SKILL.md` | Có |
-| 9. Registry | `registry/SCHEMA.md` + `registry/skills.json` | Có, 12 entry |
+| 9. Registry | `registry/SCHEMA.md` + `registry/skills.json` | Có, 13 entry |
 
 Bộ xương pipeline (stage 3-9) đầy đủ 7/7 skill vận hành. Còn thiếu duy nhất: stage 1/2 (Research, Elicit tacit process) — chưa skill hóa, vẫn làm thủ công tốt, chưa rõ cần thiết phải skill hóa hay không.
 

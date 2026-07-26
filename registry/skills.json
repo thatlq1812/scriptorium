@@ -340,6 +340,29 @@
       "dependencies": ["xelatex", "biber"],
       "license_debt": null,
       "elicited_from": "Grounded tu du an LaTeX that cua owner (D:/elix/researches/textbooks) -- XeLaTeX + polyglossia/fontspec, build sequence xelatex->biber->xelatex->xelatex"
+    },
+    {
+      "skill_id": "image-generator-gemini",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": ["general"],
+        "task_type": ["drafting"],
+        "risk_tier": "N2",
+        "harness_compatibility": []
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "generate_image.py: doc GEMINI_API_KEY tu env (bring-your-own-key, khong hardcode), goi API ngoai co khai bao ro trong SKILL.md, khong ghi/luu key ra file. Khong finding."
+      },
+      "dependencies": ["google-genai==2.14.0", "python-env-bootstrap"],
+      "license_debt": null,
+      "elicited_from": "Grounded tu D:/elix/platform/scripts/gen/gen_illustrations.py (du an rieng cua owner): google-genai SDK (Apache-2.0, verify PyPI), model gemini-3-pro-image-preview, generate_content response_modalities=[IMAGE]"
     }
   ]
 }
