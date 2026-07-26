@@ -8,6 +8,7 @@ Navigation hub. Đọc `MASTER_CONTEXT.md` trước nếu chưa quen dự án.
 2. [STATUS.md](STATUS.md) — trạng thái thật hiện tại (skill nào đã có, stage nào chưa xây), verify theo `registry/skills.json`.
 3. [DECISIONS_PENDING.md](DECISIONS_PENDING.md) — quyết định kiến trúc đang chờ owner xác nhận trước khi tiếp tục.
 4. [specs/STRATEGY_SPEC.md](specs/STRATEGY_SPEC.md) — nguồn xác thực cho định hướng chiến lược, pipeline, taxonomy, vertical pháp lý, gate Elixverse.
+5. [ROADMAP.md](ROADMAP.md) — backlog mở rộng skill (nguồn ngoài đã verify license, thứ tự thực thi).
 
 ## Thư mục
 
