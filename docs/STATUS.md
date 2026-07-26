@@ -20,7 +20,7 @@
 | `mermaid-diagram-designer` | 0.1.0 | N1 | `null` | `passed` | **Chưa chính thức** — 2 file reference + script lint (stdlib), test cả diagram hợp lệ và lỗi. Chưa qua stage 4. |
 | `translator-en-vi` | 0.1.0 | N2 | `null` | `passed` | **Chưa chính thức** — elicited từ owner (không glossary cố định, văn phong linh hoạt), 2 file reference. Chưa qua stage 4. |
 | `latex-project-bootstrap` | 0.1.0 | N1 | `null` | `passed` | **Chưa chính thức** — grounded từ dự án LaTeX thật của owner. Smoke test build thật 4-pass (xelatex→biber→xelatex→xelatex), PDF 5 trang tiếng Việt có dấu render đúng. Chưa qua stage 4. |
-| `image-generator-gemini` | 0.2.0 | N2 | `null` | `passed` | **Chưa chính thức** — verify THẬT bằng API call thật (owner cho phép dùng key test từ `D:/elix/praxis_csc/.env`, model nhẹ `gemini-3.1-flash-lite-image`): ảnh đơn lẻ, batch + skip-if-exists, style-ref anchoring — cả 3 xác nhận đúng bằng ảnh sinh ra thật. Bổ sung batch/anchoring grounded từ `D:/UNI/S9_SP26/MLN131/project`. Chưa qua stage 4. |
+| `image-generator-gemini` | 0.3.0 | N2 | `null` | `passed` | **Chưa chính thức** — mở rộng thành bộ công cụ designer (owner yêu cầu): thêm auto-anchor batch, vision-analysis (ảnh→text style), PDF-page-extraction (không cần AI). Verify THẬT cả 4 khả năng bằng API call/render thật (key test owner cho phép, model nhẹ). Grounded từ khảo sát đầy đủ `D:/elix/platform/scripts/gen/` (9 script) + `D:/UNI/S9_SP26/MLN131/project`. Chưa qua stage 4. |
 
 Nguồn: `registry/skills.json`. Nếu số liệu ở đây khác `registry/skills.json`, registry thắng — file này có thể lỗi thời.
 

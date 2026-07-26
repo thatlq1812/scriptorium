@@ -65,13 +65,15 @@ def generate(
     prompt: str,
     model: str,
     style_ref_path: Path | None = None,
+    anchor_bytes: bytes | None = None,
 ) -> bytes:
     parts = []
-    if style_ref_path is not None:
+    ref_bytes = anchor_bytes if anchor_bytes is not None else (
+        style_ref_path.read_bytes() if style_ref_path is not None else None
+    )
+    if ref_bytes is not None:
         parts.append(STYLE_REF_INSTRUCTION)
-        parts.append(
-            types.Part.from_bytes(data=style_ref_path.read_bytes(), mime_type="image/png")
-        )
+        parts.append(types.Part.from_bytes(data=ref_bytes, mime_type="image/png"))
     parts.append(prompt)
 
     response = client.models.generate_content(
@@ -92,11 +94,20 @@ def generate(
 
 
 def run_batch(client: "genai.Client", manifest_path: Path, out_dir: Path, model: str, delay_s: float) -> None:
-    """manifest.json shape: {"style_ref": "optional/path.png", "images": {"filename.png": "prompt", ...}}"""
+    """manifest.json shape: {"style_ref": "optional/path.png" | null, "images": {"filename.png": "prompt", ...}}
+
+    Nếu style_ref là null: AUTO-ANCHOR — ảnh đầu tiên sinh ra (hoặc đã có sẵn từ
+    lần chạy trước) tự động trở thành style reference cho MỌI ảnh sau đó trong
+    cùng batch. Đây là pattern quan sát thật từ D:/UNI/S9_SP26/MLN131/project
+    (gen_marketing_images.py generate_pack): không cần chuẩn bị ảnh mẫu trước,
+    cả bộ vẫn tự đồng bộ phong cách quanh ảnh đầu tiên."""
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     images = manifest.get("images", {})
     style_ref = manifest.get("style_ref")
-    style_ref_path = Path(style_ref) if style_ref else None
+    anchor_bytes: bytes | None = None
+    anchor_path = Path(style_ref) if style_ref else None
+    if anchor_path is not None:
+        anchor_bytes = anchor_path.read_bytes()
     out_dir.mkdir(parents=True, exist_ok=True)
 
     generated = skipped = failed = 0
@@ -104,14 +115,19 @@ def run_batch(client: "genai.Client", manifest_path: Path, out_dir: Path, model:
         out_path = out_dir / filename
         if out_path.exists():
             print(f"  SKIP  {filename} (đã tồn tại)")
+            if anchor_bytes is None:
+                anchor_bytes = out_path.read_bytes()  # dùng làm auto-anchor cho phần còn lại
             skipped += 1
             continue
-        print(f"  GEN   {filename} ...", end="", flush=True)
+        tag = "(anchor)" if anchor_bytes is None else "(chained)"
+        print(f"  GEN   {filename} {tag} ...", end="", flush=True)
         try:
-            data = generate(client, prompt, model, style_ref_path)
+            data = generate(client, prompt, model, anchor_bytes=anchor_bytes)
             out_path.write_bytes(data)
             print(f" OK ({len(data) / 1024:.0f} KB)")
             generated += 1
+            if anchor_bytes is None:
+                anchor_bytes = data
         except Exception as exc:
             print(f" FAIL: {exc}")
             failed += 1

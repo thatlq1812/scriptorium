@@ -370,7 +370,7 @@
     },
     {
       "skill_id": "image-generator-gemini",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "source": {
         "type": "self-authored"
       },
@@ -391,10 +391,11 @@
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
-        "note": "generate_image.py: doc GEMINI_API_KEY tu env (bring-your-own-key, khong hardcode), goi API ngoai co khai bao ro trong SKILL.md, khong ghi/luu key ra file. Batch mode chi ghi file local trong out-dir. Khong finding."
+        "note": "generate_image.py + analyze_style.py: doc GEMINI_API_KEY tu env (bring-your-own-key, khong hardcode), goi API ngoai co khai bao ro trong SKILL.md, khong ghi/luu key ra file. extract_pdf_page.py: khong goi API, chi render local qua pypdfium2. Khong finding."
       },
       "dependencies": [
         "google-genai==2.14.0",
+        "pypdfium2==5.12.1",
         "python-env-bootstrap"
       ],
       "license_debt": null,
