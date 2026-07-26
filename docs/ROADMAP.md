@@ -8,6 +8,7 @@
 | 1.3.0 | 2026-07-26 | Claude | 5 general-tier skills harvested (see `docs/STATUS.md`). Rewrote "Long-term direction" into a concrete audience-tier expansion plan (education vertical: Student → Teacher → University Student → Lecturer/Researcher, then specializer networks) per owner sequencing this session (`outside_research/`). |
 | 1.4.0 | 2026-07-26 | Claude | Owner clarified: `outside_research/` content counts as elicited input Claude can build directly from (Claude acts as the skill-creator sub-agent). Added `grounding`/`object_type` tag axes to `registry/SCHEMA.md`, retrofitted all 18 prior entries. Built `study-plan-builder`, first Student(K12)-tier skill, deliberately scoped to pure scheduling (no subject content) since no real student survey exists yet. Owner directed the Teacher tier next, loosely grounded in EduStation (explicitly "not gospel" — known-weak prior art, same spirit as this session's own v0.2.0 hardening round finding 17 defects in skills built earlier the same day). |
 | 1.5.0 | 2026-07-26 | Claude | Surveyed all 63 EduStation skill folders before building the Teacher tier — found heavy fragmentation (15 folders = one Nghị định 30/2020 admin-document template, 5 folders = one lesson-planning capability, 6 folders = one assessment-generation capability, 11 folders duplicate Scriptorium's own foundation skills). Owner directed excluding the administrative-paperwork cluster entirely ("đáp ứng cho giáo dục, không đáp ứng cho chính trị, thủ tục rườm rà"), consolidated the rest into ~6 capability clusters. Built `lesson-plan-builder` (v0.1.0), first Teacher-tier skill — a CV 5512 structural validator grounded in EduStation's domain knowledge only, not its orchestration machinery. |
+| 1.6.0 | 2026-07-26 | Claude | Owner directed dispatching parallel sub-agents to complete the remaining Teacher-tier shortlist ("nó có sẵn lõi rồi, chỉ cần chắt lọc lại, rồi bạn duyệt lại một lần"). Dispatched 6 independent background agents; each built one skill self-contained (no shared-file edits) and reported back a tested skill + ready-to-paste registry/STATUS entries. Orchestrating session independently re-verified all 6 (file existence, dangerous-pattern scan, real re-execution against bundled assets) before integrating into `registry/skills.json` (26 entries now) and `docs/STATUS.md`. Teacher tier is now substantially staffed: 7 of 8 shortlisted skills done, only `teacher_self_eval` remaining. |
 
 ---
 
@@ -90,14 +91,20 @@ Surveyed all 63 EduStation skill folders' `SKILL.md` frontmatter before starting
 | Consolidated skill | Replaces (EduStation folders) | Status |
 | --- | --- | --- |
 | `lesson-plan-builder` | `lesson_plan` + (loosely) `theme_lesson_plan`, `cross_subject_plan`, `teacher_plan`, `homeroom_plan` | **Done** (v0.1.0) — single-lesson CV 5512 structural validator; multi-lesson/interdisciplinary variants not yet covered, noted as a known limitation |
-| `assessment-builder` | `exam_builder`, `review_exam`, `sample_exam`, `tn_thpt_review`, `question_bank`, `review_outline` | Not started |
-| `grading-and-feedback` | `grading`, `primary_remarks`, `report_card_remarks` | Not started |
-| `competency-rubric-builder` | `competency_rubric` | Not started |
-| `classroom-materials-builder` | `classroom_worksheet`, `homework_sheet`, `learning_game` | Not started |
-| `grade-book-builder` | `grade_book` | Not started, lower priority (xlsx bookkeeping, not core pedagogy) |
-| `parent-communication` | `parent_brief`, `parent_letter` | Not started, lower priority (communication, not core pedagogy) |
+| `assessment-builder` | `exam_builder`, `review_exam`, `sample_exam`, `tn_thpt_review`, `question_bank`, `review_outline` | **Done** (v0.1.0) — built via parallel sub-agent (2026-07-26), reviewed + independently re-tested by the orchestrating session |
+| `grading-and-feedback` | `grading`, `primary_remarks`, `report_card_remarks` | **Done** (v0.1.0) — built via parallel sub-agent, reviewed by orchestrating session |
+| `competency-rubric-builder` | `competency_rubric` | **Done** (v0.1.0) — built via parallel sub-agent, reviewed + independently re-tested by the orchestrating session |
+| `classroom-materials-builder` | `classroom_worksheet`, `homework_sheet`, `learning_game` | **Done** (v0.1.0) — built via parallel sub-agent, reviewed + independently re-tested by the orchestrating session |
+| `grade-book-builder` | `grade_book` | **Done** (v0.1.0) — built via parallel sub-agent, reviewed + independently re-tested by the orchestrating session; deliberately hardcodes no official TT22/2021 weight/banding numbers (not found verified in source), left as required caller input |
+| `parent-communication` | `parent_brief`, `parent_letter` | **Done** (v0.1.0) — built via parallel sub-agent, reviewed by orchestrating session |
 | ~~administrative-paperwork cluster~~ | ~~15 Nghị định 30/2020 folders~~ | **Excluded by owner direction** — not building this |
-| `teacher_self_eval` (TT20/2018) | — | Not started, lowest priority (compliance form, not teaching) |
+| `teacher_self_eval` (TT20/2018) | — | Not started, lowest priority (compliance form, not teaching) — the only item remaining on the Teacher-tier shortlist |
+
+### How the 6 parallel skills were built (2026-07-26)
+
+Per owner request ("dispatch các subagent để hoàn thiện song song... rồi bạn duyệt lại một lần"): 6 independent background sub-agents were dispatched in parallel, each given the shared conventions (read `lesson-plan-builder` as the reference pattern, stdlib-only Python, real testing required, no AI/LLM call, explicit EduStation source paths to read for domain knowledge only — never copy orchestration machinery), and each explicitly forbidden from touching `registry/skills.json`/`docs/*.md` to avoid concurrent-write conflicts. Each reported back a finished, self-tested skill folder plus a ready-to-paste registry entry and STATUS.md row.
+
+The orchestrating session then reviewed all 6 before integrating: verified every claimed file actually exists, scanned all 9 new scripts for dangerous patterns (`eval`/`exec`/`subprocess`/network calls — none found, all stdlib-only), and independently re-ran each script against its own bundled asset template to confirm the reported behavior for real (not just trusting the sub-agent's report). All 6 held up under this independent re-check. `security_audit.status` was set to `passed` by the orchestrating session (sub-agents themselves left it `pending`, correctly deferring that judgment) after this review.
 
 ### After the education ladder: specializer networks
 

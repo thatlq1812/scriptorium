@@ -1,0 +1,12 @@
+{
+  "students": [
+    {
+      "student_id": "HS01",
+      "mcq_answers": {"1": "A", "2": "B", "3": "C", "4": "D"},
+      "essay_scores": [
+        {"criterion_name": "<criterion 1 name>", "score": 2.0, "justification": "<short justification, already scored by a human>"},
+        {"criterion_name": "<criterion 2 name>", "score": 1.0, "justification": "<short justification>"}
+      ]
+    }
+  ]
+}

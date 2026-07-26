@@ -1,0 +1,27 @@
+{
+  "class_name": "<class label, e.g. 7A1 - Toan - HK1>",
+  "category_weights": {
+    "mieng": 1,
+    "giua_ky": 2,
+    "cuoi_ky": 3
+  },
+  "weight_total": 6,
+  "round_digits": 1,
+  "classification_bands": [
+    {"label": "Gioi", "min_score": 8.0},
+    {"label": "Kha", "min_score": 6.5},
+    {"label": "Trung binh", "min_score": 5.0},
+    {"label": "Yeu", "min_score": 0.0}
+  ],
+  "students": [
+    {
+      "id": "<student id, e.g. roll number>",
+      "name": "<student full name>",
+      "scores": {
+        "mieng": [8, 9],
+        "giua_ky": [7],
+        "cuoi_ky": [8]
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "mcq": {
+    "scale": 10,
+    "points_per_question": null,
+    "round_digits": 2,
+    "answer_key": {
+      "1": "A",
+      "2": "B",
+      "3": "C",
+      "4": "D"
+    }
+  },
+  "rubric": [
+    {"criterion_name": "<criterion 1 name, e.g. Lập luận>", "max_points": 2.5},
+    {"criterion_name": "<criterion 2 name, e.g. Trình bày>", "max_points": 1.5}
+  ]
+}

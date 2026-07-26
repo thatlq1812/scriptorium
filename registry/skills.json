@@ -671,12 +671,20 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": ["education"],
-        "task_type": ["coordination"],
+        "domain": [
+          "education"
+        ],
+        "task_type": [
+          "coordination"
+        ],
         "risk_tier": "N1",
-        "harness_compatibility": ["claude-code"],
+        "harness_compatibility": [
+          "claude-code"
+        ],
         "grounding": "not_applicable",
-        "object_type": ["study-plan"]
+        "object_type": [
+          "study-plan"
+        ]
       },
       "quality_score": null,
       "security_audit": {
@@ -696,12 +704,20 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": ["education"],
-        "task_type": ["review-qa"],
+        "domain": [
+          "education"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
         "risk_tier": "N1",
-        "harness_compatibility": ["claude-code"],
+        "harness_compatibility": [
+          "claude-code"
+        ],
         "grounding": "required",
-        "object_type": ["lesson-plan"]
+        "object_type": [
+          "lesson-plan"
+        ]
       },
       "quality_score": null,
       "security_audit": {
@@ -712,6 +728,211 @@
       "dependencies": [],
       "license_debt": null,
       "elicited_from": "First skill for the Teacher audience tier (docs/specs/STRATEGY_SPEC.md §5.1), grounded in EduStation's real previously-deployed lesson_plan skill (D:/elix/edustation/skills/lesson_plan/SKILL.md) for CV5512/TT32-2018/TT27-2020/TT22-2021 domain knowledge (4-activity fixed structure, fixed pham-chat/nang-luc vocabulary, level-adaptive assessment rule). Used loosely per owner's explicit caveat (2026-07-26, 'dựa thôi chứ không tham khảo hẳn') -- EduStation's orchestration machinery not ported, only the domain knowledge, rebuilt as a single deterministic validator. Owner also directed this tier to skip EduStation's bureaucratic-paperwork skills (Nghị định 30/2020 admin templates: reports/decisions/correspondence/meeting-minutes) entirely, keeping scope to skills that serve actual teaching."
+    },
+    {
+      "skill_id": "assessment-builder",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "education"
+        ],
+        "task_type": [
+          "drafting"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "exam",
+          "exam-matrix",
+          "question-bank"
+        ]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "build_exam_matrix.py + validate_exam.py: local-only, stdlib only (json/argparse), zero network calls, no dynamic execution, no secret handling. Orchestrating session re-verified both scripts against their own bundled assets for real. No finding."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Consolidates 6 EduStation skill folders that were all variations of the same 'generate an exam matrix + exam + answer key balanced by cognitive level' capability, differing only in output shape (D:/elix/edustation/skills/exam_builder, review_exam, sample_exam, question_bank, review_outline, tn_thpt_review -- all SKILL.md read directly, plus exam_builder/scripts/build_dethi.py and its knowledge/ma_tran_de.md + knowledge/de_dap_an_format.md for the actual balancing-algorithm reference). Per owner direction (2026-07-26), consolidated into fewer, more practical skills rather than kept as 6 near-duplicate folders. Domain knowledge kept: the 4-cognitive-level framework (Nhan biet/Thong hieu/Van dung/Van dung cao) and its default 40/30/20/10 ratio (explicitly a generic convention per EduStation's own knowledge/CURATION.md, not an official per-subject regulation), the largest-remainder (Hamilton apportionment) balancing method so counts/points always sum exactly, the MCQ invariant (exactly 4 distinct choices, exactly one valid answer), and the tn_thpt_review skill's QD 4068/QD-BGDDT THPT-graduation-exam profile concept (folded in here as a named --profile preset, not a separate skill). EduStation's harness-specific orchestration machinery (persona/effort/token_budget tuning, use_skill/task_create/script_exec conventions, Jinja2 profile placeholders, workspace-scan-before-work, planning-gate dialogue) was NOT ported."
+    },
+    {
+      "skill_id": "grading-and-feedback",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "education"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "exam",
+          "gradebook",
+          "remark"
+        ]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "grade_exam.py + lint_remarks.py + anonymize_roster.py: local-only, stdlib only (json/re/argparse/collections), zero network calls, no dynamic execution. anonymize_roster.py's local-only real-name<->code mapping file is explicitly marked sensitive in-file and never touches a network -- reviewed and confirmed. N2 reflects subject-matter risk (student PII/scores), not a tooling finding. No finding."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Grounded in three real previously-deployed EduStation skills (D:/elix/edustation/skills/): grading/SKILL.md for the core domain knowledge -- MCQ scoring must be 100% deterministic answer-key matching, never LLM-estimated; essay/rubric scoring is per-criterion, capped at each criterion's declared max, hardened here into a hard refusal rather than the source's model-driven scoring (essay scores arrive already-assigned by a human/upstream process, this skill only aggregates/validates them, per the no-AI-backend principle); and the anonymization safety pattern -- student identities anonymized to HS01/HS02 codes for anything that would touch an LLM, with a LOCAL-ONLY mapping table re-attaching real names only at the final step, justified by Vietnam's 'Quy che AI Dieu 6' student-PII rule. primary_remarks/SKILL.md for TT27/2020 tieu hoc remark rules (no scoring language); report_card_remarks/SKILL.md for TT22/2021 THCS/THPT remark rules (scoring language allowed). The level-appropriate language check reuses the SCORE_LANGUAGE_RE pattern and TH-vs-THCS/THPT branching already proven correct in this repo's lesson-plan-builder. None of EduStation's harness-specific orchestration machinery was ported."
+    },
+    {
+      "skill_id": "competency-rubric-builder",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "education"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "rubric"
+        ]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "validate_rubric.py: local-only, stdlib only (json/argparse), zero network calls, no dynamic execution, no secret handling. Orchestrating session re-verified against its own bundled asset for real. No finding."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Grounded in EduStation's competency_rubric skill (D:/elix/edustation/skills/competency_rubric/SKILL.md, a real previously-deployed skill for K12 teachers) for the domain knowledge: a rubric is a tieu chi (criteria, rows) x muc do (performance levels, columns, high-to-low, 3 or 4 levels) table where every cell needs an observable-behavior description (explicitly not vague text like 'lam tot'/'chua tot'), each criterion carries a trong so (weight/max points) whose sum must exactly equal the declared thang_diem_tong, and level descriptions within one criterion should be distinct rather than repeated verbatim. Used loosely, not as a spec to follow literally -- EduStation's own orchestration machinery was NOT ported; this skill is a single deterministic validator+Markdown renderer instead, with no LLM/AI call of any kind."
+    },
+    {
+      "skill_id": "classroom-materials-builder",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "education"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "worksheet",
+          "homework-sheet",
+          "learning-game"
+        ]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "validate_material.py: local-only, stdlib only (json/argparse), zero network calls, no dynamic execution, no secret handling. Orchestrating session re-verified against its own bundled asset for real. No finding."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Grounded in 3 of EduStation's real previously-deployed skills for K12 teachers (D:/elix/edustation/skills/classroom_worksheet, homework_sheet, learning_game) for the domain distinctions this validator encodes: classroom_worksheet's items are organized by lesson activity and need a described response space; homework_sheet's items are organized by difficulty/type and its answer key must cover every item with no gaps; learning_game requires complete rules/steps tied to the lesson's actual topic. EduStation's own orchestration machinery for these 3 skills was NOT ported. Per owner direction (2026-07-26), consolidated 3 separate EduStation skill folders into one; deliberately kept modest in scope since these 3 EduStation skills are lighter on hard regulatory structure and heavier on open-ended content generation than lesson-plan-builder/assessment-builder -- this validator checks only the real, mechanically-checkable structural invariants, not invented rigor."
+    },
+    {
+      "skill_id": "grade-book-builder",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "education"
+        ],
+        "task_type": [
+          "drafting"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "gradebook"
+        ]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "build_gradebook.py: local-only, stdlib only (json/argparse), zero network calls, no dynamic execution, no secret handling. Orchestrating session re-verified against its own bundled asset for real. No finding."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Grounded in EduStation's grade_book skill (D:/elix/edustation/skills/grade_book/SKILL.md, a real previously-deployed skill for K12 school staff) for the domain shape only: a class gradebook has student rows, weighted assessment-category columns, a computed term-average (TBM) column, and a computed classification (xep loai) column. No exact official TT22/2021 weight percentages or classification thresholds were found stated as verified fact in the available source material, so per STRATEGY_SPEC.md Section 7 principle 5 (never fabricate legal/regulatory citations), this skill does NOT hardcode any such numbers -- category_weights and classification_bands are both required caller-declared inputs with no built-in defaults; EduStation's own source flags its 1/2/3 weight example as a non-mandatory reference default, which is quoted directly here rather than asserted as fact. EduStation's own orchestration machinery (xlsx_read/xlsx_write/script_exec sequencing, workspace-scan-before-work, planning-gate HITL) was NOT ported."
+    },
+    {
+      "skill_id": "parent-communication",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "education"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "letter",
+          "parent-brief"
+        ]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "validate_parent_message.py: local-only, stdlib only (json/re/argparse), zero network calls, no dynamic execution, no secret handling. N2 reflects subject-matter risk (a wrong/unfilled student name reaching a real parent), not a tooling finding. Orchestrating session re-verified against its own bundled (deliberately unfilled) template for real, confirming placeholder-detection correctly refuses it. No finding."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Consolidates 2 EduStation skill folders that are the same underlying task at different cadence: D:/elix/edustation/skills/parent_letter/SKILL.md (a one-off letter/notice) and D:/elix/edustation/skills/parent_brief/SKILL.md (a periodic weekly/monthly brief, explicitly framed as replacing ad-hoc Zalo messages). Both are real previously-deployed EduStation skills for Vietnamese K12 homeroom teachers, judged in-scope for this tier (unlike EduStation's excluded bureaucratic-paperwork skills) because parent communication is core homeroom-teacher work. Domain knowledge kept: the required-content shape both converge on (purpose, content, a clear ask if any, sender identity) and their shared tone constraints (respectful, no harsh judgment of the student, no fabricated specifics). The single hard-block beyond generic required-field checks is recipient_scope=single_student with an unfilled/placeholder student name -- the real, previously-identified EduStation failure mode of a form letter sent with the name placeholder never replaced. EduStation's own orchestration machinery was NOT ported; this skill never calls an LLM/AI API."
     }
   ]
 }

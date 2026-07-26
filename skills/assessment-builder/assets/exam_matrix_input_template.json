@@ -1,0 +1,14 @@
+{
+  "topics": [
+    {"name": "Đại số", "weight": 1},
+    {"name": "Hình học", "weight": 1}
+  ],
+  "total_questions": 20,
+  "total_points": 10,
+  "level_ratio": {
+    "nhan_biet": 40,
+    "thong_hieu": 30,
+    "van_dung": 20,
+    "van_dung_cao": 10
+  }
+}

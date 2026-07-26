@@ -1,0 +1,19 @@
+{
+  "material_type": "worksheet",
+  "subject": "<subject, e.g. Toan>",
+  "grade": "<grade level, e.g. Lop 6>",
+  "topic": "<lesson/topic title this material is tied to>",
+  "items": [
+    {
+      "id": "1",
+      "task": "<task/prompt text shown to students>",
+      "expected_response_type": "<fill-blank | short-answer | diagram | multiple-choice | ...>",
+      "difficulty": "<optional here; required-in-spirit for material_type=homework, e.g. co_ban | van_dung | nang_cao>",
+      "response_space": "<worksheet: describe the blank/table/diagram students fill in at their desk>",
+      "hint": "<optional hint text -- worksheet only, must NOT give away the answer>",
+      "answer": "<answer/solution text -- REQUIRED (non-empty) when material_type=homework; optional for worksheet/game>"
+    }
+  ],
+  "rules": "<material_type=game ONLY: full rules/steps text, from setup to win condition -- must mention the declared topic>",
+  "estimated_duration_minutes": 15
+}

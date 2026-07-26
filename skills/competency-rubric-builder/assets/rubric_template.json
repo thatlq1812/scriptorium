@@ -1,0 +1,35 @@
+{
+  "doi_tuong_danh_gia": "Năng lực thuyết trình",
+  "khoi_lop": "8",
+  "muc": ["Tốt", "Đạt", "Cần cố gắng"],
+  "thang_diem_tong": 10,
+  "tieu_chi": [
+    {
+      "ten": "Nội dung trình bày",
+      "trong_so": 4,
+      "mo_ta": {
+        "Tốt": "Trình bày đầy đủ, chính xác các ý chính và ý phụ theo đúng dàn ý; có dẫn chứng cụ thể cho mỗi luận điểm.",
+        "Đạt": "Trình bày đầy đủ các ý chính theo dàn ý nhưng thiếu dẫn chứng cho 1-2 luận điểm.",
+        "Cần cố gắng": "Trình bày thiếu từ 2 ý chính trở lên hoặc nội dung không bám sát dàn ý đã chuẩn bị."
+      }
+    },
+    {
+      "ten": "Kỹ năng diễn đạt",
+      "trong_so": 3,
+      "mo_ta": {
+        "Tốt": "Nói rõ ràng, tốc độ phù hợp, mắt giao tiếp với người nghe trong suốt phần trình bày, không đọc lại giấy/slide.",
+        "Đạt": "Nói rõ ràng nhưng thỉnh thoảng nhìn giấy/slide để nhớ nội dung, mắt giao tiếp với người nghe dưới 50% thời lượng.",
+        "Cần cố gắng": "Đọc lại gần như toàn bộ nội dung từ giấy/slide, ít hoặc không có giao tiếp bằng mắt với người nghe."
+      }
+    },
+    {
+      "ten": "Tương tác và trả lời câu hỏi",
+      "trong_so": 3,
+      "mo_ta": {
+        "Tốt": "Trả lời đúng trọng tâm mọi câu hỏi của người nghe, chủ động mời câu hỏi và phản hồi bình tĩnh, có dẫn chứng bổ sung.",
+        "Đạt": "Trả lời được phần lớn câu hỏi đúng trọng tâm nhưng còn lúng túng với 1-2 câu hỏi khó.",
+        "Cần cố gắng": "Không trả lời được hoặc trả lời lạc đề với đa số câu hỏi của người nghe."
+      }
+    }
+  ]
+}

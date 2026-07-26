@@ -1,0 +1,13 @@
+{
+  "message_type": "letter",
+  "recipient_scope": "single_student",
+  "purpose": "<what this communication is for -- meeting invite, result notice, cooperation request, reminder, periodic update>",
+  "student_name_or_placeholder": "<full student name -- REQUIRED filled-in if recipient_scope is single_student, leave empty string if recipient_scope is whole_class>",
+  "body_sections": [
+    "<content point 1 -- the actual information being conveyed>"
+  ],
+  "requested_action": "<what, if anything, the parent needs to do -- can be an empty string for a pure FYI message>",
+  "sender_name": "<full name of the sender -- teacher or school representative>",
+  "sender_title": "<e.g. Giao vien chu nhiem, TM. Ban Giam hieu>",
+  "contact_info": "<phone/email for the parent to reply to -- leave empty string if genuinely unavailable, do NOT invent one>"
+}

@@ -1,0 +1,24 @@
+{
+  "mcq": [
+    {
+      "question": "Phương trình 2x + 4 = 0 có nghiệm là?",
+      "choices": ["x = -2", "x = 2", "x = -4", "x = 4"],
+      "answer": "A",
+      "topic": "Đại số",
+      "level": "nhan_biet",
+      "points": 0.25
+    }
+  ],
+  "essay": [
+    {
+      "question": "Giải phương trình bậc hai x^2 - 5x + 6 = 0 và biện luận số nghiệm.",
+      "topic": "Đại số",
+      "level": "van_dung",
+      "points": 1.0,
+      "grading_guide": [
+        {"criterion": "Tính đúng biệt thức delta", "points": 0.5},
+        {"criterion": "Kết luận đúng nghiệm", "points": 0.5}
+      ]
+    }
+  ]
+}
