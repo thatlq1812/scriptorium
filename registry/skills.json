@@ -202,6 +202,29 @@
       "dependencies": [],
       "license_debt": null,
       "elicited_from": "Chưng cất từ 3 lần chạy thật trong phiên 2026-07-26: scout Docling/MinerU trước document-ai-structurer, scout uv trước python-env-bootstrap, scout anthropics/skills theo yêu cầu owner"
+    },
+    {
+      "skill_id": "office-doc-creator",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": ["general"],
+        "task_type": ["drafting"],
+        "risk_tier": "N1",
+        "harness_compatibility": ["claude-code"]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "3 script chỉ đọc JSON local, ghi file Office local, không network call, không secret handling. Không finding."
+      },
+      "dependencies": ["python-docx==1.2.0", "python-pptx==1.0.2", "openpyxl==3.1.5", "python-env-bootstrap"],
+      "license_debt": null,
+      "elicited_from": "Owner (2026-07-26): mở rộng scout ra ngoài Anthropic cho office skills; scout-harvester tìm python-docx/python-pptx/openpyxl (MIT, verify trực tiếp), tự viết implementation"
     }
   ]
 }
