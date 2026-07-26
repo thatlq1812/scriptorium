@@ -2,7 +2,7 @@
 
 | Last Updated | Status |
 | --- | --- |
-| 2026-07-26 | 9 skill đã viết. Toàn bộ đã qua `security-audit` (đều `passed`), chưa skill nào có `quality_score` (stage 4 chưa chạy trên skill nào) — nên chưa skill nào "sẵn sàng dùng" chính thức dù đã dùng thật trong session. Xem `docs/ROADMAP.md` cho backlog mở rộng đang chạy. Mọi thứ dưới đây verify trực tiếp từ `registry/skills.json` + `skills/`. |
+| 2026-07-26 | 10 skill đã viết. Toàn bộ đã qua `security-audit` (đều `passed`), chưa skill nào có `quality_score` (stage 4 chưa chạy trên skill nào) — nên chưa skill nào "sẵn sàng dùng" chính thức dù đã dùng thật trong session. Xem `docs/ROADMAP.md` cho backlog mở rộng đang chạy. Mọi thứ dưới đây verify trực tiếp từ `registry/skills.json` + `skills/`. |
 
 ## Skill đã tồn tại
 
@@ -17,6 +17,7 @@
 | `scout-harvester` | 0.1.0 | N1 | `null` | `passed` | **Chưa chính thức** — chưng cất từ 3 lần chạy thật trong phiên (Docling, uv, anthropics/skills), chưa qua stage 4. |
 | `office-doc-creator` | 0.1.0 | N1 | `null` | `passed` | **Chưa chính thức** — smoke test thật cả 3 định dạng (docx/xlsx/pptx), đọc lại xác nhận nội dung tiếng Việt đúng. Dùng python-docx/python-pptx/openpyxl (MIT, verify trực tiếp), không đụng skill bị khóa của Anthropic. Chưa qua stage 4. |
 | `dedup-novelty-check` | 0.1.0 | N1 | `null` | `passed` | **Chưa chính thức** — script tính overlap thật (stdlib, không dependency), test cả case flagged và case an toàn trên registry thật. Chưa qua stage 4. |
+| `mermaid-diagram-designer` | 0.1.0 | N1 | `null` | `passed` | **Chưa chính thức** — 2 file reference + script lint (stdlib), test cả diagram hợp lệ và lỗi. Chưa qua stage 4. |
 
 Nguồn: `registry/skills.json`. Nếu số liệu ở đây khác `registry/skills.json`, registry thắng — file này có thể lỗi thời.
 

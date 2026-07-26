@@ -271,6 +271,29 @@
       "dependencies": [],
       "license_debt": null,
       "elicited_from": "Chưng cất từ quy tắc dedup/novelty-check đã có sẵn trong registry/SCHEMA.md, formalize thành script tính overlap thật, verify trên 8 skill hiện có 2026-07-26"
+    },
+    {
+      "skill_id": "mermaid-diagram-designer",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": ["general"],
+        "task_type": ["drafting"],
+        "risk_tier": "N1",
+        "harness_compatibility": ["claude-code"]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "lint_mermaid.py: stdlib thuan, chi doc file/stdin local, khong network/secret. Khong finding."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Owner (2026-07-26, docs/ROADMAP.md): scout mermaid-js/mermaid (MIT, verify gh api). Cheatsheet + quy tac chon diagram tu viet lai bang loi rieng"
     }
   ]
 }
