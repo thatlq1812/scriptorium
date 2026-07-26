@@ -328,6 +328,35 @@
       ],
       "license_debt": null,
       "elicited_from": "Grounded in D:/elix/platform/scripts/gen/gen_illustrations.py + D:/UNI/S9_SP26/MLN131/project/scripts/gen-images-v2.mjs + gen-slide-images.mjs (owner's own projects): batch + skip-if-exists + style-ref anchoring + double-base64-decode fallback. Verified for real via actual API calls (model gemini-3.1-flash-lite-image)."
+    },
+    {
+      "skill_id": "citation-management",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored",
+        "adapted_from": {
+          "repo_url": "https://github.com/K-Dense-AI/scientific-agent-skills",
+          "path": "skills/citation-management",
+          "license": "MIT",
+          "cleared_by": "license-compliance-check 2026-07-26"
+        }
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": ["general"],
+        "task_type": ["research"],
+        "risk_tier": "N1",
+        "harness_compatibility": ["claude-code"]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "resolve_citation.py: network calls only to CrossRef/PubMed/arXiv (factual bibliographic APIs, no AI backend), no secret handling, no dangerous command. No finding."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Grounded in K-Dense-AI/scientific-agent-skills citation-management (MIT, cleared via license-compliance-check) for problem shape; rewritten from scratch dropping their OPENROUTER_API_KEY/image-gen dependency, using free CrossRef/PubMed/arXiv APIs instead"
     }
   ]
 }

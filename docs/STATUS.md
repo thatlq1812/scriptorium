@@ -21,6 +21,7 @@
 | `translator-en-vi` | 0.1.0 | N2 | `null` | `passed` | **Not yet official** — elicited from the owner (no fixed glossary, flexible register), 2 reference files. Hasn't passed stage 4. |
 | `latex-project-bootstrap` | 0.1.0 | N1 | `null` | `passed` | **Not yet official** — grounded in the owner's real LaTeX project. Real 4-pass build smoke test (xelatex→biber→xelatex→xelatex), 5-page PDF with correctly-rendered Vietnamese diacritics. Hasn't passed stage 4. |
 | `image-generator-gemini` | 0.3.0 | N2 | `null` | `passed` | **Not yet official** — expanded into a full designer toolkit (owner request): added batch auto-anchor, vision-analysis (image→text style), PDF-page-extraction (no AI needed). All 4 capabilities verified for REAL via actual API calls/renders (owner-authorized test key, lightweight model). Grounded in a full survey of `D:/elix/platform/scripts/gen/` (9 scripts) + `D:/UNI/S9_SP26/MLN131/project`. Hasn't passed stage 4. |
+| `citation-management` | 0.1.0 | N1 | `null` | `passed` | **Not yet official** — first harvested skill (from K-Dense-AI/scientific-agent-skills, MIT). DOI/PMID/arXiv → BibTeX via free CrossRef/PubMed/arXiv APIs, no AI backend. Verified real: 3 real lookups correct (AlphaFold DOI, a PMID, an arXiv ID) + 1 correct failure case. Hasn't passed stage 4. |
 
 Source: `registry/skills.json`. If the numbers here differ from `registry/skills.json`, the registry wins — this file may be stale.
 
