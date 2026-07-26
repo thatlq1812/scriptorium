@@ -248,6 +248,29 @@
       ],
       "license_debt": null,
       "elicited_from": "Owner (2026-07-26): mở rộng scout ra ngoài Anthropic cho office skills; scout-harvester tìm python-docx/python-pptx/openpyxl (MIT, verify trực tiếp), tự viết implementation"
+    },
+    {
+      "skill_id": "dedup-novelty-check",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": ["meta"],
+        "task_type": ["review-qa"],
+        "risk_tier": "N1",
+        "harness_compatibility": ["claude-code"]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "check_dedup.py: stdlib thuan (argparse/json/re), chi doc registry/skills.json local, khong ghi/network/secret. Khong finding."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Chưng cất từ quy tắc dedup/novelty-check đã có sẵn trong registry/SCHEMA.md, formalize thành script tính overlap thật, verify trên 8 skill hiện có 2026-07-26"
     }
   ]
 }

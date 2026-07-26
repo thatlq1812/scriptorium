@@ -2,7 +2,7 @@
 
 | Last Updated | Status |
 | --- | --- |
-| 2026-07-26 | 8 skill đã viết. Toàn bộ đã qua `security-audit` (đều `passed`), chưa skill nào có `quality_score` (stage 4 chưa chạy trên skill nào) — nên chưa skill nào "sẵn sàng dùng" chính thức dù đã dùng thật trong session. Mọi thứ dưới đây verify trực tiếp từ `registry/skills.json` + `skills/`. |
+| 2026-07-26 | 9 skill đã viết. Toàn bộ đã qua `security-audit` (đều `passed`), chưa skill nào có `quality_score` (stage 4 chưa chạy trên skill nào) — nên chưa skill nào "sẵn sàng dùng" chính thức dù đã dùng thật trong session. Xem `docs/ROADMAP.md` cho backlog mở rộng đang chạy. Mọi thứ dưới đây verify trực tiếp từ `registry/skills.json` + `skills/`. |
 
 ## Skill đã tồn tại
 
@@ -16,6 +16,7 @@
 | `security-audit` | 0.1.0 | N2 | `null` | `passed` (self-audit) | **Chưa chính thức** — đã áp dụng thật lên 5 skill trên (self-audit), chưa qua stage 4. |
 | `scout-harvester` | 0.1.0 | N1 | `null` | `passed` | **Chưa chính thức** — chưng cất từ 3 lần chạy thật trong phiên (Docling, uv, anthropics/skills), chưa qua stage 4. |
 | `office-doc-creator` | 0.1.0 | N1 | `null` | `passed` | **Chưa chính thức** — smoke test thật cả 3 định dạng (docx/xlsx/pptx), đọc lại xác nhận nội dung tiếng Việt đúng. Dùng python-docx/python-pptx/openpyxl (MIT, verify trực tiếp), không đụng skill bị khóa của Anthropic. Chưa qua stage 4. |
+| `dedup-novelty-check` | 0.1.0 | N1 | `null` | `passed` | **Chưa chính thức** — script tính overlap thật (stdlib, không dependency), test cả case flagged và case an toàn trên registry thật. Chưa qua stage 4. |
 
 Nguồn: `registry/skills.json`. Nếu số liệu ở đây khác `registry/skills.json`, registry thắng — file này có thể lỗi thời.
 
@@ -30,10 +31,10 @@ Nguồn: `registry/skills.json`. Nếu số liệu ở đây khác `registry/ski
 | 5. Security audit | `skills/security-audit/SKILL.md` | Có — đã áp dụng thật lên 5 skill (self-audit) |
 | 6. Scout/harvester | `skills/scout-harvester/SKILL.md` | Có |
 | 7. License-compliance check | `skills/license-compliance-check/SKILL.md` | Có |
-| 8. Dedup/novelty-check | — | Chưa xây (quy tắc có trong `registry/SCHEMA.md`, chưa tự động hóa) |
-| 9. Registry | `registry/SCHEMA.md` + `registry/skills.json` | Có, 8 entry |
+| 8. Dedup/novelty-check | `skills/dedup-novelty-check/SKILL.md` | Có |
+| 9. Registry | `registry/SCHEMA.md` + `registry/skills.json` | Có, 9 entry |
 
-Bộ xương pipeline (stage 3-7, 9) đã đủ skill vận hành. Còn thiếu: stage 1/2 (chưa cần skill hóa, vẫn làm thủ công tốt), stage 8 (dedup tự động).
+Bộ xương pipeline (stage 3-9) đầy đủ 7/7 skill vận hành. Còn thiếu duy nhất: stage 1/2 (Research, Elicit tacit process) — chưa skill hóa, vẫn làm thủ công tốt, chưa rõ cần thiết phải skill hóa hay không.
 
 ## Sổ nợ pháp lý (license debt)
 
