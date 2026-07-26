@@ -63,6 +63,27 @@
       },
       "dependencies": ["uv"],
       "elicited_from": "Owner (docs/archive/pre-spec-2026-07-26/note.md mục 3): skill 'chứa đầy đủ một phiên bản python' để người dùng phổ thông chạy được skill Python phức tạp không cần tự cài đặt trước; grounded bằng uv (Astral) làm bootstrap tool"
+    },
+    {
+      "skill_id": "license-compliance-check",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": ["meta"],
+        "task_type": ["review-qa"],
+        "risk_tier": "N2",
+        "harness_compatibility": ["claude-code"]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "pending",
+        "date": null
+      },
+      "dependencies": [],
+      "elicited_from": "Case thật 2026-07-26: kiểm tra license github.com/anthropics/skills qua gh api — phát hiện license hỗn hợp (Apache-2.0 cho skill-creator, điều khoản độc quyền cấm redistribute cho docx/pdf/pptx/xlsx)"
     }
   ]
 }

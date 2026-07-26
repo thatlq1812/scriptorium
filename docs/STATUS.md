@@ -2,7 +2,7 @@
 
 | Last Updated | Status |
 | --- | --- |
-| 2026-07-26 | 3 skill đã viết (`skill-creator` từ stage 3, `document-ai-structurer` + `python-env-bootstrap` — 2 skill domain/task-type/hạ tầng thật đầu tiên). Cả ba chưa qua stage 4/5. Mọi thứ dưới đây verify trực tiếp từ `registry/skills.json` + `skills/`. |
+| 2026-07-26 | 4 skill đã viết (`skill-creator` stage 3, `document-ai-structurer` + `python-env-bootstrap` skill thật, `license-compliance-check` stage 7). Cả bốn chưa qua stage 4/5. Mọi thứ dưới đây verify trực tiếp từ `registry/skills.json` + `skills/`. |
 
 ## Skill đã tồn tại
 
@@ -11,6 +11,7 @@
 | `skill-creator` | 0.1.0 | N2 | `null` | `pending` | **Chưa** — chưa qua stage 4 (quality eval ≥2 harness) và stage 5 (security audit). Chỉ mới verify chạy trên Claude Code. |
 | `document-ai-structurer` | 0.1.0 | N1 | `null` | `pending` | **Chưa** — smoke test 1 PDF thật thành công (Claude Code, Windows), chưa qua stage 4/5 chính thức, chưa test DOCX/PPTX/XLSX/ảnh scan. Phụ thuộc `docling` + `python-env-bootstrap` (xem `skills/document-ai-structurer/SKILL.md`). |
 | `python-env-bootstrap` | 0.1.0 | N1 | `null` | `pending` | **Chưa** — verify chạy đúng trên Windows qua PowerShell thật (dùng để bootstrap `document-ai-structurer`). Đã phát hiện + ghi lại lỗi thật: chạy qua Git Bash/MSYS2 trên Windows khiến `uv` detect nhầm platform Linux — xem `skills/python-env-bootstrap/SKILL.md`. |
+| `license-compliance-check` | 0.1.0 | N2 | `null` | `pending` | **Chưa** — verify chạy thật trên `github.com/anthropics/skills` (Claude Code), phát hiện license hỗn hợp thật (Apache-2.0 vs điều khoản độc quyền cấm redistribute). Chưa qua stage 4/5 chính thức. |
 
 Nguồn: `registry/skills.json`. Nếu số liệu ở đây khác `registry/skills.json`, registry thắng — file này có thể lỗi thời.
 
@@ -24,9 +25,9 @@ Nguồn: `registry/skills.json`. Nếu số liệu ở đây khác `registry/ski
 | 4. Quality evaluation | — | Chưa xây |
 | 5. Security audit | — | Chưa xây |
 | 6. Scout/harvester | — | Chưa xây |
-| 7. License-compliance check | — | Chưa xây |
+| 7. License-compliance check | `skills/license-compliance-check/SKILL.md` | Có |
 | 8. Dedup/novelty-check | — | Chưa xây (quy tắc có trong `registry/SCHEMA.md`, chưa tự động hóa) |
-| 9. Registry | `registry/SCHEMA.md` + `registry/skills.json` | Có, 1 entry |
+| 9. Registry | `registry/SCHEMA.md` + `registry/skills.json` | Có, 4 entry |
 
 ## Hạ tầng
 
