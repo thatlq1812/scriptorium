@@ -1,0 +1,35 @@
+{
+  "observation": {
+    "description": "<what was measured/noticed/reported, in plain factual language>",
+    "source": "<measurement or data source>",
+    "population_or_system": "<who/what was observed>",
+    "unit_of_observation": "<the thing each data point describes>",
+    "uncertainty": "<known measurement error, missingness, exclusions, preprocessing>",
+    "was_pattern_expected_or_post_hoc": "<expected | exploratory | selected after viewing results>"
+  },
+  "research_question": "<the answerable question this record addresses>",
+  "claim_type": "<descriptive | associational | predictive | causal | mechanistic>",
+  "candidates": [
+    {
+      "id": "C1",
+      "statement": "<the candidate hypothesis, stated as a proposal, not a fact>",
+      "class": "<mechanism | measurement_artifact | confounding | selection_bias | reverse_causation | temporal_boundary_condition | stochastic_variation | competing_mechanism>",
+      "status": "candidate"
+    }
+  ],
+  "predictions": [
+    {
+      "candidate_id": "C1",
+      "observable": "<what would be measured>",
+      "expected_pattern": "<the pattern this candidate predicts>",
+      "falsifying_result": "<a result that would be incompatible with this candidate>",
+      "contrasted_with": ["<id of at least one rival candidate this prediction discriminates from>"]
+    }
+  ],
+  "authorization": {
+    "accountable_human": "<name/role>",
+    "data_sensitivity": "<public | internal | restricted | unpublished | personal>",
+    "required_reviews": ["<e.g. IRB, IACUC, IBC, none>"],
+    "unresolved_blocks": "<anything not yet cleared>"
+  }
+}

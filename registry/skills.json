@@ -415,6 +415,35 @@
       "dependencies": [],
       "license_debt": null,
       "elicited_from": "Grounded in K-Dense-AI/scientific-agent-skills exploratory-data-analysis (MIT, cleared via license-compliance-check) for the safety posture and EDA-rigor checklist; scoped down to only the 'automated core' tier (CSV/TSV/JSON, stdlib-only), dropping the optional NumPy/h5py/Biopython/Pillow/tifffile inspectors and 6 domain-specific reference docs as specialized-tier, out of scope for this general-tier harvest round"
+    },
+    {
+      "skill_id": "hypothesis-generation",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored",
+        "adapted_from": {
+          "repo_url": "https://github.com/K-Dense-AI/scientific-agent-skills",
+          "path": "skills/hypothesis-generation",
+          "license": "MIT",
+          "cleared_by": "license-compliance-check 2026-07-26"
+        }
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": ["general"],
+        "task_type": ["research"],
+        "risk_tier": "N2",
+        "harness_compatibility": ["claude-code"]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "3 scripts: local-only, stdlib only (json/re/argparse), zero network calls, no dynamic execution, no secret handling. N2 reflects subject-matter risk (hypothesis framing can mislead if misused), not a tooling finding. No finding."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Grounded in K-Dense-AI/scientific-agent-skills hypothesis-generation (MIT, cleared via license-compliance-check) for the object model and non-negotiable boundaries (rivals required, status never confirmed/proven, no clinical claims, human-accountability gate); scoped down from the original's 7-script/9-reference-doc suite to 3 tools: schema validator, causal-claim linter, preregistration-scaffold generator"
     }
   ]
 }
