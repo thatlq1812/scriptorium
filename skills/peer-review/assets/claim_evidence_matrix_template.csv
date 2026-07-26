@@ -1,0 +1,3 @@
+claim_id,location,claim_text,evidence_ids,alignment_ok,limitation_noted,requested_action
+C1,"Abstract, para 2","<private working note -- not echoed by the validator>","Fig2;Table1","true","",""
+C2,"Results 3.2","<private working note>","","false","no supporting result cited for this claim","request the authors cite the supporting analysis or soften the claim"

@@ -444,6 +444,35 @@
       "dependencies": [],
       "license_debt": null,
       "elicited_from": "Grounded in K-Dense-AI/scientific-agent-skills hypothesis-generation (MIT, cleared via license-compliance-check) for the object model and non-negotiable boundaries (rivals required, status never confirmed/proven, no clinical claims, human-accountability gate); scoped down from the original's 7-script/9-reference-doc suite to 3 tools: schema validator, causal-claim linter, preregistration-scaffold generator"
+    },
+    {
+      "skill_id": "peer-review",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored",
+        "adapted_from": {
+          "repo_url": "https://github.com/K-Dense-AI/scientific-agent-skills",
+          "path": "skills/peer-review",
+          "license": "MIT",
+          "cleared_by": "license-compliance-check 2026-07-26"
+        }
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": ["general"],
+        "task_type": ["review-qa"],
+        "risk_tier": "N2",
+        "harness_compatibility": ["claude-code"]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "4 scripts: local-only, stdlib only (json/csv/re/argparse), zero network calls, no credential/env reading, no dynamic execution. N2 reflects subject-matter risk (confidential manuscript review, authorization/confidentiality boundary), not a tooling finding. No finding."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Grounded in K-Dense-AI/scientific-agent-skills peer-review (MIT, cleared via license-compliance-check) for the mandatory safety boundary (authorization/confidentiality gate, never send unpublished content externally, reviewer-recommends-editor-decides discipline) and intake-gate-first workflow; scoped down from the original's 7-script/5-reference-doc suite to 4 tools: intake validator, claim-evidence matrix validator, scaffold generator, tone/channel/decision-overreach linter"
     }
   ]
 }

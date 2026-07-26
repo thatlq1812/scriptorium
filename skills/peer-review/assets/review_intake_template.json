@@ -1,0 +1,26 @@
+{
+  "submission_type": "<manuscript | preprint | protocol | proposal | revision>",
+  "review_question": "<what is being asked of the reviewer>",
+  "target_venue": "<venue/publisher name>",
+  "review_model": "<single-blind | double-blind | open | other>",
+  "authorization": {
+    "authorized_by": "<publisher/editor/author name and role who authorized this review>",
+    "authorization_basis": "<e.g. editor assignment, invited review>",
+    "venue_policy_checked": false,
+    "ai_tool_policy": "<what the venue's policy says about AI-assisted review, or 'not checked yet'>"
+  },
+  "confidentiality": {
+    "external_service_use": false,
+    "data_reuse_planned": false,
+    "retention_or_deletion_plan": "<what happens to local copies after the review is submitted>"
+  },
+  "accountability": {
+    "accountable_human": "<name/role of the human who will read the full submission and submit the review>",
+    "competence_areas": ["<area1>", "<area2>"],
+    "competence_limits": "<what falls outside reviewer expertise; note if specialist review is needed>",
+    "conflicts_of_interest": "<none | described>",
+    "conflicts_resolved": false
+  },
+  "materials_available": ["manuscript"],
+  "materials_missing": []
+}
