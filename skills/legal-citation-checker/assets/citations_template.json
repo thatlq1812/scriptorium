@@ -1,0 +1,18 @@
+{
+  "citations": [
+    {
+      "dieu": 12,
+      "khoan": 2,
+      "diem": "a",
+      "van_ban_so_hieu": "30/2020/NĐ-CP",
+      "van_ban_ten": "<full official title of the document, e.g. Nghị định về công tác văn thư>"
+    },
+    {
+      "dieu": 5,
+      "khoan": null,
+      "diem": null,
+      "van_ban_so_hieu": "5512/BGDĐT-GDTrH",
+      "van_ban_ten": "<full official title>"
+    }
+  ]
+}

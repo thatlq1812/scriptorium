@@ -979,6 +979,29 @@
       "dependencies": [],
       "license_debt": null,
       "elicited_from": "The 7-section output schema is elicited from outside_research/research_01_result_01.md's legal-opinion output-schema table. Survey items 1 and 10 (outside_research/research_01_survey.md) both carry the note 'Dựa theo nguồn 100%, không tự generate thông tin mới' (base 100% on source, never self-generate) -- the exact principle this validator enforces mechanically: every claim in the 3 grounded sections (verified facts, statutory grounds, application analysis) must cite a real, caller-declared source, and a citation to a nonexistent source id is a hard error. Same discipline already applied by citation-management to academic citations, extended here to legal research given Stanford RegLab/HAI's 'Hallucination-Free?' finding that even purpose-built legal-AI tools hallucinate 17-33% of the time (docs/specs/STRATEGY_SPEC.md §5.2)."
+    },
+    {
+      "skill_id": "legal-citation-checker",
+      "version": "0.1.0",
+      "source": {"type": "self-authored"},
+      "license": "MIT",
+      "tags": {
+        "domain": ["legal"],
+        "task_type": ["review-qa"],
+        "risk_tier": "N2",
+        "harness_compatibility": ["claude-code"],
+        "grounding": "not_applicable",
+        "object_type": ["citation"]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "validate_citation_format.py: local-only, stdlib only (re/json/argparse), zero network calls, no dynamic execution, no secret handling. No finding."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Elicited from survey item 2 (outside_research/research_01_survey.md), whose own note flags automatic hiệu-lực (in-effect) status tracking as hard ('hơi khó vì VBPL thay đổi liên tục'). Deliberately does NOT attempt hiệu-lực verification -- no free Vietnamese legal-document API exists for this project to query, unlike CrossRef for citation-management's academic identifiers -- and is instead scoped to what's honestly deterministic without external data: citation format validation against known Vietnamese legal-document numbering conventions (with-year and công-văn-style without-year), plus flagging the same document cited under two different titles. Full gap rationale: docs/ROADMAP.md."
     }
   ]
 }
