@@ -10,8 +10,8 @@ metadata:
   pipeline_stage: 3
   source: self-authored
   elicited_from: "Owner tacit knowledge from the EduStation postmortem (docs/archive/pre-spec-2026-07-26/handoff.md) + deep research session 2026-07-26, distilled into docs/specs/STRATEGY_SPEC.md"
-  version: 0.2.0
-  adapted_from: "The 'pushy description' pattern + trigger eval set (should-trigger/should-not-trigger) adapted from github.com/anthropics/skills skills/skill-creator (Apache-2.0), cleared via skills/license-compliance-check on 2026-07-26. Rewritten in Scriptorium's own language/conventions, not copied verbatim."
+  version: 0.3.0
+  adapted_from: "The 'pushy description' pattern + trigger eval set adapted from github.com/anthropics/skills skills/skill-creator (Apache-2.0), cleared via skills/license-compliance-check on 2026-07-26. The gold-template + scaffold-script pattern adapted from D:/elix/edustation/skills/_templates/ (owner's prior project) -- kept the copy-a-skeleton principle and REQUIRED/CHOOSE comment legend, dropped the harness-specific tier/CI-enforcement machinery. Rewritten in Scriptorium's own language/conventions, not copied verbatim."
 ---
 
 # skill-creator
@@ -37,6 +37,25 @@ Frontmatter has exactly 6 keys: `name`, `description`, `license`, `compatibility
 - `compatibility` — ≤500 chars. List only harnesses that have ACTUALLY been verified running. A harness that hasn't been tested must not be listed, even if a vendor showcase claims support (see `docs/archive/pre-spec-2026-07-26/raw_research.md` §1 — Kimi Code CLI is absent from the official showcase even though many secondary sources claim it's supported).
 - `metadata` — a free key-value map, use at minimum Scriptorium's 5 standard fields: `domain`, `task_type`, `risk_tier` (N1-N5, per `registry/SCHEMA.md`), `source` (`self-authored` or `harvested`), `elicited_from` (a short description of the elicited knowledge source — this field must never be empty).
 - `allowed-tools` — marked Experimental in the spec. Only add it when there's a concrete safety reason to restrict tools (e.g. a high risk-tier skill shouldn't have arbitrary file-write access). Don't add it by default "just in case."
+
+## Scaffold from a gold template — don't write SKILL.md from a blank file
+
+Copy from a template in `templates/` instead of authoring from scratch each time — reduces variance/errors and speeds up creation. Decide which:
+
+- **Standalone** (`templates/standalone_skill/`) — a user/agent invokes it directly for a deliverable. Mirrors `document-ai-structurer`, `office-doc-creator`, `image-generator-gemini`.
+- **Dependency** (`templates/dependency_skill/`) — infrastructure another skill leans on, not invoked directly for a deliverable. Mirrors `python-env-bootstrap`, `license-compliance-check`, `dedup-novelty-check`.
+
+```bash
+python skills/skill-creator/scripts/scaffold_skill.py <skill_id> --template standalone_skill
+```
+
+This only automates the folder/file mechanics (copies the template, substitutes `<skill_id>`) — it does NOT skip the precondition above. Every remaining `<...>` slot in the copied `SKILL.md` still needs filling from real elicited input + research, and every `<!-- -->` comment block must be deleted before the skill ships.
+
+See `templates/README.md` for the full rationale (adapted from `D:/elix/edustation/skills/_templates/` — the owner's prior project — keeping the copy-a-skeleton principle, dropping the harness-specific machinery).
+
+## Readiness check before handing off to quality-eval
+
+If the skill's own `SKILL.md` body references a script (e.g. "run `scripts/foo.py`"), that script MUST exist and actually work — never leave a stub, a `NotImplementedError`, or a script that was described in prose but never written. Before calling a skill "created," run it once yourself on a trivial real input and confirm the output matches what the SKILL.md claims. A skill whose documented behavior doesn't match its actual behavior is worse than no skill — it actively misleads the next agent that reads it.
 
 ## Structural constraints
 

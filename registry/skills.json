@@ -3,7 +3,7 @@
   "skills": [
     {
       "skill_id": "skill-creator",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "source": {
         "type": "self-authored",
         "adapted_from": {
@@ -158,7 +158,7 @@
     },
     {
       "skill_id": "scout-harvester",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "source": {
         "type": "self-authored"
       },
