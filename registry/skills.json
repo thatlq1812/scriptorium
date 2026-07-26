@@ -343,7 +343,7 @@
     },
     {
       "skill_id": "image-generator-gemini",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "source": {
         "type": "self-authored"
       },
@@ -352,17 +352,17 @@
         "domain": ["general"],
         "task_type": ["drafting"],
         "risk_tier": "N2",
-        "harness_compatibility": []
+        "harness_compatibility": ["claude-code"]
       },
       "quality_score": null,
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
-        "note": "generate_image.py: doc GEMINI_API_KEY tu env (bring-your-own-key, khong hardcode), goi API ngoai co khai bao ro trong SKILL.md, khong ghi/luu key ra file. Khong finding."
+        "note": "generate_image.py: doc GEMINI_API_KEY tu env (bring-your-own-key, khong hardcode), goi API ngoai co khai bao ro trong SKILL.md, khong ghi/luu key ra file. Batch mode chi ghi file local trong out-dir. Khong finding."
       },
       "dependencies": ["google-genai==2.14.0", "python-env-bootstrap"],
       "license_debt": null,
-      "elicited_from": "Grounded tu D:/elix/platform/scripts/gen/gen_illustrations.py (du an rieng cua owner): google-genai SDK (Apache-2.0, verify PyPI), model gemini-3-pro-image-preview, generate_content response_modalities=[IMAGE]"
+      "elicited_from": "Grounded tu D:/elix/platform/scripts/gen/gen_illustrations.py + D:/UNI/S9_SP26/MLN131/project/scripts/gen-images-v2.mjs + gen-slide-images.mjs (du an rieng cua owner): batch + skip-if-exists + style-ref anchoring + double-base64-decode fallback. Verify that bang API call thuc te (model gemini-3.1-flash-lite-image)."
     }
   ]
 }
