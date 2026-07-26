@@ -10,7 +10,8 @@ metadata:
   pipeline_stage: 3
   source: self-authored
   elicited_from: "Owner tacit knowledge từ EduStation postmortem (docs/archive/pre-spec-2026-07-26/handoff.md) + deep research session 2026-07-26, chưng cất vào docs/specs/STRATEGY_SPEC.md"
-  version: 0.1.0
+  version: 0.2.0
+  adapted_from: "Pattern 'pushy description' + trigger eval set (should-trigger/should-not-trigger) adapted từ github.com/anthropics/skills skills/skill-creator (Apache-2.0), cleared qua skills/license-compliance-check ngày 2026-07-26. Đã diễn đạt lại theo ngôn ngữ/quy chế riêng của Scriptorium, không copy nguyên văn."
 ---
 
 # skill-creator
@@ -31,7 +32,7 @@ Nếu thiếu một trong hai, output của bước này rơi vào nhóm "self-g
 Frontmatter chỉ có đúng 6 key: `name`, `description`, `license`, `compatibility`, `metadata`, `allowed-tools`. Mọi field riêng của Scriptorium (domain, task_type, risk_tier, pipeline_stage, elicited_from, harness_verified...) đi vào trong `metadata`, không bao giờ ở cấp top-level.
 
 - `name` — bắt buộc, ≤64 ký tự, chỉ chữ thường/số/hyphen, PHẢI trùng tên thư mục cha trong `skills/`.
-- `description` — bắt buộc, ≤1024 ký tự. Nêu rõ CẢ hai: skill làm gì, VÀ khi nào nên dùng / khi nào không nên dùng (giúp agent chọn đúng skill giữa nhiều skill có sẵn).
+- `description` — bắt buộc, ≤1024 ký tự. Nêu rõ CẢ hai: skill làm gì, VÀ khi nào nên dùng / khi nào không nên dùng (giúp agent chọn đúng skill giữa nhiều skill có sẵn). Đây là cơ chế trigger chính — agent tiêu thụ quyết định có dùng skill hay không chỉ dựa vào `description` (chưa đọc thân bài). Xu hướng chung là **under-trigger** (agent bỏ qua skill lẽ ra nên dùng): viết description hơi "đẩy mạnh" thay vì trung tính — nêu rõ các biến thể ngữ cảnh/cách diễn đạt khác nhau mà người dùng có thể gõ, không chỉ 1 câu mẫu duy nhất. Trước khi chốt description, tự sinh 8-10 câu hỏi "nên trigger" + 8-10 câu "không nên trigger" (đặc biệt near-miss — câu hỏi dùng từ khóa gần giống nhưng thực ra cần skill khác) và tự kiểm description có phân biệt đúng không; sửa nếu sai.
 - `license` — SPDX identifier. Nếu skill harvested từ nguồn ngoài, license phải khớp license gốc và đã qua license-compliance check (bước 7 pipeline) — không tự ý đổi sang MIT.
 - `compatibility` — ≤500 ký tự. Chỉ liệt kê harness ĐÃ verify chạy thật. Harness chưa test thì không được liệt kê, kể cả khi vendor showcase nói có hỗ trợ (xem `docs/archive/pre-spec-2026-07-26/raw_research.md` §1 — Kimi Code CLI không có trong showcase chính thức dù nhiều nguồn thứ cấp nói có).
 - `metadata` — map key-value tự do, dùng tối thiểu 5 field chuẩn của Scriptorium: `domain`, `task_type`, `risk_tier` (N1–N5, theo `registry/SCHEMA.md`), `source` (`self-authored` hoặc `harvested`), `elicited_from` (mô tả ngắn nguồn tri thức đã elicit — trường này không được để rỗng).

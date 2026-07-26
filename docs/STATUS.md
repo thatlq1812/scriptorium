@@ -8,7 +8,7 @@
 
 | skill_id | version | risk_tier | quality_score | security_audit | Sẵn sàng dùng? |
 | --- | --- | --- | --- | --- | --- |
-| `skill-creator` | 0.1.0 | N2 | `null` | `pending` | **Chưa** — chưa qua stage 4 (quality eval ≥2 harness) và stage 5 (security audit). Chỉ mới verify chạy trên Claude Code. |
+| `skill-creator` | 0.2.0 | N2 | `null` | `pending` | **Chưa** — chưa qua stage 4 (quality eval ≥2 harness) và stage 5 (security audit). Chỉ mới verify chạy trên Claude Code. |
 | `document-ai-structurer` | 0.1.0 | N1 | `null` | `pending` | **Chưa** — smoke test 1 PDF thật thành công (Claude Code, Windows), chưa qua stage 4/5 chính thức, chưa test DOCX/PPTX/XLSX/ảnh scan. Phụ thuộc `docling` + `python-env-bootstrap` (xem `skills/document-ai-structurer/SKILL.md`). |
 | `python-env-bootstrap` | 0.1.0 | N1 | `null` | `pending` | **Chưa** — verify chạy đúng trên Windows qua PowerShell thật (dùng để bootstrap `document-ai-structurer`). Đã phát hiện + ghi lại lỗi thật: chạy qua Git Bash/MSYS2 trên Windows khiến `uv` detect nhầm platform Linux — xem `skills/python-env-bootstrap/SKILL.md`. |
 | `license-compliance-check` | 0.1.0 | N2 | `null` | `pending` | **Chưa** — verify chạy thật trên `github.com/anthropics/skills` (Claude Code), phát hiện license hỗn hợp thật (Apache-2.0 vs điều khoản độc quyền cấm redistribute). Chưa qua stage 4/5 chính thức. |

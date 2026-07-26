@@ -17,8 +17,8 @@ Tham chiếu quyết định: `docs/specs/STRATEGY_SPEC.md` §3 (bước 9) và 
 |---|---|---|
 | `skill_id` | string | Định danh gốc, bất biến, trùng tên thư mục trong `skills/`. |
 | `version` | string (semver) | Tăng khi nội dung SKILL.md thay đổi có ý nghĩa. |
-| `source` | object | `{ "type": "self-authored" \| "harvested", "repo_url"?: string, "commit"?: string }`. Nếu `harvested`, `repo_url` + `commit` bắt buộc. |
-| `license` | string | SPDX identifier (`MIT`, `Apache-2.0`, ...). Bắt buộc qua license-compliance check nếu `source.type = harvested`. |
+| `source` | object | `{ "type": "self-authored" \| "harvested", "repo_url"?: string, "commit"?: string, "adapted_from"?: { "repo_url", "path", "license", "cleared_by" } }`. Nếu `harvested`, `repo_url` + `commit` bắt buộc. `adapted_from` dùng khi `type = self-authored` nhưng có pattern/ý tưởng cụ thể mượn từ nguồn ngoài đã qua license-compliance-check (không phải harvest nguyên khối) — vẫn phải qua check trước khi ghi. |
+| `license` | string | SPDX identifier (`MIT`, `Apache-2.0`, ...). Bắt buộc qua license-compliance check nếu `source.type = harvested` HOẶC `source.adapted_from` có giá trị. |
 | `tags.domain` | string[] | ≥1 giá trị. |
 | `tags.task_type` | string[] | ≥1 giá trị. |
 | `tags.risk_tier` | string | Đúng 1 giá trị N1–N5. |
