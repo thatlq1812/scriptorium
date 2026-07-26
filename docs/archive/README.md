@@ -13,3 +13,8 @@ Toàn bộ thảo luận + báo cáo nghiên cứu thô dẫn tới quyết đ�
 - `full_content_and_research.md` — bản merge Phần A (tổng hợp định hướng) + Phần B (toàn văn raw_research.md), là tài liệu tham chiếu đầy đủ nhất của giai đoạn thảo luận.
 
 Con số/giả định trong các file này có thể đã lỗi thời hoặc chưa xác thực (tự các file cũng ghi rõ "cần kiểm lại" ở một số chỗ) — dùng `docs/specs/STRATEGY_SPEC.md` làm nguồn xác thực hiện tại, không trích trực tiếp từ đây.
+
+## important-2026-07-26/
+
+- `important.md` — chỉ thị owner về backlog mở rộng skill (4 repo nguồn ngoài, phản hồi về bài blog "Top 10" có số liệu không xác thực được, ảnh sơ đồ 42-skill tham khảo). Đã chưng cất vào `docs/ROADMAP.md`.
+- `skill-org-chart-reference.jpg` — ảnh sơ đồ tổ chức skill của một sản phẩm thương mại khác, owner gửi làm cảm hứng cấu trúc mở rộng domain (không copy nội dung, xem `docs/ROADMAP.md`).
