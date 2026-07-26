@@ -1,23 +1,23 @@
-# Nhận diện văn phong nguồn — EN ↔ VI
+# Detecting the source register — EN ↔ VI
 
-Không có văn phong mặc định cố định — luôn xác định giọng điệu văn bản nguồn trước, rồi ánh xạ sang tiếng đích tương ứng.
+There is no fixed default register — always determine the source text's tone first, then map it onto the corresponding target register.
 
-## Tín hiệu nhận diện văn phong (tiếng Anh nguồn)
+## Register signals (English source)
 
-| Tín hiệu | Trang trọng | Thân mật |
+| Signal | Formal | Casual |
 | --- | --- | --- |
-| Contraction (don't/can't) | Hiếm/không dùng | Phổ biến |
-| Từ vựng | Latinate ("utilize", "commence") | Anglo-Saxon ("use", "start") |
-| Câu | Dài, cấu trúc phức | Ngắn, hội thoại |
-| Đại từ xưng hô | "one", passive voice | "you", "I", active voice |
-| Thuật ngữ kỹ thuật | Định nghĩa rõ, không viết tắt tùy tiện | Có thể dùng jargon/slang ngành |
+| Contractions (don't/can't) | Rare/avoided | Common |
+| Vocabulary | Latinate ("utilize", "commence") | Anglo-Saxon ("use", "start") |
+| Sentences | Long, complex structure | Short, conversational |
+| Address | "one," passive voice | "you," "I," active voice |
+| Technical terms | Clearly defined, no casual abbreviation | Jargon/industry slang allowed |
 
-## Ánh xạ sang tiếng Việt
+## Mapping onto Vietnamese
 
-- **Trang trọng** → dùng "quý vị/anh/chị" thay "bạn", câu đầy đủ chủ ngữ-vị ngữ, hạn chế từ lóng, giữ cấu trúc câu phức tương đương (không đơn giản hóa quá mức).
-- **Thân mật** → "bạn/mình/tớ" tùy ngữ cảnh, câu ngắn, có thể giữ nguyên từ mượn tiếng Anh phổ biến trong giới trẻ/ngành công nghệ (không ép Việt hóa "deadline" thành "hạn chót" nếu ngữ cảnh gốc đã thân mật và dùng từ mượn tự nhiên).
-- **Kỹ thuật/business** (trường hợp phổ biến nhất khi dịch tài liệu cho Scriptorium) → giữ nguyên thuật ngữ ngành đã phổ biến trong cộng đồng dùng tiếng Anh nguyên bản (API, skill, agent, prompt, token...) thay vì dịch cưỡng ép — dịch ép các từ này thường khó hiểu hơn bản gốc với đúng đối tượng đọc.
+- **Formal** → use "quý vị/anh/chị" instead of "bạn," full subject-predicate sentences, minimal slang, keep equivalent complex sentence structure (don't oversimplify).
+- **Casual** → "bạn/mình/tớ" depending on context, short sentences, may keep English loanwords common among young people/tech workers as-is (don't force-Vietnamize "deadline" into "hạn chót" if the original context is already casual and naturally uses the loanword).
+- **Technical/business** (the most common case when translating Scriptorium's documentation) → keep industry terms that are already established in the English-speaking community as-is (API, skill, agent, prompt, token...) instead of force-translating them — forcing a translation of these terms is usually harder for the intended reader to understand than the original.
 
-## Chiều ngược lại (VI → EN)
+## The reverse direction (VI → EN)
 
-Tiếng Việt có ít marker văn phong hình thức rõ ràng hơn tiếng Anh qua từ vựng đơn thuần (không có hệ contraction) — tín hiệu chính là hệ đại từ xưng hô (anh/chị/em/bạn/tôi/mình) và mật độ từ Hán-Việt trang trọng so với từ thuần Việt đời thường. Khi dịch sang tiếng Anh, ánh xạ đại từ xưng hô trang trọng (quý vị, thưa ông/bà) sang cấu trúc trang trọng tiếng Anh (formal address, "We would like to..." thay vì "We want to..."), không dịch máy móc từng đại từ (tiếng Anh không có hệ đại từ phân cấp vai vế như tiếng Việt).
+Vietnamese has fewer clear formal-register markers through vocabulary alone (no contraction system) — the main signal is the personal-pronoun system (anh/chị/em/bạn/tôi/mình) and the density of formal Sino-Vietnamese words versus everyday native Vietnamese words. When translating into English, map formal address pronouns (quý vị, thưa ông/bà) onto formal English structures (formal address, "We would like to..." instead of "We want to..."), don't mechanically translate each pronoun literally (English has no rank-based pronoun hierarchy like Vietnamese does).

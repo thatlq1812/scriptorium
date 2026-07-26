@@ -1,57 +1,57 @@
 ---
 name: scout-harvester
-description: Tìm và đánh giá sơ bộ ứng viên bên ngoài (repo GitHub, thư viện, bài báo, skill có sẵn) cho một nhu cầu skill cụ thể của Scriptorium, trước khi bất kỳ nội dung nào chạm license-compliance-check (bước 7). Dùng khi bắt đầu một skill mới và muốn biết "đã có ai giải bài này chưa, làm thế nào" trước khi tự thiết kế từ đầu. KHÔNG tự quyết định harvest/dùng — chỉ đề xuất ứng viên kèm đánh giá sơ bộ, quyết định go/no-go pháp lý luôn thuộc license-compliance-check.
+description: Finds and preliminarily evaluates outside candidates (GitHub repos, libraries, papers, existing skills) for a specific Scriptorium skill need, before any content touches license-compliance-check (step 7). Use when starting a new skill and wanting to know "has anyone already solved this, and how" before designing from scratch. Does NOT decide harvest/use on its own — only proposes candidates with a preliminary evaluation; the legal go/no-go decision always belongs to license-compliance-check.
 license: MIT
-compatibility: Quy trình research (web search + đọc code/docs), không phụ thuộc harness. Verify chạy sạch: Claude Code (2026-07-26) — đã chạy thật 3 lần trong việc xây `document-ai-structurer` (Docling/MinerU/unstructured.io), `python-env-bootstrap` (uv), và đánh giá anthropics/skills.
+compatibility: A research process (web search + reading code/docs), no harness dependency. Verified running clean: Claude Code (2026-07-26) — run for real 3 times while building `document-ai-structurer` (Docling/MinerU/unstructured.io), `python-env-bootstrap` (uv), and evaluating anthropics/skills.
 metadata:
   domain: meta
   task_type: research
   risk_tier: N1
   pipeline_stage: 6
   source: self-authored
-  elicited_from: "Chưng cất từ 3 lần chạy thật trong phiên 2026-07-26: research công cụ document-parsing trước khi xây document-ai-structurer, research python bootstrap tool trước khi xây python-env-bootstrap, và scout anthropics/skills theo yêu cầu owner — cả ba đều theo cùng 1 pattern chưa từng viết ra thành quy trình"
+  elicited_from: "Distilled from 3 real runs in the 2026-07-26 session: researching document-parsing tools before building document-ai-structurer, researching a python bootstrap tool before building python-env-bootstrap, and scouting anthropics/skills at owner's request — all three followed the same pattern that had never been written down as a process before"
   version: 0.1.0
 ---
 
 # scout-harvester
 
-Trả lời: **thứ này đã có ai làm tốt chưa, và nếu có, có đáng học/dùng không** — trước khi `skill-creator` tự thiết kế từ đầu, và trước khi bất kỳ nội dung nào được phép chạm `license-compliance-check`.
+Answers: **has anyone already done this well, and if so, is it worth learning from/using** — before `skill-creator` designs from scratch, and before any content is allowed to touch `license-compliance-check`.
 
-## Khi nào chạy
+## When to run
 
-Ngay sau khi xác định nhu cầu một skill mới (từ elicit hoặc từ yêu cầu owner), TRƯỚC khi viết `SKILL.md`. Bỏ qua bước này = coi như tự thiết kế từ số 0, đôi khi hợp lý (nhu cầu quá đặc thù Scriptorium, ví dụ `license-compliance-check` — không có tiền lệ ngoài để scout) nhưng phải là quyết định có ý thức, không phải mặc định.
+Right after identifying a need for a new skill (from elicitation or an owner request), BEFORE writing `SKILL.md`. Skipping this step = designing from zero, sometimes reasonable (a need too Scriptorium-specific to have an outside precedent, e.g. `license-compliance-check` — nothing external to scout), but it must be a deliberate decision, not the default.
 
-## Quy trình (rút từ 3 case thật đã chạy)
+## Process (distilled from 3 real runs)
 
-### 1. Xác định phạm vi tìm kiếm
+### 1. Determine search scope
 
-Ba loại nguồn khác nhau, tìm theo thứ tự ưu tiên khác nhau tùy nhu cầu:
-- **Công cụ/thư viện đã đóng gói** (vd Docling, uv) — ưu tiên khi cần NĂNG LỰC kỹ thuật cụ thể (parse PDF, quản lý Python env). Tìm qua: so sánh nhiều lựa chọn cùng lúc (đừng chốt cái đầu tiên tìm thấy), ưu tiên self-host/không cần API key ngoài.
-- **Skill/repo có sẵn cùng ý tưởng** (vd anthropics/skills) — ưu tiên khi cần THAM KHẢO cách trình bày/quy trình cho một loại skill đã phổ biến. Kiểm marketplace lớn trước (skills.sh, agentskills.io showcase) rồi tới GitHub topic search.
-- **Bài báo/tiêu chuẩn** (vd SkillsBench, llms.txt) — ưu tiên khi cần grounding phương pháp luận, không có "code để harvest" mà có "cách nghĩ để học theo".
+Three different kinds of sources, searched in different priority order depending on the need:
+- **Packaged tools/libraries** (e.g. Docling, uv) — prioritize when a specific technical CAPABILITY is needed (parsing PDFs, managing a Python env). Search by: comparing several options at once (don't lock in the first one found), prefer self-hosted/no external API key needed.
+- **An existing skill/repo with the same idea** (e.g. anthropics/skills) — prioritize when REFERENCE for how to present/structure a common type of skill is needed. Check major marketplaces first (skills.sh, the agentskills.io showcase) then GitHub topic search.
+- **Papers/standards** (e.g. SkillsBench, llms.txt) — prioritize when methodology grounding is needed, when there's no "code to harvest" but there is "a way of thinking to learn from."
 
-### 2. Đánh giá sơ bộ mỗi ứng viên (KHÔNG phải audit sâu — đó là bước sau)
+### 2. Preliminary evaluation of each candidate (NOT a deep audit — that's a later step)
 
-Cho mỗi ứng viên, trả lời nhanh 4 câu, không cần điều tra kỹ:
-- Có đang được dùng/maintain thật không (activity, adoption) hay chỉ là proof-of-concept bỏ hoang?
-- Input/output/năng lực có khớp đúng nhu cầu, hay chỉ "gần giống"?
-- License NHÌN QUA có vẻ gì (MIT/Apache/proprietary/không rõ) — chỉ ghi nhận, KHÔNG tự kết luận go/no-go ở bước này, đó là việc của license-compliance-check.
-- Có ứng viên nào rõ ràng tốt hơn hẳn (self-host, permissive, output đúng nhu cầu) để không cần so hết mọi lựa chọn?
+For each candidate, quickly answer 4 questions, no deep investigation needed:
+- Is it actually in real use/maintained (activity, adoption) or just an abandoned proof-of-concept?
+- Does the input/output/capability actually match the need, or just "roughly similar"?
+- What does the license LOOK LIKE at a glance (MIT/Apache/proprietary/unclear) — just note it, do NOT conclude go/no-go at this step, that's license-compliance-check's job.
+- Is there a candidate clearly better than the rest (self-hosted, permissive, output matching the need) so the full comparison can stop early?
 
-### 3. Bàn giao
+### 3. Handoff
 
-Đầu ra là một bảng ứng viên (không phải SKILL.md, không phải quyết định harvest) chuyển tới `license-compliance-check` (bước 7) cho những ứng viên có khả năng dùng code/pattern thật, hoặc thẳng tới `skill-creator` (bước 3) kèm ghi chú "grounding từ nghiên cứu X" nếu chỉ là tài liệu tham khảo phương pháp luận (không có code để check license).
+The output is a candidate table (not a SKILL.md, not a harvest decision) passed to `license-compliance-check` (step 7) for candidates that might use real code/patterns, or straight to `skill-creator` (step 3) with a "grounded in research X" note if it's purely methodology reference material (no code to license-check).
 
-## Việc scout-harvester KHÔNG làm
+## What scout-harvester does NOT do
 
-- Không tự quyết định license SAFE/BLOCKED — luôn bàn giao license-compliance-check.
-- Không tự viết SKILL.md — đó là skill-creator.
-- Không điều tra sâu từng ứng viên (đọc hết source, test hết tính năng) — đó là việc của bước sau nếu ứng viên được chọn tiếp tục.
+- Doesn't decide SAFE/BLOCKED on licenses itself — always hands off to license-compliance-check.
+- Doesn't write SKILL.md itself — that's skill-creator.
+- Doesn't deeply investigate each candidate (reading all the source, testing every feature) — that's the next step's job if a candidate is selected to continue.
 
-## Case thật đã chạy (2026-07-26)
+## Real cases run (2026-07-26)
 
-| Nhu cầu | Ứng viên tìm được | Chọn | Bàn giao |
+| Need | Candidates found | Chosen | Handed off to |
 | --- | --- | --- | --- |
-| Parse PDF/DOCX/ảnh → cấu trúc AI-optimized | Docling, MinerU, unstructured.io, marker, MarkItDown, LlamaParse, Reducto | Docling (MIT, self-host, output JSON mạnh) | license-compliance-check (đã cleared) → dùng làm dependency, không copy code |
-| Bootstrap Python không cần máy có sẵn Python | `uv` (Astral) | `uv` | license-compliance-check (MIT, dùng làm external tool qua installer chính thức, không vendor code) |
-| Tham khảo cấu trúc skill-creator | github.com/anthropics/skills | skill-creator (Apache-2.0) trong repo đó; docx/pdf/pptx/xlsx BLOCKED | license-compliance-check (đã chạy thật, phát hiện license hỗn hợp) |
+| Parse PDF/DOCX/images → AI-optimized structure | Docling, MinerU, unstructured.io, marker, MarkItDown, LlamaParse, Reducto | Docling (MIT, self-hosted, strong JSON output) | license-compliance-check (cleared) → used as a dependency, no code copied |
+| Bootstrap Python without an existing Python install | `uv` (Astral) | `uv` | license-compliance-check (MIT, used as an external tool via its official installer, no vendored code) |
+| Reference structure for skill-creator | github.com/anthropics/skills | skill-creator (Apache-2.0) inside that repo; docx/pdf/pptx/xlsx BLOCKED | license-compliance-check (run for real, found mixed licensing) |

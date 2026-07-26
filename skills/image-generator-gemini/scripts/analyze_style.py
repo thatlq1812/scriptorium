@@ -56,11 +56,11 @@ def main() -> int:
     args = parser.parse_args()
 
     if not args.image_path.exists():
-        sys.exit(f"Không tìm thấy {args.image_path}")
+        sys.exit(f"Not found: {args.image_path}")
 
     api_key = args.api_key or os.environ.get("GEMINI_API_KEY")
     if not api_key:
-        sys.exit("Thiếu GEMINI_API_KEY — set biến môi trường hoặc dùng --api-key.")
+        sys.exit("Missing GEMINI_API_KEY — set the environment variable or use --api-key.")
 
     client = genai.Client(api_key=api_key)
     description = analyze(client, args.image_path, args.model)

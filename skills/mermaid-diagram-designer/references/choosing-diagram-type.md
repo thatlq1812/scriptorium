@@ -1,24 +1,24 @@
-# Chọn loại diagram theo tình huống
+# Choosing a diagram type by situation
 
-| Tình huống mô tả | Loại diagram | Vì sao |
+| Described situation | Diagram type | Why |
 | --- | --- | --- |
-| "làm A rồi tới B, nếu X thì rẽ nhánh" | `flowchart` | Biểu diễn quyết định/rẽ nhánh trực quan nhất |
-| "hệ thống A gọi hệ thống B, B trả lời, có thứ tự thời gian" | `sequenceDiagram` | Duy nhất trong Mermaid thể hiện được trục thời gian giữa nhiều actor |
-| "class/entity này kế thừa/chứa class kia" | `classDiagram` | Ký hiệu UML chuẩn cho quan hệ kế thừa/composition |
-| "đối tượng chuyển từ trạng thái này sang trạng thái khác khi có sự kiện" | `stateDiagram-v2` | Không dùng flowchart để giả lập state machine — thiếu ngữ nghĩa transition/event |
-| "bảng A liên kết bảng B theo tỷ lệ 1-nhiều" | `erDiagram` | Ký hiệu quan hệ CSDL chuẩn (crow's foot) |
-| "việc này kéo dài từ ngày X tới Y, phụ thuộc việc trước" | `gantt` | Duy nhất có trục thời gian lịch thật |
-| "tỷ lệ phần trăm giữa vài nhóm" | `pie` | Đơn giản, đủ dùng cho 3-6 lát cắt; nhiều hơn thì khó đọc, cân nhắc bar chart ở công cụ khác |
-| "trải nghiệm người dùng qua các bước, có mức độ hài lòng" | `journey` | Có trục cảm xúc (điểm số) tích hợp sẵn, flowchart không có |
-| "ý tưởng phân nhánh không có thứ tự/thời gian cố định" | `mindmap` | Cấu trúc cây tự do, không ép vào luồng tuyến tính |
-| "chuỗi sự kiện theo mốc thời gian nhưng không phải task có duration" | `timeline` | Nhẹ hơn gantt, không cần ngày bắt đầu/kết thúc chính xác |
+| "do A then B, branch if X" | `flowchart` | The clearest way to show decisions/branching |
+| "system A calls system B, B replies, there's a time order" | `sequenceDiagram` | The only Mermaid type that shows a time axis across multiple actors |
+| "this class/entity inherits/contains that class" | `classDiagram` | Standard UML notation for inheritance/composition relationships |
+| "an object moves from one state to another on an event" | `stateDiagram-v2` | Don't use a flowchart to fake a state machine — it lacks transition/event semantics |
+| "table A links to table B one-to-many" | `erDiagram` | Standard database relationship notation (crow's foot) |
+| "this task runs from date X to Y, depends on an earlier task" | `gantt` | The only type with a real calendar time axis |
+| "percentage split between a few groups" | `pie` | Simple, good for 3-6 slices; more than that gets hard to read, consider a bar chart in another tool |
+| "user experience across steps, with a satisfaction level" | `journey` | Has a built-in emotion axis (score), which flowchart doesn't |
+| "branching ideas with no fixed order/timeline" | `mindmap` | Free tree structure, not forced into a linear flow |
+| "a sequence of events by time marker but not tasks with duration" | `timeline` | Lighter than gantt, doesn't need precise start/end dates |
 
-## Quy tắc quyết định nhanh
+## Quick decision rules
 
-1. Có trục **thời gian thật** (ngày tháng cụ thể, duration) → `gantt` hoặc `timeline`.
-2. Có **nhiều actor tương tác qua lại** → `sequenceDiagram`.
-3. Có **trạng thái + sự kiện chuyển trạng thái** (không phải chỉ bước tuần tự) → `stateDiagram-v2`.
-4. Có **cấu trúc dữ liệu/class quan hệ tĩnh** (không phải luồng xử lý) → `classDiagram` hoặc `erDiagram`.
-5. Còn lại, mặc định `flowchart` — linh hoạt nhất, dùng được cho hầu hết quy trình/quyết định.
+1. There's a **real time axis** (specific dates, duration) → `gantt` or `timeline`.
+2. There are **multiple interacting actors** → `sequenceDiagram`.
+3. There are **states + state-transition events** (not just sequential steps) → `stateDiagram-v2`.
+4. There's a **static data structure/class relationship** (not a processing flow) → `classDiagram` or `erDiagram`.
+5. Otherwise, default to `flowchart` — the most flexible, usable for most processes/decisions.
 
-Khi không chắc, hỏi lại người dùng muốn nhấn mạnh khía cạnh nào (thứ tự thời gian? trạng thái? quan hệ dữ liệu?) thay vì đoán — chọn sai loại diagram làm người đọc hiểu sai bản chất hệ thống, không chỉ là vấn đề thẩm mỹ.
+When unsure, ask the user which aspect they want to emphasize (time order? state? data relationships?) instead of guessing — picking the wrong diagram type makes the reader misunderstand the system's actual nature, which is more than just an aesthetic issue.

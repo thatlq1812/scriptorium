@@ -1,32 +1,32 @@
 ---
 name: latex-project-bootstrap
-description: Dựng khung dự án LaTeX (book/report) đúng chuẩn ngay từ đầu — XeLaTeX + fontspec/polyglossia cho tiếng Việt (không dùng pdfLaTeX + babel, dễ lỗi dấu), biblatex + biber cho bibliography, kèm build script đúng thứ tự 4-pass. Dùng khi cần bắt đầu một tài liệu LaTeX mới (sách, báo cáo nghiên cứu, luận văn) có tiếng Việt. KHÔNG dùng để tạo nội dung/chương sách thật (đó là công việc soạn thảo riêng) — skill này chỉ dựng khung kỹ thuật đúng, tránh 2 lỗi phổ biến nhất khi bắt đầu dự án LaTeX tiếng Việt từ đầu.
+description: Scaffolds a LaTeX project (book/report) correctly from the start — XeLaTeX + fontspec/polyglossia for Vietnamese (not pdfLaTeX + babel, which is prone to diacritic bugs), biblatex + biber for bibliography, plus a build script in the correct 4-pass order. Use when starting a new LaTeX document (book, research report, thesis) containing Vietnamese. Do NOT use to write actual book/chapter content (that's separate drafting work) — this skill only scaffolds the correct technical setup, avoiding the 2 most common mistakes when starting a Vietnamese LaTeX project from scratch.
 license: MIT
-compatibility: Cần XeLaTeX (`xelatex`) + `biber` cài sẵn (MiKTeX/TeX Live). Script scaffold là Python 3 stdlib thuần, không cần venv. Verify chạy sạch: Claude Code, Windows (2026-07-26, build thật 4-pass, PDF 5 trang, tiếng Việt có dấu render đúng qua MiKTeX 25.12).
+compatibility: Requires XeLaTeX (`xelatex`) + `biber` already installed (MiKTeX/TeX Live). The scaffold script is pure Python 3 stdlib, no venv needed. Verified running clean: Claude Code, Windows (2026-07-26, real 4-pass build, 5-page PDF, correctly-rendered Vietnamese diacritics via MiKTeX 25.12).
 metadata:
   domain: general
   task_type: drafting
   risk_tier: N1
   source: self-authored
-  elicited_from: "Grounded từ dự án LaTeX thật của owner (D:/elix/researches/textbooks — chương trình sách giáo khoa dùng thật trong sản xuất): engine XeLaTeX + polyglossia/fontspec, build sequence xelatex->biber->xelatex->xelatex, quan sát trực tiếp từ textbooks/templates/core/elix-textbook.cls và docs/methodology/idea_to_book_series.md Phase 6. Tự viết scaffold generic, không copy nguyên file .cls 476 dòng đặc thù chương trình K-12 của owner."
+  elicited_from: "Grounded in the owner's real LaTeX project (D:/elix/researches/textbooks — a textbook program in real production use): the XeLaTeX + polyglossia/fontspec engine, the xelatex->biber->xelatex->xelatex build sequence, observed directly from textbooks/templates/core/elix-textbook.cls and docs/methodology/idea_to_book_series.md Phase 6. Wrote a generic scaffold from scratch, didn't copy the owner's 476-line .cls file specific to their K-12 program."
   version: 0.1.0
 ---
 
 # latex-project-bootstrap
 
-Dựng khung dự án LaTeX đúng ngay từ lần đầu — tránh 2 lỗi phổ biến nhất khi ai đó tự bắt đầu: dùng sai engine cho tiếng Việt, và quên thứ tự build 4-pass khi có bibliography.
+Scaffolds a LaTeX project correctly on the first try — avoiding the 2 most common mistakes someone makes starting on their own: using the wrong engine for Vietnamese, and forgetting the 4-pass build order when a bibliography is involved.
 
-## Bài học nguồn (từ dự án LaTeX thật)
+## Source lesson (from a real LaTeX project)
 
-Đọc `references/vietnamese-latex-setup.md` trước khi viết bất kỳ file `.tex` nào — bài học rút từ một chương trình LaTeX sản xuất thật (không phải lý thuyết): pdfLaTeX + babel `vietnamese` dễ lỗi dấu thanh khi phối với font hiện đại; XeLaTeX + `fontspec`/`polyglossia` xử lý Unicode trực tiếp, ổn định hơn nhiều.
+Read `references/vietnamese-latex-setup.md` before writing a single `.tex` file — a lesson drawn from a real production LaTeX program (not theory): pdfLaTeX + babel `vietnamese` is prone to tone-mark bugs when paired with modern fonts; XeLaTeX + `fontspec`/`polyglossia` handles Unicode directly, far more stable.
 
-## Dựng khung dự án
+## Scaffold the project
 
 ```bash
-python scripts/init_project.py <output_dir> --title "Tên tài liệu" --font "Noto Serif"
+python scripts/init_project.py <output_dir> --title "Document title" --font "Noto Serif"
 ```
 
-Sinh ra: `main.tex` (preamble XeLaTeX đúng chuẩn + biblatex/biber), `chapters/01_intro.tex`, `bibliography.bib` mẫu, `build.sh`/`build.ps1`.
+Produces: `main.tex` (a correct XeLaTeX preamble + biblatex/biber), `chapters/01_intro.tex`, a sample `bibliography.bib`, `build.sh`/`build.ps1`.
 
 ## Build
 
@@ -37,20 +37,20 @@ bash build.sh
 .\build.ps1
 ```
 
-Thứ tự bắt buộc (xem `references/vietnamese-latex-setup.md` để biết vì sao từng bước cần thiết): `xelatex → biber → xelatex → xelatex`. Bỏ qua bất kỳ pass nào có thể ra PDF thiếu citation hoặc mục lục/số trang sai.
+Required order (see `references/vietnamese-latex-setup.md` for why each step is needed): `xelatex → biber → xelatex → xelatex`. Skipping any pass can produce a PDF missing citations or with a wrong table of contents/page numbers.
 
-## Việc skill này KHÔNG làm
+## What this skill does NOT do
 
-- Không tạo nội dung chương sách thật — chỉ dựng khung kỹ thuật (preamble, build script).
-- Không cài đặt TeX distribution (MiKTeX/TeX Live) — giả định đã có sẵn trên máy, kiểm bằng `xelatex --version` trước khi dùng skill.
-- Không dùng custom class phức tạp (kiểu `elix-textbook.cls` của dự án nguồn, có macro riêng cho SGK) — dùng `book` class chuẩn + preamble tối giản, để skill portable cho mọi loại tài liệu, không chỉ sách giáo khoa.
+- Doesn't write actual chapter content — only scaffolds the technical setup (preamble, build script).
+- Doesn't install a TeX distribution (MiKTeX/TeX Live) — assumes one is already on the machine, check with `xelatex --version` before using this skill.
+- Doesn't use a complex custom class (like the source project's `elix-textbook.cls`, with its own macros for a specific textbook program) — uses the standard `book` class + a minimal preamble, keeping the skill portable for any kind of document, not just textbooks.
 
-## File đi kèm
+## Bundled files
 
-- `scripts/init_project.py` — scaffold, stdlib thuần.
-- `references/vietnamese-latex-setup.md` — bài học kỹ thuật + preamble mẫu + lỗi thường gặp.
+- `scripts/init_project.py` — the scaffold script, pure stdlib.
+- `references/vietnamese-latex-setup.md` — technical lessons + a sample preamble + common errors.
 
-## Giới hạn đã biết (v0.1.0)
+## Known limitations (v0.1.0)
 
-- Chỉ scaffold `book` class đơn giản (1 chương mẫu) — chưa hỗ trợ multi-volume, TikZ figures, hay custom environment (những thứ dự án nguồn có nhưng đặc thù riêng, không tổng quát hóa được ngay).
-- Chưa test với font khác ngoài "Noto Serif"/"Times New Roman" — nếu font không có trên máy build, `xelatex` báo lỗi rõ ràng ("Font not found"), không silent fail.
+- Only scaffolds a simple `book` class (1 sample chapter) — doesn't yet support multi-volume, TikZ figures, or custom environments (things the source project has but which are project-specific, not immediately generalizable).
+- Not tested with fonts other than "Noto Serif"/"Times New Roman" — if a font isn't on the build machine, `xelatex` reports a clear error ("Font not found"), no silent failure.

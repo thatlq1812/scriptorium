@@ -1,35 +1,35 @@
 ---
 name: translator-en-vi
-description: Dịch văn bản Anh-Việt và Việt-Anh, giữ văn phong tự nhiên theo giọng điệu nguồn (không ép một style cố định) — nhận diện trang trọng/thân mật/kỹ thuật từ chính văn bản rồi ánh xạ sang tiếng đích. Dùng khi cần dịch tài liệu, email, mô tả kỹ thuật, hoặc bất kỳ văn bản EN/VI nào cần bản dịch đọc tự nhiên như người bản ngữ viết, không phải dịch máy móc từng từ. KHÔNG dùng cho văn bản pháp lý cần độ chính xác thuật ngữ tuyệt đối/có giá trị pháp lý (hợp đồng, văn bản luật) mà chưa qua review của người có chuyên môn — bản dịch này chỉ để tham khảo/giao tiếp, không thay thế bản dịch công chứng.
+description: Translates text English-Vietnamese and Vietnamese-English, keeping a natural register that matches the source tone (not forced into one fixed style) — detects formal/casual/technical register from the text itself, then maps it onto the target language. Use when translating documents, emails, technical descriptions, or any EN/VI text that needs to read naturally, as a native speaker would write it, not translated word-by-word. Do NOT use for legally binding text needing absolute terminology precision (contracts, statutes) that hasn't been reviewed by a qualified professional — this translation is for reference/communication only, not a substitute for a certified translation.
 license: MIT
-compatibility: Thuần instructional, không script/dependency — dùng năng lực ngôn ngữ của chính agent tiêu thụ skill. Verify chạy sạch: Claude Code (2026-07-26).
+compatibility: Pure instructional, no script/dependency — uses the language capability of the consuming agent itself. Verified running clean: Claude Code (2026-07-26).
 metadata:
   domain: general
   task_type: drafting
   risk_tier: N2
   source: self-authored
-  elicited_from: "Owner (2026-07-26): không cần glossary thuật ngữ cố định, văn phong tự nhiên linh hoạt theo ngữ cảnh nguồn thay vì ép 1 style. Nội dung kỹ thuật (đối chiếu EN-VI về thì, loại từ, đại từ, thành ngữ) tự viết dựa trên hiểu biết ngôn ngữ học đối chiếu công khai."
+  elicited_from: "Owner (2026-07-26): no fixed terminology glossary needed, a natural register that flexes with the source context rather than one forced style. The technical content (EN-VI contrastive notes on tense, classifiers, pronouns, idioms) was written from scratch based on public knowledge of contrastive linguistics."
   version: 0.1.0
 ---
 
 # translator-en-vi
 
-Dịch EN↔VI đọc tự nhiên như người bản ngữ viết, không phải dịch từng từ. Phạm vi ban đầu chỉ EN-VI/VI-EN (mở rộng ngôn ngữ khác sau nếu cần — chưa có nhu cầu cụ thể).
+Translates EN↔VI to read naturally, as a native speaker would write it, not word-for-word. Initial scope is EN-VI/VI-EN only (extend to other languages later if needed — no concrete need yet).
 
-## Quy trình
+## Process
 
-1. **Đọc văn bản gốc, nhận diện văn phong** — trang trọng/thân mật/kỹ thuật (xem `references/register-detection.md` để có tín hiệu cụ thể cần tìm). Không mặc định một văn phong cố định cho mọi bản dịch.
-2. **Dịch theo nghĩa và chức năng giao tiếp, không theo từng từ** — đặc biệt cảnh giác các điểm khác biệt cấu trúc EN↔VI liệt kê ở `references/common-pitfalls-en-vi.md` (thì động từ, loại từ, đại từ nhân xưng, thành ngữ, từ vay mượn kỹ thuật).
-3. **Tự kiểm bắt buộc**: đọc lại bản dịch độc lập, không nhìn song song bản gốc — nếu phải quay lại đọc bản gốc mới hiểu bản dịch, chưa đạt, sửa lại.
-4. **Rủi ro cao (risk_tier N2)**: nếu văn bản có giá trị pháp lý/hợp đồng, luôn nói rõ với người dùng rằng bản dịch này chỉ để tham khảo, không thay thế bản dịch công chứng/có chuyên môn pháp lý xác nhận.
+1. **Read the source text, detect its register** — formal/casual/technical (see `references/register-detection.md` for the concrete signals to look for). Don't default to one fixed register for every translation.
+2. **Translate for meaning and communicative function, not word-by-word** — pay particular attention to the EN↔VI structural differences listed in `references/common-pitfalls-en-vi.md` (verb tense, classifiers, personal pronouns, idioms, technical loanwords).
+3. **Mandatory self-check**: read the translation back independently, without looking at the source side by side — if you need to go back to the source to understand the translation, it isn't good enough yet, fix it.
+4. **High risk (risk_tier N2)**: if the text carries legal/contractual weight, always tell the user clearly that this translation is for reference only, not a substitute for a certified/legally-qualified translation.
 
-## File đi kèm
+## Bundled files
 
-- `references/register-detection.md` — tín hiệu nhận diện văn phong nguồn + cách ánh xạ sang tiếng đích.
-- `references/common-pitfalls-en-vi.md` — 5 loại lỗi thường gặp cụ thể cho cặp EN↔VI, kèm cách xử lý.
+- `references/register-detection.md` — signals for detecting the source's register + how to map it onto the target language.
+- `references/common-pitfalls-en-vi.md` — 5 common error types specific to the EN↔VI pair, with how to handle them.
 
-## Việc skill này KHÔNG làm
+## What this skill does NOT do
 
-- Không tự tạo/dùng glossary thuật ngữ cố định (owner xác nhận không cần) — quyết định theo ngữ cảnh mỗi lần.
-- Không thay thế dịch thuật công chứng cho văn bản pháp lý.
-- Không mở rộng sang ngôn ngữ thứ 3 ở v0.1.0 — thêm khi có nhu cầu cụ thể, không xây trước.
+- Doesn't create/use a fixed terminology glossary (owner confirmed it isn't needed) — decided contextually each time.
+- Doesn't substitute for a certified translation of legal text.
+- Doesn't extend to a third language in v0.1.0 — add that when there's a concrete need, not built ahead of time.

@@ -1,34 +1,34 @@
-# Mermaid — cheatsheet cú pháp theo loại diagram
+# Mermaid — syntax cheatsheet by diagram type
 
-Mọi diagram Mermaid là text thuần, đặt trong code fence ```` ```mermaid ```` (markdown) hoặc `<pre class="mermaid">` (HTML). Dòng đầu tiên luôn là từ khóa khai báo loại diagram.
+Every Mermaid diagram is plain text, placed inside a ```` ```mermaid ```` code fence (markdown) or `<pre class="mermaid">` (HTML). The first line is always the diagram-type keyword.
 
-## Flowchart — quy trình, luồng quyết định
+## Flowchart — processes, decision flows
 
 ```
 flowchart TD
-    A[Bắt đầu] --> B{Điều kiện?}
-    B -->|Đúng| C[Xử lý A]
-    B -->|Sai| D[Xử lý B]
-    C --> E[Kết thúc]
+    A[Start] --> B{Condition?}
+    B -->|Yes| C[Process A]
+    B -->|No| D[Process B]
+    C --> E[End]
     D --> E
 ```
 
-Hướng: `TD`/`TB` (trên-xuống), `LR` (trái-phải), `BT`, `RL`. Hình dạng node: `[chữ nhật]`, `(bo tròn)`, `{hình thoi = quyết định}`, `((hình tròn))`, `[[subroutine]]`.
+Direction: `TD`/`TB` (top-down), `LR` (left-right), `BT`, `RL`. Node shapes: `[rectangle]`, `(rounded)`, `{diamond = decision}`, `((circle))`, `[[subroutine]]`.
 
-## Sequence diagram — tương tác qua thời gian giữa nhiều actor
+## Sequence diagram — interactions over time between multiple actors
 
 ```
 sequenceDiagram
     participant User
     participant API
-    User->>API: Gửi request
-    API-->>User: Trả response
-    Note over API: Xử lý async
+    User->>API: Send request
+    API-->>User: Return response
+    Note over API: Async processing
 ```
 
-`->>` = gọi đồng bộ (mũi tên đặc), `-->>` = trả lời (mũi tên đứt), `activate`/`deactivate` để vẽ lifeline.
+`->>` = synchronous call (solid arrow), `-->>` = reply (dashed arrow), `activate`/`deactivate` to draw a lifeline.
 
-## Class diagram — quan hệ giữa các class/entity
+## Class diagram — relationships between classes/entities
 
 ```
 classDiagram
@@ -41,9 +41,9 @@ classDiagram
     Skill *-- Metadata
 ```
 
-`<|--` kế thừa, `*--` composition, `o--` aggregation, `-->` association.
+`<|--` inheritance, `*--` composition, `o--` aggregation, `-->` association.
 
-## State diagram — máy trạng thái
+## State diagram — state machines
 
 ```
 stateDiagram-v2
@@ -54,7 +54,7 @@ stateDiagram-v2
     Published --> [*]
 ```
 
-## ER diagram — mô hình dữ liệu
+## ER diagram — data models
 
 ```
 erDiagram
@@ -67,7 +67,7 @@ erDiagram
 
 `||--o{` = one-to-many, `||--||` = one-to-one, `}o--o{` = many-to-many.
 
-## Gantt — timeline dự án
+## Gantt — project timeline
 
 ```
 gantt
@@ -77,24 +77,24 @@ gantt
     Design   :after a1, 5d
 ```
 
-## Pie — tỷ lệ đơn giản (KHÔNG phải công cụ chính cho biểu đồ dữ liệu phức tạp)
+## Pie — simple proportions (NOT the primary tool for complex data charts)
 
 ```
-pie title Phân bổ skill theo domain
+pie title Skill distribution by domain
     "meta" : 8
     "general" : 3
 ```
 
-Với dữ liệu định lượng phức tạp hơn (nhiều series, trục, tương tác), dùng công cụ chart chuyên dụng (matplotlib/Recharts/D3), không ép Mermaid làm việc nó không mạnh.
+For more complex quantitative data (multiple series, axes, interactivity), use a dedicated charting tool (matplotlib/Recharts/D3) — don't force Mermaid to do what it isn't strong at.
 
-## Journey / Mindmap / Timeline — trình bày trải nghiệm/ý tưởng phân nhánh
+## Journey / Mindmap / Timeline — presenting experiences/branching ideas
 
 ```
 journey
-    title Hành trình người dùng
-    section Khám phá
-      Tìm skill: 5: User
-      Đọc SKILL.md: 4: User
+    title User journey
+    section Discovery
+      Find a skill: 5: User
+      Read SKILL.md: 4: User
 ```
 
 ```
@@ -106,9 +106,9 @@ mindmap
     Registry
 ```
 
-## Lỗi cú pháp thường gặp (script `scripts/lint_mermaid.py` bắt được phần này)
+## Common syntax errors (caught in part by the `scripts/lint_mermaid.py` script)
 
-- Thiếu từ khóa loại diagram ở dòng đầu.
-- Ngoặc `[`, `(`, `{` không cân đối.
-- Nhãn cạnh (`|text|`) không đóng.
-- Trộn cú pháp `stateDiagram` cũ và `stateDiagram-v2` (dùng `-v2` cho mọi diagram mới, cú pháp phong phú hơn).
+- Missing diagram-type keyword on the first line.
+- Unbalanced `[`, `(`, `{` brackets.
+- An unclosed edge label (`|text|`).
+- Mixing old `stateDiagram` syntax with `stateDiagram-v2` (use `-v2` for every new diagram, richer syntax).

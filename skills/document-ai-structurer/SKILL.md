@@ -1,44 +1,44 @@
 ---
 name: document-ai-structurer
-description: Chuyển một tài liệu nguồn bất kỳ (PDF, DOCX, PPTX, XLSX, HTML, ảnh/scan) thành một cấu trúc thư mục tối ưu cho AI đọc — full.md (toàn văn), sections/*.md (tách theo heading), index.json (mục lục/manifest). Dùng khi cần nạp một tài liệu dài/không có cấu trúc sẵn (kể cả bản scan) vào ngữ cảnh của agent mà không phải đọc nguyên khối, hoặc cần tài liệu ở dạng agent khác dùng lại được. KHÔNG dùng để trình bày tài liệu cho người đọc trực tiếp (output tối ưu cho máy, không phải để in/xem).
+description: Converts any source document (PDF, DOCX, PPTX, XLSX, HTML, scanned image) into a directory structure optimized for AI reading — full.md (full text), sections/*.md (split by heading), index.json (table of contents/manifest). Use when a long/unstructured document (including scans) needs to enter an agent's context without loading the whole thing at once, or when the document needs to be in a form another agent can reuse. Do NOT use to present a document to a human reader directly (the output is optimized for machines, not for printing/viewing).
 license: MIT
-compatibility: Cần Python 3.11+ và gói `docling` (cài qua `requirements.txt` đi kèm). Verify chạy sạch: Claude Code (2026-07-26, smoke test PDF thật, 37 sections). Chưa verify: OpenAI Codex CLI, Kimi Code CLI, Antigravity CLI.
+compatibility: Requires Python 3.11+ and the `docling` package (installed via the bundled `requirements.txt`). Verified running clean: Claude Code (2026-07-26, real PDF smoke test, 37 sections). Not yet verified: OpenAI Codex CLI, Kimi Code CLI, Antigravity CLI.
 metadata:
   domain: general
   task_type: document-conversion
   risk_tier: N1
   source: self-authored
-  elicited_from: "Owner (2026-07-26): ý tưởng chuyển mọi loại tài liệu thành cấu trúc tối ưu AI (thư mục + JSON mục lục) dùng Python; grounded bằng research về Docling/MinerU/unstructured.io/llms.txt convention và chunking best practice"
+  elicited_from: "Owner (2026-07-26): idea of turning any document type into an AI-optimized structure (folder + JSON index) using Python; grounded in research on Docling/MinerU/unstructured.io/the llms.txt convention and chunking best practice"
   engine: "docling==2.115.0"
-  version: 0.1.0
+  version: 0.1.1
 ---
 
 # document-ai-structurer
 
-Chuyển đổi một tài liệu nguồn (PDF kể cả bản scan, DOCX, PPTX, XLSX, HTML, ảnh) thành cấu trúc thư mục tối ưu cho agent đọc lại — không có chuẩn ngành sẵn cho việc này (đã research, xem `docs/specs/STRATEGY_SPEC.md` liên quan), nên đây là thiết kế riêng của Scriptorium, mượn 2 ý đã validate: JSON phân cấp kiểu Docling + nguyên tắc curated-index kiểu `llms.txt`.
+Converts a source document (PDF including scans, DOCX, PPTX, XLSX, HTML, images) into a directory structure optimized for an agent to read back — there's no industry standard for this (already researched, see the related `docs/specs/STRATEGY_SPEC.md`), so this is Scriptorium's own design, borrowing 2 validated ideas: Docling-style hierarchical JSON + the `llms.txt` curated-index convention.
 
-## Khi nào dùng
+## When to use
 
-Dùng khi: tài liệu dài, không có cấu trúc sẵn cho AI (PDF gốc, bản scan, DOCX...), và agent cần đọc lại nhiều lần hoặc chỉ cần một phần (không muốn nạp nguyên file mỗi lần). Đặc biệt hữu ích cho tài liệu luật, giáo trình, báo cáo nghiên cứu, sách — bất kỳ domain nào có tài liệu nguồn dài.
+Use when: the document is long, has no AI-ready structure (raw PDF, scan, DOCX...), and the agent needs to read it back multiple times or only needs part of it (doesn't want to load the whole file every time). Especially useful for legal documents, textbooks, research reports, books — any domain with long source documents.
 
-Không dùng khi: tài liệu đã là markdown/text sạch và ngắn (không cần convert); hoặc mục đích là trình bày cho người đọc (output này không có styling, không dành để in).
+Don't use when: the document is already clean, short markdown/text (no conversion needed); or the goal is presenting it to a human reader (this output has no styling, isn't meant for printing).
 
-## Bootstrap môi trường (bắt buộc, chạy 1 lần mỗi máy)
+## Environment bootstrap (required, run once per machine)
 
-**Không dùng `.venv` đã commit sẵn — không có, vì venv là binary gắn OS/kiến trúc, không portable.** Dùng skill `python-env-bootstrap` — venv DÙNG CHUNG ở root repo, không riêng cho skill này (không giả định máy đã có Python):
+**Don't use a pre-committed `.venv` — there isn't one, because a venv is a binary tied to the OS/architecture, not portable.** Use the `python-env-bootstrap` skill — a SHARED venv at the repo root, not specific to this skill (doesn't assume the machine already has Python):
 
 ```bash
-# Từ root repo:
+# From the repo root:
 bash skills/python-env-bootstrap/scripts/bootstrap.sh skills/document-ai-structurer/requirements.txt 3.12
 # Windows: .\skills\python-env-bootstrap\scripts\bootstrap.ps1 -Requirements skills\document-ai-structurer\requirements.txt -PyVersion 3.12
 ```
 
-Lần chạy đầu tiên, Docling tải model layout-detection + OCR (RapidOCR) từ HuggingFace/ModelScope về `~/.cache` hoặc local site-packages — cần mạng, vài chục MB, chỉ tải một lần.
+On first run, Docling downloads its layout-detection + OCR (RapidOCR) models from HuggingFace/ModelScope to `~/.cache` or local site-packages — needs network, a few dozen MB, only downloaded once.
 
-## Chạy
+## Run
 
 ```bash
-# Từ root repo, venv chung:
+# From the repo root, shared venv:
 .venv/bin/python skills/document-ai-structurer/scripts/structure_doc.py <input_file> <output_dir>
 # Windows: .venv\Scripts\python.exe skills\document-ai-structurer\scripts\structure_doc.py <input_file> <output_dir>
 ```
@@ -48,18 +48,18 @@ Lần chạy đầu tiên, Docling tải model layout-detection + OCR (RapidOCR)
 ```
 <output_dir>/
   index.json          # manifest: source_file, title, engine, sections[], images[]
-  full.md              # toàn văn markdown (đọc khi cần mạch đầy đủ)
-  full_artifacts/       # ảnh trích xuất từ tài liệu (do Docling tự sinh khi có ảnh)
+  full.md              # full text markdown (read when the whole flow is needed)
+  full_artifacts/       # images extracted from the document (auto-generated by Docling when present)
   sections/
     00-<slug>.md
     01-<slug>.md
-    ...                # mỗi file là một section, tách theo heading level-2 (##)
+    ...                # each file is one section, split on level-2 headings (##)
 ```
 
-`index.json.sections[].file` trỏ tới từng file trong `sections/` — agent tiêu thụ nên đọc `index.json` trước để quyết định đọc section nào, thay vì luôn nạp `full.md`.
+`index.json.sections[].file` points to each file under `sections/` — the consuming agent should read `index.json` first to decide which section to read, instead of always loading `full.md`.
 
-## Giới hạn đã biết (v0.1.0, chưa qua quality-eval chính thức)
+## Known limitations (v0.1.1, not yet through official quality-eval)
 
-- Section chỉ tách theo heading level-2 (`##`). Tài liệu không có heading (hoặc chỉ có heading level-1/3+) sẽ ra 1 section duy nhất hoặc phân đoạn không như kỳ vọng — kiểm tra `index.json.sections` sau khi chạy, đừng giả định luôn tách đẹp.
-- Ảnh được Docling trích ra `full_artifacts/` và tham chiếu trong `full.md`; script hiện chưa tách riêng ảnh theo section hay sinh caption/OCR-text riêng cho từng ảnh trong `index.json.images` (chỉ ghi `id` + `ref` nội bộ Docling) — cần cải tiến nếu tài liệu nguồn nặng về hình ảnh/biểu đồ.
-- Chỉ smoke-test trên 1 PDF học thuật tiếng Anh (`D:/elix/researches/papers/_pdf_export/a1_3_vn_misconceptions.pdf`, 37 sections, 0 ảnh). Chưa test DOCX/PPTX/XLSX/HTML/ảnh scan tiếng Việt, chưa qua stage 4 (quality eval ≥2 harness) hay stage 5 (security audit).
+- Sections only split on level-2 headings (`##`). A document with no headings (or only level-1/3+ headings) will produce a single section or unexpected segmentation — check `index.json.sections` after running, don't assume it always splits cleanly.
+- Images are extracted by Docling into `full_artifacts/` and referenced in `full.md`; the script doesn't yet split images per section or generate a separate caption/OCR-text per image in `index.json.images` (only records Docling's internal `id` + `ref`) — needs improvement for image/chart-heavy source documents.
+- Only smoke-tested on 1 English-language academic PDF (`D:/elix/researches/papers/_pdf_export/a1_3_vn_misconceptions.pdf`, 37 sections, 0 images). Not yet tested on DOCX/PPTX/XLSX/HTML/Vietnamese scans, hasn't passed stage 4 (quality eval, ≥2 harnesses) or stage 5 (security audit).

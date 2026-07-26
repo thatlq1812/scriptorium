@@ -25,7 +25,7 @@ except ImportError:
 def extract(pdf_path: Path, output_path: Path, page_index: int, scale: float) -> tuple[int, int]:
     pdf = pdfium.PdfDocument(str(pdf_path))
     if page_index >= len(pdf):
-        raise ValueError(f"PDF chỉ có {len(pdf)} trang, không có trang index {page_index}")
+        raise ValueError(f"PDF only has {len(pdf)} pages, no page at index {page_index}")
     page = pdf[page_index]
     bitmap = page.render(scale=scale)
     pil_image = bitmap.to_pil()
@@ -37,12 +37,12 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("input_pdf", type=Path)
     parser.add_argument("output_png", type=Path)
-    parser.add_argument("--page", type=int, default=0, help="Index trang (0-based, mặc định trang đầu)")
-    parser.add_argument("--scale", type=float, default=2.0, help="Hệ số render (2.0 ~ 144 DPI cho trang chuẩn)")
+    parser.add_argument("--page", type=int, default=0, help="Page index (0-based, defaults to the first page)")
+    parser.add_argument("--scale", type=float, default=2.0, help="Render scale factor (2.0 ~ 144 DPI for a standard page)")
     args = parser.parse_args()
 
     if not args.input_pdf.exists():
-        sys.exit(f"Không tìm thấy {args.input_pdf}")
+        sys.exit(f"Not found: {args.input_pdf}")
 
     width, height = extract(args.input_pdf, args.output_png, args.page, args.scale)
     print(f"OK: wrote {args.output_png} ({width}x{height})")

@@ -1,54 +1,54 @@
 ---
 name: office-doc-creator
-description: Tạo file Word (.docx), PowerPoint (.pptx), Excel (.xlsx) thật từ một JSON content spec đơn giản, dùng thư viện MIT (python-docx, python-pptx, openpyxl) — không phải viết XML thủ công, không phụ thuộc Anthropic hay bất kỳ dịch vụ AI nào. Dùng khi cần xuất kết quả agent (báo cáo, hợp đồng, công văn, bảng dữ liệu, slide) thành file Office thật có thể mở bằng Word/Excel/PowerPoint. KHÔNG dùng để ĐỌC/phân tích file Office có sẵn (đó là `document-ai-structurer`) — skill này chỉ TẠO MỚI.
+description: Creates real Word (.docx), PowerPoint (.pptx), Excel (.xlsx) files from a simple JSON content spec, using MIT-licensed libraries (python-docx, python-pptx, openpyxl) — not hand-writing XML, no dependency on Anthropic or any AI service. Use when an agent's output (a report, contract, official letter, data table, slides) needs to become a real Office file openable in Word/Excel/PowerPoint. Do NOT use to READ/analyze an existing Office file (that's `document-ai-structurer`) — this skill only CREATES new files.
 license: MIT
-compatibility: Cần Python 3.11+ + `python-docx`/`python-pptx`/`openpyxl` (bootstrap qua `python-env-bootstrap`). Verify chạy sạch: Claude Code, Windows qua PowerShell (2026-07-26, smoke test cả 3 định dạng, xác nhận đọc lại nội dung tiếng Việt có dấu đúng).
+compatibility: Requires Python 3.11+ + `python-docx`/`python-pptx`/`openpyxl` (bootstrapped via `python-env-bootstrap`). Verified running clean: Claude Code, Windows via PowerShell (2026-07-26, smoke-tested all 3 formats, confirmed correct Vietnamese-diacritic content by reading it back).
 metadata:
   domain: general
   task_type: drafting
   risk_tier: N1
   source: self-authored
-  elicited_from: "Owner (2026-07-26): mở rộng scout ra ngoài Anthropic, dựng 'office skills' từ nguồn khác vì docx/pdf/pptx/xlsx của Anthropic bị khóa license. Scout tìm được python-docx/python-pptx/openpyxl (MIT, xác minh trực tiếp qua pip show + PyPI JSON API), tự viết implementation từ đầu."
-  version: 0.1.0
+  elicited_from: "Owner (2026-07-26): extend scouting beyond Anthropic, build 'office skills' from another source since Anthropic's docx/pdf/pptx/xlsx are license-locked. Scouting found python-docx/python-pptx/openpyxl (MIT, verified directly via pip show + the PyPI JSON API), implementation written from scratch."
+  version: 0.1.1
 ---
 
 # office-doc-creator
 
-Tạo file Office thật (không phải giả lập) từ nội dung agent đã chuẩn bị sẵn dưới dạng JSON. Ba script độc lập, mỗi định dạng một file — không dùng chung một "mega script".
+Creates real Office files (not a simulation) from content the agent has already prepared as JSON. Three independent scripts, one per format — not a single shared "mega script."
 
-## Vì sao tự viết thay vì dùng skill docx/pptx/xlsx của Anthropic
+## Why write it from scratch instead of using Anthropic's docx/pptx/xlsx skill
 
-Đã scout (`scout-harvester`) và kiểm license (`license-compliance-check`) — skill tương ứng của Anthropic có điều khoản hợp đồng cấm tuyệt đối extract/copy/derive/distribute, BLOCKED hoàn toàn. `python-docx`/`python-pptx`/`openpyxl` là thư viện MIT độc lập, không liên quan tới Anthropic, verify license trực tiếp (`pip show`, PyPI JSON API) ngày 2026-07-26 — an toàn tự viết implementation riêng.
+Already scouted (`scout-harvester`) and license-checked (`license-compliance-check`) — Anthropic's corresponding skill has a contractual clause absolutely banning extract/copy/derive/distribute, fully BLOCKED. `python-docx`/`python-pptx`/`openpyxl` are independent MIT libraries, unrelated to Anthropic, license verified directly (`pip show`, the PyPI JSON API) on 2026-07-26 — safe to write our own implementation.
 
-## Bootstrap môi trường
+## Environment bootstrap
 
-Venv DÙNG CHUNG ở root repo (không riêng cho skill này — xem `skills/python-env-bootstrap/SKILL.md`):
+A SHARED venv at the repo root (not specific to this skill — see `skills/python-env-bootstrap/SKILL.md`):
 
 ```bash
-# Khuyến nghị: qua python-env-bootstrap (PowerShell trên Windows, KHÔNG qua Git Bash):
+# Recommended: via python-env-bootstrap (PowerShell on Windows, NOT Git Bash):
 .\skills\python-env-bootstrap\scripts\bootstrap.ps1 -Requirements skills\office-doc-creator\requirements.txt -PyVersion 3.12
 ```
 
-## Tạo file Word (.docx)
+## Create a Word file (.docx)
 
 ```bash
-# Từ root repo, venv chung:
+# From the repo root, shared venv:
 .venv\Scripts\python.exe skills\office-doc-creator\scripts\create_docx.py <content.json> <output.docx>
 ```
 
 `content.json`:
 ```json
 {
-  "title": "Tiêu đề tài liệu",
+  "title": "Document title",
   "blocks": [
-    {"type": "heading", "level": 1, "text": "Phần 1"},
-    {"type": "paragraph", "text": "Nội dung đoạn văn."},
-    {"type": "table", "headers": ["Cột A", "Cột B"], "rows": [["1", "2"]]}
+    {"type": "heading", "level": 1, "text": "Section 1"},
+    {"type": "paragraph", "text": "Paragraph content."},
+    {"type": "table", "headers": ["Column A", "Column B"], "rows": [["1", "2"]]}
   ]
 }
 ```
 
-## Tạo file Excel (.xlsx)
+## Create an Excel file (.xlsx)
 
 ```bash
 .venv\Scripts\python.exe skills\office-doc-creator\scripts\create_xlsx.py <content.json> <output.xlsx>
@@ -56,16 +56,16 @@ Venv DÙNG CHUNG ở root repo (không riêng cho skill này — xem `skills/pyt
 
 `content.json`: `{ "sheets": [{ "name": "Sheet1", "headers": [...], "rows": [[...], ...] }] }`
 
-## Tạo file PowerPoint (.pptx)
+## Create a PowerPoint file (.pptx)
 
 ```bash
 .venv\Scripts\python.exe skills\office-doc-creator\scripts\create_pptx.py <content.json> <output.pptx>
 ```
 
-`content.json`: `{ "slides": [{ "title": "...", "bullets": ["...", "..."] }] }` — dùng layout "Title and Content" mặc định của PowerPoint, không custom theme.
+`content.json`: `{ "slides": [{ "title": "...", "bullets": ["...", "..."] }] }` — uses PowerPoint's default "Title and Content" layout, no custom theme.
 
-## Giới hạn đã biết (v0.1.0)
+## Known limitations (v0.1.1)
 
-- Không hỗ trợ style/theme phức tạp, ảnh chèn vào, hay template công ty riêng — chỉ tạo cấu trúc nội dung thô (heading/paragraph/table cho docx; sheet/row cho xlsx; title/bullet cho pptx). Nếu cần branding/template, mở rộng script hoặc dùng `python-docx`'s `Document(template_path)` trực tiếp.
-- Chưa test file cực lớn (>100 trang/slide/sheet) — chỉ verify với nội dung nhỏ.
-- Chưa qua stage 4 (quality eval) chính thức; security-audit đã chạy (self-audit, không finding — scripts chỉ đọc JSON local, ghi file local, không network call, không secret handling).
+- Doesn't support complex styling/themes, inserted images, or a company-specific template — only produces raw content structure (heading/paragraph/table for docx; sheet/row for xlsx; title/bullet for pptx). If branding/templates are needed, extend the script or use `python-docx`'s `Document(template_path)` directly.
+- Not yet tested on very large files (>100 pages/slides/sheets) — only verified with small content.
+- Hasn't officially passed stage 4 (quality eval); security-audit has run (self-audit, no finding — the scripts only read local JSON, write local files, no network calls, no secret handling).

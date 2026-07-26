@@ -1,57 +1,57 @@
 ---
 name: skill-creator
-description: Chuẩn hóa tri thức thủ tục đã được elicit từ một nguồn thật (chuyên gia, hoặc tacit knowledge của owner) cộng với research đã grounding, thành một Agent Skill portable tuân đúng spec mở agentskills.io (6-field frontmatter). Dùng khi input elicited-process + research đã sẵn sàng cho một quy trình lặp lại, cụ thể. KHÔNG dùng để tự suy luận ra một skill mới khi chưa có input elicited/research — self-generated skill không qua elicit đã được đo là "no benefit on average" (SkillsBench).
+description: Standardize procedural knowledge already elicited from a real source (an expert, or the owner's tacit knowledge) plus grounded research, into a portable Agent Skill following the agentskills.io open spec (6-field frontmatter). Use when elicited-process input + research are ready for a specific, repeatable procedure. Do NOT use to self-infer a new skill without elicited/research input — a self-generated skill that skipped elicitation has been measured as "no benefit on average" (SkillsBench).
 license: MIT
-compatibility: Portable theo spec mở agentskills.io (frontmatter 6 field, không mở rộng). Verify chạy sạch: Claude Code (2026-07-26). Chưa verify: OpenAI Codex CLI, Kimi Code CLI, Antigravity CLI — không được đánh dấu compatible cho tới khi test trực tiếp.
+compatibility: Portable per the agentskills.io open spec (6-field frontmatter, no extensions). Verified running clean: Claude Code (2026-07-26). Not yet verified: OpenAI Codex CLI, Kimi Code CLI, Antigravity CLI — do not mark compatible until tested directly.
 metadata:
   domain: meta
   task_type: skill-authoring
   risk_tier: N2
   pipeline_stage: 3
   source: self-authored
-  elicited_from: "Owner tacit knowledge từ EduStation postmortem (docs/archive/pre-spec-2026-07-26/handoff.md) + deep research session 2026-07-26, chưng cất vào docs/specs/STRATEGY_SPEC.md"
+  elicited_from: "Owner tacit knowledge from the EduStation postmortem (docs/archive/pre-spec-2026-07-26/handoff.md) + deep research session 2026-07-26, distilled into docs/specs/STRATEGY_SPEC.md"
   version: 0.2.0
-  adapted_from: "Pattern 'pushy description' + trigger eval set (should-trigger/should-not-trigger) adapted từ github.com/anthropics/skills skills/skill-creator (Apache-2.0), cleared qua skills/license-compliance-check ngày 2026-07-26. Đã diễn đạt lại theo ngôn ngữ/quy chế riêng của Scriptorium, không copy nguyên văn."
+  adapted_from: "The 'pushy description' pattern + trigger eval set (should-trigger/should-not-trigger) adapted from github.com/anthropics/skills skills/skill-creator (Apache-2.0), cleared via skills/license-compliance-check on 2026-07-26. Rewritten in Scriptorium's own language/conventions, not copied verbatim."
 ---
 
 # skill-creator
 
-Meta-skill sinh ra `SKILL.md` cho một skill khác trong Scriptorium. Đây là bước 3 trong pipeline bootstrap (`docs/specs/STRATEGY_SPEC.md` §3) — đứng SAU research và elicit tacit process, KHÔNG đứng trước.
+The meta-skill that produces a `SKILL.md` for another skill in Scriptorium. This is step 3 in the bootstrap pipeline (`docs/specs/STRATEGY_SPEC.md` §3) — it comes AFTER research and elicit-tacit-process, never before.
 
-## Precondition — kiểm tra trước khi chạy
+## Precondition — check before running
 
-Trước khi viết bất kỳ dòng SKILL.md nào, xác nhận cả hai điều kiện sau đã có, và ghi rõ nguồn:
+Before writing a single line of SKILL.md, confirm both of the following exist, and note their source explicitly:
 
-1. **Elicited tacit process** — quy trình đã được rút ra từ một nguồn thật (chuyên gia thực hành, hoặc chính owner của Scriptorium mô tả kinh nghiệm cụ thể), không phải suy luận của model. Nếu chưa có, DỪNG lại — quay về bước elicit, không tự bịa quy trình rồi coi là input hợp lệ.
-2. **Research đã grounding** — nguồn tham chiếu kiểm chứng được (tài liệu, benchmark, luật, tiêu chuẩn ngành), không phải kiến thức nội suy không kiểm chứng.
+1. **Elicited tacit process** — a process extracted from a real source (a practicing expert, or Scriptorium's own owner describing concrete experience), not the model's own inference. If this doesn't exist yet, STOP — go back to the elicit step; never invent a process and treat it as valid input.
+2. **Grounded research** — verifiable reference sources (documentation, benchmarks, law, industry standards), not unverified interpolated knowledge.
 
-Nếu thiếu một trong hai, output của bước này rơi vào nhóm "self-generated skill" — đã được SkillsBench đo là không cải thiện gì so với không có skill. Không tạo skill trong tình trạng đó.
+If either is missing, this step's output falls into the "self-generated skill" bucket — measured by SkillsBench as no improvement over having no skill at all. Never create a skill in that state.
 
-## Bám đúng 6 field spec — không tự chế thêm field
+## Stick to the 6-field spec — never invent extra fields
 
-Frontmatter chỉ có đúng 6 key: `name`, `description`, `license`, `compatibility`, `metadata`, `allowed-tools`. Mọi field riêng của Scriptorium (domain, task_type, risk_tier, pipeline_stage, elicited_from, harness_verified...) đi vào trong `metadata`, không bao giờ ở cấp top-level.
+Frontmatter has exactly 6 keys: `name`, `description`, `license`, `compatibility`, `metadata`, `allowed-tools`. Every Scriptorium-specific field (domain, task_type, risk_tier, pipeline_stage, elicited_from, harness_verified...) goes inside `metadata`, never at the top level.
 
-- `name` — bắt buộc, ≤64 ký tự, chỉ chữ thường/số/hyphen, PHẢI trùng tên thư mục cha trong `skills/`.
-- `description` — bắt buộc, ≤1024 ký tự. Nêu rõ CẢ hai: skill làm gì, VÀ khi nào nên dùng / khi nào không nên dùng (giúp agent chọn đúng skill giữa nhiều skill có sẵn). Đây là cơ chế trigger chính — agent tiêu thụ quyết định có dùng skill hay không chỉ dựa vào `description` (chưa đọc thân bài). Xu hướng chung là **under-trigger** (agent bỏ qua skill lẽ ra nên dùng): viết description hơi "đẩy mạnh" thay vì trung tính — nêu rõ các biến thể ngữ cảnh/cách diễn đạt khác nhau mà người dùng có thể gõ, không chỉ 1 câu mẫu duy nhất. Trước khi chốt description, tự sinh 8-10 câu hỏi "nên trigger" + 8-10 câu "không nên trigger" (đặc biệt near-miss — câu hỏi dùng từ khóa gần giống nhưng thực ra cần skill khác) và tự kiểm description có phân biệt đúng không; sửa nếu sai.
-- `license` — SPDX identifier. Nếu skill harvested từ nguồn ngoài, license phải khớp license gốc và đã qua license-compliance check (bước 7 pipeline) — không tự ý đổi sang MIT.
-- `compatibility` — ≤500 ký tự. Chỉ liệt kê harness ĐÃ verify chạy thật. Harness chưa test thì không được liệt kê, kể cả khi vendor showcase nói có hỗ trợ (xem `docs/archive/pre-spec-2026-07-26/raw_research.md` §1 — Kimi Code CLI không có trong showcase chính thức dù nhiều nguồn thứ cấp nói có).
-- `metadata` — map key-value tự do, dùng tối thiểu 5 field chuẩn của Scriptorium: `domain`, `task_type`, `risk_tier` (N1–N5, theo `registry/SCHEMA.md`), `source` (`self-authored` hoặc `harvested`), `elicited_from` (mô tả ngắn nguồn tri thức đã elicit — trường này không được để rỗng).
-- `allowed-tools` — đánh dấu Experimental trong spec. Chỉ thêm khi có lý do an toàn cụ thể để giới hạn tool (ví dụ skill risk-tier cao không nên có quyền ghi file tùy ý). Không thêm mặc định "cho chắc".
+- `name` — required, ≤64 chars, lowercase letters/numbers/hyphens only, MUST match the parent folder name under `skills/`.
+- `description` — required, ≤1024 chars. State BOTH: what the skill does, AND when to use it / when not to (helps the consuming agent pick the right skill among several). This is the primary triggering mechanism — the consuming agent decides whether to use a skill based on `description` alone (it hasn't read the body yet). The general tendency is to **under-trigger** (the agent skips a skill it should have used): write the description slightly "pushy" instead of neutral — spell out different contexts/phrasings a user might type, not just one sample sentence. Before finalizing the description, generate 8-10 "should trigger" questions + 8-10 "should not trigger" questions (especially near-misses — questions using similar keywords that actually need a different skill) and self-check whether the description discriminates correctly; fix it if not.
+- `license` — SPDX identifier. If the skill was harvested from an outside source, the license must match the original and have passed license-compliance-check (pipeline step 7) — never unilaterally switch it to MIT.
+- `compatibility` — ≤500 chars. List only harnesses that have ACTUALLY been verified running. A harness that hasn't been tested must not be listed, even if a vendor showcase claims support (see `docs/archive/pre-spec-2026-07-26/raw_research.md` §1 — Kimi Code CLI is absent from the official showcase even though many secondary sources claim it's supported).
+- `metadata` — a free key-value map, use at minimum Scriptorium's 5 standard fields: `domain`, `task_type`, `risk_tier` (N1-N5, per `registry/SCHEMA.md`), `source` (`self-authored` or `harvested`), `elicited_from` (a short description of the elicited knowledge source — this field must never be empty).
+- `allowed-tools` — marked Experimental in the spec. Only add it when there's a concrete safety reason to restrict tools (e.g. a high risk-tier skill shouldn't have arbitrary file-write access). Don't add it by default "just in case."
 
-## Ràng buộc cấu trúc
+## Structural constraints
 
-- Toàn bộ SKILL.md < 500 dòng.
-- Phần instructions (thân bài sau frontmatter) < 5000 token — nếu quy trình dài, tách phần chi tiết ra file phụ trong cùng thư mục skill và reference từ SKILL.md (progressive disclosure), không nhồi hết vào một file.
-- Không viết theo lối kể chuyện — viết theo lối instruction agent khác có thể theo mà không cần hỏi lại.
+- The entire SKILL.md must stay under 500 lines.
+- The instructions section (body after frontmatter) must stay under 5000 tokens — if the process is long, split the detail into a supporting file in the same skill folder and reference it from SKILL.md (progressive disclosure); don't cram everything into one file.
+- Don't write in a narrative style — write as instructions another agent can follow without needing to ask clarifying questions.
 
-## Việc skill-creator KHÔNG làm
+## What skill-creator does NOT do
 
-- Không tự chấm chất lượng skill vừa tạo — đó là bước 4 (quality evaluation loop), chạy riêng, trên ≥2 harness đã verify.
-- Không tự audit bảo mật skill vừa tạo — đó là bước 5 (security audit), một pipeline stage riêng biệt, không gộp chung với bước 4 (`docs/specs/STRATEGY_SPEC.md` §7 điểm 2).
-- Không tự quyết định skill đã "sẵn sàng dùng" — trạng thái đó chỉ được set khi `registry/skills.json` có `quality_score` khác null VÀ `security_audit.status = "passed"`.
+- Doesn't grade the quality of the skill it just created — that's step 4 (quality evaluation loop), run separately, on ≥2 verified harnesses.
+- Doesn't audit the security of the skill it just created — that's step 5 (security audit), a separate pipeline stage, never merged with step 4 (`docs/specs/STRATEGY_SPEC.md` §7 point 2).
+- Doesn't decide on its own that a skill is "ready to use" — that status is only set when `registry/skills.json` has a non-null `quality_score` AND `security_audit.status = "passed"`.
 
-## Output của skill-creator
+## skill-creator's output
 
-1. Thư mục `skills/<name>/SKILL.md` (và file phụ nếu cần progressive disclosure) đúng 6-field spec.
-2. Một entry nháp cho `registry/skills.json` theo đúng field trong `registry/SCHEMA.md`, với `quality_score: null` và `security_audit.status: "pending"` — không được tự set các field này thành đã pass.
-3. Nếu ứng viên gần trùng một skill đã có trong registry (≥80% phạm vi), báo lại thay vì tạo entry song song — dedup/novelty-check là bước 8, chạy trước khi bước này bắt đầu tạo nội dung mới.
+1. A `skills/<name>/SKILL.md` folder (plus supporting files if progressive disclosure is needed), matching the 6-field spec.
+2. A draft entry for `registry/skills.json` matching the fields in `registry/SCHEMA.md`, with `quality_score: null` and `security_audit.status: "pending"` — never self-set these fields as already passed.
+3. If a candidate closely overlaps an existing skill in the registry (≥80% scope), report that instead of creating a parallel entry — dedup/novelty-check is step 8, which runs before this step starts producing new content.

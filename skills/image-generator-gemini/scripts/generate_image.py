@@ -90,17 +90,18 @@ def generate(
     text = " ".join(
         p.text for c in response.candidates for p in c.content.parts if getattr(p, "text", None)
     )
-    raise RuntimeError(f"Response chứa 0 image part.{f' Model nói: {text[:200]}' if text else ''}")
+    raise RuntimeError(f"Response contained 0 image parts.{f' Model said: {text[:200]}' if text else ''}")
 
 
 def run_batch(client: "genai.Client", manifest_path: Path, out_dir: Path, model: str, delay_s: float) -> None:
     """manifest.json shape: {"style_ref": "optional/path.png" | null, "images": {"filename.png": "prompt", ...}}
 
-    Nếu style_ref là null: AUTO-ANCHOR — ảnh đầu tiên sinh ra (hoặc đã có sẵn từ
-    lần chạy trước) tự động trở thành style reference cho MỌI ảnh sau đó trong
-    cùng batch. Đây là pattern quan sát thật từ D:/UNI/S9_SP26/MLN131/project
-    (gen_marketing_images.py generate_pack): không cần chuẩn bị ảnh mẫu trước,
-    cả bộ vẫn tự đồng bộ phong cách quanh ảnh đầu tiên."""
+    If style_ref is null: AUTO-ANCHOR — the first image generated (or already
+    present from a prior run) automatically becomes the style reference for
+    EVERY image after it in the same batch. This is a pattern observed for
+    real in D:/UNI/S9_SP26/MLN131/project (gen_marketing_images.py
+    generate_pack): no sample image needs preparing beforehand, the whole set
+    still auto-syncs its style around the first image."""
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     images = manifest.get("images", {})
     style_ref = manifest.get("style_ref")
@@ -114,9 +115,9 @@ def run_batch(client: "genai.Client", manifest_path: Path, out_dir: Path, model:
     for filename, prompt in images.items():
         out_path = out_dir / filename
         if out_path.exists():
-            print(f"  SKIP  {filename} (đã tồn tại)")
+            print(f"  SKIP  {filename} (already exists)")
             if anchor_bytes is None:
-                anchor_bytes = out_path.read_bytes()  # dùng làm auto-anchor cho phần còn lại
+                anchor_bytes = out_path.read_bytes()  # use as the auto-anchor for the rest
             skipped += 1
             continue
         tag = "(anchor)" if anchor_bytes is None else "(chained)"
@@ -133,26 +134,26 @@ def run_batch(client: "genai.Client", manifest_path: Path, out_dir: Path, model:
             failed += 1
         time.sleep(delay_s)
 
-    print(f"\nXong. Generated: {generated}, Skipped: {skipped}, Failed: {failed}")
+    print(f"\nDone. Generated: {generated}, Skipped: {skipped}, Failed: {failed}")
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("prompt", nargs="?", help="Prompt cho ảnh đơn lẻ (bỏ qua nếu dùng --batch)")
-    parser.add_argument("output_path", type=Path, nargs="?", help="File output cho ảnh đơn lẻ")
-    parser.add_argument("--style-ref", type=Path, default=None, help="Ảnh tham chiếu để anchor phong cách (ảnh đơn lẻ)")
-    parser.add_argument("--batch", type=Path, default=None, help="Đường dẫn manifest JSON cho batch generation")
-    parser.add_argument("--out-dir", type=Path, default=Path("."), help="Thư mục output cho batch (mặc định thư mục hiện tại)")
-    parser.add_argument("--delay", type=float, default=3.0, help="Giây chờ giữa mỗi request trong batch (mặc định 3s, tránh rate-limit)")
+    parser.add_argument("prompt", nargs="?", help="Prompt for a single image (ignored if --batch is used)")
+    parser.add_argument("output_path", type=Path, nargs="?", help="Output file for a single image")
+    parser.add_argument("--style-ref", type=Path, default=None, help="Reference image to anchor style (single image)")
+    parser.add_argument("--batch", type=Path, default=None, help="Path to a JSON manifest for batch generation")
+    parser.add_argument("--out-dir", type=Path, default=Path("."), help="Output directory for batch mode (default: current directory)")
+    parser.add_argument("--delay", type=float, default=3.0, help="Seconds to wait between each request in batch mode (default 3s, avoids rate-limiting)")
     parser.add_argument("--model", default=DEFAULT_MODEL)
-    parser.add_argument("--api-key", default=None, help="Mặc định đọc từ biến môi trường GEMINI_API_KEY")
+    parser.add_argument("--api-key", default=None, help="Defaults to reading from the GEMINI_API_KEY environment variable")
     args = parser.parse_args()
 
     api_key = args.api_key or os.environ.get("GEMINI_API_KEY")
     if not api_key:
         sys.exit(
-            "Thiếu GEMINI_API_KEY. Đây là key RIÊNG của người dùng (bring-your-own-key), "
-            "không phải backend do Scriptorium quản lý — set biến môi trường hoặc dùng --api-key."
+            "Missing GEMINI_API_KEY. This is the user's OWN key (bring-your-own-key), "
+            "not a backend managed by Scriptorium — set the environment variable or use --api-key."
         )
     client = genai.Client(api_key=api_key)
 
@@ -161,7 +162,7 @@ def main() -> int:
         return 0
 
     if not args.prompt or not args.output_path:
-        parser.error("cần prompt + output_path cho ảnh đơn lẻ, hoặc --batch <manifest.json>")
+        parser.error("prompt + output_path are required for a single image, or use --batch <manifest.json>")
 
     data = generate(client, args.prompt, args.model, args.style_ref)
     args.output_path.write_bytes(data)

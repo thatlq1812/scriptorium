@@ -1,103 +1,103 @@
 ---
 name: image-generator-gemini
-description: Bộ công cụ designer dùng Gemini (google-genai SDK) qua API key RIÊNG của người dùng — tùy chọn, không phải backend AI do Scriptorium quản lý. Không chỉ tạo ảnh đơn lẻ: hỗ trợ style-anchoring (1 ảnh tham chiếu), auto-anchor batch (cả bộ asset tự đồng bộ phong cách quanh ảnh đầu tiên, không cần chuẩn bị mẫu trước), vision-analysis (đọc một ảnh có sẵn, mô tả phong cách thành text để tái dùng), và trích cover từ PDF có sẵn (không cần AI, render local). Dùng khi người dùng đã có Gemini API key và cần tạo/phân tích/trích xuất asset hình ảnh — từ 1 icon đơn tới cả bộ brand/cover đồng bộ. KHÔNG dùng nếu người dùng chưa có key riêng, và không phải lối tắt né nguyên tắc "Scriptorium không tích hợp AI backend" (xem ghi chú bên dưới).
+description: A designer toolkit using Gemini (google-genai SDK) via the user's OWN API key — optional, not an AI backend managed by Scriptorium. Not just single-image generation: supports style-anchoring (1 reference image), auto-anchor batch (an entire asset set auto-syncs its style around the first image, no sample prep needed beforehand), vision-analysis (reads an existing image, describes its style as text for reuse), and extracting a cover from an existing PDF (no AI needed, local render). Use when the user already has a Gemini API key and needs to create/analyze/extract image assets — from a single icon to a whole synced brand/cover set. Do NOT use if the user doesn't have their own key, and this is not a shortcut around the "Scriptorium doesn't integrate an AI backend" principle (see the note below).
 license: MIT
-compatibility: Cần Python 3.11+ + `google-genai` + `pypdfium2` (đã có sẵn qua transitive dep của `document-ai-structurer` trong venv chung — bootstrap qua `python-env-bootstrap`) + biến môi trường `GEMINI_API_KEY` của chính người dùng. Verify chạy sạch: Claude Code, Windows (2026-07-26) — verify THẬT bằng API call thật cho cả 4 khả năng: ảnh đơn lẻ, batch + skip-if-exists, style-ref anchoring, vision-analysis (mô tả phong cách đúng, chi tiết), PDF-page-extraction (render trang PDF thật, đọc được text).
+compatibility: Requires Python 3.11+ + `google-genai` + `pypdfium2` (already present via `document-ai-structurer`'s transitive dependency in the shared venv — bootstrapped via `python-env-bootstrap`) + the user's own `GEMINI_API_KEY` environment variable. Verified running clean: Claude Code, Windows (2026-07-26) — verified for REAL via actual API calls for all 4 capabilities: single image, batch + skip-if-exists, style-ref anchoring, vision-analysis (accurate, detailed style description), PDF-page-extraction (real PDF page render, text readable).
 metadata:
   domain: general
   task_type: drafting
   risk_tier: N2
   source: self-authored
-  elicited_from: "Grounded từ 3 dự án riêng của owner: D:/elix/platform/scripts/gen/ (9 script gen_*.py — pattern batch/style-chain/brand-identity/PDF-cover quan sát qua khảo sát chữ ký hàm), D:/UNI/S9_SP26/MLN131/project/scripts/ (gen-images-v2.mjs: batch+skip-if-exists; gen-slide-images.mjs: style-ref anchoring; gen_marketing_images.py generate_pack(): auto-anchor từ ảnh đầu batch nếu chưa có style_ref, pattern 'anchor'/'chained' tag). Tự viết lại toàn bộ bằng Python, tổng quát hóa, bỏ phần gắn cứng GCS/DB/style-rules đặc thù project gốc."
+  elicited_from: "Grounded in 3 of the owner's own projects: D:/elix/platform/scripts/gen/ (9 gen_*.py scripts — batch/style-chain/brand-identity/PDF-cover patterns observed via a function-signature survey), D:/UNI/S9_SP26/MLN131/project/scripts/ (gen-images-v2.mjs: batch+skip-if-exists; gen-slide-images.mjs: style-ref anchoring; gen_marketing_images.py generate_pack(): auto-anchor from the batch's first image if no style_ref is set, 'anchor'/'chained' log tag pattern). Rewrote everything from scratch in Python, generalized, dropped the parts hard-coded to GCS/DB/project-specific style-rules from the source projects."
   version: 0.3.0
 ---
 
 # image-generator-gemini
 
-Bộ công cụ designer, không chỉ generator đơn lẻ: tạo ảnh, giữ nhất quán phong cách qua nhiều ảnh (2 cách: anchor thủ công hoặc auto-anchor), đọc/mô tả phong cách ảnh có sẵn, và trích cover từ PDF không cần AI.
+A designer toolkit, not just a single-image generator: generates images, keeps a consistent style across multiple images (2 ways: manual anchor or auto-anchor), reads/describes an existing image's style, and extracts a cover from a PDF without needing AI.
 
-## Quan trọng — không mâu thuẫn với nguyên tắc "không tích hợp AI backend"
+## Important — doesn't contradict the "no AI backend integration" principle
 
-`docs/specs/STRATEGY_SPEC.md` §2 nói Scriptorium không tích hợp AI backend nào — nguyên tắc đó nói về **Scriptorium tự nó** không đứng giữa như một service gọi LLM hộ ai bằng credential của chính Scriptorium. Skill này khác bản chất: nó là instruction cho agent gọi API **bằng key của chính người dùng đang chạy skill** (bring-your-own-key), hoàn toàn tùy chọn — giống một skill "gửi email qua SendGrid" dùng SendGrid key riêng của người dùng. Không phải Scriptorium cấp key, quản lý billing, hay bắt buộc dùng.
+`docs/specs/STRATEGY_SPEC.md` §2 says Scriptorium doesn't integrate any AI backend — that principle is about **Scriptorium itself** never sitting in the middle as a service calling an LLM on someone's behalf using Scriptorium's own credentials. This skill is different in nature: it's an instruction for the agent to call an API **using the credentials of the user actually running the skill** (bring-your-own-key), entirely optional — like a "send email via SendGrid" skill using the user's own SendGrid key. Scriptorium never issues the key, manages billing, or requires its use.
 
-## Bootstrap môi trường
+## Environment bootstrap
 
-Venv DÙNG CHUNG ở root repo (xem `skills/python-env-bootstrap/SKILL.md`):
+A SHARED venv at the repo root (see `skills/python-env-bootstrap/SKILL.md`):
 
 ```bash
 .\skills\python-env-bootstrap\scripts\bootstrap.ps1 -Requirements skills\image-generator-gemini\requirements.txt -PyVersion 3.12
 ```
 
-## Ảnh đơn lẻ
+## A single image
 
 ```bash
-export GEMINI_API_KEY="key-cua-ban"   # hoặc --api-key
-.venv\Scripts\python.exe skills\image-generator-gemini\scripts\generate_image.py "mô tả ảnh cần tạo" output.png
+export GEMINI_API_KEY="your-key"   # or --api-key
+.venv\Scripts\python.exe skills\image-generator-gemini\scripts\generate_image.py "description of the image to create" output.png
 ```
 
-## Style-anchoring thủ công — giữ nhất quán phong cách với 1 ảnh mẫu có sẵn
+## Manual style-anchoring — consistent style with an existing sample image
 
 ```bash
-.venv\Scripts\python.exe skills\image-generator-gemini\scripts\generate_image.py "mô tả ảnh mới" output2.png --style-ref output.png
+.venv\Scripts\python.exe skills\image-generator-gemini\scripts\generate_image.py "description of the new image" output2.png --style-ref output.png
 ```
 
-`--style-ref` gửi kèm ảnh tham chiếu + instruction "STRICT style reference" trước prompt chính — model match palette/lighting/line-weight của ảnh tham chiếu khi vẽ chủ thể mới.
+`--style-ref` sends the reference image along with a "STRICT style reference" instruction ahead of the main prompt — the model matches the reference image's palette/lighting/line-weight when drawing the new subject.
 
-## Batch với auto-anchor — cả bộ asset tự đồng bộ phong cách, không cần mẫu trước
+## Batch with auto-anchor — a whole asset set auto-syncs its style, no prior sample needed
 
 ```bash
 .venv\Scripts\python.exe skills\image-generator-gemini\scripts\generate_image.py --batch manifest.json --out-dir assets/
 ```
 
-`manifest.json` (xem `scripts/batch_manifest.example.json`):
+`manifest.json` (see `scripts/batch_manifest.example.json`):
 ```json
 {
-  "style_ref": "path/to/reference.png hoặc null",
+  "style_ref": "path/to/reference.png or null",
   "images": {
-    "ten-file-1.png": "prompt cho ảnh 1",
-    "ten-file-2.png": "prompt cho ảnh 2"
+    "file-name-1.png": "prompt for image 1",
+    "file-name-2.png": "prompt for image 2"
   }
 }
 ```
 
-Nếu `style_ref` là **null**: **auto-anchor** — ảnh ĐẦU TIÊN sinh ra trong batch tự động trở thành style reference cho MỌI ảnh sau đó (pattern quan sát thật từ `generate_pack()` của dự án MLN131 — tag log "(anchor)" cho ảnh đầu, "(chained)" cho các ảnh sau). Không cần chuẩn bị ảnh mẫu trước khi bắt đầu — cả bộ tự đồng bộ quanh item đầu tiên. Nếu chạy lại batch dở dang, ảnh đã có (skip) cũng được dùng làm anchor, không mất tính nhất quán giữa các lần chạy.
+If `style_ref` is **null**: **auto-anchor** — the FIRST image generated in the batch automatically becomes the style reference for EVERY image after it (a pattern observed for real in the MLN131 project's `generate_pack()` — log tag "(anchor)" for the first image, "(chained)" for the rest). No need to prepare a sample image beforehand — the whole set auto-syncs around the first item. If a partial batch is re-run, an already-existing (skipped) image is also used as the anchor, preserving consistency across runs.
 
-Đặc điểm khác: **skip-if-exists** (an toàn khi batch fail giữa chừng), **rate-limit delay** giữa mỗi request (mặc định 3s, chỉnh qua `--delay`).
+Other characteristics: **skip-if-exists** (safe when a batch fails partway through), a **rate-limit delay** between each request (default 3s, adjustable via `--delay`).
 
-## Vision-analysis — đọc một ảnh có sẵn, mô tả phong cách thành text
+## Vision-analysis — read an existing image, describe its style as text
 
 ```bash
 .venv\Scripts\python.exe skills\image-generator-gemini\scripts\analyze_style.py reference.png
 ```
 
-Trả về đoạn mô tả phong cách (palette, lighting, line-weight, composition — KHÔNG mô tả chủ thể) dùng làm prompt prefix cho lần generate sau, hoặc để hiểu một brand/design system có sẵn trước khi tạo ảnh mới khớp nó. Verify thật: mô tả đúng, chi tiết, đúng cấu trúc yêu cầu (đã test 2026-07-26).
+Returns a style description (palette, lighting, line-weight, composition — NOT a subject description) usable as a prompt prefix for a future generation, or to understand an existing brand/design system before creating new images that match it. Verified for real: accurate, detailed, matches the required structure (tested 2026-07-26).
 
-## Trích cover từ PDF — KHÔNG cần AI, render local
+## Extract a cover from a PDF — NO AI needed, local render
 
 ```bash
 .venv\Scripts\python.exe skills\image-generator-gemini\scripts\extract_pdf_page.py document.pdf cover.png --page 0 --scale 2.0
 ```
 
-Dùng `pypdfium2` (đã có sẵn qua dep của `document-ai-structurer`) render 1 trang PDF thành PNG — không gọi API, không tốn phí, không cần `GEMINI_API_KEY`. Dùng khi cần cover/thumbnail từ tài liệu ĐÃ CÓ (khác các lệnh trên, vốn TẠO MỚI ảnh từ mô tả).
+Uses `pypdfium2` (already present via `document-ai-structurer`'s dependency) to render a PDF page as PNG — no API call, no cost, no `GEMINI_API_KEY` needed. Use when a cover/thumbnail is needed from a document that ALREADY EXISTS (unlike the commands above, which CREATE NEW images from a description).
 
-## Việc skill này KHÔNG làm
+## What this skill does NOT do
 
-- Không cung cấp/quản lý API key thay người dùng.
-- Không mặc định model cố định vĩnh viễn — cập nhật `DEFAULT_MODEL`/`DEFAULT_TEXT_MODEL` trong script nếu Gemini đổi tên model, đừng để model cũ silently fail.
-- Không tự động chạy khi không có `GEMINI_API_KEY` (trừ `extract_pdf_page.py`, không cần key).
-- Không hard-code style-rules/brand identity của bất kỳ project cụ thể nào (khác các script gốc quan sát được, vốn có style-rules/GCS-upload/DB-insert cứng cho từng project) — mọi nội dung phong cách/output đích luôn do người gọi skill cung cấp, giữ skill portable.
-- Không tự upload lên cloud storage hay ghi vào database — chỉ ghi file local, khác các pipeline gốc gắn với hạ tầng platform cụ thể.
+- Doesn't supply/manage the API key for the user.
+- Doesn't default to a permanently fixed model — update `DEFAULT_MODEL`/`DEFAULT_TEXT_MODEL` in the script if Gemini renames its models, don't let a stale model silently fail.
+- Doesn't run automatically without `GEMINI_API_KEY` (except `extract_pdf_page.py`, which needs no key).
+- Doesn't hard-code style-rules/brand identity for any specific project (unlike the source scripts observed, which had style-rules/GCS-upload/DB-insert hard-coded per project) — every style/output-target content is always supplied by the skill's caller, keeping the skill portable.
+- Doesn't upload to cloud storage or write to a database itself — only writes local files, unlike the source pipelines tied to specific platform infrastructure.
 
-## File đi kèm
+## Bundled files
 
-- `scripts/generate_image.py` — CLI 3 chế độ (đơn lẻ/style-ref/batch với auto-anchor).
-- `scripts/analyze_style.py` — vision-analysis, ảnh → mô tả phong cách text.
-- `scripts/extract_pdf_page.py` — trích trang PDF thành PNG, không cần AI.
-- `scripts/batch_manifest.example.json` — mẫu manifest cho chế độ batch.
+- `scripts/generate_image.py` — a 3-mode CLI (single/style-ref/batch with auto-anchor).
+- `scripts/analyze_style.py` — vision-analysis, image → text style description.
+- `scripts/extract_pdf_page.py` — extracts a PDF page as PNG, no AI needed.
+- `scripts/batch_manifest.example.json` — a sample manifest for batch mode.
 
-## Giới hạn đã biết (v0.3.0)
+## Known limitations (v0.3.0)
 
-- Model tên tại thời điểm viết (2026-07-26) — có thể đổi theo thời gian.
-- Batch chưa hỗ trợ retry tự động khi 1 ảnh fail trong cùng lần chạy — chạy lại batch sẽ tự skip ảnh đã có và chỉ thử lại ảnh fail.
-- Chưa có "style-chain thật" kiểu mỗi ảnh nối tiếp ảnh NGAY TRƯỚC nó (khác auto-anchor hiện tại, vốn cố định 1 anchor cho cả batch) — nếu cần drift phong cách có chủ đích qua một chuỗi dài, chưa hỗ trợ.
-- Chưa hỗ trợ brand-identity generation (logo + icon + favicon từ 1 mô tả sản phẩm) như 1 lệnh riêng — hiện phải tự viết manifest batch tương đương.
+- Model names as of writing (2026-07-26) — may change over time.
+- Batch doesn't yet support automatic retry when 1 image fails within the same run — re-running the batch will auto-skip existing images and only retry the failed one.
+- No "true style-chain" yet where each image chains off the image IMMEDIATELY BEFORE it (unlike the current auto-anchor, which fixes 1 anchor for the whole batch) — not yet supported if deliberate style drift across a long sequence is needed.
+- Doesn't yet support brand-identity generation (logo + icon + favicon from 1 product description) as a single command — currently requires writing an equivalent batch manifest by hand.

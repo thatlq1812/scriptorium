@@ -3,7 +3,7 @@
 setup (fontspec + polyglossia, not pdflatex + babel). Stdlib only.
 
 Usage:
-    python init_project.py <output_dir> [--title "Ten tai lieu"] [--font "Noto Serif"]
+    python init_project.py <output_dir> [--title "Document title"] [--font "Noto Serif"]
 """
 from __future__ import annotations
 
@@ -33,14 +33,14 @@ MAIN_TEX = """\\documentclass[11pt]{{book}}
 \\end{{document}}
 """
 
-CHAPTER_TEX = """\\chapter{{Giới thiệu}}
+CHAPTER_TEX = """\\chapter{{Introduction}}
 
-Nội dung chương đầu tiên. Trích dẫn ví dụ~\\cite{{example2026}}.
+Content of the first chapter. Example citation~\\cite{{example2026}}.
 """
 
 BIBLIOGRAPHY_BIB = """@article{example2026,
   author  = {Nguyen, Van A},
-  title   = {Vi du bibliography entry},
+  title   = {Example bibliography entry},
   journal = {Example Journal},
   year    = {2026},
 }
@@ -78,12 +78,12 @@ def scaffold(output_dir: Path, title: str, font: str) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("output_dir", type=Path)
-    parser.add_argument("--title", default="Tai lieu moi")
+    parser.add_argument("--title", default="New document")
     parser.add_argument("--font", default="Noto Serif")
     args = parser.parse_args()
 
     scaffold(args.output_dir, args.title, args.font)
-    print(f"OK: scaffold tại {args.output_dir} — build bằng build.sh/build.ps1 (cần xelatex + biber)")
+    print(f"OK: scaffold at {args.output_dir} — build with build.sh/build.ps1 (requires xelatex + biber)")
     return 0
 
 

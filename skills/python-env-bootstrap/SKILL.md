@@ -1,58 +1,58 @@
 ---
 name: python-env-bootstrap
-description: Tạo/mở rộng MỘT venv Python dùng chung ở root repo (sibling `skills/`), kể cả trên máy CHƯA cài Python — dùng uv (Astral), một binary tĩnh tự tải Python chuẩn. Dùng khi một skill khác khai báo `requirements.txt` và cần được cài vào môi trường chạy chung. KHÔNG dùng để cài Python vào hệ thống vĩnh viễn hay thay thế trình quản lý gói của người dùng — chỉ quản lý venv dùng chung của repo.
+description: Create/extend ONE shared Python venv at the repo root (sibling to `skills/`), even on a machine that does NOT have Python installed — uses uv (Astral), a static binary that downloads a standard Python itself. Use when another skill declares a `requirements.txt` and needs to be installed into the shared runtime environment. Do NOT use to permanently install Python system-wide or to replace the user's package manager — this only manages the repo's shared venv.
 license: MIT
-compatibility: Cần tải/cài `uv` (script cài chính thức astral.sh, không cần Python có sẵn). Verify chạy sạch: Claude Code, Windows qua PowerShell thật (2026-07-26) — venv chung tại root cài thành công dependency của 3 skill (document-ai-structurer, office-doc-creator, image-generator-gemini), import chéo không xung đột. Chạy qua Git Bash/MSYS2 trên cùng máy Windows thất bại — xem cảnh báo trong thân bài. Chưa verify: macOS/Linux thật, OpenAI Codex CLI, Kimi Code CLI, Antigravity CLI.
+compatibility: Requires downloading/installing `uv` (the official astral.sh install script, no pre-existing Python needed). Verified running clean: Claude Code, Windows via real PowerShell (2026-07-26) — the shared root venv successfully installed dependencies for 3 skills (document-ai-structurer, office-doc-creator, image-generator-gemini), no cross-import conflicts. Running via Git Bash/MSYS2 on the same Windows machine fails — see the warning in the body. Not yet verified: real macOS/Linux, OpenAI Codex CLI, Kimi Code CLI, Antigravity CLI.
 metadata:
   domain: meta
   task_type: coordination
   risk_tier: N1
   source: self-authored
-  elicited_from: "Owner (docs/archive/pre-spec-2026-07-26/note.md mục 3): ý tưởng một skill 'chứa đầy đủ một phiên bản python bên trong nó' để người dùng phổ thông chạy được skill cần Python phức tạp mà không cần tự cài đặt gì trước. Cập nhật 2026-07-26: owner yêu cầu chuyển từ venv-per-skill sang venv chung ở root — tránh trùng lặp dependency nặng (torch...) qua từng skill."
+  elicited_from: "Owner (docs/archive/pre-spec-2026-07-26/note.md point 3): the idea of a skill 'containing a full python version inside it' so ordinary users can run a skill needing complex Python without installing anything first. Updated 2026-07-26: owner requested moving from venv-per-skill to a shared venv at the root — avoids duplicating heavy dependencies (torch...) across skills."
   version: 0.2.0
 ---
 
 # python-env-bootstrap
 
-Skill hạ tầng dùng chung: bootstrap/mở rộng MỘT venv Python dùng chung ở root repo (`<repo_root>/.venv`, sibling `skills/`) cho các skill khác cần Python, dựa trên `uv` — binary tĩnh ~15MB, tự tải Python portable, không yêu cầu máy đã có Python cài sẵn.
+A shared infrastructure skill: bootstraps/extends ONE shared Python venv at the repo root (`<repo_root>/.venv`, sibling to `skills/`) for other skills that need Python, based on `uv` — a ~15MB static binary that downloads a portable Python itself, no pre-installed Python required.
 
-## Vì sao venv chung, không phải mỗi skill một venv
+## Why a shared venv, not one venv per skill
 
-**Đổi hướng 2026-07-26 (owner)**: trước đây mỗi skill có `.venv` riêng bên trong thư mục skill — dẫn tới trùng lặp dependency nặng (vd `torch` ~2GB, đã bị cài lại nhiều lần cho nhiều skill khác nhau dùng chung stack ML). Venv chung ở root giải quyết việc đó: cài 1 lần, mọi skill Python dùng chung. Verify thật: `document-ai-structurer` + `office-doc-creator` + `image-generator-gemini` cùng cài vào 1 venv, import chéo không xung đột (`docling`, `python-docx/pptx`, `openpyxl`, `google-genai` cùng tồn tại sạch).
+**Direction change 2026-07-26 (owner)**: previously each skill had its own `.venv` inside the skill folder — leading to duplicated heavy dependencies (e.g. `torch` ~2GB, reinstalled repeatedly across skills sharing the same ML stack). A shared venv at the root solves this: install once, every Python skill shares it. Verified for real: `document-ai-structurer` + `office-doc-creator` + `image-generator-gemini` all installed into the same venv, no cross-import conflicts (`docling`, `python-docx/pptx`, `openpyxl`, `google-genai` all coexist cleanly).
 
-## Vì sao không dùng `venv` chuẩn của Python
+## Why not use Python's standard `venv`
 
-`python -m venv` yêu cầu Python đã cài sẵn trên máy — không đúng giả định "người dùng phổ thông" mà owner đặt ra. `uv` giải quyết đúng khoảng trống này: cài `uv` (không cần Python) → `uv python install` tự tải Python chuẩn → `uv venv` + `uv pip install` như bình thường.
+`python -m venv` requires Python already installed on the machine — doesn't match the owner's "ordinary user" assumption. `uv` fills exactly this gap: install `uv` (no Python needed) → `uv python install` downloads a standard Python → `uv venv` + `uv pip install` as usual.
 
-## Nguyên tắc — không commit venv (nhắc lại từ `docs/specs/STRATEGY_SPEC.md` §7.7)
+## Principle — never commit a venv (repeated from `docs/specs/STRATEGY_SPEC.md` §7.7)
 
-Skill này KHÔNG tạo ra và KHÔNG commit bất kỳ venv nào vào git. Nó chỉ là logic bootstrap chạy tại thời điểm cần — venv luôn được tạo mới trên máy đang chạy, nằm trong `.gitignore` ở root repo.
+This skill does NOT create or commit any venv into git. It's purely bootstrap logic that runs when needed — the venv is always created fresh on the running machine, and sits in `.gitignore` at the repo root.
 
-## Dùng cho một skill khác
+## Using it for another skill
 
-Skill đích phải có `requirements.txt` ở gốc thư mục của nó. Chạy (từ root repo):
+The target skill must have a `requirements.txt` at its root. Run (from the repo root):
 
 ```bash
-# Unix/macOS thật (KHÔNG dùng qua Git Bash/MSYS2 trên Windows — xem cảnh báo dưới):
-bash skills/python-env-bootstrap/scripts/bootstrap.sh skills/<skill_dich>/requirements.txt [python_version]
+# Real Unix/macOS (do NOT run via Git Bash/MSYS2 on Windows — see the warning below):
+bash skills/python-env-bootstrap/scripts/bootstrap.sh skills/<target_skill>/requirements.txt [python_version]
 
-# Windows: LUÔN chạy qua PowerShell thật, không qua Git Bash:
-.\skills\python-env-bootstrap\scripts\bootstrap.ps1 -Requirements skills\<skill_dich>\requirements.txt [-PyVersion 3.12]
+# Windows: ALWAYS run via real PowerShell, not Git Bash:
+.\skills\python-env-bootstrap\scripts\bootstrap.ps1 -Requirements skills\<target_skill>\requirements.txt [-PyVersion 3.12]
 ```
 
-Kết quả: `<repo_root>/.venv` sẵn sàng (tạo mới nếu chưa có, mở rộng nếu đã có), đúng version Python + dependency của skill vừa gọi được thêm vào — venv này dùng chung cho MỌI skill Python trong repo, không tạo venv mới cho mỗi lần gọi.
+Result: `<repo_root>/.venv` is ready (created if missing, extended if it already exists), with the right Python version + the calling skill's dependencies added — this venv is shared by EVERY Python skill in the repo, no new venv is created per call.
 
-## Cảnh báo đã xác nhận bằng lỗi thật: không chạy `bootstrap.sh` từ Git Bash/MSYS2 trên Windows
+## Warning confirmed by a real bug: don't run `bootstrap.sh` from Git Bash/MSYS2 on Windows
 
-Chạy `bootstrap.sh` bên trong Git Bash (MINGW64/MSYS2) trên Windows khiến `uv` **detect nhầm platform thành `linux-x86_64-gnu`** (do `uname` của MSYS2 trả về giá trị giống Linux) và tải một Python build Linux không dùng được — venv tạo ra có symlink trỏ tới đường dẫn không tồn tại (`/home/<user>/.local/share/uv/python/...`), lỗi "No such file" khi gọi. Trên Windows, phải chạy `bootstrap.ps1` qua PowerShell thật (không phải Git Bash gọi powershell.exe lồng nhau) để `uv` detect đúng `x86_64-pc-windows-msvc`. Đã tái hiện và fix thật ngày 2026-07-26 khi bootstrap `document-ai-structurer`.
+Running `bootstrap.sh` inside Git Bash (MINGW64/MSYS2) on Windows causes `uv` to **misdetect the platform as `linux-x86_64-gnu`** (because MSYS2's `uname` returns a Linux-like value) and download an unusable Linux Python build — the resulting venv has a symlink pointing to a path that doesn't exist (`/home/<user>/.local/share/uv/python/...`), producing a "No such file" error when invoked. On Windows, `bootstrap.ps1` must run through real PowerShell (not Git Bash calling powershell.exe nested inside it) so `uv` correctly detects `x86_64-pc-windows-msvc`. Reproduced and fixed for real on 2026-07-26 while bootstrapping `document-ai-structurer`.
 
-## Giới hạn đã biết (v0.2.0)
+## Known limitations (v0.2.0)
 
-- Venv chung nghĩa là MỌI skill Python dùng cùng version dependency — nếu 2 skill cần version khác nhau của cùng 1 package, xung đột thật (chưa gặp trường hợp này, nhưng cần theo dõi khi thêm skill Python mới).
-- Verify chạy đúng trên Windows qua PowerShell thật. Script `.sh` viết theo chuẩn POSIX nhưng chưa test thật trên macOS/Linux thật.
-- Cài `uv` lần đầu cần mạng (tải installer từ astral.sh) — không hoạt động hoàn toàn offline lần chạy đầu.
-- Chưa qua stage 4 (quality eval ≥2 harness) và stage 5 (security audit).
+- A shared venv means EVERY Python skill uses the same dependency versions — if 2 skills need different versions of the same package, that's a real conflict (hasn't happened yet, but needs watching as new Python skills are added).
+- Verified working correctly on Windows via real PowerShell. The `.sh` script is written to POSIX standards but hasn't been tested for real on macOS/Linux.
+- Installing `uv` for the first time needs network access (downloading the installer from astral.sh) — not fully offline-capable on the first run.
+- Hasn't passed stage 4 (quality eval, ≥2 harnesses) or stage 5 (security audit).
 
-## Skill đang phụ thuộc vào skill này
+## Skills depending on this skill
 
-- `document-ai-structurer`, `office-doc-creator`, `image-generator-gemini` (xem `registry/skills.json`, field `dependencies`).
+- `document-ai-structurer`, `office-doc-creator`, `image-generator-gemini` (see `registry/skills.json`, `dependencies` field).

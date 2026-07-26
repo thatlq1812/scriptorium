@@ -4,7 +4,7 @@ skill-creator starts. Stdlib only — no dependency, no venv needed.
 
 Usage:
     python check_dedup.py --domain general legal --task-type document-conversion \
-        --description "Chuyen doi tai lieu PDF thanh markdown co cau truc" \
+        --description "Convert PDF documents into structured markdown" \
         [--registry ../../../registry/skills.json] [--threshold 0.8]
 """
 from __future__ import annotations
@@ -85,10 +85,10 @@ def main() -> int:
     flagged = [r for r in results if r["combined_score"] >= args.threshold]
     if flagged:
         print(f"\nFLAGGED (>= {args.threshold}): {[r['skill_id'] for r in flagged]}")
-        print("Ưu tiên mở rộng/versioning skill đã có thay vì tạo mới.")
+        print("Prefer extending/versioning the existing skill instead of creating a new one.")
         return 1
 
-    print(f"\nKhông có skill nào vượt ngưỡng {args.threshold} — an toàn để tiếp tục skill-creator.")
+    print(f"\nNo skill crossed the {args.threshold} threshold — safe to proceed to skill-creator.")
     return 0
 
 

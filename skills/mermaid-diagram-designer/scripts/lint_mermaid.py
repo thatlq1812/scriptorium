@@ -29,12 +29,12 @@ def lint(text: str) -> list[str]:
     issues: list[str] = []
     lines = [l for l in text.splitlines() if l.strip()]
     if not lines:
-        return ["Diagram rỗng."]
+        return ["Empty diagram."]
 
     first_token = lines[0].strip().split()[0] if lines[0].strip() else ""
     if first_token not in KNOWN_KEYWORDS:
         issues.append(
-            f"Dòng đầu '{lines[0].strip()}' không khớp từ khóa loại diagram đã biết "
+            f"First line '{lines[0].strip()}' doesn't match a known diagram-type keyword "
             f"({', '.join(sorted(KNOWN_KEYWORDS))})."
         )
 
@@ -51,32 +51,32 @@ def lint(text: str) -> list[str]:
             stack.append(BRACKET_PAIRS[ch])
         elif ch in BRACKET_PAIRS.values():
             if not stack or stack.pop() != ch:
-                issues.append(f"Ngoặc '{ch}' ở vị trí {i} không khớp — kiểm tra lại cấu trúc node/label.")
+                issues.append(f"Bracket '{ch}' at position {i} doesn't match — check the node/label structure.")
     if stack:
-        issues.append(f"Thiếu {len(stack)} ngoặc đóng ở cuối diagram (còn mở: {stack}).")
+        issues.append(f"Missing {len(stack)} closing bracket(s) at the end of the diagram (still open: {stack}).")
 
     if text.count('"') % 2 != 0:
-        issues.append("Số dấu ngoặc kép lẻ — có label chưa đóng.")
+        issues.append("Odd number of double quotes — a label is unclosed.")
 
     if "stateDiagram\n" in text or text.strip().startswith("stateDiagram\n"):
-        issues.append("Dùng 'stateDiagram' cũ — khuyến nghị 'stateDiagram-v2' cho cú pháp đầy đủ hơn.")
+        issues.append("Using the old 'stateDiagram' — 'stateDiagram-v2' is recommended for richer syntax.")
 
     return issues
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("source", help="Đường dẫn file .mmd, hoặc '-' để đọc từ stdin")
+    parser.add_argument("source", help="Path to a .mmd file, or '-' to read from stdin")
     args = parser.parse_args()
 
     text = sys.stdin.read() if args.source == "-" else Path(args.source).read_text(encoding="utf-8")
     issues = lint(text)
 
     if not issues:
-        print("OK: không phát hiện lỗi cấu trúc rõ ràng (lint thô, không thay thế render thật để verify).")
+        print("OK: no obvious structural errors found (rough lint, not a substitute for a real render to verify).")
         return 0
 
-    print(f"{len(issues)} vấn đề:")
+    print(f"{len(issues)} issue(s):")
     for issue in issues:
         print(f"  - {issue}")
     return 1
