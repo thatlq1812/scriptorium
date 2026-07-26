@@ -956,6 +956,29 @@
       "dependencies": [],
       "license_debt": null,
       "elicited_from": "Elicited from a real practitioner survey (outside_research/research_01_survey.md, items 7-8: a recent law graduate in a junior legal role) naming exactly the three checks this skill encodes: article numbering, cross-reference integrity, and party-name consistency. Scoped to only the genuinely deterministic subset of items 7-8 -- date/defined-term consistency was judged too fragile for reliable regex detection in v0.1.0 and left as a known limitation. First skill for the Legal specializer network (docs/specs/STRATEGY_SPEC.md §5.2), chosen to build first because it needed no external legal database and no owner-supplied checklist/template data, unlike legal-citation-checker (no free Vietnamese legal-document API exists) or legal-form-filler (no real government checklist/template data available yet) -- both flagged as open gaps rather than built around with invented data."
+    },
+    {
+      "skill_id": "legal-research-brief",
+      "version": "0.1.0",
+      "source": {"type": "self-authored"},
+      "license": "MIT",
+      "tags": {
+        "domain": ["legal"],
+        "task_type": ["review-qa"],
+        "risk_tier": "N2",
+        "harness_compatibility": ["claude-code"],
+        "grounding": "required",
+        "object_type": ["legal-brief"]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "validate_legal_brief.py: local-only, stdlib only (json/argparse), zero network calls, no dynamic execution, no secret handling. No finding."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "The 7-section output schema is elicited from outside_research/research_01_result_01.md's legal-opinion output-schema table. Survey items 1 and 10 (outside_research/research_01_survey.md) both carry the note 'Dựa theo nguồn 100%, không tự generate thông tin mới' (base 100% on source, never self-generate) -- the exact principle this validator enforces mechanically: every claim in the 3 grounded sections (verified facts, statutory grounds, application analysis) must cite a real, caller-declared source, and a citation to a nonexistent source id is a hard error. Same discipline already applied by citation-management to academic citations, extended here to legal research given Stanford RegLab/HAI's 'Hallucination-Free?' finding that even purpose-built legal-AI tools hallucinate 17-33% of the time (docs/specs/STRATEGY_SPEC.md §5.2)."
     }
   ]
 }

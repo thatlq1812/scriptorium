@@ -1,0 +1,15 @@
+{
+  "cau_hoi_chinh": "<the core legal question this brief addresses>",
+  "su_kien_da_xac_minh": [
+    {"noi_dung": "<a verified fact, from the case file>", "nguon": ["S1"]}
+  ],
+  "thieu_sot_gia_dinh": "<gaps in the client file, and any assumptions made to fill them -- not grounded, this is an analytical note>",
+  "can_cu_phap_ly": [
+    {"noi_dung": "<a statutory ground -- cite the specific clause/article>", "nguon": ["S1"]}
+  ],
+  "phan_tich_ap_dung": [
+    {"noi_dung": "<how a statutory ground applies to the verified facts>", "nguon": ["S1"]}
+  ],
+  "quan_diem_trai_chieu": "<alternative interpretations / counterarguments to prepare for -- not grounded, this is an analytical note>",
+  "danh_gia_rui_ro": "<risk level + what requires an executive/client decision -- not grounded, this is a judgment call>"
+}
