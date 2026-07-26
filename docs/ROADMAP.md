@@ -7,6 +7,7 @@
 | 1.2.0 | 2026-07-26 | Claude | Translated to English per owner directive (whole system except `docs/archive/` and outside-reference material). |
 | 1.3.0 | 2026-07-26 | Claude | 5 general-tier skills harvested (see `docs/STATUS.md`). Rewrote "Long-term direction" into a concrete audience-tier expansion plan (education vertical: Student → Teacher → University Student → Lecturer/Researcher, then specializer networks) per owner sequencing this session (`outside_research/`). |
 | 1.4.0 | 2026-07-26 | Claude | Owner clarified: `outside_research/` content counts as elicited input Claude can build directly from (Claude acts as the skill-creator sub-agent). Added `grounding`/`object_type` tag axes to `registry/SCHEMA.md`, retrofitted all 18 prior entries. Built `study-plan-builder`, first Student(K12)-tier skill, deliberately scoped to pure scheduling (no subject content) since no real student survey exists yet. Owner directed the Teacher tier next, loosely grounded in EduStation (explicitly "not gospel" — known-weak prior art, same spirit as this session's own v0.2.0 hardening round finding 17 defects in skills built earlier the same day). |
+| 1.5.0 | 2026-07-26 | Claude | Surveyed all 63 EduStation skill folders before building the Teacher tier — found heavy fragmentation (15 folders = one Nghị định 30/2020 admin-document template, 5 folders = one lesson-planning capability, 6 folders = one assessment-generation capability, 11 folders duplicate Scriptorium's own foundation skills). Owner directed excluding the administrative-paperwork cluster entirely ("đáp ứng cho giáo dục, không đáp ứng cho chính trị, thủ tục rườm rà"), consolidated the rest into ~6 capability clusters. Built `lesson-plan-builder` (v0.1.0), first Teacher-tier skill — a CV 5512 structural validator grounded in EduStation's domain knowledge only, not its orchestration machinery. |
 
 ---
 
@@ -63,13 +64,40 @@ Order: **Student (K12) → Teacher → University Student → Lecturer/Researche
 | # | Tier | Elicitation source | Status |
 | --- | --- | --- | --- |
 | 1 | Student (K12) | Owner confirmed `outside_research/` + direct owner instruction count as elicitation for this tier (2026-07-26) | **In progress** — `study-plan-builder` done (scheduling only, deliberately avoids subject content) |
-| 2 | Teacher | Strong — EduStation (`D:/elix/edustation/skills/`, ~60 folders, previously deployed), used loosely (owner: "dựa thôi chứ không phải tham khảo hẳn, vì tôi biết nó vẫn yếu" — treat as rough prior art, not gospel) | **Next up** — survey EduStation for *process*, never copy its code (different governance model — see below) |
+| 2 | Teacher | Strong — EduStation (`D:/elix/edustation/skills/`, 63 folders, previously deployed), used loosely (owner: "dựa thôi chứ không phải tham khảo hẳn, vì tôi biết nó vẫn yếu" — treat as rough prior art, not gospel) | **In progress** — `lesson-plan-builder` done (see consolidation survey below) |
 | 3 | University Student | Thin — EduStation's `research_proposal`/`thesis_guide`/`university_exam_bank` are faculty-facing, not student-facing | Not started; needs its own survey or stronger grounding |
 | 4 | Lecturer / Researcher | Substantial — already covered by this session's 5 general-tier research skills + `latex-project-bootstrap`/`office-doc-creator`, just not labeled as an audience tier | Core covered; gap candidates: grant-proposal formatting, venue-specific manuscript formatting, thesis-structure scaffolding |
 
 **Candidate skill names are not pre-approved for building.** `outside_research/research_01_lawer-work.md` contains an external AI's brainstormed skill list per tier (e.g. `learning-path-planner`, `concept-visualizer`, `homework-rubric-checker` for Student; `lesson-plan-generator`, `exam-matrix-builder`, `slide-deck-architect`, `student-feedback-summarizer` for Teacher; `thesis-structure-bootstrap`, `literature-matrix-builder`, `academic-paraphraser-vi` for University Student; `grant-proposal-scaffold`, `manuscript-peer-reviewer`, `journal-formatter` for Lecturer/Researcher). These are useful as a starting shortlist to survey against, not a build list — principle 4 (`docs/specs/STRATEGY_SPEC.md` §7) still requires elicitation from a real source per tier before `skill-creator` runs.
 
 **On EduStation as a source for the Teacher tier**: EduStation counts as real elicited process (a previously-deployed system), same standing as `D:/elix/platform`/`D:/elix/researches` already surveyed this session. But its architecture baked in machinery Scriptorium deliberately does not replicate — 18 R-rules, a 5-tier enforcement engine, harness-specific dispatcher hooks (see `docs/archive/` for the full EduStation audit). Borrow the *workflow/problem shape* the same way `latex-project-bootstrap` and `image-generator-gemini` borrowed from their reference projects — read, understand, rewrite from scratch; never copy EduStation code or its governance machinery wholesale.
+
+### Teacher-tier consolidation survey (2026-07-26)
+
+Surveyed all 63 EduStation skill folders' `SKILL.md` frontmatter before starting. Finding, matching the owner's own complaint: EduStation's skills are individually well-written but **fragmented past the point of being practical** — trivial variations of the same underlying capability each got their own folder, while the actual teaching work stayed thin. Concretely:
+
+- **15 folders are the same Nghị định 30/2020 administrative-document template**, parameterized only by document type/occasion: `docs_writer` (the general case: tờ trình/công văn/báo cáo/kế hoạch/biên bản/quyết định) plus 14 near-duplicates — `annual_report`, `correspondence_log`, `directive_letter`, `inspection_plan`, `inspection_report`, `interim_report`, `meeting_minutes`, `school_decision`, `training_plan`, `weekly_schedule`, `yearly_plan`, `admin_petition`, `multi_school_aggregate`, `digital_records`.
+- **5 folders are variations of the same CV 5512 lesson/curriculum-planning capability**, differing only in scope: `lesson_plan`, `theme_lesson_plan`, `cross_subject_plan`, `teacher_plan`, `homeroom_plan`.
+- **6 folders are variations of the same cognitive-level-matrix assessment-generation capability**, differing only in output shape: `exam_builder`, `review_exam`, `sample_exam`, `tn_thpt_review`, `question_bank`, `review_outline`.
+- **2 folders are the same parent-communication task**: `parent_brief`, `parent_letter`.
+- **11 folders are pure document/media infrastructure** already covered by Scriptorium's foundation-tier skills, not Teacher-specific at all: `word`/`excel`/`pdf`/`content`/`bilingual_paragraph_merger`/`latex_build` → `office-doc-creator`/`document-ai-structurer`/`translator-en-vi`/`latex-project-bootstrap`; `bulletin_poster`/`edu_infographic`/`visual`/`image_gen_pipeline`/`slide_outline` → `image-generator-gemini`/`mermaid-diagram-designer`/`office-doc-creator`(pptx).
+- `docx_rebuild`/`xlsx_repair` (repairing a malformed Office file) are a genuinely new capability not yet in Scriptorium at any tier — flagged as a possible **foundation-tier** gap (not Teacher-specific), not scheduled.
+- `course_syllabus`/`research_paper`/`research_proposal`/`thesis_guide`/`essay_contest`/`university_exam_bank` belong to the University Student/Lecturer tiers, not Teacher.
+- `skill_creator`/`research`/`campaign_runner`/`_templates` are EduStation's own meta-tooling — Scriptorium already has better equivalents (`skill-creator`, `scout-harvester`).
+
+**Owner's explicit direction on scope (2026-07-26)**: build for what serves actual teaching, not administrative/bureaucratic process. The 15-folder Nghị định 30/2020 administrative-paperwork cluster is **excluded from this tier entirely**, not just deferred — the owner's words: *"đáp ứng cho giáo dục, không đáp ứng cho chính trị, thủ tục rườm rà."* Reasonable consolidated shortlist for what remains (down from ~40 Teacher-relevant folders to ~6 capability clusters):
+
+| Consolidated skill | Replaces (EduStation folders) | Status |
+| --- | --- | --- |
+| `lesson-plan-builder` | `lesson_plan` + (loosely) `theme_lesson_plan`, `cross_subject_plan`, `teacher_plan`, `homeroom_plan` | **Done** (v0.1.0) — single-lesson CV 5512 structural validator; multi-lesson/interdisciplinary variants not yet covered, noted as a known limitation |
+| `assessment-builder` | `exam_builder`, `review_exam`, `sample_exam`, `tn_thpt_review`, `question_bank`, `review_outline` | Not started |
+| `grading-and-feedback` | `grading`, `primary_remarks`, `report_card_remarks` | Not started |
+| `competency-rubric-builder` | `competency_rubric` | Not started |
+| `classroom-materials-builder` | `classroom_worksheet`, `homework_sheet`, `learning_game` | Not started |
+| `grade-book-builder` | `grade_book` | Not started, lower priority (xlsx bookkeeping, not core pedagogy) |
+| `parent-communication` | `parent_brief`, `parent_letter` | Not started, lower priority (communication, not core pedagogy) |
+| ~~administrative-paperwork cluster~~ | ~~15 Nghị định 30/2020 folders~~ | **Excluded by owner direction** — not building this |
+| `teacher_self_eval` (TT20/2018) | — | Not started, lowest priority (compliance form, not teaching) |
 
 ### After the education ladder: specializer networks
 

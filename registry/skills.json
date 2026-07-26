@@ -687,6 +687,31 @@
       "dependencies": [],
       "license_debt": null,
       "elicited_from": "First skill for the Student (K12) audience tier (docs/specs/STRATEGY_SPEC.md §5.1) -- no real student survey exists yet; scope deliberately kept to pure scheduling arithmetic (never touching subject content or answering questions) per owner direction (2026-07-26) to avoid the 'doing the student's work' ethical line while that tier still lacks real elicitation. Candidate name cross-checked against outside_research/research_01_lawer-work.md's 'learning-path-planner' brainstorm (ideation only); the round-robin-interleave + periodic-review algorithm is original to this session."
+    },
+    {
+      "skill_id": "lesson-plan-builder",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": ["education"],
+        "task_type": ["review-qa"],
+        "risk_tier": "N1",
+        "harness_compatibility": ["claude-code"],
+        "grounding": "required",
+        "object_type": ["lesson-plan"]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "validate_lesson_plan.py: local-only, stdlib only (json/re/argparse), zero network calls, no dynamic execution, no secret handling. No finding."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "First skill for the Teacher audience tier (docs/specs/STRATEGY_SPEC.md §5.1), grounded in EduStation's real previously-deployed lesson_plan skill (D:/elix/edustation/skills/lesson_plan/SKILL.md) for CV5512/TT32-2018/TT27-2020/TT22-2021 domain knowledge (4-activity fixed structure, fixed pham-chat/nang-luc vocabulary, level-adaptive assessment rule). Used loosely per owner's explicit caveat (2026-07-26, 'dựa thôi chứ không tham khảo hẳn') -- EduStation's orchestration machinery not ported, only the domain knowledge, rebuilt as a single deterministic validator. Owner also directed this tier to skip EduStation's bureaucratic-paperwork skills (Nghị định 30/2020 admin templates: reports/decisions/correspondence/meeting-minutes) entirely, keeping scope to skills that serve actual teaching."
     }
   ]
 }
