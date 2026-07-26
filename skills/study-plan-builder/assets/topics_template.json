@@ -1,0 +1,7 @@
+{
+  "topics": [
+    {"name": "<topic 1 name>", "weight": 2},
+    {"name": "<topic 2 name>", "weight": 3},
+    {"name": "<topic 3 name>", "weight": 1}
+  ]
+}

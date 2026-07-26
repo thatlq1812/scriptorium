@@ -15,10 +15,20 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": ["meta"],
-        "task_type": ["skill-authoring"],
+        "domain": [
+          "meta"
+        ],
+        "task_type": [
+          "skill-authoring"
+        ],
         "risk_tier": "N2",
-        "harness_compatibility": ["claude-code"]
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "skill-package"
+        ]
       },
       "quality_score": null,
       "security_audit": {
@@ -38,10 +48,24 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": ["general"],
-        "task_type": ["document-conversion"],
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "document-conversion"
+        ],
         "risk_tier": "N1",
-        "harness_compatibility": ["claude-code"]
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "pdf",
+          "docx",
+          "pptx",
+          "xlsx",
+          "image"
+        ]
       },
       "quality_score": null,
       "security_audit": {
@@ -64,10 +88,18 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": ["meta"],
-        "task_type": ["coordination"],
+        "domain": [
+          "meta"
+        ],
+        "task_type": [
+          "coordination"
+        ],
         "risk_tier": "N1",
-        "harness_compatibility": ["claude-code"]
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": []
       },
       "quality_score": null,
       "security_audit": {
@@ -89,10 +121,20 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": ["meta"],
-        "task_type": ["review-qa"],
+        "domain": [
+          "meta"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
         "risk_tier": "N2",
-        "harness_compatibility": ["claude-code"]
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "license-file"
+        ]
       },
       "quality_score": null,
       "security_audit": {
@@ -106,7 +148,7 @@
     },
     {
       "skill_id": "quality-eval",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "source": {
         "type": "self-authored",
         "adapted_from": {
@@ -118,20 +160,30 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": ["meta"],
-        "task_type": ["review-qa"],
+        "domain": [
+          "meta"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
         "risk_tier": "N2",
-        "harness_compatibility": []
+        "harness_compatibility": [],
+        "grounding": "not_applicable",
+        "object_type": [
+          "skill-package"
+        ]
       },
       "quality_score": null,
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
-        "note": "Pure process, no script yet (v0.1.0). No finding."
+        "note": "Re-audited at v0.2.0, which added the first script to this skill. make_adversarial_fixtures.py: local-only, stdlib only, zero network calls, no dynamic execution, no secret handling; writes only inside --out, refuses to overwrite without --force, and every generated file is bounded by an explicitly capped size argument (no resource-exhaustion payloads). One item noted and accepted: the generated fixture injection_embedded_instructions.csv deliberately contains instruction-shaped text and a URL, as test DATA for checking whether a tool honors its 'never echoes raw cell values' claim. It is inert (never executed, never fetched), the URL uses the RFC 6761 reserved .invalid TLD which cannot resolve, it is generated at runtime rather than committed to the repo, and its purpose is stated in the generated MANIFEST.md and in references/adversarial-input-catalog.md. Not prompt injection against the agent -- an input fixture for evaluating another tool. No finding."
       },
-      "dependencies": [],
+      "dependencies": [
+        "scripts/make_adversarial_fixtures.py"
+      ],
       "license_debt": null,
-      "elicited_from": "Grounded in SkillsBench (arXiv 2602.12670) + a baseline-comparison pattern adapted from the Apache-2.0 skill-creator, generalized to be harness-agnostic"
+      "elicited_from": "Grounded in SkillsBench (arXiv 2602.12670) + a baseline-comparison pattern adapted from the Apache-2.0 skill-creator, generalized to be harness-agnostic. Pass A (contract conformance under adversarial input) elicited from a real event: the 2026-07-26 hardening round, 17 reproducible defects across 5 freshly-authored skills in ~20 minutes of hostile-input testing (docs/STATUS.md)"
     },
     {
       "skill_id": "security-audit",
@@ -141,10 +193,21 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": ["meta"],
-        "task_type": ["review-qa"],
+        "domain": [
+          "meta"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
         "risk_tier": "N2",
-        "harness_compatibility": ["claude-code"]
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "skill-package",
+          "script"
+        ]
       },
       "quality_score": null,
       "security_audit": {
@@ -164,10 +227,20 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": ["meta"],
-        "task_type": ["research"],
+        "domain": [
+          "meta"
+        ],
+        "task_type": [
+          "research"
+        ],
         "risk_tier": "N1",
-        "harness_compatibility": ["claude-code"]
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "repository"
+        ]
       },
       "quality_score": null,
       "security_audit": {
@@ -187,10 +260,22 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": ["general"],
-        "task_type": ["drafting"],
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "drafting"
+        ],
         "risk_tier": "N1",
-        "harness_compatibility": ["claude-code"]
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "optional",
+        "object_type": [
+          "docx",
+          "pptx",
+          "xlsx"
+        ]
       },
       "quality_score": null,
       "security_audit": {
@@ -215,10 +300,20 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": ["meta"],
-        "task_type": ["review-qa"],
+        "domain": [
+          "meta"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
         "risk_tier": "N1",
-        "harness_compatibility": ["claude-code"]
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "skill-package"
+        ]
       },
       "quality_score": null,
       "security_audit": {
@@ -238,10 +333,20 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": ["general"],
-        "task_type": ["drafting"],
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "drafting"
+        ],
         "risk_tier": "N1",
-        "harness_compatibility": ["claude-code"]
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "optional",
+        "object_type": [
+          "diagram"
+        ]
       },
       "quality_score": null,
       "security_audit": {
@@ -261,10 +366,18 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": ["general"],
-        "task_type": ["drafting"],
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "drafting"
+        ],
         "risk_tier": "N2",
-        "harness_compatibility": ["claude-code"]
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "optional",
+        "object_type": []
       },
       "quality_score": null,
       "security_audit": {
@@ -284,10 +397,20 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": ["general"],
-        "task_type": ["drafting"],
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "drafting"
+        ],
         "risk_tier": "N1",
-        "harness_compatibility": ["claude-code"]
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "latex-project"
+        ]
       },
       "quality_score": null,
       "security_audit": {
@@ -310,10 +433,20 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": ["general"],
-        "task_type": ["drafting"],
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "drafting"
+        ],
         "risk_tier": "N2",
-        "harness_compatibility": ["claude-code"]
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "optional",
+        "object_type": [
+          "image"
+        ]
       },
       "quality_score": null,
       "security_audit": {
@@ -331,7 +464,7 @@
     },
     {
       "skill_id": "citation-management",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "source": {
         "type": "self-authored",
         "adapted_from": {
@@ -343,16 +476,27 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": ["general"],
-        "task_type": ["research"],
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "research"
+        ],
         "risk_tier": "N1",
-        "harness_compatibility": ["claude-code"]
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "bibliography",
+          "citation"
+        ]
       },
       "quality_score": null,
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
-        "note": "resolve_citation.py: network calls only to CrossRef/PubMed/arXiv (factual bibliographic APIs, no AI backend), no secret handling, no dangerous command. No finding."
+        "note": "Re-audited at v0.2.0 (scripts changed). resolve_citation.py: network calls only to the declared CrossRef/PubMed/arXiv hosts (factual bibliographic APIs, no AI backend), no dangerous command, no dynamic execution. Two items noted, both acceptable: (a) the optional CROSSREF_MAILTO env var is read and, when set, sent in the User-Agent to CrossRef -- opt-in, an email address rather than a secret, declared in SKILL.md; (b) the BibTeX escaper uses \\u0000-\\u0002 sentinels internally when mapping i/em/sub/sup markup -- intentional and commented, not obfuscation. No finding."
       },
       "dependencies": [],
       "license_debt": null,
@@ -360,7 +504,7 @@
     },
     {
       "skill_id": "literature-review",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "source": {
         "type": "self-authored",
         "adapted_from": {
@@ -372,24 +516,37 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": ["general"],
-        "task_type": ["research"],
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "research"
+        ],
         "risk_tier": "N1",
-        "harness_compatibility": ["claude-code"]
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "bibliography",
+          "literature-review"
+        ]
       },
       "quality_score": null,
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
-        "note": "search_literature.py: network calls only to arXiv/PubMed/CrossRef (factual bibliographic APIs, no AI backend), no secret handling, no dangerous command. No finding."
+        "note": "Re-audited at v0.2.0 (scripts changed). search_literature.py: network calls only to the declared arXiv/PubMed/CrossRef hosts (factual bibliographic APIs, no AI backend); --abstracts adds a PubMed efetch call on the already-declared eutils host, documented in SKILL.md. No secret handling, no dangerous command, no dynamic execution. No finding."
       },
-      "dependencies": ["citation-management"],
+      "dependencies": [
+        "citation-management"
+      ],
       "license_debt": null,
       "elicited_from": "Grounded in K-Dense-AI/scientific-agent-skills literature-review (MIT, cleared via license-compliance-check) for the overall workflow shape (plan -> search -> screen -> synthesize -> verify -> generate); rewritten from scratch dropping the OPENROUTER_API_KEY-gated parallel-web CLI, mandatory AI-generated figures (scientific-schematics), and biology-specific database skills (gget/bioservices) -- replaced with 3 free no-key APIs (arXiv/PubMed/CrossRef) covering any field, citation verification delegated to citation-management, PDF generation delegated to office-doc-creator/document-ai-structurer"
     },
     {
       "skill_id": "exploratory-data-analysis",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "source": {
         "type": "self-authored",
         "adapted_from": {
@@ -401,16 +558,28 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": ["general"],
-        "task_type": ["research"],
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "research"
+        ],
         "risk_tier": "N1",
-        "harness_compatibility": ["claude-code"]
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "dataset",
+          "csv",
+          "json"
+        ]
       },
       "quality_score": null,
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
-        "note": "eda_analyzer.py: local-only, stdlib only, zero network calls, no pickle/eval/dynamic execution, path confined to --root with symlink/traversal rejection, never prints raw row values. No finding."
+        "note": "Re-audited at v0.2.0 (scripts changed). eda_analyzer.py: still local-only, stdlib only, zero network calls, no pickle/eval/dynamic execution, path confined to --root with symlink/traversal rejection, never prints raw row values. The v0.2.0 changes tighten the boundary rather than widen it: undecodable bytes, oversized CSV fields, malformed CSV and unbounded JSON nesting are now explicit refusals instead of tracebacks, per-column memory is bounded, and --output gained an overwrite guard. No finding."
       },
       "dependencies": [],
       "license_debt": null,
@@ -418,7 +587,7 @@
     },
     {
       "skill_id": "hypothesis-generation",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "source": {
         "type": "self-authored",
         "adapted_from": {
@@ -430,16 +599,26 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": ["general"],
-        "task_type": ["research"],
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "research"
+        ],
         "risk_tier": "N2",
-        "harness_compatibility": ["claude-code"]
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "research-record"
+        ]
       },
       "quality_score": null,
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
-        "note": "3 scripts: local-only, stdlib only (json/re/argparse), zero network calls, no dynamic execution, no secret handling. N2 reflects subject-matter risk (hypothesis framing can mislead if misused), not a tooling finding. No finding."
+        "note": "Re-audited at v0.2.0 (scripts changed). 3 scripts: local-only, stdlib only (json/re/argparse), zero network calls, no dynamic execution, no secret handling. The preregistration generator is now gated on the schema validator with no bypass, closing a case where an invalid record (candidate marked 'confirmed', no rival, no accountable human) could produce a shareable preregistration -- a tightening, not a widening; --allow-class only relaxes structural validation and requires an explicit flag. N2 reflects subject-matter risk (hypothesis framing can mislead if misused), not a tooling finding. No finding."
       },
       "dependencies": [],
       "license_debt": null,
@@ -447,7 +626,7 @@
     },
     {
       "skill_id": "peer-review",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "source": {
         "type": "self-authored",
         "adapted_from": {
@@ -459,20 +638,55 @@
       },
       "license": "MIT",
       "tags": {
-        "domain": ["general"],
-        "task_type": ["review-qa"],
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
         "risk_tier": "N2",
-        "harness_compatibility": ["claude-code"]
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "manuscript"
+        ]
       },
       "quality_score": null,
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
-        "note": "4 scripts: local-only, stdlib only (json/csv/re/argparse), zero network calls, no credential/env reading, no dynamic execution. N2 reflects subject-matter risk (confidential manuscript review, authorization/confidentiality boundary), not a tooling finding. No finding."
+        "note": "Re-audited at v0.2.0 (scripts changed). 4 scripts: local-only, stdlib only (json/csv/re/argparse), zero network calls, no credential/env reading, no dynamic execution. v0.2.0 closes a real gate weakness -- the intake validator accepted unfilled template placeholders as answers, so a copied template with 3 booleans flipped reached READY_FOR_LOCAL_REVIEW -- and adds channel-leak detection; lint output still reports line numbers/rule IDs only and now truncates matched placeholders to 40 chars, so no review text leaves the file. N2 reflects subject-matter risk (confidential manuscript review, authorization/confidentiality boundary), not a tooling finding. No finding."
       },
       "dependencies": [],
       "license_debt": null,
       "elicited_from": "Grounded in K-Dense-AI/scientific-agent-skills peer-review (MIT, cleared via license-compliance-check) for the mandatory safety boundary (authorization/confidentiality gate, never send unpublished content externally, reviewer-recommends-editor-decides discipline) and intake-gate-first workflow; scoped down from the original's 7-script/5-reference-doc suite to 4 tools: intake validator, claim-evidence matrix validator, scaffold generator, tone/channel/decision-overreach linter"
+    },
+    {
+      "skill_id": "study-plan-builder",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": ["education"],
+        "task_type": ["coordination"],
+        "risk_tier": "N1",
+        "harness_compatibility": ["claude-code"],
+        "grounding": "not_applicable",
+        "object_type": ["study-plan"]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "build_study_plan.py: local-only, stdlib only (json/argparse/math), zero network calls, no dynamic execution, no secret handling, pure scheduling arithmetic over user-supplied topic names (never executed/interpreted). No finding."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "First skill for the Student (K12) audience tier (docs/specs/STRATEGY_SPEC.md §5.1) -- no real student survey exists yet; scope deliberately kept to pure scheduling arithmetic (never touching subject content or answering questions) per owner direction (2026-07-26) to avoid the 'doing the student's work' ethical line while that tier still lacks real elicitation. Candidate name cross-checked against outside_research/research_01_lawer-work.md's 'learning-path-planner' brainstorm (ideation only); the round-robin-interleave + periodic-review algorithm is original to this session."
     }
   ]
 }

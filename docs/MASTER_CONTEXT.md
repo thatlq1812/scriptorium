@@ -4,6 +4,7 @@
 | --- | --- | --- | --- |
 | 1.0.0 | 2026-07-26 | Claude | First version, written alongside setting up the project's documentation convention (referencing `D:/elix/platform`'s docs structure). |
 | 1.1.0 | 2026-07-26 | Claude | Translated to English per owner directive: the whole system (excluding `docs/archive/` and content brought in from outside) must be in English. Refreshed stale references (`ROADMAP.md` now exists). |
+| 1.2.0 | 2026-07-26 | Claude | Added `outside_research/` as a recognized input directory (owner-authored active research on verticals/audiences, distilled into `docs/specs/`+`docs/ROADMAP.md`, kept verbatim like `docs/archive/` but living rather than frozen). See `docs/ROADMAP.md` §"Audience-tier expansion model" and `docs/specs/STRATEGY_SPEC.md` §5. |
 
 ---
 
@@ -47,6 +48,9 @@ scriptorium/
 │   ├── specs/                  # Official specs — current source of truth
 │   │   └── STRATEGY_SPEC.md
 │   └── archive/                # History, not current state — see archive/README.md
+├── outside_research/           # Owner-authored active research (surveys, external AI analysis)
+│                                # on verticals/audiences — living input, kept verbatim (like
+│                                # docs/archive/), distilled into docs/specs/ + docs/ROADMAP.md
 ├── skills/
 │   └── <skill_id>/SKILL.md     # Each skill is its own subfolder
 ├── registry/
@@ -62,6 +66,7 @@ Directly referenced from how `D:/elix/platform/docs/` operates (README nav hub, 
 - **Every "current" doc (`MASTER_CONTEXT.md`, `STATUS.md`, `DECISIONS_PENDING.md`, every file in `specs/`) carries a version header table at the top** — Version/Date/Author/Description. Bump the version on any meaningful content change; never edit silently.
 - **Real code/skills beat docs when they conflict.** `STATUS.md` must be verifiable against `registry/skills.json` + `skills/` — never written from memory or intent.
 - **`docs/archive/` is history, not a current source of truth.** When a major distillation round happens (like research → STRATEGY_SPEC), raw discussion/research files move into a date-named subfolder (`pre-spec-YYYY-MM-DD/`), content unchanged.
+- **`outside_research/` (repo root) is a living input, not history.** Unlike `docs/archive/`, it keeps growing — owner-authored surveys and external AI-assisted analysis about a candidate audience/vertical, gathered *before* a tier is built. Kept verbatim (original language, unedited) the same way `docs/archive/` is; insights get distilled into `docs/ROADMAP.md`/`docs/specs/STRATEGY_SPEC.md`, but the raw file itself is never treated as a source of truth on its own — and its brainstormed skill lists are candidate ideation, not elicited input (principle 4, `docs/specs/STRATEGY_SPEC.md` §7) — a real survey/interview or a real deployed prior system is still required before `skill-creator` runs for that audience.
 - **`DECISIONS_PENDING.md`** uses exactly one format per entry: question → recommendation + reasoning → action plan → `Decision: [ ] OK / [ ] Override: ___`. Remove an entry once the owner has decided — don't let it linger.
 - **The entire system must be in English**, except `docs/archive/` (historical discussion, kept verbatim in its original language) and content brought in from outside purely for reference. Optimizes for both AI and human readers — a user can still discuss with the agent in any language and the skill still works well.
 

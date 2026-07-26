@@ -16,6 +16,7 @@ Navigation hub. Read `MASTER_CONTEXT.md` first if you're new to the project.
 | --- | --- |
 | `specs/` | Official, active specs. Write a new spec here when a decision/feature is big enough to distill into a source of truth. |
 | `archive/` | History — discussion transcripts, raw research already distilled into `specs/`. See `archive/README.md`. Don't cite figures/decisions directly from here if `specs/` already has a corrected version. |
+| `../outside_research/` (repo root) | Living input — owner-authored surveys and external AI-assisted analysis on candidate audiences/verticals, gathered before a tier is built. Distilled into `ROADMAP.md`/`specs/STRATEGY_SPEC.md`; its brainstormed skill lists are ideation only, not elicited input. |
 
 ## Rule when things conflict
 

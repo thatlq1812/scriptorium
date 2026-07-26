@@ -9,6 +9,8 @@
 | 1.4.0 | 2026-07-26 | Claude | Owner deliberately overrode the "no license-check exceptions" principle (§7 point 5, originally from `handoff.md` point 6): during the current bootstrap phase, controlled "legal debt" is allowed — see the new §7 point 5 + `registry/SCHEMA.md` field `license_debt`. |
 | 1.5.0 | 2026-07-26 | Claude | Owner requested moving the venv from per-skill to a SHARED venv at the repo root — §7 point 7 updated. `python-env-bootstrap` v0.2.0 manages the shared venv, verified for real (3 Python skills installed together, no cross-import conflicts). |
 | 1.6.0 | 2026-07-26 | Claude | Translated the entire document to English per owner directive (whole system except `docs/archive/` and outside-reference material must be English). |
+| 1.7.0 | 2026-07-26 | Claude | 5 general-tier skills harvested from K-Dense-AI/scientific-agent-skills (`citation-management`, `literature-review`, `exploratory-data-analysis`, `hypothesis-generation`, `peer-review`). Rewrote §5 into an explicit two-stage expansion model: an **audience-tier ladder** (education vertical — Student → Teacher → University Student → Lecturer/Researcher) precedes **specializer networks** (industry-specific, Legal is first) per owner's explicit sequencing (`outside_research/`, this session). Added `outside_research/` as a recognized living-input directory (see `docs/MASTER_CONTEXT.md` §3-4). |
+| 1.8.0 | 2026-07-26 | Claude | Owner clarified `outside_research/` counts as elicited input (principle 4, §7) — Claude proceeds directly to `skill-creator` from it, no separate survey required for tiers it covers. Registry gained 2 tag axes, `grounding` (mandatory) and `object_type` (optional) — see `registry/SCHEMA.md`, adapted from `outside_research/research_01_comment_01.md` §6's multi-axis tagging suggestion (took `grounding`, dropped its redundant `workflow` axis which already overlaps `task_type`, kept `object_type` as optional rather than mandatory). First Student(K12)-tier skill built: `study-plan-builder`. |
 
 ---
 
@@ -53,7 +55,31 @@ Do not reorder (1)→(2)→(3). A skill that hasn't cleared (4) and (5) is never
 
 4 mandatory axes per skill: **domain** (reference SkillsMP's occupation groups directly, don't invent a taxonomy from scratch), **task-type** (research / document-conversion / drafting / review-qa / coordination — cuts across every domain), **risk-tier** (N1-N5, inherits the spirit of EduStation's tiering but is just 1 field declared at skill-declaration time, NOT a separate enforcement engine — see the EduStation survey in `docs/archive`), **harness-compatibility** (only list harnesses actually verified to run — never inferred from a vendor showcase). Full field list: `registry/SCHEMA.md`.
 
-## 5. First pilot vertical: Vietnamese legal
+## 5. Vertical expansion model: audience-tier ladder, then specializer networks
+
+Two distinct kinds of expansion happen after the general-tier skill layer (`domain: general` skills, e.g. the 5 K-Dense-AI harvests) is in place, and they are **not the same thing**:
+
+- **Audience-tier ladder** — general-purpose skills refined for a specific *role/capability level* a person occupies (a student, a teacher), still broadly domain-agnostic in the underlying task. Not industry-specific.
+- **Specializer networks** — skills scoped to a specific *industry/profession* (Legal, eventually Medicine/Finance/...), which inherit the full stack below them (foundation → general → audience-tier where applicable).
+
+Owner's explicit sequencing (2026-07-26, `outside_research/`): finish the audience-tier ladder for the education vertical before jumping to specializer networks. Rationale stated by the owner: a system needs "đủ tứ chi, bộ não, và kiến thức kĩ năng, như một học sinh lớp 12" (a general capability base, like a 12th-grade graduate) before specialized/professional skills ("như các chuyên ngành được học") can sit on top of it usefully.
+
+### 5.1 Audience-tier ladder — education vertical (current focus)
+
+Order: **Student (K12) → Teacher → University Student → Lecturer/Researcher**. Then branch into specializer networks (§5.2).
+
+| Tier | Real elicitation source available? | Status (2026-07-26) |
+| --- | --- | --- |
+| Student (K12) | **Owner-confirmed as of 2026-07-26.** No independent student survey exists, but the owner explicitly confirmed `outside_research/` + direct instruction count as elicitation for this tier — Claude (acting as the skill-creator sub-agent) builds directly from it, scoped conservatively. | **In progress** — `study-plan-builder` (v0.1.0) done: deterministic study/review scheduling, deliberately avoids any subject-matter content to sidestep the "doing the student's work" risk while real per-topic elicitation is still thin. |
+| Teacher | **Strong.** EduStation (`D:/elix/edustation/skills/`) is a real, previously-deployed K12-teacher system with ~60 skill folders (`lesson_plan`, `exam_builder`, `grade_book`, `homeroom_plan`, `teacher_self_eval`, `question_bank`, `school_decision`, `training_plan`, ...) — counts as a real elicited process, same standing as any other prior-art source already surveyed this session (`D:/elix/platform`, `D:/elix/researches`). Owner's explicit caveat: use it loosely ("dựa thôi chứ không phải tham khảo hẳn, vì tôi biết nó vẫn yếu") — EduStation is known-imperfect prior art, not a spec to follow literally. | **Next up.** Approach: survey the actual EduStation skill folders for *process*, same borrow-pattern-not-code convention already used for `latex-project-bootstrap`/`image-generator-gemini` — never copy EduStation code directly (different governance model: their 18 R-rules/tier-enforcement engine is deliberately not being replicated, see `docs/ROADMAP.md`). |
+| University Student | **Thin.** EduStation has `research_proposal`, `thesis_guide`, `university_exam_bank` but they read as faculty/teacher-facing more than student-facing. | Not started. Needs its own survey or stronger grounding before building. |
+| Lecturer / Researcher | **Substantial, already built — just not labeled as this tier.** The 5 general-tier research skills (`literature-review`, `citation-management`, `hypothesis-generation`, `peer-review`, `exploratory-data-analysis`) plus `latex-project-bootstrap`/`office-doc-creator` were built domain-agnostic but directly serve this audience. | Core covered. Remaining gap candidates (not yet elicited): grant-proposal formatting, venue-specific manuscript formatting, thesis-structure scaffolding built on `latex-project-bootstrap`. |
+
+**Update (2026-07-26)**: the owner clarified that `outside_research/` content — including the external-AI-brainstormed skill names in `research_01_lawer-work.md` (e.g. `learning-path-planner`, `lesson-plan-generator`, `exam-matrix-builder`, `thesis-structure-bootstrap`) — is elicited input the owner is providing directly, satisfying principle 4 (§7) for tiers it covers. Claude proceeds straight to `skill-creator` from it rather than waiting on a separate survey. Judgment on scope/safety per skill still applies (see `study-plan-builder`'s deliberately conservative scope), and the Teacher tier still additionally draws on EduStation as a second, independent elicitation source (used loosely, per the owner's caveat above).
+
+### 5.2 First specializer network: Vietnamese legal
+
+Comes after §5.1 is substantially staffed. Real elicitation already collected: `outside_research/research_01_survey.md` (an 11-item real practitioner survey — recent law graduate, junior legal role) plus two AI-assisted research reports (`research_01_result_01.md`, `research_01_result_02.md`) providing competency-model/maturity-model framing and cross-jurisdiction ethics context (ABA, SRA, Vietnamese practice). This satisfies principle 4 for the legal vertical specifically — it does not extend to other industries without their own survey.
 
 Planned flagships, ordered by risk-tier: statute lookup + statute→markdown conversion (N1-N2, low risk, first) → drafting official letters/document review (medium) → contract drafting/law review (N4-N5, high risk, **mandatory human gate**, later).
 

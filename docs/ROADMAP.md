@@ -5,6 +5,8 @@
 | 1.0.0 | 2026-07-26 | Claude | First version — recorded the skill-expansion backlog the owner laid out (`important.md`); owner delegated full ordering authority. |
 | 1.1.0 | 2026-07-26 | Claude | Completed backlog items 1-5 in the same session: 8 new skills (`dedup-novelty-check`, `mermaid-diagram-designer`, `translator-en-vi`, `latex-project-bootstrap`, + item-5 scouting). Recorded deep-scout results from the 2 large repos. |
 | 1.2.0 | 2026-07-26 | Claude | Translated to English per owner directive (whole system except `docs/archive/` and outside-reference material). |
+| 1.3.0 | 2026-07-26 | Claude | 5 general-tier skills harvested (see `docs/STATUS.md`). Rewrote "Long-term direction" into a concrete audience-tier expansion plan (education vertical: Student → Teacher → University Student → Lecturer/Researcher, then specializer networks) per owner sequencing this session (`outside_research/`). |
+| 1.4.0 | 2026-07-26 | Claude | Owner clarified: `outside_research/` content counts as elicited input Claude can build directly from (Claude acts as the skill-creator sub-agent). Added `grounding`/`object_type` tag axes to `registry/SCHEMA.md`, retrofitted all 18 prior entries. Built `study-plan-builder`, first Student(K12)-tier skill, deliberately scoped to pure scheduling (no subject content) since no real student survey exists yet. Owner directed the Teacher tier next, loosely grounded in EduStation (explicitly "not gospel" — known-weak prior art, same spirit as this session's own v0.2.0 hardening round finding 17 defects in skills built earlier the same day). |
 
 ---
 
@@ -46,9 +48,34 @@ A skill with only a `SKILL.md` does NOT meet the bar. A quality skill needs enou
 
 Haven't harvested any specific skill from these two sources yet — waiting on owner priority confirmation before proceeding (see end of session).
 
-## Long-term direction (owner confirmed it's sound)
+## Long-term direction: audience-tier expansion model
 
-General-purpose skill clusters first → skills by audience (students, university students, teachers, professors) → explosion by industry. Matches the principle already in `docs/specs/STRATEGY_SPEC.md` §5 (the legal vertical is the first pilot, not the only one).
+General-purpose skill clusters first → skills by audience (education vertical) → specializer networks (industry). Formalized in `docs/specs/STRATEGY_SPEC.md` §5. Source: `outside_research/` (owner-authored surveys + external AI-assisted analysis, 2026-07-26) — see `docs/MASTER_CONTEXT.md` §3-4 for how that directory is treated (living input, not a source of truth on its own).
+
+### Status of general-tier skills (done this session)
+
+5 skills harvested from K-Dense-AI/scientific-agent-skills (MIT): `citation-management`, `literature-review`, `exploratory-data-analysis`, `hypothesis-generation`, `peer-review`. See `docs/STATUS.md`.
+
+### Next: audience-tier ladder, education vertical
+
+Order: **Student (K12) → Teacher → University Student → Lecturer/Researcher**, then branch into specializer networks. Full reasoning and per-tier elicitation-source status: `docs/specs/STRATEGY_SPEC.md` §5.1. Summary:
+
+| # | Tier | Elicitation source | Status |
+| --- | --- | --- | --- |
+| 1 | Student (K12) | Owner confirmed `outside_research/` + direct owner instruction count as elicitation for this tier (2026-07-26) | **In progress** — `study-plan-builder` done (scheduling only, deliberately avoids subject content) |
+| 2 | Teacher | Strong — EduStation (`D:/elix/edustation/skills/`, ~60 folders, previously deployed), used loosely (owner: "dựa thôi chứ không phải tham khảo hẳn, vì tôi biết nó vẫn yếu" — treat as rough prior art, not gospel) | **Next up** — survey EduStation for *process*, never copy its code (different governance model — see below) |
+| 3 | University Student | Thin — EduStation's `research_proposal`/`thesis_guide`/`university_exam_bank` are faculty-facing, not student-facing | Not started; needs its own survey or stronger grounding |
+| 4 | Lecturer / Researcher | Substantial — already covered by this session's 5 general-tier research skills + `latex-project-bootstrap`/`office-doc-creator`, just not labeled as an audience tier | Core covered; gap candidates: grant-proposal formatting, venue-specific manuscript formatting, thesis-structure scaffolding |
+
+**Candidate skill names are not pre-approved for building.** `outside_research/research_01_lawer-work.md` contains an external AI's brainstormed skill list per tier (e.g. `learning-path-planner`, `concept-visualizer`, `homework-rubric-checker` for Student; `lesson-plan-generator`, `exam-matrix-builder`, `slide-deck-architect`, `student-feedback-summarizer` for Teacher; `thesis-structure-bootstrap`, `literature-matrix-builder`, `academic-paraphraser-vi` for University Student; `grant-proposal-scaffold`, `manuscript-peer-reviewer`, `journal-formatter` for Lecturer/Researcher). These are useful as a starting shortlist to survey against, not a build list — principle 4 (`docs/specs/STRATEGY_SPEC.md` §7) still requires elicitation from a real source per tier before `skill-creator` runs.
+
+**On EduStation as a source for the Teacher tier**: EduStation counts as real elicited process (a previously-deployed system), same standing as `D:/elix/platform`/`D:/elix/researches` already surveyed this session. But its architecture baked in machinery Scriptorium deliberately does not replicate — 18 R-rules, a 5-tier enforcement engine, harness-specific dispatcher hooks (see `docs/archive/` for the full EduStation audit). Borrow the *workflow/problem shape* the same way `latex-project-bootstrap` and `image-generator-gemini` borrowed from their reference projects — read, understand, rewrite from scratch; never copy EduStation code or its governance machinery wholesale.
+
+### After the education ladder: specializer networks
+
+**Legal is first.** Real survey already collected: `outside_research/research_01_survey.md` (11-item survey, a recent law graduate in a junior legal role) + 2 AI-assisted research reports providing competency/maturity-model framing (`research_01_result_01.md`, `research_01_result_02.md`). This satisfies principle 4 for the legal vertical specifically. Candidate skill groups from the survey (still need to go through the actual 9-step pipeline, not build directly from the brainstorm): legal research/citation (`legal-research-brief`, `legal-citation-checker`), form/dossier automation (`legal-form-filler`, `legal-dossier-checklist`), contract audit (`contract-risk-auditor`, `legal-doc-linter`), legal translation (`legal-translator-en-vi`, extending the existing `translator-en-vi` with a legal glossary). Full detail: `docs/specs/STRATEGY_SPEC.md` §5.2.
+
+Other industries (Medicine, Finance, ...) require their own real survey before a specializer network starts — no shortcut via brainstormed lists.
 
 ## More flexible repo structure (owner confirmed)
 
