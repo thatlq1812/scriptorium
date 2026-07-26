@@ -25,22 +25,12 @@ Không dùng khi: tài liệu đã là markdown/text sạch và ngắn (không c
 
 ## Bootstrap môi trường (bắt buộc, chạy 1 lần mỗi máy)
 
-**Không dùng `.venv` đã commit sẵn — không có, vì venv là binary gắn OS/kiến trúc, không portable.** Cách khuyến nghị: dùng skill `python-env-bootstrap` (không giả định máy đã có Python):
+**Không dùng `.venv` đã commit sẵn — không có, vì venv là binary gắn OS/kiến trúc, không portable.** Dùng skill `python-env-bootstrap` — venv DÙNG CHUNG ở root repo, không riêng cho skill này (không giả định máy đã có Python):
 
 ```bash
-bash ../python-env-bootstrap/scripts/bootstrap.sh . 3.12          # từ trong skills/document-ai-structurer
-# Windows: ..\python-env-bootstrap\scripts\bootstrap.ps1 -SkillDir . -PyVersion 3.12
-```
-
-Fallback nếu máy đã có Python sẵn và không muốn cài `uv`:
-
-```bash
-cd skills/document-ai-structurer
-python -m venv .venv
-# Windows:
-.venv\Scripts\pip install -r requirements.txt
-# macOS/Linux:
-.venv/bin/pip install -r requirements.txt
+# Từ root repo:
+bash skills/python-env-bootstrap/scripts/bootstrap.sh skills/document-ai-structurer/requirements.txt 3.12
+# Windows: .\skills\python-env-bootstrap\scripts\bootstrap.ps1 -Requirements skills\document-ai-structurer\requirements.txt -PyVersion 3.12
 ```
 
 Lần chạy đầu tiên, Docling tải model layout-detection + OCR (RapidOCR) từ HuggingFace/ModelScope về `~/.cache` hoặc local site-packages — cần mạng, vài chục MB, chỉ tải một lần.
@@ -48,8 +38,9 @@ Lần chạy đầu tiên, Docling tải model layout-detection + OCR (RapidOCR)
 ## Chạy
 
 ```bash
-.venv/bin/python scripts/structure_doc.py <input_file> <output_dir>
-# Windows: .venv\Scripts\python.exe scripts\structure_doc.py <input_file> <output_dir>
+# Từ root repo, venv chung:
+.venv/bin/python skills/document-ai-structurer/scripts/structure_doc.py <input_file> <output_dir>
+# Windows: .venv\Scripts\python.exe skills\document-ai-structurer\scripts\structure_doc.py <input_file> <output_dir>
 ```
 
 ## Output

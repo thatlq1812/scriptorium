@@ -22,15 +22,18 @@ Tạo file Office thật (không phải giả lập) từ nội dung agent đã 
 
 ## Bootstrap môi trường
 
+Venv DÙNG CHUNG ở root repo (không riêng cho skill này — xem `skills/python-env-bootstrap/SKILL.md`):
+
 ```bash
-# Khuyến nghị: qua python-env-bootstrap (PowerShell trên Windows, KHÔNG qua Git Bash — xem skills/python-env-bootstrap/SKILL.md):
-.\skills\python-env-bootstrap\scripts\bootstrap.ps1 -SkillDir skills\office-doc-creator -PyVersion 3.12
+# Khuyến nghị: qua python-env-bootstrap (PowerShell trên Windows, KHÔNG qua Git Bash):
+.\skills\python-env-bootstrap\scripts\bootstrap.ps1 -Requirements skills\office-doc-creator\requirements.txt -PyVersion 3.12
 ```
 
 ## Tạo file Word (.docx)
 
 ```bash
-python scripts/create_docx.py <content.json> <output.docx>
+# Từ root repo, venv chung:
+.venv\Scripts\python.exe skills\office-doc-creator\scripts\create_docx.py <content.json> <output.docx>
 ```
 
 `content.json`:
@@ -48,7 +51,7 @@ python scripts/create_docx.py <content.json> <output.docx>
 ## Tạo file Excel (.xlsx)
 
 ```bash
-python scripts/create_xlsx.py <content.json> <output.xlsx>
+.venv\Scripts\python.exe skills\office-doc-creator\scripts\create_xlsx.py <content.json> <output.xlsx>
 ```
 
 `content.json`: `{ "sheets": [{ "name": "Sheet1", "headers": [...], "rows": [[...], ...] }] }`
@@ -56,7 +59,7 @@ python scripts/create_xlsx.py <content.json> <output.xlsx>
 ## Tạo file PowerPoint (.pptx)
 
 ```bash
-python scripts/create_pptx.py <content.json> <output.pptx>
+.venv\Scripts\python.exe skills\office-doc-creator\scripts\create_pptx.py <content.json> <output.pptx>
 ```
 
 `content.json`: `{ "slides": [{ "title": "...", "bullets": ["...", "..."] }] }` — dùng layout "Title and Content" mặc định của PowerPoint, không custom theme.

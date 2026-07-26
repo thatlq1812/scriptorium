@@ -22,21 +22,23 @@ Tạo ảnh từ prompt text, dùng Gemini image model qua key riêng của ngư
 
 ## Bootstrap môi trường
 
+Venv DÙNG CHUNG ở root repo (xem `skills/python-env-bootstrap/SKILL.md`):
+
 ```bash
-.\skills\python-env-bootstrap\scripts\bootstrap.ps1 -SkillDir skills\image-generator-gemini -PyVersion 3.12
+.\skills\python-env-bootstrap\scripts\bootstrap.ps1 -Requirements skills\image-generator-gemini\requirements.txt -PyVersion 3.12
 ```
 
 ## Ảnh đơn lẻ
 
 ```bash
 export GEMINI_API_KEY="key-cua-ban"   # hoặc --api-key
-python scripts/generate_image.py "mô tả ảnh cần tạo" output.png
+.venv\Scripts\python.exe skills\image-generator-gemini\scripts\generate_image.py "mô tả ảnh cần tạo" output.png
 ```
 
 ## Style-anchoring — giữ nhất quán phong cách qua nhiều ảnh
 
 ```bash
-python scripts/generate_image.py "mô tả ảnh mới" output2.png --style-ref output.png
+.venv\Scripts\python.exe skills\image-generator-gemini\scripts\generate_image.py "mô tả ảnh mới" output2.png --style-ref output.png
 ```
 
 `--style-ref` gửi kèm ảnh tham chiếu + instruction "STRICT style reference" trước prompt chính — model match palette/lighting/line-weight của ảnh tham chiếu khi vẽ chủ thể mới. Dùng khi cần một bộ ảnh trông "cùng một gia đình" (vd icon set, cover series) thay vì mỗi ảnh một phong cách ngẫu nhiên.
@@ -44,7 +46,7 @@ python scripts/generate_image.py "mô tả ảnh mới" output2.png --style-ref 
 ## Batch — tạo cả bộ asset từ manifest
 
 ```bash
-python scripts/generate_image.py --batch manifest.json --out-dir assets/
+.venv\Scripts\python.exe skills\image-generator-gemini\scripts\generate_image.py --batch manifest.json --out-dir assets/
 ```
 
 `manifest.json` (xem `scripts/batch_manifest.example.json`):

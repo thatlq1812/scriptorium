@@ -9,13 +9,13 @@
 | skill_id | version | risk_tier | quality_score | security_audit | Sẵn sàng dùng? |
 | --- | --- | --- | --- | --- | --- |
 | `skill-creator` | 0.2.0 | N2 | `null` | `passed` | **Chưa chính thức** — security-audit sạch, nhưng chưa qua stage 4 (quality eval ≥2 harness). |
-| `document-ai-structurer` | 0.1.0 | N1 | `null` | `passed` | **Chưa chính thức** — smoke test PDF thật OK, security-audit sạch (external fetch Docling đã khai báo), chưa qua stage 4. |
-| `python-env-bootstrap` | 0.1.0 | N1 | `null` | `passed` (chấp nhận rủi ro có ghi chú) | **Chưa chính thức** — verify chạy đúng Windows/PowerShell. Security-audit ghi nhận blind-trust pattern (`curl\|sh`/`irm\|iex` từ astral.sh) là rủi ro chấp nhận được (nguồn chính chủ, đã khai báo), chưa qua stage 4. |
+| `document-ai-structurer` | 0.1.1 | N1 | `null` | `passed` | **Chưa chính thức** — smoke test PDF thật OK, security-audit sạch (external fetch Docling đã khai báo), chưa qua stage 4. |
+| `python-env-bootstrap` | 0.2.0 | N1 | `null` | `passed` (chấp nhận rủi ro có ghi chú) | **Chưa chính thức** — verify chạy đúng Windows/PowerShell. Security-audit ghi nhận blind-trust pattern (`curl\|sh`/`irm\|iex` từ astral.sh) là rủi ro chấp nhận được (nguồn chính chủ, đã khai báo), chưa qua stage 4. |
 | `license-compliance-check` | 0.2.0 | N2 | `null` | `passed` | **Chưa chính thức** — verify chạy thật trên anthropics/skills, security-audit sạch, chưa qua stage 4. |
 | `quality-eval` | 0.1.0 | N2 | `null` | `passed` | **Chưa chính thức** — thiết kế xong (v0.1.0), chưa áp dụng lên skill thật nào, security-audit sạch (chưa có script). |
 | `security-audit` | 0.1.0 | N2 | `null` | `passed` (self-audit) | **Chưa chính thức** — đã áp dụng thật lên 5 skill trên (self-audit), chưa qua stage 4. |
 | `scout-harvester` | 0.1.0 | N1 | `null` | `passed` | **Chưa chính thức** — chưng cất từ 3 lần chạy thật trong phiên (Docling, uv, anthropics/skills), chưa qua stage 4. |
-| `office-doc-creator` | 0.1.0 | N1 | `null` | `passed` | **Chưa chính thức** — smoke test thật cả 3 định dạng (docx/xlsx/pptx), đọc lại xác nhận nội dung tiếng Việt đúng. Dùng python-docx/python-pptx/openpyxl (MIT, verify trực tiếp), không đụng skill bị khóa của Anthropic. Chưa qua stage 4. |
+| `office-doc-creator` | 0.1.1 | N1 | `null` | `passed` | **Chưa chính thức** — smoke test thật cả 3 định dạng (docx/xlsx/pptx), đọc lại xác nhận nội dung tiếng Việt đúng. Dùng python-docx/python-pptx/openpyxl (MIT, verify trực tiếp), không đụng skill bị khóa của Anthropic. Chưa qua stage 4. |
 | `dedup-novelty-check` | 0.1.0 | N1 | `null` | `passed` | **Chưa chính thức** — script tính overlap thật (stdlib, không dependency), test cả case flagged và case an toàn trên registry thật. Chưa qua stage 4. |
 | `mermaid-diagram-designer` | 0.1.0 | N1 | `null` | `passed` | **Chưa chính thức** — 2 file reference + script lint (stdlib), test cả diagram hợp lệ và lỗi. Chưa qua stage 4. |
 | `translator-en-vi` | 0.1.0 | N2 | `null` | `passed` | **Chưa chính thức** — elicited từ owner (không glossary cố định, văn phong linh hoạt), 2 file reference. Chưa qua stage 4. |

@@ -1,19 +1,27 @@
-# Bootstrap a reproducible Python venv for another skill, without assuming
-# Python is pre-installed. Uses uv (astral.sh) - a single static binary that
-# can install Python itself. Usage:
-#   .\bootstrap.ps1 <skill_dir> [python_version]
-# <skill_dir> must contain a requirements.txt. Creates <skill_dir>\.venv.
+# Bootstrap ONE shared Python venv at the repo root (sibling to skills/),
+# without assuming Python is pre-installed. Uses uv (astral.sh) - a single
+# static binary that can install Python itself.
+#
+# All skills share the SAME venv (accumulating installed packages) rather
+# than each skill carrying its own .venv/ -- avoids duplicating heavy deps
+# (e.g. torch, pulled in by both document-ai-structurer and any future ML
+# skill) across every skill folder.
+#
+# Usage:
+#   .\bootstrap.ps1 -Requirements skills\<skill>\requirements.txt [-PyVersion 3.12]
 param(
-    [Parameter(Mandatory = $true)][string]$SkillDir,
+    [Parameter(Mandatory = $true)][string]$Requirements,
     [string]$PyVersion = "3.12"
 )
 $ErrorActionPreference = "Stop"
 
-$ReqFile = Join-Path $SkillDir "requirements.txt"
-if (-not (Test-Path $ReqFile)) {
-    Write-Error "No requirements.txt at $ReqFile"
+if (-not (Test-Path $Requirements)) {
+    Write-Error "No requirements.txt at $Requirements"
     exit 1
 }
+
+$RepoRoot = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent | Split-Path -Parent
+$VenvPath = Join-Path $RepoRoot ".venv"
 
 if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
     Write-Host "uv not found - installing (single static binary, no Python required)..."
@@ -22,7 +30,9 @@ if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
 }
 
 uv python install $PyVersion
-uv venv "$SkillDir\.venv" --python $PyVersion
-uv pip install --python "$SkillDir\.venv" -r $ReqFile
+if (-not (Test-Path $VenvPath)) {
+    uv venv $VenvPath --python $PyVersion
+}
+uv pip install --python $VenvPath -r $Requirements
 
-Write-Host "OK: venv ready at $SkillDir\.venv (Python $PyVersion, deps from $ReqFile)"
+Write-Host "OK: shared venv ready at $VenvPath (Python $PyVersion, deps from $Requirements)"
