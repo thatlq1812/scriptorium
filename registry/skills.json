@@ -933,6 +933,29 @@
       "dependencies": [],
       "license_debt": null,
       "elicited_from": "Consolidates 2 EduStation skill folders that are the same underlying task at different cadence: D:/elix/edustation/skills/parent_letter/SKILL.md (a one-off letter/notice) and D:/elix/edustation/skills/parent_brief/SKILL.md (a periodic weekly/monthly brief, explicitly framed as replacing ad-hoc Zalo messages). Both are real previously-deployed EduStation skills for Vietnamese K12 homeroom teachers, judged in-scope for this tier (unlike EduStation's excluded bureaucratic-paperwork skills) because parent communication is core homeroom-teacher work. Domain knowledge kept: the required-content shape both converge on (purpose, content, a clear ask if any, sender identity) and their shared tone constraints (respectful, no harsh judgment of the student, no fabricated specifics). The single hard-block beyond generic required-field checks is recipient_scope=single_student with an unfilled/placeholder student name -- the real, previously-identified EduStation failure mode of a form letter sent with the name placeholder never replaced. EduStation's own orchestration machinery was NOT ported; this skill never calls an LLM/AI API."
+    },
+    {
+      "skill_id": "contract-consistency-linter",
+      "version": "0.1.0",
+      "source": {"type": "self-authored"},
+      "license": "MIT",
+      "tags": {
+        "domain": ["legal"],
+        "task_type": ["review-qa"],
+        "risk_tier": "N2",
+        "harness_compatibility": ["claude-code"],
+        "grounding": "required",
+        "object_type": ["contract"]
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-26",
+        "note": "lint_contract.py: local-only, stdlib only (re/json/argparse), zero network calls, no dynamic execution, no secret handling. No finding."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Elicited from a real practitioner survey (outside_research/research_01_survey.md, items 7-8: a recent law graduate in a junior legal role) naming exactly the three checks this skill encodes: article numbering, cross-reference integrity, and party-name consistency. Scoped to only the genuinely deterministic subset of items 7-8 -- date/defined-term consistency was judged too fragile for reliable regex detection in v0.1.0 and left as a known limitation. First skill for the Legal specializer network (docs/specs/STRATEGY_SPEC.md §5.2), chosen to build first because it needed no external legal database and no owner-supplied checklist/template data, unlike legal-citation-checker (no free Vietnamese legal-document API exists) or legal-form-filler (no real government checklist/template data available yet) -- both flagged as open gaps rather than built around with invented data."
     }
   ]
 }
