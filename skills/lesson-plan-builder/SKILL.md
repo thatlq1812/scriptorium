@@ -2,7 +2,7 @@
 name: lesson-plan-builder
 description: Validates a K-12 Vietnamese lesson plan (KHBD) record against the mandatory structure of Phu luc IV, Cong van 5512/BGDDT-GDTrH — exactly 4 activities in fixed order, each with all 4 required sub-parts, a fixed competency/quality-trait vocabulary (CT GDPT 2018), and level-appropriate assessment language (TT27 for tieu hoc: no scores; TT22 for THCS/THPT: scores allowed) — then renders a clean Markdown KHBD. Use when drafting or checking a lesson plan for structural completeness before class. Do NOT use this to judge whether the pedagogy itself is good — it validates structure and fixed vocabulary only, never teaching quality.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, re, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-26) — a real 4-activity THCS lesson plan (Toán, số nguyên tố) validated with zero errors/warnings and rendered correctly to Markdown; a Tiểu học (grade 3) plan with scoring language correctly errored citing TT27; a deliberately broken plan (wrong activity order, invalid phẩm chất/năng lực vocabulary, missing to_chuc_thuc_hien steps) correctly caught 7 errors + 3 cross-reference warnings; missing-fields and malformed-JSON cases correctly refused; a time-allocation mismatch (45 vs 90 declared minutes) correctly warned at the 5% tolerance threshold.
+compatibility: Requires Python 3.11+, stdlib only (json, re, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.
 metadata:
   domain: education
   task_type: review-qa
@@ -46,6 +46,10 @@ Start from `assets/lesson_plan_template.json`. Exit 0 = structurally valid (warn
 - Doesn't generate the lesson content itself (no LLM/AI call) — the teacher (or the agent working with the teacher) fills the JSON; this only checks it.
 - Doesn't produce a `.docx` in the official Times New Roman 14 / 2.5-2.0-2.0-2.0cm margin format — delegate that formatting step to `office-doc-creator` once the Markdown passes validation.
 - Doesn't cover any of the administrative-paperwork document types (reports, decisions, correspondence logs, meeting minutes) — deliberately out of scope for this tier, see "Why this skill" above.
+
+## Verified
+
+A real 4-activity THCS lesson plan (Toán, số nguyên tố) validated with zero errors/warnings and rendered correctly to Markdown; a Tiểu học (grade 3) plan with scoring language correctly errored citing TT27; a deliberately broken plan (wrong activity order, invalid phẩm chất/năng lực vocabulary, missing to_chuc_thuc_hien steps) correctly caught 7 errors + 3 cross-reference warnings; missing-fields and malformed-JSON cases correctly refused; a time-allocation mismatch (45 vs 90 declared minutes) correctly warned at the 5% tolerance threshold.
 
 ## Known limitations (v0.1.0)
 

@@ -2,7 +2,7 @@
 name: study-plan-builder
 description: Turns a flat list of study topics into a day-by-day study/review schedule — spaces out topics so the same one is never studied twice in a row, and inserts periodic review sessions cycling through everything introduced so far. Use when a student wants to plan how to work through a syllabus/topic list over N days before an exam or deadline. Do NOT use this to answer questions, solve problems, or do the work itself — it only decides WHEN to study WHAT; the studying stays entirely the student's own.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse, math) — no dependency, no venv needed, local-only, zero network calls of any kind. Verified running clean: Claude Code (2026-07-26) — a 4-topic/14-day real schedule (correct spacing, no back-to-back repeats, sensible review distribution); an insufficient-capacity case correctly refused with an actionable "add N more days" message; an exact-fit case (10 days, weight sum = 8) verified to produce exactly 8 new + 2 review sessions; invalid `--review-every 1`, a duplicate topic name, and an out-of-range weight all correctly refused with exit code 2; a real bug (crash when a schedule has MORE capacity than topics need) was found and fixed during this testing.
+compatibility: Requires Python 3.11+, stdlib only (json, argparse, math) — no dependency, no venv needed, local-only, zero network calls of any kind. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.
 metadata:
   domain: education
   task_type: coordination
@@ -44,6 +44,10 @@ Start from `assets/topics_template.json`. `--review-every` must be ≥2 (a value
 - Doesn't adapt the schedule based on how well a session actually went (no mastery tracking / spaced-repetition-by-performance) — it's a fixed, deterministic schedule computed up front, not an adaptive one. A future version could add a `--progress` input if this gap turns out to matter in real use.
 - Doesn't call any LLM/AI API — pure stdlib arithmetic.
 - Doesn't validate that the topic list itself is complete, correctly ordered, or exam-relevant — that judgment call stays with the student/teacher supplying the topic list.
+
+## Verified
+
+A 4-topic/14-day real schedule (correct spacing, no back-to-back repeats, sensible review distribution); an insufficient-capacity case correctly refused with an actionable "add N more days" message; an exact-fit case (10 days, weight sum = 8) verified to produce exactly 8 new + 2 review sessions; invalid `--review-every 1`, a duplicate topic name, and an out-of-range weight all correctly refused with exit code 2; a real bug (crash when a schedule has MORE capacity than topics need) was found and fixed during this testing.
 
 ## Known limitations (v0.1.0)
 

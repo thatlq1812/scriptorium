@@ -1,0 +1,24 @@
+{
+  "doc_kieu": "bien_ban",
+  "co_quan_chu_quan": "",
+  "co_quan_ban_hanh": "SỞ NỘI VỤ TỈNH X",
+  "so": 3,
+  "ky_hieu": "BB-SNV",
+  "trich_yeu": "Họp giao ban công tác văn thư, lưu trữ quý III năm 2026",
+  "thoi_gian_bat_dau": "14 giờ 00 phút, ngày 27 tháng 7 năm 2026",
+  "dia_diem": "Phòng họp A, Sở Nội vụ tỉnh X",
+  "thanh_phan_tham_du": "Lãnh đạo Sở, Trưởng các phòng chuyên môn",
+  "chu_tri": "Ông Nguyễn Văn A, Giám đốc Sở",
+  "thu_ky": "Bà Trần Thị B, Chuyên viên Văn phòng",
+  "noi_dung_doan": [
+    "Các đơn vị báo cáo tình hình thực hiện công tác văn thư, lưu trữ quý III năm 2026.",
+    "Giám đốc Sở kết luận, giao Văn phòng tổng hợp báo cáo gửi Bộ Nội vụ trước ngày 05 tháng 8 năm 2026."
+  ],
+  "thoi_gian_ket_thuc": {"gio": 16, "ngay": 27, "thang": 7, "nam": 2026},
+  "thu_ky_ho_ten": "Trần Thị B",
+  "chu_toa_ho_ten": "Nguyễn Văn A",
+  "noi_nhan": [
+    "Các phòng chuyên môn",
+    "Lưu: VT, VP"
+  ]
+}

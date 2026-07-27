@@ -2,7 +2,7 @@
 name: contract-consistency-linter
 description: Lints a Vietnamese contract text for three purely mechanical consistency errors — Điều (article) numbering (sequential, no gaps/duplicates), cross-reference integrity (every "Điều N" mention resolves to a real heading), and party-label consistency (only the declared parties, e.g. "Bên A"/"Bên B", appear — catches leftover copy-paste like a stray "Bên C" from a template). Use before finalizing or sending a contract. Do NOT use this to assess legal risk, clause fairness, or compliance — that's `contract-risk-log`'s job; this is a mechanical proofreading pass only, not a legal review.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (re, json, argparse) — no dependency, no venv needed, local-only, zero network calls of any kind. Verified running clean: Claude Code (2026-07-26) — a real clean 3-article contract passed with zero flags; a deliberately broken contract (out-of-sequence numbering, a duplicate article number, 2 dangling cross-references, an undeclared "Bên C") was correctly flagged with all 5 issues named by exact line number; missing contract file, malformed config JSON, and a config missing the required field were all correctly refused with exit code 2.
+compatibility: Requires Python 3.11+, stdlib only (re, json, argparse) — no dependency, no venv needed, local-only, zero network calls of any kind. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for the real test cases.
 metadata:
   domain: legal
   task_type: review-qa
@@ -44,6 +44,10 @@ Start from `assets/lint_config_template.json` for the config shape (`allowed_par
 - Doesn't check date consistency (e.g. an effective date mentioned in two places with different values) or defined-term consistency (a term defined once, referenced with a slightly different spelling elsewhere) — both judged too fragile for reliable regex detection in v0.1.0; a real gap, not silently ignored.
 - Doesn't call any LLM/AI API — pure regex/stdlib mechanical checking.
 - Doesn't verify statute citations inside the contract (e.g. "theo Nghị định 30/2020") resolve to a real, currently-effective legal document — that's the open gap flagged for `legal-citation-checker`.
+
+## Verified
+
+A real clean 3-article contract passed with zero flags; a deliberately broken contract (out-of-sequence numbering, a duplicate article number, 2 dangling cross-references, an undeclared "Bên C") was correctly flagged with all 5 issues named by exact line number; missing contract file, malformed config JSON, and a config missing the required field were all correctly refused with exit code 2.
 
 ## Known limitations (v0.1.0)
 

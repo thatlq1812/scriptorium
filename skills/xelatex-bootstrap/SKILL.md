@@ -2,7 +2,7 @@
 name: xelatex-bootstrap
 description: Detects whether the XeLaTeX toolchain (xelatex, biber, the fontspec LaTeX package) is present on this machine, and only when explicitly run, installs it via the platform's package manager (winget/brew/apt). Use before latex-project-bootstrap on a machine where the toolchain hasn't already been confirmed present — latex-project-bootstrap assumes xelatex/biber already exist and doesn't install them itself. Do NOT run the install script speculatively — always run check_toolchain.py first; installing is a multi-minute, several-hundred-MB system change and should only happen when detection actually shows something missing.
 license: MIT
-compatibility: check_toolchain.py is stdlib-only (shutil, subprocess, platform), no dependency, no venv. install_toolchain.ps1 requires winget (Windows); install_toolchain.sh requires brew (macOS) or apt-get (Debian/Ubuntu Linux). Verified running clean: Claude Code, Windows (2026-07-27) — check_toolchain.py correctly detected an already-installed MiKTeX 25.12 (xelatex, biber, fontspec.sty all found with real version strings), and correctly reports a missing binary when tested directly against a nonexistent binary name. install_toolchain.ps1/.sh NOT executed for real this session (heavy system-modifying operation, no machine available without an existing toolchain to test against) — written carefully but flagged as unverified in Known limitations.
+compatibility: check_toolchain.py is stdlib-only (shutil, subprocess, platform), no dependency, no venv. install_toolchain.ps1 requires winget (Windows); install_toolchain.sh requires brew (macOS) or apt-get (Debian/Ubuntu Linux). Verified running clean: Claude Code, Windows (2026-07-27). See "Verified" section below for real test-case detail.
 metadata:
   domain: general
   task_type: coordination
@@ -42,6 +42,10 @@ Windows installs MiKTeX via `winget`; macOS installs MacTeX (no-GUI) via `brew`;
 - Doesn't scaffold a LaTeX project — that's `latex-project-bootstrap`, which depends on this skill's job being done first (or the toolchain already being present).
 - Doesn't install anything on its own initiative — `check_toolchain.py` never calls the install scripts; a human/agent decides to run `install_toolchain.ps1`/`.sh` after seeing MISSING output.
 - Doesn't manage a shared venv — unrelated to `python-env-bootstrap`; this is a system-level LaTeX toolchain, not a Python environment.
+
+## Verified
+
+check_toolchain.py correctly detected an already-installed MiKTeX 25.12 (xelatex, biber, fontspec.sty all found with real version strings), and correctly reports a missing binary when tested directly against a nonexistent binary name. install_toolchain.ps1/.sh NOT executed for real this session (heavy system-modifying operation, no machine available without an existing toolchain to test against) — written carefully but flagged as unverified in Known limitations.
 
 ## Known limitations (v0.1.0, not yet through official quality-eval)
 

@@ -2,7 +2,7 @@
 name: competency-rubric-builder
 description: Validates a competency/product/activity assessment rubric (rubric đánh giá năng lực/sản phẩm/hoạt động) record — a criteria × performance-levels table (3 or 4 levels, e.g. "Tốt / Đạt / Cần cố gắng") — checking every criterion has a non-empty observable-behavior description for every level, that criterion weights sum exactly to the declared total scale, and flagging (as a warning) any criterion whose level descriptions were copy-pasted identically across levels; then renders a clean Markdown rubric table. Use when drafting or checking a rubric before grading with it. Do NOT use this to judge whether the described behaviors are pedagogically appropriate for the subject/grade — it validates structure, arithmetic, and literal duplication only, never teaching quality.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-26) — a valid 3-level/3-criteria rubric (weights 4+3+3=10) validated with zero errors and rendered to a clean Markdown table; a valid 4-level/3-criteria rubric (weights 25+25+50=100) also passed; a weight-sum mismatch (7 vs declared 10) was correctly refused showing the exact shortfall; a missing mo_ta cell was correctly refused naming the exact criterion and level; a criterion with identical description text copy-pasted across two levels correctly warned (not errored, exit 0); a 2-level muc, duplicate criterion names, a non-numeric trong_so, missing top-level fields, an empty tieu_chi list, and malformed/non-object JSON were all correctly refused; --render correctly declined to overwrite an existing file without --force and succeeded with it.
+compatibility: Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.
 metadata:
   domain: education
   task_type: review-qa
@@ -45,6 +45,10 @@ Start from `assets/rubric_template.json` (a valid 3-level, 3-criteria example �
 - Doesn't generate rubric content itself (no LLM/AI call) — the teacher (or the agent working with the teacher) fills the JSON; this only checks it.
 - Doesn't produce a `.docx` in the official A4/Times New Roman format — delegate that formatting step to `office-doc-creator` once the Markdown passes validation.
 - Doesn't check that criteria/levels named in the rubric match any specific official framework (e.g. CT GDPT 2018 competency descriptors) — content-level correctness is out of scope, same as the structural-only stance in `lesson-plan-builder`.
+
+## Verified
+
+A valid 3-level/3-criteria rubric (weights 4+3+3=10) validated with zero errors and rendered to a clean Markdown table; a valid 4-level/3-criteria rubric (weights 25+25+50=100) also passed; a weight-sum mismatch (7 vs declared 10) was correctly refused showing the exact shortfall; a missing mo_ta cell was correctly refused naming the exact criterion and level; a criterion with identical description text copy-pasted across two levels correctly warned (not errored, exit 0); a 2-level muc, duplicate criterion names, a non-numeric trong_so, missing top-level fields, an empty tieu_chi list, and malformed/non-object JSON were all correctly refused; --render correctly declined to overwrite an existing file without --force and succeeded with it.
 
 ## Known limitations (v0.1.0)
 

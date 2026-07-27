@@ -1,0 +1,31 @@
+{
+  "doc_kieu": "quyet_dinh_truc_tiep",
+  "co_quan_chu_quan": "",
+  "co_quan_ban_hanh": "UỶ BAN NHÂN DÂN TỈNH X",
+  "so": 12,
+  "ky_hieu": "QĐ-UBND",
+  "trich_yeu": "ban hành Quy chế văn thư nội bộ",
+  "dia_danh": "Hà Nội",
+  "ngay": 5,
+  "thang": 3,
+  "nam": 2026,
+  "can_cu": [
+    "Luật Tổ chức chính quyền địa phương ngày 19 tháng 6 năm 2015",
+    "Nghị định số 30/2020/NĐ-CP ngày 05 tháng 3 năm 2020 của Chính phủ về công tác văn thư"
+  ],
+  "theo_de_nghi": "Chánh Văn phòng Uỷ ban nhân dân tỉnh X",
+  "dieu_list": [
+    {"so": 1, "noi_dung": "Ban hành kèm theo Quyết định này Quy chế văn thư nội bộ của Uỷ ban nhân dân tỉnh X."},
+    {"so": 2, "noi_dung": "Quyết định này có hiệu lực thi hành kể từ ngày ký."},
+    {"so": 3, "noi_dung": "Chánh Văn phòng, Thủ trưởng các đơn vị trực thuộc chịu trách nhiệm thi hành Quyết định này."}
+  ],
+  "nguoi_ky": {
+    "quyen_han": "",
+    "chuc_vu": "CHỦ TỊCH",
+    "ho_ten": "Trần Văn B"
+  },
+  "noi_nhan": [
+    "Như Điều 3",
+    "Lưu: VT, VP"
+  ]
+}

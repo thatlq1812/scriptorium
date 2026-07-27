@@ -19,10 +19,28 @@ claim as hiệu lực: a real Điều number that was repealed last year still
 Verifying a citation's real-world legal status remains a human task (or a
 future version of this skill, if/when a real queryable source is supplied).
 
+Access modes (2026-07-27, v0.3.0): every citation is reported with an explicit
+access_mode, adapted from a pattern found in 3 outside LegalTech skill repos
+surveyed this session (claude-for-legal/awesome-legal-skills/lq-skills all
+independently converged on a live-source / user-supplied / no-source
+3-state model for how a claim was actually grounded):
+  - "no-source"     -- format/consistency check only, the default.
+  - "user-supplied" -- --catalog matched this citation's van_ban_so_hieu
+                        against a real local corpus (Điều-existence only).
+  - "live-source"    -- --web-record matched this citation against a
+                        legal-web-search validated search record (a REAL
+                        web search the calling agent already ran and
+                        disciplined via validate_search_record.py). This
+                        NEVER asserts hiệu lực -- it surfaces exactly what
+                        the source page displayed (or a disclosed
+                        WebSearch-summary snippet), dated and sourced, for
+                        a human to read. Multiple modes can apply to the
+                        same citation at once.
+
 Exit codes: 0 = no flags, 1 = at least one flag found, 2 = malformed input.
 
 Usage:
-    python validate_citation_format.py citations.json [--catalog catalog.json]
+    python validate_citation_format.py citations.json [--catalog catalog.json] [--web-record record.json]
 """
 from __future__ import annotations
 
@@ -76,8 +94,57 @@ def load_catalog(path: Path) -> dict[str, dict]:
     return by_so_hieu
 
 
-def validate(citations: list[dict], catalog: dict[str, dict] | None = None) -> list[str]:
+def load_web_record(path: Path) -> dict[str, list[dict]]:
+    """Return {document_ref: [result, ...]} from a legal-web-search record.
+    Does not re-validate search-record discipline (allowlisted domains,
+    dated access, contradiction surfacing) -- that's validate_search_record's
+    job. Only requires enough structure to safely read document_ref/
+    as_displayed_status/js_shell fields without crashing on a malformed file."""
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError, UnicodeDecodeError) as exc:
+        raise CitationError(f"cannot read web-record: {exc}") from exc
+    results = data.get("results")
+    if not isinstance(results, list):
+        raise CitationError("web-record must be an object with a 'results' list")
+    by_ref: dict[str, list[dict]] = {}
+    for r in results:
+        if not isinstance(r, dict):
+            continue
+        ref = r.get("document_ref")
+        if ref:
+            by_ref.setdefault(ref, []).append(r)
+    return by_ref
+
+
+def access_modes_for(so_hieu: str | None, catalog: dict[str, dict] | None, web_record: dict[str, list[dict]] | None) -> list[str]:
+    modes = ["no-source"]
+    if so_hieu and catalog is not None and so_hieu in catalog:
+        modes.append("user-supplied")
+    if so_hieu and web_record is not None and so_hieu in web_record:
+        modes.append("live-source")
+    return modes
+
+
+def format_live_source_hints(so_hieu: str, web_record: dict[str, list[dict]]) -> list[str]:
+    hints: list[str] = []
+    for r in web_record.get(so_hieu, []):
+        if r.get("js_shell_detected") and r.get("snippet_note"):
+            display = f"WebSearch-summary snippet (js_shell_detected): {r['snippet_note']}"
+        else:
+            status = r.get("as_displayed_status")
+            display = f"as displayed: {status.get('text')}" if isinstance(status, dict) and status.get("text") else "no status text displayed on this source"
+        hints.append(
+            f"live-source hint for {so_hieu!r} -- {display} (source: {r.get('url', '?')}, "
+            f"accessed {r.get('accessed_date', '?')}) -- NOT a hiệu lực determination, only what the source showed."
+        )
+    return hints
+
+
+def validate(citations: list[dict], catalog: dict[str, dict] | None = None, web_record: dict[str, list[dict]] | None = None) -> tuple[list[str], list[str], list[str]]:
     errors: list[str] = []
+    access_notes: list[str] = []
+    live_source_hints: list[str] = []
     title_by_so_hieu: dict[str, str] = {}
 
     for i, c in enumerate(citations):
@@ -128,7 +195,12 @@ def validate(citations: list[dict], catalog: dict[str, dict] | None = None) -> l
                     f"Điều number or the corpus is out of date, not a hiệu lực claim"
                 )
 
-    return errors
+        modes = access_modes_for(so_hieu, catalog, web_record)
+        access_notes.append(f"citations[{i}]: access_mode={','.join(modes)}")
+        if so_hieu and web_record is not None and so_hieu in web_record:
+            live_source_hints.extend(format_live_source_hints(so_hieu, web_record))
+
+    return errors, access_notes, live_source_hints
 
 
 def main() -> int:
@@ -139,6 +211,12 @@ def main() -> int:
         help="Optional catalog.json from document-ai-structurer's build_catalog.py -- when given, also checks that "
              "each cited Điều number actually exists in the structured corpus for documents the catalog covers "
              "(by van_ban_so_hieu). Documents not in the catalog are still format/consistency-checked as usual.",
+    )
+    parser.add_argument(
+        "--web-record", type=Path, default=None,
+        help="Optional legal-web-search record JSON (already run through that skill's validate_search_record.py) "
+             "-- when a citation's van_ban_so_hieu matches a result's document_ref, prints a disclosed "
+             "live-source hint (what the source page displayed, dated, sourced). Never asserts hiệu lực.",
     )
     args = parser.parse_args()
 
@@ -164,16 +242,33 @@ def main() -> int:
             print(f"MALFORMED: {exc}", file=sys.stderr)
             return 2
 
-    errors = validate(citations, catalog)
+    web_record = None
+    if args.web_record:
+        if not args.web_record.exists():
+            print(f"web-record not found: {args.web_record}", file=sys.stderr)
+            return 1
+        try:
+            web_record = load_web_record(args.web_record)
+        except CitationError as exc:
+            print(f"MALFORMED: {exc}", file=sys.stderr)
+            return 2
+
+    errors, access_notes, live_source_hints = validate(citations, catalog, web_record)
 
     print(
         "NOTE: this checks citation FORMAT, title consistency"
-        + (", and Điều-existence against the supplied corpus" if catalog is not None else "")
+        + (", Điều-existence against the supplied corpus" if catalog is not None else "")
+        + (", and disclosed live-source hints from a real web-search record" if web_record is not None else "")
         + " only -- it does NOT verify a document is currently in effect (hiệu lực), amended, or repealed. "
         "No free Vietnamese legal-document database is available to this project; verifying real-world legal "
         "status remains a human task.",
         file=sys.stderr,
     )
+
+    for note in access_notes:
+        print(note, file=sys.stderr)
+    for hint in live_source_hints:
+        print(hint, file=sys.stderr)
 
     if errors:
         print(f"FLAGGED: {len(errors)} issue(s).")

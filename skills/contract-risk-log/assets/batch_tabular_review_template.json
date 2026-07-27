@@ -1,0 +1,52 @@
+{
+  "review_title": "Rà soát 2 hợp đồng dịch vụ - Quý III 2026",
+  "reviewer": "Nguyễn Văn A",
+  "review_date": "2026-07-27",
+  "documents": ["Hợp đồng A - Công ty X", "Hợp đồng B - Công ty Y"],
+  "columns": ["Thời hạn hợp đồng", "Điều khoản chấm dứt sớm", "Phạt vi phạm"],
+  "cells": [
+    {
+      "document": "Hợp đồng A - Công ty X",
+      "column": "Thời hạn hợp đồng",
+      "state": "value",
+      "value": "24 tháng kể từ ngày ký",
+      "verbatim_quote": "Hợp đồng có thời hạn 24 (hai mươi bốn) tháng kể từ ngày ký.",
+      "location": "Điều 3"
+    },
+    {
+      "document": "Hợp đồng A - Công ty X",
+      "column": "Điều khoản chấm dứt sớm",
+      "state": "value",
+      "value": "Một bên có thể chấm dứt với thông báo trước 30 ngày",
+      "verbatim_quote": "Mỗi Bên có quyền đơn phương chấm dứt Hợp đồng bằng cách thông báo trước cho Bên kia ít nhất 30 (ba mươi) ngày.",
+      "location": "Điều 8, Khoản 2"
+    },
+    {
+      "document": "Hợp đồng A - Công ty X",
+      "column": "Phạt vi phạm",
+      "state": "not_present"
+    },
+    {
+      "document": "Hợp đồng B - Công ty Y",
+      "column": "Thời hạn hợp đồng",
+      "state": "value",
+      "value": "12 tháng, tự động gia hạn",
+      "verbatim_quote": "Thời hạn Hợp đồng là 12 tháng và sẽ tự động gia hạn thêm 12 tháng nếu không có Bên nào thông báo chấm dứt.",
+      "location": "Điều 2"
+    },
+    {
+      "document": "Hợp đồng B - Công ty Y",
+      "column": "Điều khoản chấm dứt sớm",
+      "state": "needs_review",
+      "note": "Điều khoản viết mập mờ, không rõ điều kiện chấm dứt sớm áp dụng cho bên nào -- cần luật sư xem lại bản gốc."
+    },
+    {
+      "document": "Hợp đồng B - Công ty Y",
+      "column": "Phạt vi phạm",
+      "state": "value",
+      "value": "0.1%/ngày chậm thanh toán, tối đa 8% giá trị hợp đồng",
+      "verbatim_quote": "Bên vi phạm nghĩa vụ thanh toán phải chịu phạt 0.1%/ngày trên số tiền chậm thanh toán, tổng mức phạt không vượt quá 8% giá trị Hợp đồng.",
+      "location": "Điều 6"
+    }
+  ]
+}

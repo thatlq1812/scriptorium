@@ -1,0 +1,29 @@
+{
+  "doc_kieu": "van_ban_ten_loai",
+  "co_quan_chu_quan": "",
+  "co_quan_ban_hanh": "SỞ NỘI VỤ TỈNH X",
+  "so": 15,
+  "ky_hieu": "BC-SNV",
+  "nam": 2026,
+  "ten_loai": {"hien_thi": "BÁO CÁO", "viet_tat": "BC"},
+  "trich_yeu": "Kết quả thực hiện công tác văn thư, lưu trữ 6 tháng đầu năm 2026",
+  "dia_danh": "Hà Nội",
+  "ngay": 27,
+  "thang": 7,
+  "noi_dung_doan": [
+    "Thực hiện chương trình công tác năm 2026, Sở Nội vụ tỉnh X báo cáo kết quả thực hiện công tác văn thư, lưu trữ 6 tháng đầu năm như sau:",
+    "I. Kết quả đạt được",
+    "Các đơn vị trực thuộc đã thực hiện đăng ký, quản lý văn bản đi/đến theo đúng thể thức quy định tại Nghị định số 30/2020/NĐ-CP.",
+    "II. Phương hướng 6 tháng cuối năm",
+    "Tiếp tục hoàn thiện Hệ thống quản lý tài liệu điện tử theo Phụ lục VI Nghị định này."
+  ],
+  "nguoi_ky": {
+    "quyen_han": "KT.",
+    "chuc_vu": "GIÁM ĐỐC",
+    "ho_ten": "Nguyễn Văn A"
+  },
+  "noi_nhan": [
+    "Bộ Nội vụ (để báo cáo)",
+    "Lưu: VT, VP"
+  ]
+}

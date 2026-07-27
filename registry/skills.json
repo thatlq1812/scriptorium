@@ -3,7 +3,7 @@
   "skills": [
     {
       "skill_id": "skill-creator",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "source": {
         "type": "self-authored",
         "adapted_from": {
@@ -189,6 +189,29 @@
       "elicited_from": "Owner (2026-07-27), reviewing another agent's request.md proposal: accepted as a real gap -- latex-project-bootstrap assumes XeLaTeX/biber already installed, doesn't install them itself, same relationship python-env-bootstrap has to Python. Detect/install split follows python-env-bootstrap's own established pattern of never silently taking a heavy system action."
     },
     {
+      "skill_id": "typst-bootstrap",
+      "version": "0.1.0",
+      "source": {"type": "self-authored"},
+      "license": "MIT",
+      "tags": {
+        "domain": ["general"],
+        "task_type": ["coordination"],
+        "risk_tier": "N1",
+        "harness_compatibility": ["claude-code"],
+        "grounding": "not_applicable",
+        "object_type": []
+      },
+      "quality_score": null,
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-27",
+        "note": "check_typst.py: subprocess used only via a fixed argument list (typst --version), no shell=True. install_typst.py downloads from a hardcoded official GitHub release URL via urllib.request, extracts via zipfile/tarfile (no dynamic execution of extracted content), writes only into the shared .tools/typst/ location. No secret handling. Executed for real this session (real download+install verified)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Owner (2026-07-27): after comparing D:/elix/praxis_csc's real document-export pipeline, directed switching latex-project-bootstrap's vnnd30 mode from XeLaTeX to Typst for portability (a ~50MB static binary vs a ~5GB TeX distribution) -- this is the 'get Typst onto this machine' layer, same relationship python-env-bootstrap has to Python skills and xelatex-bootstrap has to the book-scaffold mode."
+    },
+    {
       "skill_id": "pandoc-bootstrap",
       "version": "0.1.0",
       "source": {"type": "self-authored"},
@@ -213,7 +236,7 @@
     },
     {
       "skill_id": "legal-web-search",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "source": {"type": "self-authored"},
       "license": "MIT",
       "tags": {
@@ -568,7 +591,7 @@
     },
     {
       "skill_id": "latex-project-bootstrap",
-      "version": "0.1.0",
+      "version": "0.4.0",
       "source": {
         "type": "self-authored"
       },
@@ -586,21 +609,24 @@
         ],
         "grounding": "not_applicable",
         "object_type": [
-          "latex-project"
+          "latex-project",
+          "administrative-document"
         ]
       },
       "quality_score": null,
       "security_audit": {
         "status": "passed",
-        "date": "2026-07-26",
-        "note": "init_project.py: pure stdlib, only writes local files. build.sh/.ps1 only call local xelatex/biber, no network/secrets. No finding."
+        "date": "2026-07-27",
+        "note": "Re-audited at 0.4.0: render_nd30_document.py rewritten for Typst (json/re/shutil/subprocess/argparse/platform, still pure stdlib), export_nd30_docx.py/build_reference_docx.py unchanged. Writes only to the caller-given output path, subprocess calls to typst/pandoc use fixed argument lists (no shell=True, no string interpolation into a shell command). No network/secrets. No finding."
       },
       "dependencies": [
         "xelatex",
-        "biber"
+        "biber",
+        "typst-bootstrap",
+        "pandoc"
       ],
       "license_debt": null,
-      "elicited_from": "Grounded in the owner's real LaTeX project (D:/elix/researches/textbooks) -- XeLaTeX + polyglossia/fontspec, build sequence xelatex->biber->xelatex->xelatex"
+      "elicited_from": "Grounded in the owner's real LaTeX project (D:/elix/researches/textbooks) -- XeLaTeX + polyglossia/fontspec, build sequence xelatex->biber->xelatex->xelatex (book/report scaffold mode only). vnnd30 mode elicited from the real Nghi dinh 30/2020/ND-CP PDF (downloaded directly from vanban.chinhphu.vn 2026-07-27). v0.3.0's DOCX reference-doc patch recipe adapted from a real fix in D:/elix/praxis_csc/resources/templates/reference-vn.docx. v0.4.0: owner directed switching vnnd30 mode's engine from XeLaTeX to Typst after comparing praxis_csc's own docs/CHANGELOG.md, which records that project independently making the identical switch for the identical portability reason."
     },
     {
       "skill_id": "image-generator-gemini",
@@ -1159,7 +1185,7 @@
     },
     {
       "skill_id": "legal-citation-checker",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "source": {"type": "self-authored"},
       "license": "MIT",
       "tags": {
@@ -1174,7 +1200,7 @@
       "security_audit": {
         "status": "passed",
         "date": "2026-07-27",
-        "note": "Re-audited at 0.2.0: new --catalog code path adds only json/re stdlib usage, still local-only, zero network calls, no dynamic execution, no secret handling. No finding."
+        "note": "Re-audited at 0.3.0: new --web-record code path adds only json stdlib usage (reads an already-validated legal-web-search record file), still local-only, zero network calls, no dynamic execution, no secret handling. No finding."
       },
       "dependencies": ["document-ai-structurer"],
       "license_debt": null,
@@ -1182,7 +1208,7 @@
     },
     {
       "skill_id": "contract-risk-log",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "source": {"type": "self-authored"},
       "license": "MIT",
       "tags": {
@@ -1196,8 +1222,8 @@
       "quality_score": null,
       "security_audit": {
         "status": "passed",
-        "date": "2026-07-26",
-        "note": "validate_risk_log.py: local-only, stdlib only (json/argparse), zero network calls, no dynamic execution, no secret handling. N3 reflects subject-matter risk (contract risk assessment reaching a client/decision-maker), not a tooling finding. No finding."
+        "date": "2026-07-27",
+        "note": "Re-audited at 0.2.0: batch_tabular_review.py, local-only, stdlib only (json/argparse), zero network calls, no dynamic execution, no secret handling. N3 reflects subject-matter risk (contract risk assessment reaching a client/decision-maker), not a tooling finding. No finding."
       },
       "dependencies": [],
       "license_debt": null,

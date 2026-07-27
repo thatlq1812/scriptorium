@@ -2,7 +2,7 @@
 name: image-generator-gemini
 description: A designer toolkit using Gemini (google-genai SDK) via the user's OWN API key — optional, not an AI backend managed by Scriptorium. Not just single-image generation: supports style-anchoring (1 reference image), auto-anchor batch (an entire asset set auto-syncs its style around the first image, no sample prep needed beforehand), vision-analysis (reads an existing image, describes its style as text for reuse), and extracting a cover from an existing PDF (no AI needed, local render). Use when the user already has a Gemini API key and needs to create/analyze/extract image assets — from a single icon to a whole synced brand/cover set. Do NOT use if the user doesn't have their own key, and this is not a shortcut around the "Scriptorium doesn't integrate an AI backend" principle (see the note below).
 license: MIT
-compatibility: Requires Python 3.11+ + `google-genai` + `pypdfium2` (already present via `document-ai-structurer`'s transitive dependency in the shared venv — bootstrapped via `python-env-bootstrap`) + the user's own `GEMINI_API_KEY` environment variable. Verified running clean: Claude Code, Windows (2026-07-26) — verified for REAL via actual API calls for all 4 capabilities: single image, batch + skip-if-exists, style-ref anchoring, vision-analysis (accurate, detailed style description), PDF-page-extraction (real PDF page render, text readable).
+compatibility: Requires Python 3.11+ + `google-genai` + `pypdfium2` (already present via `document-ai-structurer`'s transitive dependency in the shared venv — bootstrapped via `python-env-bootstrap`) + the user's own `GEMINI_API_KEY` environment variable. Verified running clean: Claude Code, Windows (2026-07-26). See "Verified" section below for real test-case detail.
 metadata:
   domain: general
   task_type: drafting
@@ -94,6 +94,10 @@ Uses `pypdfium2` (already present via `document-ai-structurer`'s dependency) to 
 - `scripts/analyze_style.py` — vision-analysis, image → text style description.
 - `scripts/extract_pdf_page.py` — extracts a PDF page as PNG, no AI needed.
 - `scripts/batch_manifest.example.json` — a sample manifest for batch mode.
+
+## Verified
+
+Verified for REAL via actual API calls for all 4 capabilities: single image, batch + skip-if-exists, style-ref anchoring, vision-analysis (accurate, detailed style description), PDF-page-extraction (real PDF page render, text readable).
 
 ## Known limitations (v0.3.0)
 

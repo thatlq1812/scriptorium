@@ -2,7 +2,7 @@
 name: skill-exporter
 description: Packages one or more skills from this repo into a single .zip for someone outside this project — a colleague, a friend, another project — to drop into their own agent. Use when a user says something like "prepare a skill pack for me/a friend for [purpose/workflow]" — the calling agent interviews the user (free-form, no fixed script; a suggested checklist is below) to figure out who it's for and what they need, maps that to registry tags, then runs the 2 bundled scripts to list candidates and export. Do NOT export a skill with license_debt set or a security_audit status other than "passed" — both scripts hard-refuse this, no override flag exists.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse, zipfile, shutil) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-27) — list_candidates.py filtered by domain/task_type/object_type against the real registry (37 skills), correctly excluding any skill with license_debt or a non-passed security_audit (verified directly, none currently in the ledger to exercise against for real, so tested via direct function calls with synthetic data). export_bundle.py verified real end-to-end: exporting legal-citation-checker correctly auto-resolved its dependency chain 2 levels deep (document-ai-structurer → python-env-bootstrap), produced a real .zip with all 3 skill folders + a MANIFEST.md separating skill dependencies (bundled) from non-skill dependencies like docling/uv (listed, not bundled); overwrite-protection and unknown-skill_id refusal both correct.
+compatibility: Requires Python 3.11+, stdlib only (json, argparse, zipfile, shutil) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-27). See "Verified" section below for real test-case detail.
 metadata:
   domain: meta
   task_type: coordination
@@ -52,6 +52,10 @@ Exit 0 = exported. Exit 1 = a requested skill_id doesn't exist, or fails the har
 - Does not editorialize about `quality_score` (owner decision, 2026-07-27) — the field is shown factually in `list_candidates.py`'s output like any other registry field, not flagged as a blocking caveat.
 - Does not override the license_debt/security_audit hard exclusion for any reason — no `--force`-style flag exists for this specific check (unlike the unrelated output-overwrite `--force`).
 - Does not vendor non-skill dependencies (Python packages, external tools) into the bundle — only lists them in `MANIFEST.md` for the recipient to install via their own `python-env-bootstrap`-equivalent.
+
+## Verified
+
+list_candidates.py filtered by domain/task_type/object_type against the real registry (37 skills), correctly excluding any skill with license_debt or a non-passed security_audit (verified directly, none currently in the ledger to exercise against for real, so tested via direct function calls with synthetic data). export_bundle.py verified real end-to-end: exporting legal-citation-checker correctly auto-resolved its dependency chain 2 levels deep (document-ai-structurer → python-env-bootstrap), produced a real .zip with all 3 skill folders + a MANIFEST.md separating skill dependencies (bundled) from non-skill dependencies like docling/uv (listed, not bundled); overwrite-protection and unknown-skill_id refusal both correct.
 
 ## Known limitations (v0.1.0, not yet through official quality-eval)
 

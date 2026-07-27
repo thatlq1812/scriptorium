@@ -2,7 +2,7 @@
 name: python-env-bootstrap
 description: Create/extend ONE shared Python venv at the repo root (sibling to `skills/`), even on a machine that does NOT have Python installed — uses uv (Astral), a static binary that downloads a standard Python itself. Use when another skill declares a `requirements.txt` and needs to be installed into the shared runtime environment. Do NOT use to permanently install Python system-wide or to replace the user's package manager — this only manages the repo's shared venv.
 license: MIT
-compatibility: Requires downloading/installing `uv` (the official astral.sh install script, no pre-existing Python needed). Verified running clean: Claude Code, Windows via real PowerShell (2026-07-26) — the shared root venv successfully installed dependencies for 3 skills (document-ai-structurer, office-doc-creator, image-generator-gemini), no cross-import conflicts. Running via Git Bash/MSYS2 on the same Windows machine fails — see the warning in the body. Not yet verified: real macOS/Linux, OpenAI Codex CLI, Kimi Code CLI, Antigravity CLI.
+compatibility: Requires downloading/installing `uv` (the official astral.sh install script, no pre-existing Python needed). Verified running clean: Claude Code, Windows via real PowerShell (2026-07-26). See "Verified" section below for real test-case detail.
 metadata:
   domain: meta
   task_type: coordination
@@ -45,6 +45,10 @@ Result: `<repo_root>/.venv` is ready (created if missing, extended if it already
 ## Warning confirmed by a real bug: don't run `bootstrap.sh` from Git Bash/MSYS2 on Windows
 
 Running `bootstrap.sh` inside Git Bash (MINGW64/MSYS2) on Windows causes `uv` to **misdetect the platform as `linux-x86_64-gnu`** (because MSYS2's `uname` returns a Linux-like value) and download an unusable Linux Python build — the resulting venv has a symlink pointing to a path that doesn't exist (`/home/<user>/.local/share/uv/python/...`), producing a "No such file" error when invoked. On Windows, `bootstrap.ps1` must run through real PowerShell (not Git Bash calling powershell.exe nested inside it) so `uv` correctly detects `x86_64-pc-windows-msvc`. Reproduced and fixed for real on 2026-07-26 while bootstrapping `document-ai-structurer`.
+
+## Verified
+
+The shared root venv successfully installed dependencies for 3 skills (document-ai-structurer, office-doc-creator, image-generator-gemini), no cross-import conflicts. Running via Git Bash/MSYS2 on the same Windows machine fails — see the warning in the body. Not yet verified: real macOS/Linux, OpenAI Codex CLI, Kimi Code CLI, Antigravity CLI.
 
 ## Known limitations (v0.2.0)
 

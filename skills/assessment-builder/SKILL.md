@@ -2,7 +2,7 @@
 name: assessment-builder
 description: Balances a Vietnamese K-12 exam matrix (ma trận đề) — topics × 4 cognitive levels (Nhận biết/Thông hiểu/Vận dụng/Vận dụng cao) — into an exact question-count + point allocation using a largest-remainder deterministic method, then validates that an actual exam (MCQ + essay) structurally and numerically matches that matrix. Use when a teacher needs to balance question/point counts for a test, quiz, question bank, exam set, sample/reference exam, or review outline, or to check a drafted exam against its intended matrix before printing. Do NOT use this to generate question CONTENT (no LLM call, ever — a human or the calling agent supplies the actual question text/answers) or to judge subject-matter correctness/difficulty — this validates matrix balance and structural conformance only.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-26) — build_exam_matrix.py verified to sum exactly to the requested total_questions/total_points across 8 combinations (few questions, one question, more topics than questions, uneven/non-100 ratios, weighted topics, 40-question/7-topic case, odd point totals); malformed input, missing topics, negative counts, duplicate topic names, and an unknown --profile were all correctly refused (exit 1) with a specific reason; refused to overwrite an existing output without --force (exit 2). validate_exam.py: a matching valid exam (10 MCQ + 10 essay against a 20-question/2-topic plan) passed with zero errors; 8 deliberately-broken exams (wrong MCQ choice count, duplicate choices, invalid answer label, missing question dropping a level count, an out-of-plan topic, an invalid level, a grading-guide sum mismatch, an off-total point sum) were each caught with the exact field/count/reason named; malformed JSON and an exam.json that is a JSON array both correctly refused (exit 1/2).
+compatibility: Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.
 metadata:
   domain: education
   task_type: drafting
@@ -103,6 +103,10 @@ This skill produces JSON (the plan) and validates JSON (the exam) — it does no
 - Doesn't render `.docx` — delegate to `office-doc-creator` once `exam.json` passes validation.
 - Doesn't implement the QĐ 4068 3-answer-format (TN cổ điển + Đúng/Sai + Trả lời ngắn) structure or per-subject official ratio tables — see "Known limitations".
 - Doesn't implement question-bank-style stable question codes/coverage tracking (EduStation's `question_bank` skill) or a bộ-đề (exam-set)/multi-exam batch mode (EduStation's `review_exam`) — a single matrix + a single exam per run in v0.1.0.
+
+## Verified
+
+build_exam_matrix.py verified to sum exactly to the requested total_questions/total_points across 8 combinations (few questions, one question, more topics than questions, uneven/non-100 ratios, weighted topics, 40-question/7-topic case, odd point totals); malformed input, missing topics, negative counts, duplicate topic names, and an unknown --profile were all correctly refused (exit 1) with a specific reason; refused to overwrite an existing output without --force (exit 2). validate_exam.py: a matching valid exam (10 MCQ + 10 essay against a 20-question/2-topic plan) passed with zero errors; 8 deliberately-broken exams (wrong MCQ choice count, duplicate choices, invalid answer label, missing question dropping a level count, an out-of-plan topic, an invalid level, a grading-guide sum mismatch, an off-total point sum) were each caught with the exact field/count/reason named; malformed JSON and an exam.json that is a JSON array both correctly refused (exit 1/2).
 
 ## Known limitations (v0.1.0)
 

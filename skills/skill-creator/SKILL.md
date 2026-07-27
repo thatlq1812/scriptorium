@@ -10,8 +10,9 @@ metadata:
   pipeline_stage: 3
   source: self-authored
   elicited_from: "Owner tacit knowledge from the EduStation postmortem (docs/archive/pre-spec-2026-07-26/handoff.md) + deep research session 2026-07-26, distilled into docs/specs/STRATEGY_SPEC.md"
-  version: 0.3.0
-  adapted_from: "The 'pushy description' pattern + trigger eval set adapted from github.com/anthropics/skills skills/skill-creator (Apache-2.0), cleared via skills/license-compliance-check on 2026-07-26. The gold-template + scaffold-script pattern adapted from D:/elix/edustation/skills/_templates/ (owner's prior project) -- kept the copy-a-skeleton principle and REQUIRED/CHOOSE comment legend, dropped the harness-specific tier/CI-enforcement machinery. Rewritten in Scriptorium's own language/conventions, not copied verbatim."
+  version: 0.3.1
+  changelog_0_3_1: "Added scripts/validate_skill.py: a mechanical validator for the 6-field spec + Scriptorium's required metadata fields (name==folder, description/compatibility length caps, elicited_from non-empty, risk_tier/task_type/source enum checks), stdlib-only. Closes a gap found comparing against github.com/anthropics/skills' skill-creator/scripts/quick_validate.py during this session's core-skill-package research round: this skill's own SKILL.md documented these structural constraints in prose but had no script gating them, relying entirely on an agent reading carefully. Running it retroactively against the full registry found 19 pre-existing real violations (compatibility field verification narrative accumulated past the 500-char cap over many sessions) -- all fixed the same session (moved to a 'Verified' section in each skill's own body)."
+  adapted_from: "The 'pushy description' pattern + trigger eval set adapted from github.com/anthropics/skills skills/skill-creator (Apache-2.0), cleared via skills/license-compliance-check on 2026-07-26. The gold-template + scaffold-script pattern adapted from D:/elix/edustation/skills/_templates/ (owner's prior project) -- kept the copy-a-skeleton principle and REQUIRED/CHOOSE comment legend, dropped the harness-specific tier/CI-enforcement machinery. validate_skill.py (v0.3.1) adapted from the same anthropics/skills skill-creator's quick_validate.py -- pattern/structure only (allowed-keys check, name/folder match), rewritten from scratch in Scriptorium's own field set, no code copied verbatim. Rewritten in Scriptorium's own language/conventions throughout, not copied verbatim."
 ---
 
 # skill-creator
@@ -54,6 +55,14 @@ This only automates the folder/file mechanics (copies the template, substitutes 
 See `templates/README.md` for the full rationale (adapted from `D:/elix/edustation/skills/_templates/` — the owner's prior project — keeping the copy-a-skeleton principle, dropping the harness-specific machinery).
 
 ## Readiness check before handing off to quality-eval
+
+Before anything else, run the mechanical validator:
+
+```bash
+python skills/skill-creator/scripts/validate_skill.py skills/<skill_id>
+```
+
+This checks the 6-field spec, `name`==folder, `description`/`compatibility` length caps, and that `metadata.elicited_from`/`risk_tier`/`task_type`/`source` are present and valid — deterministically, so a weaker reviewing agent doesn't have to remember every constraint above by reading carefully. Exit 0 = passes structural validation. This is a floor, not the full bar — it doesn't check content quality (that's stage 4) or safety (stage 5).
 
 If the skill's own `SKILL.md` body references a script (e.g. "run `scripts/foo.py`"), that script MUST exist and actually work — never leave a stub, a `NotImplementedError`, or a script that was described in prose but never written. Before calling a skill "created," run it once yourself on a trivial real input and confirm the output matches what the SKILL.md claims. A skill whose documented behavior doesn't match its actual behavior is worse than no skill — it actively misleads the next agent that reads it.
 

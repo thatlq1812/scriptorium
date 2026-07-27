@@ -2,7 +2,7 @@
 name: grade-book-builder
 description: Aggregates already-scored assessment results into a class-wide term gradebook (so tong hop diem) — deterministically computes each student's weighted term average (TBM) across multiple assessment categories (e.g. mieng/giua_ky/cuoi_ky), classifies each student against user-declared bands (e.g. Gioi/Kha/Trung binh/Yeu), and produces class statistics — then renders a Markdown summary table. Use when a teacher/giao vu already has per-assessment scores for a class and needs the term-level rollup. Do NOT use this to grade or score an individual assessment (that's `grading-and-feedback`), and do NOT use it as a source of official TT22/2021 weight percentages or classification thresholds — those are required inputs the caller must declare, this skill does not assert or invent them.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-26) — a valid 3-student/3-category class computed correctly (hand-verified: student A weighted sum 8.5*1+7*2+8*3=46.5 / weight_total 6 = 7.75 -> rounds to 7.8, classified Kha; class average across 3 students 7.7), rendered to Markdown and JSON correctly; a category_weights sum mismatch (declared weight_total 10 vs actual sum 6) correctly refused showing both numbers; a student using an undeclared category correctly refused naming the unknown category; a student missing a declared category correctly refused; a category declared but never used by any student correctly refused; a score outside the 0-10 scale correctly refused; classification_bands out of descending order correctly refused; a duplicate student id correctly refused; malformed JSON and a nonexistent input file both correctly exited 2; render/--out both correctly refused to overwrite without --force and succeeded with --force.
+compatibility: Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.
 metadata:
   domain: education
   task_type: drafting
@@ -53,6 +53,10 @@ Start from `assets/gradebook_template.json`. Exit 0 = computed successfully (pri
 - Does not assert official TT22/2021 weight percentages or classification-band thresholds as verified fact — see "The one hard caveat" above. `category_weights` and `classification_bands` are always required, caller-declared inputs.
 - Does not produce a `.xlsx`/`.docx` gradebook file with live spreadsheet formulas — delegate rendering the final gradebook to a document format to `office-doc-creator` once the JSON/Markdown result is correct. (Unlike EduStation's original, this skill computes the numbers itself in Python; it does not write Excel formula strings.)
 - Does not call any LLM/AI API — pure deterministic arithmetic, no network of any kind.
+
+## Verified
+
+A valid 3-student/3-category class computed correctly (hand-verified: student A weighted sum 8.5*1+7*2+8*3=46.5 / weight_total 6 = 7.75 -> rounds to 7.8, classified Kha; class average across 3 students 7.7), rendered to Markdown and JSON correctly; a category_weights sum mismatch (declared weight_total 10 vs actual sum 6) correctly refused showing both numbers; a student using an undeclared category correctly refused naming the unknown category; a student missing a declared category correctly refused; a category declared but never used by any student correctly refused; a score outside the 0-10 scale correctly refused; classification_bands out of descending order correctly refused; a duplicate student id correctly refused; malformed JSON and a nonexistent input file both correctly exited 2; render/--out both correctly refused to overwrite without --force and succeeded with --force.
 
 ## Known limitations (v0.1.0)
 

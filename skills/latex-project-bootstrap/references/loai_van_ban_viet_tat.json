@@ -1,0 +1,38 @@
+{
+  "_source": "Nghị định 30/2020/NĐ-CP, Phụ lục III, Mục I (Bảng chữ viết tắt tên loại văn bản hành chính và bản sao văn bản). Transcribed directly from the real government PDF (30.signed.pdf, downloaded from vanban.chinhphu.vn) on 2026-07-27 -- not from a secondary source.",
+  "van_ban_hanh_chinh": {
+    "Nghị quyết (cá biệt)": "NQ",
+    "Quyết định (cá biệt)": "QĐ",
+    "Chỉ thị": "CT",
+    "Quy chế": "QC",
+    "Quy định": "QyĐ",
+    "Thông cáo": "TC",
+    "Thông báo": "TB",
+    "Hướng dẫn": "HD",
+    "Chương trình": "CTr",
+    "Kế hoạch": "KH",
+    "Phương án": "PA",
+    "Đề án": "ĐA",
+    "Dự án": "DA",
+    "Báo cáo": "BC",
+    "Biên bản": "BB",
+    "Tờ trình": "TTr",
+    "Hợp đồng": "HĐ",
+    "Công điện": "CĐ",
+    "Bản ghi nhớ": "BGN",
+    "Bản thỏa thuận": "BTT",
+    "Giấy uỷ quyền": "GUQ",
+    "Giấy mời": "GM",
+    "Giấy giới thiệu": "GGT",
+    "Giấy nghỉ phép": "GNP",
+    "Phiếu gửi": "PG",
+    "Phiếu chuyển": "PC",
+    "Phiếu báo": "PB"
+  },
+  "ban_sao_van_ban": {
+    "Bản sao y": "SY",
+    "Bản trích sao": "TrS",
+    "Bản sao lục": "SL"
+  },
+  "_note": "Công văn has no viết tắt in this table -- its ký hiệu never carries a tên loại prefix (Mẫu 1.5: Số: <so>/<co_quan_vt>-<don_vi_vt>, without a year, distinct from types-with-year like Quyết định/Nghị quyết which use <so>/<nam>/<loai_vt>-<co_quan_vt>)."
+}

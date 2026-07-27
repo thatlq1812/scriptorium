@@ -1,6 +1,7 @@
 important.md
 request.md
 .venv/
+.tools/
 __pycache__/
 *.pyc
 /outside_research

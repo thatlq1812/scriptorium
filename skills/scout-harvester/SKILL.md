@@ -2,7 +2,7 @@
 name: scout-harvester
 description: Finds and preliminarily evaluates outside candidates (GitHub repos, libraries, papers, existing skills) for a specific Scriptorium skill need, before any content touches license-compliance-check (step 7). Can also shallow-clone a chosen candidate for closer reading. Use when starting a new skill and wanting to know "has anyone already solved this, and how" before designing from scratch. Does NOT decide harvest/use on its own — only proposes candidates with a preliminary evaluation (and, if cloned, a local copy to read); the legal go/no-go decision always belongs to license-compliance-check.
 license: MIT
-compatibility: A research process (web search + reading code/docs), no harness dependency for the process itself. `scripts/github_scout.py` and `scripts/clone_candidate.py` require the `gh` CLI / `git` on PATH respectively; `scripts/pypi_license_check.py` is stdlib-only. Verified running clean: Claude Code (2026-07-26) — process run for real 3 times while building `document-ai-structurer`, `python-env-bootstrap`, and evaluating anthropics/skills; both scripts tested for real against mermaid-js/mermaid and 3 PyPI packages, output matched prior manual checks. 2026-07-27: `clone_candidate.py` verified with a real clone of `octocat/Hello-World`, plus 3 refusal paths (invalid slug, destination inside this repo, destination already non-empty).
+compatibility: A research process (web search + reading code/docs), no harness dependency for the process itself. `scripts/github_scout.py` and `scripts/clone_candidate.py` require the `gh` CLI / `git` on PATH respectively; `scripts/pypi_license_check.py` is stdlib-only. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.
 metadata:
   domain: meta
   task_type: research
@@ -84,3 +84,7 @@ The output is a candidate table (not a SKILL.md, not a harvest decision) passed 
 | Bootstrap Python without an existing Python install | `uv` (Astral) | `uv` | license-compliance-check (MIT, used as an external tool via its official installer, no vendored code) |
 | Reference structure for skill-creator | github.com/anthropics/skills | skill-creator (Apache-2.0) inside that repo; docx/pdf/pptx/xlsx BLOCKED | license-compliance-check (run for real, found mixed licensing) |
 | Validating `github_scout.py`/`pypi_license_check.py` themselves | mermaid-js/mermaid (repo), python-docx/google-genai/openpyxl (PyPI) | Both scripts reproduced the same stars/license figures found manually earlier in the session | Confirms the scripts are safe to rely on going forward instead of hand-typing `gh api`/PyPI curl calls |
+
+## Verified
+
+Process run for real 3 times while building `document-ai-structurer`, `python-env-bootstrap`, and evaluating anthropics/skills; both scripts tested for real against mermaid-js/mermaid and 3 PyPI packages, output matched prior manual checks. 2026-07-27: `clone_candidate.py` verified with a real clone of `octocat/Hello-World`, plus 3 refusal paths (invalid slug, destination inside this repo, destination already non-empty).

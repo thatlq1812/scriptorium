@@ -2,7 +2,7 @@
 name: browser-web-renderer
 description: Renders a URL with a real headless Chromium browser (Playwright) and extracts its visible text — for JS-rendered SPA pages a plain HTTP fetch can't read. Two-step like every bootstrap skill in this repo — check_browser.py detects whether playwright + a Chromium binary are ready (safe, default), install_browser.ps1/.sh installs them only when explicitly run (heavy: ~300MB download). render_and_extract.py is read-only: navigates and extracts text, never submits a form, never runs caller-supplied JavaScript, never authenticates, never attempts to evade a site's bot-detection/WAF. Use when a page is confirmed JS-rendered (not merely slow) and a direct fetch tool already failed to get real content. Do NOT use this as a general scraper for sites that actively block automated access (see the real dichvucong.gov.vn finding below) — rendering the DOM is this skill's job; getting past a WAF/anti-bot block is a different, out-of-scope problem this project does not attempt to solve by evasion.
 license: MIT
-compatibility: Requires Python 3.11+, the `playwright` package (via `python-env-bootstrap`'s shared venv) + a Chromium binary (`playwright install chromium`, ~300MB, downloaded separately from the pip package). Verified running clean: Claude Code, Windows (2026-07-27) — real install (playwright 1.61.0 + Chromium 149.0.7827.55 via uv into the shared venv), `check_browser.py` correctly detects both. `render_and_extract.py` verified real against 2 sites: `vanban.chinhphu.vn` rendered cleanly (2865 chars extracted, richer than a plain WebFetch got earlier the same session — found a real attached PDF link `30.signed.pdf` that WebFetch's summary missed); `dichvucong.gov.vn` was tested on 2 URLs (a procedure page and the bare homepage) and BOTH returned a WAF "Request Rejected" block (124 chars, a rejection page with a support ID) — not a JS-rendering problem, a bot-detection block at the network/WAF layer that a plain headless browser does not get past. This project does not attempt to evade it (see "What this skill does NOT do").
+compatibility: Requires Python 3.11+, the `playwright` package (via `python-env-bootstrap`'s shared venv) + a Chromium binary (`playwright install chromium`, ~300MB, downloaded separately from the pip package). Verified running clean: Claude Code, Windows (2026-07-27). See "Verified" section below for real test-case detail.
 metadata:
   domain: general
   task_type: document-conversion
@@ -53,6 +53,10 @@ Navigates to `<url>`, waits for network idle, extracts `document.title` and the 
 - Does not authenticate to anything — `WebFetch`'s own documentation already warns authenticated/private URLs need a different tool; this skill doesn't change that.
 - Does not install anything on its own initiative — `check_browser.py` never calls the install scripts.
 - Does not replace `legal-web-search`'s domain allowlist/grounding discipline — a caller using this skill's output inside a `legal-web-search` record still needs to follow that skill's rules (dated, allowlisted, disclosed status).
+
+## Verified
+
+Real install (playwright 1.61.0 + Chromium 149.0.7827.55 via uv into the shared venv), `check_browser.py` correctly detects both. `render_and_extract.py` verified real against 2 sites: `vanban.chinhphu.vn` rendered cleanly (2865 chars extracted, richer than a plain WebFetch got earlier the same session — found a real attached PDF link `30.signed.pdf` that WebFetch's summary missed); `dichvucong.gov.vn` was tested on 2 URLs (a procedure page and the bare homepage) and BOTH returned a WAF "Request Rejected" block (124 chars, a rejection page with a support ID) — not a JS-rendering problem, a bot-detection block at the network/WAF layer that a plain headless browser does not get past. This project does not attempt to evade it (see "What this skill does NOT do").
 
 ## Known limitations (v0.1.0, not yet through official quality-eval)
 

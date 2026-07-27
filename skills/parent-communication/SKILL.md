@@ -2,7 +2,7 @@
 name: parent-communication
 description: Checks a homeroom teacher's message to parents (a one-off letter/notice or a periodic weekly/monthly brief) for completeness and tone before it goes out — required fields present, no leftover template placeholder (especially an unfilled student name on a single-student letter), a concrete requested action if one is stated, and no harsh/accusatory language about the student. Use when a teacher or agent has drafted a parent letter or periodic brief and wants it checked before sending. Do NOT use this to generate the message content itself (no LLM/AI call — it only checks a filled-in record), to judge writing quality/persuasiveness, or for school-administration paperwork (reports, decisions, correspondence logs — out of scope for this tier).
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, re, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-26) — a complete single-student result-notice letter validated with zero errors/warnings; a letter with an unfilled `<student_name>` placeholder on a single-student message correctly refused (exit 1); a periodic brief with harsh/accusatory language ("hư hỏng", "hỗn láo") about the student correctly warned (exit 0, 2 warnings) without blocking; a message missing `purpose`/`sender_name` correctly refused (exit 1, 2 errors); a whole-class message with an empty (not placeholder) student-name field correctly passed; a `requested_action` left as `<TODO>` correctly refused; malformed JSON and an empty `body_sections` list both correctly refused.
+compatibility: Requires Python 3.11+, stdlib only (json, re, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.
 metadata:
   domain: education
   task_type: review-qa
@@ -65,6 +65,10 @@ Exit 0 = passes (warnings, if any, print above the VALID line — they're tone s
 - **Does not render a `.docx`.** Delegate that to `office-doc-creator` once the JSON record passes validation — same division of labor as `lesson-plan-builder`.
 - **Does not cover school-administration paperwork** (reports, decisions, correspondence logs, meeting minutes) — deliberately out of scope for this tier, per the owner's direction that excluded EduStation's bureaucratic-paperwork skills.
 - **Does not enforce the two source skills' Vietnamese formal-letter formatting conventions** (Quốc hiệu/Tiêu ngữ header block, 2-column government letterhead, PascalCase filenames) — those are `office-doc-creator` rendering concerns, not completeness/tone concerns, and out of scope here.
+
+## Verified
+
+A complete single-student result-notice letter validated with zero errors/warnings; a letter with an unfilled `<student_name>` placeholder on a single-student message correctly refused (exit 1); a periodic brief with harsh/accusatory language ("hư hỏng", "hỗn láo") about the student correctly warned (exit 0, 2 warnings) without blocking; a message missing `purpose`/`sender_name` correctly refused (exit 1, 2 errors); a whole-class message with an empty (not placeholder) student-name field correctly passed; a `requested_action` left as `<TODO>` correctly refused; malformed JSON and an empty `body_sections` list both correctly refused.
 
 ## Known limitations (v0.1.0)
 

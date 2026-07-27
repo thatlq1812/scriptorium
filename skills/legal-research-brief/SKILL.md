@@ -2,7 +2,7 @@
 name: legal-research-brief
 description: Validates that a structured legal research brief (legal question → verified facts → statutory grounds → application analysis → alternative interpretations → risk evaluation) grounds every factual/statutory claim in a caller-supplied source — catching a fabricated or mistyped citation before it reaches a client or court filing. Use after drafting a legal brief/memo to verify every claim traces to a real, declared source. Do NOT use this to search the web or a legal database for sources (it has none — sources must already be supplied); do NOT use it to judge whether the legal analysis itself is correct — it validates grounding and structure only.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls of any kind. Verified running clean: Claude Code (2026-07-26) — a real valid brief (2 sources, all 3 grounded sections correctly cited) passed clean and rendered correctly to Markdown with source labels inlined; a deliberately broken brief (a fabricated source id, a missing citation on a grounded claim, a missing required field) correctly caught all 3 errors; duplicate source id, empty sources list, and malformed brief JSON all correctly refused (exit 2).
+compatibility: Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls of any kind. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.
 metadata:
   domain: legal
   task_type: review-qa
@@ -53,6 +53,10 @@ Start from `assets/sources_template.json` (declare every source you're allowed t
 - Doesn't verify a statute is currently in effect (hiệu lực status) — that's the open gap flagged for `legal-citation-checker` (`docs/ROADMAP.md`).
 - Doesn't call any LLM/AI API — pure stdlib structural/reference validation.
 - Doesn't render the final client-facing document format — delegate to `office-doc-creator` once the brief passes validation.
+
+## Verified
+
+A real valid brief (2 sources, all 3 grounded sections correctly cited) passed clean and rendered correctly to Markdown with source labels inlined; a deliberately broken brief (a fabricated source id, a missing citation on a grounded claim, a missing required field) correctly caught all 3 errors; duplicate source id, empty sources list, and malformed brief JSON all correctly refused (exit 2).
 
 ## Known limitations (v0.1.0)
 

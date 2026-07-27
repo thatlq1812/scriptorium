@@ -2,7 +2,7 @@
 name: pandoc-bootstrap
 description: Detects whether `pandoc` is present on this machine, and only when explicitly run, installs it via the platform's package manager (winget/brew/apt). Use before any skill needs to convert between .tex/.docx/.pdf/.html and hasn't confirmed pandoc is already installed. Converting TO .pdf additionally needs a working LaTeX engine (see xelatex-bootstrap) — this skill only manages pandoc itself. Do NOT run the install script speculatively — always run check_pandoc.py first.
 license: MIT
-compatibility: check_pandoc.py is stdlib-only (shutil, subprocess, platform), no dependency, no venv. install_pandoc.ps1 requires winget (Windows); install_pandoc.sh requires brew (macOS) or apt-get (Debian/Ubuntu Linux). Verified running clean: Claude Code, Windows (2026-07-27) — check_pandoc.py correctly detected an already-installed pandoc 3.8.1 (real version string), and correctly reports missing when pandoc is unavailable (verified by simulating a missing binary). install_pandoc.ps1/.sh NOT executed for real this session (no machine available without pandoc already installed) — flagged as unverified in Known limitations.
+compatibility: check_pandoc.py is stdlib-only (shutil, subprocess, platform), no dependency, no venv. install_pandoc.ps1 requires winget (Windows); install_pandoc.sh requires brew (macOS) or apt-get (Debian/Ubuntu Linux). Verified running clean: Claude Code, Windows (2026-07-27). See "Verified" section below for real test-case detail.
 metadata:
   domain: general
   task_type: coordination
@@ -42,6 +42,10 @@ Windows via `winget`, macOS via `brew`, Linux (Debian/Ubuntu) via `apt-get` (nee
 - Doesn't install a LaTeX engine — converting TO `.pdf` needs one; see `xelatex-bootstrap`. This skill only manages `pandoc` itself, so it stays useful for .tex/.docx/.html conversions even on a machine that never needs PDF output.
 - Doesn't duplicate `office-doc-creator` — that skill builds `.docx`/`.xlsx`/`.pptx` directly via `python-docx`/`openpyxl`/`python-pptx`, no `pandoc` involved. This skill is for format *conversion* (e.g. `.tex` → `.docx`), not building an Office file from scratch.
 - Doesn't install anything on its own initiative — `check_pandoc.py` never calls the install scripts.
+
+## Verified
+
+check_pandoc.py correctly detected an already-installed pandoc 3.8.1 (real version string), and correctly reports missing when pandoc is unavailable (verified by simulating a missing binary). install_pandoc.ps1/.sh NOT executed for real this session (no machine available without pandoc already installed) — flagged as unverified in Known limitations.
 
 ## Known limitations (v0.1.0, not yet through official quality-eval)
 

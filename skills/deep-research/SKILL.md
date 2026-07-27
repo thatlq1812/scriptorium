@@ -2,7 +2,7 @@
 name: deep-research
 description: A protocol for conducting rigorous multi-source research on an open question and packaging the result as a grounded, machine-checkable brief — not a research API. The calling agent does the actual searching/reading using whatever tools it already has (web search, file access, a database); this skill supplies the decomposition/grounding discipline and a validator that catches a fabricated or mistyped citation before the brief is trusted. Use when a question needs multiple sources triangulated and an honest account of gaps/contradictions/confidence, not a single quick lookup. Do NOT use this skill expecting it to search or call an AI itself — it has no network access and calls no AI backend; it is instructions + a validator, executed by whichever agent's own model is already running.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse, re) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-27) — the bundled template passes clean and renders correctly; a deliberately broken brief (fabricated finding-level citation, an empty-cites finding, an invalid confidence value, a missing confidence_rationale, a synthesis with zero citation markers) caught all 5 errors; a fabricated citation marker inline in synthesis text (not in any finding) caught separately; malformed JSON and render-overwrite-without-force both correctly refused.
+compatibility: Requires Python 3.11+, stdlib only (json, argparse, re) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-27). See "Known limitations" section below for real test-case detail.
 metadata:
   domain: general
   task_type: research
@@ -47,6 +47,10 @@ Start from `assets/research_brief_template.json` for the exact schema.
 - Does not call any AI/LLM API — Scriptorium never does (`docs/specs/STRATEGY_SPEC.md` §2/§6/§7.4).
 - Does not verify a cited source's *content* actually supports the claim — only that the citation points to a *declared* source, exactly like `legal-research-brief`'s equivalent limitation. A human/agent must still confirm the characterization is accurate.
 - Does not generate the brief for you — there is no scaffold generator here (deliberately, after this project's own v0.2.0 hardening round found an ungated generator was the exact failure mode in `hypothesis-generation` and `peer-review`); the agent writes the brief from real research, this skill only validates it.
+
+## Verified
+
+The bundled template passes clean and renders correctly; a deliberately broken brief (fabricated finding-level citation, an empty-cites finding, an invalid confidence value, a missing confidence_rationale, a synthesis with zero citation markers) caught all 5 errors; a fabricated citation marker inline in synthesis text (not in any finding) caught separately; malformed JSON and render-overwrite-without-force both correctly refused.
 
 ## Known limitations (v0.1.0, not yet through official quality-eval)
 
