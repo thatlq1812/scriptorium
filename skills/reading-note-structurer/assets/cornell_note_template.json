@@ -1,0 +1,21 @@
+{
+  "type": "cornell",
+  "title": "Photosynthesis",
+  "topic": "Biology",
+  "date": "2026-07-29",
+  "entries": [
+    {
+      "cue": "What is photosynthesis?",
+      "notes": "The process by which plants, algae, and some bacteria convert light energy into chemical energy stored in glucose."
+    },
+    {
+      "cue": "What are the inputs?",
+      "notes": "Carbon dioxide (from air), water (from soil), and light energy (from the sun)."
+    },
+    {
+      "cue": "What are the outputs?",
+      "notes": "Glucose (stored chemical energy) and oxygen (released as a byproduct)."
+    }
+  ],
+  "summary": "Photosynthesis converts light energy into chemical energy stored in glucose, using CO2 and water as inputs and releasing oxygen as a byproduct."
+}

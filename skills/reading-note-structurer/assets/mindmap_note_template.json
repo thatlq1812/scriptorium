@@ -1,0 +1,31 @@
+{
+  "type": "mindmap",
+  "title": "Photosynthesis",
+  "central_topic": "Photosynthesis",
+  "branches": [
+    {
+      "label": "Inputs",
+      "children": [
+        {"label": "Sunlight", "children": []},
+        {"label": "Water", "children": []},
+        {"label": "Carbon dioxide", "children": []}
+      ]
+    },
+    {
+      "label": "Outputs",
+      "children": [
+        {"label": "Glucose", "children": []},
+        {"label": "Oxygen", "children": []}
+      ]
+    },
+    {
+      "label": "Location",
+      "children": [
+        {"label": "Chloroplast", "children": [
+          {"label": "Thylakoid (light reactions)", "children": []},
+          {"label": "Stroma (Calvin cycle)", "children": []}
+        ]}
+      ]
+    }
+  ]
+}

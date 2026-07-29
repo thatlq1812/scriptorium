@@ -1,0 +1,12 @@
+{
+  "target_role": "<e.g. Data Analyst>",
+  "current_skills": [
+    "<skill the learner already holds, name 1>",
+    "<skill the learner already holds, name 2>"
+  ],
+  "target_skills": [
+    {"name": "<skill required for target_role, name 1>", "weight": 2},
+    {"name": "<skill required for target_role, name 2>", "weight": 3},
+    {"name": "<skill already held that is also required -- will be excluded from the gap>", "weight": 1}
+  ]
+}

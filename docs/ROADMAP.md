@@ -73,6 +73,9 @@ General-purpose skill clusters first → skills by audience (education vertical)
 
 ### Next: audience-tier ladder, education vertical
 
+> [!NOTE]
+> **Stale as of 2026-07-29 — kept as a historical record of the 2026-07-26 state, not current.** Student (K12) and University Student were merged into one "Student / Learner" tier, and the Role Capability Layer's remaining sub-tiers (Parent/Guardian, TA/Graduate, Lifelong Learner) were substantially staffed. `docs/specs/STRATEGY_SPEC.md` §5.1 is the current authoritative table — this section's table below reflects an earlier snapshot, not today's registry.
+
 Order: **Student (K12) → Teacher → University Student → Lecturer/Researcher**, then branch into specializer networks. Full reasoning and per-tier elicitation-source status: `docs/specs/STRATEGY_SPEC.md` §5.1. Summary:
 
 | # | Tier | Elicitation source | Status |
@@ -175,3 +178,54 @@ Idea: a new shared cluster (same standing as Legal) for email-related work — d
 ## More flexible repo structure (owner confirmed)
 
 Not everything has to live inside `skills/`. Free to add directories at root (`scripts/`, a shared `venv`...) if convenient — treat Scriptorium like a normal project, not a rigid mold containing only `skills/`.
+
+## New planned roadmap items (owner, 2026-07-29)
+
+Recorded from owner direction and real non-tech user pilot (`request.md`):
+
+### 1. Personal Profile & Behavior Adaptation Skill Cluster
+- **Concept**: Personalization & user adaptation engine for non-tech users (teachers, lawyers, professionals).
+- **Core capabilities**:
+  - **User Profile & Identity Auto-fill**: Maintains a local `personal/profile.json` storing identity, organization, title, tax ID, and contact details to auto-fill forms, dossiers, contracts, and lesson plans without repeating manual entry.
+  - **Behavior & Writing Style Adaptation**: Surveys user output preference, analyzes feedback on draft tone/register, and updates system instructions (`AGENTS.md`, `CLAUDE.md`, or harness system prompt) so the agent naturally mimics the user's voice and working habits.
+  - **Privacy-by-Default Convention**: The `personal/` folder is listed in `.gitignore` by default to prevent accidental public git commits of sensitive PII. Includes a `personal/README.md` explaining the privacy protection and noting that users using private repositories can remove the ignore rule if they want cloud version control.
+
+### 2. Project Workspace Scaffolder Skill (`project-workspace-initializer`)
+- **Source material**: Grounded in real non-tech user workflow testing (`d:/my-workspace` deployment for legal practitioner).
+- **Functionality**:
+  - Reads profession-specific templates (`projects/_templates/`).
+  - Scaffolds date-indexed project workspaces (e.g., `projects/project_YYYYMMDD_02/`) containing structured subdirectories (`source/`, `work/`, `draft/`, `deliverables/`, `archives/`).
+  - Generates a central `PROJECT.md` control panel containing pre-formulated prompts and commands so non-tech users interact with the agent directly without getting lost in directory trees.
+
+### 3. Role Capability Layer (8 Independent Roles — Pre-Specialist)
+- **Concept**: Decoupled, domain-agnostic role capabilities (Student, Parent, Teacher, School Admin, Univ Student, TA/Graduate, Lecturer/Researcher, Lifelong Learner).
+- **Deliverables**: Phased research and skill creation across all 8 roles (see `UPGRADE_PLAN_20260729.md` §4 Item 3 for full candidate list).
+
+### 4. Light Design Skill Cluster (grounded in `temp_project_20260728` & `May052026`)
+- **Source material**: Elicit practical layout, SVG composition, typography scaling, signboard/menu layout, and brand color palette rules directly from real reference projects (`D:/elix/temp_project_20260728` and `D:/Document/May052026`).
+- **Scope**: Deterministic, script-backed layout tools (`domain: general`, foundation-tier — avoids red-ocean complex image-gen or Figma clones):
+  - `svg-poster-builder`: Deterministic SVG layout engine for A1/A4 posters, flyers, banners with ribbons, headers, and footers.
+  - `brand-identity-linter`: Layout & brand color palette validator for signboards/menus (color priority, font scaling, icon spacing).
+  - `slogan-copy-linter`: Structure and tone linter for short marketing copy/slogans.
+  - `light-logo-arranger`: Script-based positioning and icon/logo anchoring utility.
+
+### 5. Upgrade `skill-creator` with Tacit Knowledge & Document Distillation (`book-to-skill` Reference)
+- **Source material**: Cloned `virgiliojr94/book-to-skill` (MIT license) to `outside_research/references/book-to-skill/` for reference.
+- **Upgrades planned for `skill-creator` (v0.4.0)**:
+  - **Tacit Knowledge & Heuristics Extraction**: Extracts expert decision trees, exception rules, and operational heuristics (beyond simple prose compression).
+  - **On-Demand Reference Scaffolding**: Support generating complex skills from technical books, manuals, or document folders (`docs/`, PDFs, EPUBs, DOCXs, MD), splitting content into a master `SKILL.md` index (~4k tokens) and topic-based `references/` or `chapters/` (~1k tokens each) loaded on-demand (24x-51x token reduction).
+  - **Multi-Mode Operation**: Support 4 operation modes (Full Conversion, Analyze-Only, Generate from Prior Analysis, and Incremental Fold-In/Update).
+  - **Supporting Artifact Scaffolding**: Auto-generate `glossary.md`, `patterns.md`, and `cheatsheet.md` alongside the master `SKILL.md`.
+
+### 6. Upgrade `skill-exporter` to Knowledge Deployment Engine (Capability Curator)
+- **Reframed Role**: Reframing `skill-exporter` from a zip utility to a **Knowledge Deployment Engine** / **Bundle Curator**.
+- **Zero-Noise Delivery Principle**: Dynamic task + role + environment capability filtering to prevent Context Pollution in LLM runtimes.
+- **Planned Upgrades**: `skills.lock` (version locking), `MANIFEST.md` / `dependency-tree.md` (transparency manifest), Negative Dependencies / Exclusion filters (`exclude: ["education/*"]`).
+
+### 7. Scriptorium Tutorial Guides for Non-Tech Users
+- **Purpose**: Address the traction/usability gap by creating accessible, non-technical documentation for end-users (teachers, lawyers, students).
+- **Deliverables**: Step-by-step visual and plain-language guides (`docs/guides/NON_TECH_USER_GUIDE.md`) demonstrating how to package, import, and run Scriptorium skills on popular harnesses (Claude Desktop, Kimi CLI, Codex CLI, etc.).
+
+
+
+

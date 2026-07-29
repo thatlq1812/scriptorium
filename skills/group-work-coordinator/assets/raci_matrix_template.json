@@ -1,0 +1,40 @@
+{
+  "project_name": "Marketing Research Group Project",
+  "members": ["Alice", "Bob", "Carol", "Dan"],
+  "tasks": [
+    {
+      "task_name": "Literature review and background research",
+      "raci": {
+        "Alice": "A",
+        "Bob": "R",
+        "Carol": "C"
+      }
+    },
+    {
+      "task_name": "Survey design and data collection",
+      "raci": {
+        "Carol": "A",
+        "Dan": "R",
+        "Bob": "C",
+        "Alice": "I"
+      }
+    },
+    {
+      "task_name": "Data analysis",
+      "raci": {
+        "Dan": "A",
+        "Alice": "R",
+        "Bob": "C"
+      }
+    },
+    {
+      "task_name": "Final report writing and editing",
+      "raci": {
+        "Bob": "A",
+        "Alice": "R",
+        "Carol": "R",
+        "Dan": "I"
+      }
+    }
+  ]
+}

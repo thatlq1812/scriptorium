@@ -1,0 +1,27 @@
+{
+  "template_id": "legal-practitioner",
+  "label": "Legal practitioner case/matter workspace",
+  "subdirs": ["source", "work", "draft", "deliverables", "archives"],
+  "project_md_prompts": [
+    {
+      "heading": "Nạp tài liệu nguồn",
+      "text": "Đặt toàn bộ hồ sơ/tài liệu gốc của vụ việc vào `source/` (hợp đồng, văn bản pháp lý liên quan, email khách hàng). Không sửa file trong `source/` sau khi đã nạp -- đây là bản gốc tham chiếu."
+    },
+    {
+      "heading": "Rà soát hợp đồng",
+      "text": "Dùng skill `contract-consistency-linter` trên bản hợp đồng trong `source/`, kết quả lưu vào `work/`."
+    },
+    {
+      "heading": "Kiểm tra rủi ro",
+      "text": "Dùng skill `contract-risk-log` để lập risk log cho vụ việc, lưu bản nháp vào `draft/`."
+    },
+    {
+      "heading": "Soạn bản giao khách hàng",
+      "text": "Khi bản nháp đã được rà soát xong, xuất bản chính thức (docx/pdf qua `office-doc-creator`) vào `deliverables/`."
+    },
+    {
+      "heading": "Lưu trữ",
+      "text": "Sau khi vụ việc kết thúc, chuyển toàn bộ nội dung không còn thao tác tiếp vào `archives/`."
+    }
+  ]
+}

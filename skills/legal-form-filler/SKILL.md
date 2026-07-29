@@ -9,7 +9,8 @@ metadata:
   risk_tier: N2
   source: self-authored
   elicited_from: "Elicited from survey items 3, 4, 5 (outside_research/research_01_survey.md: form filling, form suggestion, dossier completeness checking). Item 4 ('Đề xuất biểu mẫu phù hợp' -- suggesting which form applies to a procedure) requires domain judgment about which of many possible Vietnamese administrative procedures a request maps to -- this project has no real checklist/template database for that judgment call, so it is explicitly OUT of scope here (not attempted, not guessed). Items 3 and 5 (filling a form, checking dossier completeness) are genuinely mechanical once a checklist/template is already known -- scoped down to a generic engine where BOTH the checklist and the form template are always caller-supplied input, never hard-coded, mirroring grade-book-builder's refusal to hardcode unverified official numbers. Full gap rationale: docs/ROADMAP.md §'Legal-cluster consolidation survey.' Owner (2026-07-27): directed wiring this skill into document-ai-structurer's catalog capability so a checklist can be grounded in a real cataloged Điều instead of always being hand-typed -- still does not decide WHICH Điều/document is the right one for a procedure, same domain-judgment gap as before, now just cheaper to extract once a human/agent has identified the right Điều."
-  version: 0.2.0
+  version: 0.2.1
+  changelog_0_2_1: "Doc-only: documented and verified real chaining from personal-profile-manager's autofill.py into fill_form.py's form_data.json input -- same flat field-name-to-value shape, zero conversion needed (docs/DECISIONS_PENDING.md resolved item 9). No script change."
   changelog_0_2_0: "Added checklist_from_catalog.py: given a document-ai-structurer catalog.json + văn bản số hiệu + Điều number, extracts that Điều's Khoản list verbatim as required_documents, in check_dossier.py's exact input schema. Mechanical extraction only -- does not judge whether the Khoản list is actually a document checklist (an Điều can enumerate obligations, deadlines, anything else); every run prints a reminder to verify this before trusting the output, same discipline as legal-citation-checker's --catalog scope-limit reminder."
   grounding: required
   object_type: ["dossier", "form"]
@@ -38,6 +39,8 @@ Start from `assets/checklist_template.json` and `assets/provided_documents_templ
 ```bash
 python scripts/fill_form.py <form_template.json> <form_data.json> [--render filled.md]
 ```
+
+**`form_data.json` can come from `personal-profile-manager`'s `autofill.py -o filled.json`** (2026-07-29, `docs/DECISIONS_PENDING.md` resolved item 9) -- verified real, zero conversion needed, same flat `{field_name: value}` shape. Extra fields the form doesn't declare are reported as unmatched, not an error, so one profile/field_map can feed several different forms.
 
 Start from `assets/form_template.json` and `assets/form_data_template.json`. Validates every field marked `required: true` has a non-empty value, and flags any data key that doesn't match a declared field name — a real, cheap way to catch a typo'd field name that would otherwise silently leave the intended field unfilled. Exit 0 = all required fields filled, 1 = at least one missing, 2 = malformed input.
 

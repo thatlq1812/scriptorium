@@ -1,0 +1,11 @@
+{
+  "canvas": {"preset": "A4"},
+  "zones": [
+    {"id": "master_anchor", "type": "background_canvas", "x_pct": 0, "y_pct": 0, "w_pct": 100, "h_pct": 100},
+    {"id": "hero", "type": "hero_image", "x_pct": 10, "y_pct": 8, "w_pct": 80, "h_pct": 45},
+    {"id": "title_frame", "type": "typography_frame", "x_pct": 15, "y_pct": 55, "w_pct": 70, "h_pct": 12, "text_label": "TIÊU ĐỀ"},
+    {"id": "scene_1", "type": "content_scene", "x_pct": 10, "y_pct": 70, "w_pct": 35, "h_pct": 20},
+    {"id": "scene_2", "type": "content_scene", "x_pct": 55, "y_pct": 70, "w_pct": 35, "h_pct": 20},
+    {"id": "corner_ornament", "type": "decorative_element", "x_pct": 2, "y_pct": 2, "w_pct": 8, "h_pct": 6}
+  ]
+}

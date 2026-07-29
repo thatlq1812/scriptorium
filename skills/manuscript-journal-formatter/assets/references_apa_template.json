@@ -1,0 +1,6 @@
+{
+  "style": "apa",
+  "entries": [
+    {"surname": "<first author's family name, e.g. Smith>", "year": "<publication year, e.g. 2021, or 2021a for disambiguation>", "title": "<reference title>"}
+  ]
+}

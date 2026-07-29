@@ -1,0 +1,10 @@
+{
+  "ho_ten": "identity.full_name",
+  "ngay_sinh": "identity.date_of_birth",
+  "so_cccd": "identity.id_number",
+  "ten_to_chuc": "organization.org_name",
+  "chuc_danh": "organization.title",
+  "ma_so_thue": "organization.tax_id",
+  "email": "contact.email",
+  "so_dien_thoai": "contact.phone"
+}

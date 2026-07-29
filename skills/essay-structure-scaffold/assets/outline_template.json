@@ -1,0 +1,24 @@
+{
+  "thesis_statement": "Urban community gardens improve neighborhood food security by increasing access to fresh produce and strengthening local food-distribution networks.",
+  "body_paragraphs": [
+    {
+      "topic_sentence": "Community gardens directly increase access to fresh produce for residents in food deserts.",
+      "evidence": [
+        "A 2019 USDA survey found households within walking distance of a community garden reported 23% higher weekly vegetable consumption.",
+        "Case study of the Detroit Garden Resource Program showed participating families reduced grocery spending on produce by an average of $150 per season."
+      ],
+      "link_back_to_thesis": "This increased access to fresh produce is a direct mechanism by which community gardens improve neighborhood food security."
+    },
+    {
+      "topic_sentence": "Community gardens also strengthen local food-distribution networks by creating informal produce-sharing channels.",
+      "evidence": [
+        "Interviews with garden coordinators in Portland documented surplus-sharing arrangements with three neighboring food pantries.",
+        "A 2021 study of 40 community gardens found 68% had a formal or informal surplus-donation agreement with a local organization."
+      ],
+      "link_back_to_thesis": "These distribution networks extend the food-security benefit of community gardens beyond the gardeners themselves, reinforcing the thesis."
+    }
+  ],
+  "conclusion": {
+    "restates_thesis": "By increasing access to fresh produce and strengthening local food-distribution networks, community gardens improve neighborhood food security."
+  }
+}

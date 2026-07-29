@@ -1,0 +1,6 @@
+{
+  "style": "ieee",
+  "entries": [
+    {"key": "1", "authors": "<author list, e.g. A. Author and B. Other>", "title": "<reference title>"}
+  ]
+}

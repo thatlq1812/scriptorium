@@ -3,7 +3,7 @@
   "skills": [
     {
       "skill_id": "skill-creator",
-      "version": "0.3.1",
+      "version": "0.4.0",
       "source": {
         "type": "self-authored",
         "adapted_from": {
@@ -30,11 +30,16 @@
           "skill-package"
         ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (no expert elicitation, no uncontrolled external input)"
+      },
       "security_audit": {
         "status": "passed",
-        "date": "2026-07-26",
-        "note": "Pure instructional, no script. No finding."
+        "date": "2026-07-29",
+        "note": "Re-audited at 0.4.0 (2026-07-29): 4 scripts total (scaffold_skill.py, validate_skill.py, and 2 new this version -- scaffold_distillation.py, validate_distillation.py), all stdlib only (json/argparse/re/pathlib/shutil), zero network calls, no dynamic execution. New scripts confirmed via grep clean of subprocess/os.system/eval/exec/urllib/requests/socket/shell=True."
       },
       "dependencies": [],
       "license_debt": null,
@@ -42,26 +47,41 @@
     },
     {
       "skill_id": "skill-exporter",
-      "version": "0.1.0",
-      "source": {"type": "self-authored"},
+      "version": "0.2.2",
+      "source": {
+        "type": "self-authored"
+      },
       "license": "MIT",
       "tags": {
-        "domain": ["meta"],
-        "task_type": ["coordination"],
+        "domain": [
+          "meta"
+        ],
+        "task_type": [
+          "coordination"
+        ],
         "risk_tier": "N1",
-        "harness_compatibility": ["claude-code"],
+        "harness_compatibility": [
+          "claude-code"
+        ],
         "grounding": "not_applicable",
-        "object_type": ["skill-package"]
+        "object_type": [
+          "skill-package"
+        ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (no expert elicitation, no uncontrolled external input)"
+      },
       "security_audit": {
         "status": "passed",
-        "date": "2026-07-27",
-        "note": "list_candidates.py + export_bundle.py: local-only, stdlib only (json/argparse/zipfile/shutil), zero network calls, no dynamic execution, no secret handling."
+        "date": "2026-07-29",
+        "note": "Re-audited at 0.2.2: list_candidates.py + export_bundle.py + verify_lock.py, all local-only, stdlib only, zero network calls, no dynamic execution. v0.2.2 only adds a static text block to the generated MANIFEST.md, no new logic surface."
       },
       "dependencies": [],
       "license_debt": null,
-      "elicited_from": "Owner (2026-07-27): the distribution half of the pipeline was missing -- everything else creates/audits/catalogs skills, nothing packages them for someone outside the repo. Skill-importer judged unnecessary (scout-harvester + license-compliance-check + skill-creator already form the import pipeline). Owner directive: intake/interview is free-form, up to the calling agent's own judgment, not a fixed script this skill dictates; explicitly declined a quality_score caveat in the output ('tôi kiểm soát được nó') -- the hard license_debt/security_audit exclusion is kept regardless as a distinct written registry rule, not a quality judgment."
+      "elicited_from": "Owner (2026-07-27): the distribution half of the pipeline was missing -- everything else creates/audits/catalogs skills, nothing packages them for someone outside the repo. Skill-importer judged unnecessary (scout-harvester + license-compliance-check + skill-creator already form the import pipeline). Owner directive: intake/interview is free-form, up to the calling agent's own judgment, not a fixed script this skill dictates; explicitly declined a quality_score caveat in the output ('tôi kiểm soát được nó') -- the hard license_debt/security_audit exclusion is kept regardless as a distinct written registry rule, not a quality judgment. v0.2.1 (2026-07-29): extended the hard-exclusion rule to a 3rd case, registry/SCHEMA.md's new operational_status field -- a skill can be structurally valid and security-audit-clean but still owner-paused for a distinct reason (design premise, missing real elicitation), and the export gate now enforces that too."
     },
     {
       "skill_id": "document-ai-structurer",
@@ -90,7 +110,12 @@
           "image"
         ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "partial — legal-article mode tested against synthetic fixture only, not real Docling output from a scanned Vietnamese PDF (see STATUS.md)",
+        "stage4_required": true,
+        "stage4_reason": "ingests uncontrolled external documents (arbitrary scanned/PDF input via Docling)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-27",
@@ -124,7 +149,12 @@
         "grounding": "not_applicable",
         "object_type": []
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (no expert elicitation, no uncontrolled external input)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-27",
@@ -155,7 +185,12 @@
         "grounding": "required",
         "object_type": []
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": true,
+        "stage4_reason": "synthesizes uncontrolled external content (arbitrary web findings)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-27",
@@ -168,17 +203,30 @@
     {
       "skill_id": "xelatex-bootstrap",
       "version": "0.1.0",
-      "source": {"type": "self-authored"},
+      "source": {
+        "type": "self-authored"
+      },
       "license": "MIT",
       "tags": {
-        "domain": ["general"],
-        "task_type": ["coordination"],
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "coordination"
+        ],
         "risk_tier": "N1",
-        "harness_compatibility": ["claude-code"],
+        "harness_compatibility": [
+          "claude-code"
+        ],
         "grounding": "not_applicable",
         "object_type": []
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (no expert elicitation, no uncontrolled external input)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-27",
@@ -191,17 +239,30 @@
     {
       "skill_id": "typst-bootstrap",
       "version": "0.1.0",
-      "source": {"type": "self-authored"},
+      "source": {
+        "type": "self-authored"
+      },
       "license": "MIT",
       "tags": {
-        "domain": ["general"],
-        "task_type": ["coordination"],
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "coordination"
+        ],
         "risk_tier": "N1",
-        "harness_compatibility": ["claude-code"],
+        "harness_compatibility": [
+          "claude-code"
+        ],
         "grounding": "not_applicable",
         "object_type": []
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (no expert elicitation, no uncontrolled external input)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-27",
@@ -214,17 +275,30 @@
     {
       "skill_id": "pandoc-bootstrap",
       "version": "0.1.0",
-      "source": {"type": "self-authored"},
+      "source": {
+        "type": "self-authored"
+      },
       "license": "MIT",
       "tags": {
-        "domain": ["general"],
-        "task_type": ["coordination"],
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "coordination"
+        ],
         "risk_tier": "N1",
-        "harness_compatibility": ["claude-code"],
+        "harness_compatibility": [
+          "claude-code"
+        ],
         "grounding": "not_applicable",
         "object_type": []
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (no expert elicitation, no uncontrolled external input)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-27",
@@ -237,17 +311,33 @@
     {
       "skill_id": "legal-web-search",
       "version": "0.2.2",
-      "source": {"type": "self-authored"},
+      "source": {
+        "type": "self-authored"
+      },
       "license": "MIT",
       "tags": {
-        "domain": ["legal"],
-        "task_type": ["research"],
+        "domain": [
+          "legal"
+        ],
+        "task_type": [
+          "research"
+        ],
         "risk_tier": "N3",
-        "harness_compatibility": ["claude-code"],
+        "harness_compatibility": [
+          "claude-code"
+        ],
         "grounding": "required",
-        "object_type": ["legal-document", "citation"]
+        "object_type": [
+          "legal-document",
+          "citation"
+        ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": true,
+        "stage4_reason": "expert-elicited (Legal specializer) + uncontrolled external web content"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-27",
@@ -260,23 +350,38 @@
     {
       "skill_id": "browser-web-renderer",
       "version": "0.1.0",
-      "source": {"type": "self-authored"},
+      "source": {
+        "type": "self-authored"
+      },
       "license": "MIT",
       "tags": {
-        "domain": ["general"],
-        "task_type": ["document-conversion"],
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "document-conversion"
+        ],
         "risk_tier": "N2",
-        "harness_compatibility": ["claude-code"],
+        "harness_compatibility": [
+          "claude-code"
+        ],
         "grounding": "not_applicable",
         "object_type": []
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": true,
+        "stage4_reason": "ingests uncontrolled external content (arbitrary rendered web pages)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-27",
         "note": "playwright itself scouted via scout-harvester before building (Apache-2.0, microsoft/playwright-python, 14.8k stars, actively maintained). This skill's 3 scripts add no eval/exec/subprocess/os.system beyond what playwright's own API does internally. Read-only navigation + extraction only -- no form submission, no JS execution, no auth, no WAF-evasion logic."
       },
-      "dependencies": ["python-env-bootstrap"],
+      "dependencies": [
+        "python-env-bootstrap"
+      ],
       "license_debt": null,
       "elicited_from": "Proposed by another agent via request.md (2026-07-27) to close legal-web-search's dichvucong.gov.vn JS-rendering gap. Owner approved a 2-step plan (static code, then explicit approval for real install+test) after Dev Agent flagged this as heavier/riskier than prior bootstrap skills. Both steps approved and executed same session. Real testing found the flagged risk correct and worse than assumed: dichvucong.gov.vn WAF-blocks a real headless browser too, confirming this is bot-detection, not JS-rendering -- browser-web-renderer deliberately does not attempt evasion."
     },
@@ -301,7 +406,12 @@
         "grounding": "not_applicable",
         "object_type": []
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (no expert elicitation, no uncontrolled external input)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
@@ -336,7 +446,12 @@
           "license-file"
         ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": true,
+        "stage4_reason": "ingests uncontrolled external content (arbitrary repo license files)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
@@ -373,7 +488,12 @@
           "skill-package"
         ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (no expert elicitation, no uncontrolled external input)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
@@ -409,7 +529,12 @@
           "script"
         ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (no expert elicitation, no uncontrolled external input)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
@@ -442,7 +567,12 @@
           "repository"
         ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": true,
+        "stage4_reason": "ingests uncontrolled external content (arbitrary GitHub repos/clones)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-27",
@@ -477,7 +607,12 @@
           "xlsx"
         ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (no expert elicitation, no uncontrolled external input)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
@@ -515,7 +650,12 @@
           "skill-package"
         ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (no expert elicitation, no uncontrolled external input)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
@@ -548,7 +688,12 @@
           "diagram"
         ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (no expert elicitation, no uncontrolled external input)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
@@ -579,7 +724,12 @@
         "grounding": "optional",
         "object_type": []
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (no expert elicitation, no uncontrolled external input)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-27",
@@ -613,7 +763,12 @@
           "administrative-document"
         ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (no expert elicitation, no uncontrolled external input)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-27",
@@ -651,7 +806,12 @@
           "image"
         ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": true,
+        "stage4_reason": "ingests uncontrolled external content (arbitrary user images + external Gemini API)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
@@ -695,7 +855,12 @@
           "citation"
         ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": true,
+        "stage4_reason": "ingests uncontrolled external content (CrossRef/PubMed/arXiv API responses)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
@@ -735,7 +900,12 @@
           "literature-review"
         ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": true,
+        "stage4_reason": "ingests uncontrolled external content (arXiv/PubMed/CrossRef API responses)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
@@ -778,7 +948,12 @@
           "json"
         ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (no expert elicitation, no uncontrolled external input)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
@@ -817,7 +992,12 @@
           "research-record"
         ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (no expert elicitation, no uncontrolled external input)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
@@ -856,7 +1036,12 @@
           "manuscript"
         ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (no expert elicitation, no uncontrolled external input)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
@@ -868,7 +1053,7 @@
     },
     {
       "skill_id": "study-plan-builder",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "source": {
         "type": "self-authored"
       },
@@ -889,7 +1074,12 @@
           "study-plan"
         ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (no expert elicitation, no uncontrolled external input)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
@@ -922,7 +1112,12 @@
           "lesson-plan"
         ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (no expert elicitation, no uncontrolled external input)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
@@ -957,7 +1152,12 @@
           "question-bank"
         ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (no expert elicitation, no uncontrolled external input)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
@@ -992,7 +1192,12 @@
           "remark"
         ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (no expert elicitation, no uncontrolled external input)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
@@ -1025,7 +1230,12 @@
           "rubric"
         ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (no expert elicitation, no uncontrolled external input)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
@@ -1060,7 +1270,12 @@
           "learning-game"
         ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (no expert elicitation, no uncontrolled external input)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
@@ -1093,7 +1308,12 @@
           "gradebook"
         ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (no expert elicitation, no uncontrolled external input)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
@@ -1127,7 +1347,12 @@
           "parent-brief"
         ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (no expert elicitation, no uncontrolled external input)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
@@ -1140,17 +1365,32 @@
     {
       "skill_id": "contract-consistency-linter",
       "version": "0.1.0",
-      "source": {"type": "self-authored"},
+      "source": {
+        "type": "self-authored"
+      },
       "license": "MIT",
       "tags": {
-        "domain": ["legal"],
-        "task_type": ["review-qa"],
+        "domain": [
+          "legal"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
         "risk_tier": "N2",
-        "harness_compatibility": ["claude-code"],
+        "harness_compatibility": [
+          "claude-code"
+        ],
         "grounding": "required",
-        "object_type": ["contract"]
+        "object_type": [
+          "contract"
+        ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": true,
+        "stage4_reason": "expert-elicited (Legal specializer, junior-lawyer survey)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
@@ -1163,17 +1403,32 @@
     {
       "skill_id": "legal-research-brief",
       "version": "0.1.0",
-      "source": {"type": "self-authored"},
+      "source": {
+        "type": "self-authored"
+      },
       "license": "MIT",
       "tags": {
-        "domain": ["legal"],
-        "task_type": ["review-qa"],
+        "domain": [
+          "legal"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
         "risk_tier": "N2",
-        "harness_compatibility": ["claude-code"],
+        "harness_compatibility": [
+          "claude-code"
+        ],
         "grounding": "required",
-        "object_type": ["legal-brief"]
+        "object_type": [
+          "legal-brief"
+        ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": true,
+        "stage4_reason": "expert-elicited (Legal specializer)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
@@ -1186,40 +1441,73 @@
     {
       "skill_id": "legal-citation-checker",
       "version": "0.3.0",
-      "source": {"type": "self-authored"},
+      "source": {
+        "type": "self-authored"
+      },
       "license": "MIT",
       "tags": {
-        "domain": ["legal"],
-        "task_type": ["review-qa"],
+        "domain": [
+          "legal"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
         "risk_tier": "N2",
-        "harness_compatibility": ["claude-code"],
+        "harness_compatibility": [
+          "claude-code"
+        ],
         "grounding": "not_applicable",
-        "object_type": ["citation"]
+        "object_type": [
+          "citation"
+        ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": true,
+        "stage4_reason": "expert-elicited (Legal specializer)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-27",
         "note": "Re-audited at 0.3.0: new --web-record code path adds only json stdlib usage (reads an already-validated legal-web-search record file), still local-only, zero network calls, no dynamic execution, no secret handling. No finding."
       },
-      "dependencies": ["document-ai-structurer"],
+      "dependencies": [
+        "document-ai-structurer"
+      ],
       "license_debt": null,
       "elicited_from": "Elicited from survey item 2 (outside_research/research_01_survey.md), whose own note flags automatic hiệu-lực (in-effect) status tracking as hard ('hơi khó vì VBPL thay đổi liên tục'). Deliberately does NOT attempt hiệu-lực verification -- no free Vietnamese legal-document API exists for this project to query, unlike CrossRef for citation-management's academic identifiers -- and is instead scoped to what's honestly deterministic without external data: citation format validation against known Vietnamese legal-document numbering conventions (with-year and công-văn-style without-year), plus flagging the same document cited under two different titles. Full gap rationale: docs/ROADMAP.md. Owner (2026-07-27): directed wiring in document-ai-structurer's new catalog capability for an optional Điều-existence check, still explicitly not a hiệu lực claim."
     },
     {
       "skill_id": "contract-risk-log",
       "version": "0.2.0",
-      "source": {"type": "self-authored"},
+      "source": {
+        "type": "self-authored"
+      },
       "license": "MIT",
       "tags": {
-        "domain": ["legal"],
-        "task_type": ["review-qa"],
+        "domain": [
+          "legal"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
         "risk_tier": "N3",
-        "harness_compatibility": ["claude-code"],
+        "harness_compatibility": [
+          "claude-code"
+        ],
         "grounding": "not_applicable",
-        "object_type": ["contract", "risk-log"]
+        "object_type": [
+          "contract",
+          "risk-log"
+        ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": true,
+        "stage4_reason": "expert-elicited (Legal specializer)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-27",
@@ -1231,26 +1519,942 @@
     },
     {
       "skill_id": "legal-form-filler",
-      "version": "0.2.0",
-      "source": {"type": "self-authored"},
+      "version": "0.2.1",
+      "source": {
+        "type": "self-authored"
+      },
       "license": "MIT",
       "tags": {
-        "domain": ["legal"],
-        "task_type": ["drafting"],
+        "domain": [
+          "legal"
+        ],
+        "task_type": [
+          "drafting"
+        ],
         "risk_tier": "N2",
-        "harness_compatibility": ["claude-code"],
+        "harness_compatibility": [
+          "claude-code"
+        ],
         "grounding": "required",
-        "object_type": ["dossier", "form"]
+        "object_type": [
+          "dossier",
+          "form"
+        ]
       },
-      "quality_score": null,
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": true,
+        "stage4_reason": "expert-elicited (Legal specializer)"
+      },
       "security_audit": {
         "status": "passed",
         "date": "2026-07-27",
         "note": "Re-audited at 0.2.0: checklist_from_catalog.py (added this version) is local-only, stdlib only (json/argparse), zero network calls, no dynamic execution. check_dossier.py + fill_form.py unchanged this version. No finding."
       },
-      "dependencies": ["document-ai-structurer"],
+      "dependencies": [
+        "document-ai-structurer"
+      ],
       "license_debt": null,
       "elicited_from": "Elicited from survey items 3, 4, 5 (outside_research/research_01_survey.md: form filling, form suggestion, dossier completeness). Item 4's form-SUGGESTION capability (deciding which form applies to a procedure) is explicitly out of scope -- this project has no real Vietnamese government checklist/template database to ground that judgment call in, so it is not attempted or guessed. Items 3 and 5 (filling a known form, checking a known checklist) are scoped down to a generic engine where the checklist and form template are always caller-supplied input, never hard-coded, mirroring grade-book-builder's refusal to hardcode unverified official numbers. Full gap rationale: docs/ROADMAP.md. Owner (2026-07-27): directed wiring this skill into document-ai-structurer's catalog so a checklist can be extracted from a real Điều's Khoản list -- still doesn't decide which Điều/document is right for a given procedure, same domain-judgment gap as before."
+    },
+    {
+      "skill_id": "personal-profile-manager",
+      "version": "0.1.1",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "coordination"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "profile",
+          "form"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (no expert elicitation, no uncontrolled external input; profile is local caller-supplied data)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-29",
+        "note": "Self-audit. 4 scripts, stdlib only (json/argparse/pathlib/collections), zero network calls, no dynamic execution (no eval/exec/subprocess/os.system), no secret handling — SKILL.md explicitly documents profile.json is not a credentials store. Local file writes only, path-scoped by caller-supplied arguments (no path traversal beyond what the caller explicitly names)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Owner direction 2026-07-29 (docs/ROADMAP.md 'New planned roadmap items', UPGRADE_PLAN_20260729.md Item 1), grounded in a real non-tech-user pilot need (repeating identity/org details across forms/dossiers/contracts/lesson plans). Field schema cross-checked against legal-form-filler/office-doc-creator/lesson-plan-builder's own input schemas rather than invented from scratch; local-config-file convention lightly grounded against AWS CLI's config/credentials split and cookiecutter's variables-file pattern (public-convention survey, no dependency adopted — kept stdlib-only)."
+    },
+    {
+      "skill_id": "project-workspace-initializer",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "coordination"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "workspace"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (deterministic scaffolder, structured caller-supplied template only, no uncontrolled external input)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-29",
+        "note": "Self-audit. 1 script, stdlib only (json/argparse/re/datetime/pathlib), zero network calls, no dynamic execution. Writes are confined to the caller-supplied projects_root argument; sequence numbering derived by scanning existing directory names, never overwrites an existing directory."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Grounded in a real non-tech-user pilot (a legal-practitioner workspace deployment, recorded in docs/ROADMAP.md's 2026-07-29 entry — the pilot deployment directory is no longer directly accessible on this machine, so the already-recorded workflow description is treated as the elicitation record). Only one real profession template built (legal-practitioner) — no template invented for a profession without a real pilot behind it, same discipline as legal-form-filler's refusal to guess a form-selection procedure."
+    },
+    {
+      "skill_id": "svg-poster-builder",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "drafting"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "poster",
+          "diagram"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (deterministic layout renderer, structured caller-supplied layout only, no uncontrolled external input)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-29",
+        "note": "Self-audit. 1 script, stdlib only (json/argparse/pathlib), zero network calls, no dynamic execution. Output is a plain SVG file written to a caller-supplied path; input is structured JSON only, no arbitrary code/markup injection surface."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Zone taxonomy and full-bleed/no-overflow placement discipline grounded in a real production A1-poster rendering pipeline's own documented component-type schema (D:/Document/May052026/scripts/component_types.md, per UPGRADE_PLAN_20260729.md Item 4). Canvas presets are the real public ISO 216 standard (A1/A4)."
+    },
+    {
+      "skill_id": "brand-identity-linter",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "signboard",
+          "menu"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (deterministic structural linter, structured caller-supplied input only, no uncontrolled external input)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-29",
+        "note": "Self-audit. 1 script, stdlib only (json/re/pathlib), zero network calls, no dynamic execution."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Grounded in a real signboard/menu revision session this project has direct access to (D:/elix/temp_project_20260728/brand-data.json + its PROJECT.md client-feedback log, per UPGRADE_PLAN_20260729.md Item 4): a real color-priority role system, a real client note on CTA/contact emphasis, and a real client complaint about orphan icons. Fixture is a generic anonymized example, not the real client's business data."
+    },
+    {
+      "skill_id": "slogan-copy-linter",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "marketing-copy"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (deterministic structural linter, structured caller-supplied input only, no uncontrolled external input)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-29",
+        "note": "Self-audit. 1 script, stdlib only (json/pathlib), zero network calls, no dynamic execution."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "General-capability tier (CLAUDE.md principle 4) — short-copy length constraints and unverifiable-superlative-claim risk are publicly well-documented marketing-standards concerns. Companion to brand-identity-linter/svg-poster-builder within UPGRADE_PLAN_20260729.md Item 4's Light Design cluster; fixture text is a generic invented example, not real client copy."
+    },
+    {
+      "skill_id": "light-logo-arranger",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "drafting"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "logo",
+          "diagram"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (deterministic coordinate calculator, structured caller-supplied input only, no uncontrolled external input)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-29",
+        "note": "Self-audit. 1 script, stdlib only (json/pathlib), zero network calls, no dynamic execution, no file writes at all (pure computation, prints coordinates only)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Anchor-then-exclude placement concept lightly grounded in a real production layout pipeline's own component-chaining idea (D:/Document/May052026/scripts/component_types.md's master_anchor/group_anchor chain hierarchy, per UPGRADE_PLAN_20260729.md Item 4), simplified to single-point named-anchor placement."
+    },
+    {
+      "skill_id": "academic-grant-proposal",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "education"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "grant-proposal",
+          "budget"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (public-source grounding, structured caller-supplied input only, no uncontrolled external input)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-29",
+        "note": "Self-audit. 1 script(s), stdlib only, zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed via grep across all scripts. Built by a background sub-agent under UPGRADE_PLAN_20260729.md Item 3, independently re-verified by the orchestrating session (validate_skill.py + syntax compile + security grep across all 17 Item-3 skills, plus a real re-run of a sample script from 2 of the 6 agent batches confirming claimed behavior for real)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "The 5-section structural core (specific_aims, significance, approach, timeline, budget_justification) is grounded in two real, publicly documented funder guides: NIH's SF424 (R&R) Application Guide, which requires Specific Aims, Significance, and Approach as separate required attachments for an R01-type research narrative (https://grants.nih.gov/grants/how-to-apply-application-guide.html), and NSF's Proposal & Award Policies & Procedures Guide (PAPPG), which requires a Project Description covering the proposed work's goals/approach and a mandatory, itemized Budget Justification tied to the Budget (https://www.nsf.gov/policies/pappg). The budget-justification-must-trace-to-a-real-line-item check applies the same grounding discipline this repo's legal-research-brief already applies to factual/statutory claims (every assertion must cite a real, caller-declared source) -- here applied to grant structure instead of legal fact."
+    },
+    {
+      "skill_id": "academic-source-finder",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "education"
+        ],
+        "task_type": [
+          "research"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "citation",
+          "source-list"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (public-source grounding, structured caller-supplied input only, no uncontrolled external input)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-29",
+        "note": "Self-audit. 1 script(s), stdlib only, zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed via grep across all scripts. Built by a background sub-agent under UPGRADE_PLAN_20260729.md Item 3, independently re-verified by the orchestrating session (validate_skill.py + syntax compile + security grep across all 17 Item-3 skills, plus a real re-run of a sample script from 2 of the 6 agent batches confirming claimed behavior for real)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "General-capability tier per CLAUDE.md principle 4 — public-source grounding, no expert interview needed. The citable-academic-source checklist (peer-reviewed status, source-type distinctions between a journal article/preprint/government report/thesis vs. a non-academic blog, recency relevance, and full bibliographic/access-date documentation) is standard, widely-taught university-library and writing-center guidance (e.g. how academic-library 'evaluating sources' / CRAAP-test guidance and citation-manual conventions like APA/MLA source-type categories describe a citable source), not a niche or tacit practice. Architecturally grounded directly in this repo's own deep-research and legal-web-search precedent (both read in full before building this skill): Scriptorium holds no AI backend and no web-search capability of its own (docs/specs/STRATEGY_SPEC.md, CLAUDE.md non-negotiable principle 8), so 'academic source finder' cannot mean a live search tool — it means the same protocol-plus-validator shape those two skills already established, generalized to the university-student academic-source-evaluation use case instead of general open-ended research or Vietnamese legal search."
+    },
+    {
+      "skill_id": "certification-exam-prep",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "education"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "exam-blueprint",
+          "study-log"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (public-source grounding, structured caller-supplied input only, no uncontrolled external input)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-29",
+        "note": "Self-audit. 1 script(s), stdlib only, zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed via grep across all scripts. Built by a background sub-agent under UPGRADE_PLAN_20260729.md Item 3, independently re-verified by the orchestrating session (validate_skill.py + syntax compile + security grep across all 17 Item-3 skills, plus a real re-run of a sample script from 2 of the 6 agent batches confirming claimed behavior for real)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Lifelong Learner / Upskilling Professional role-capability tier (general-capability, public-source grounding per CLAUDE.md principle 4). Checklist-against-published-blueprint shape is standard certification-prep practice publicly documented by certification bodies themselves (e.g. exam guides published by AWS, CompTIA, PMI, ISC2 that list weighted domains and testable objectives, which candidates are directed to self-check against). The bundled fixture (assets/exam_blueprint_template.json) cites AWS's own published exam guide for AWS Certified Cloud Practitioner (CLF-C02) at aws.amazon.com/certification/certified-cloud-practitioner/ for domain names and weightings; objective wording in the fixture is explicitly marked paraphrased/illustrative, not verbatim, per the fixture's own 'source_citation' field -- callers must supply the live official wording for real use. No expert interview needed for this general-capability tier; the validator logic itself (exact-match coverage checking) is original to this session."
+    },
+    {
+      "skill_id": "dissertation-proposal-scaffold",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "education"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "dissertation-proposal"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (public-source grounding, structured caller-supplied input only, no uncontrolled external input)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-29",
+        "note": "Self-audit. 1 script(s), stdlib only, zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed via grep across all scripts. Built by a background sub-agent under UPGRADE_PLAN_20260729.md Item 3, independently re-verified by the orchestrating session (validate_skill.py + syntax compile + security grep across all 17 Item-3 skills, plus a real re-run of a sample script from 2 of the 6 agent batches confirming claimed behavior for real)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Grounded in the standard graduate research-proposal structure taught broadly across research-methods literature and university Graduate College proposal guidelines: problem statement, review of the literature identifying a gap, research questions (or hypotheses), methodology, and a timeline/work plan -- the same five-part shape described in widely-used graduate methods texts such as Creswell & Creswell, 'Research Design: Qualitative, Quantitative, and Mixed Methods Approaches' (SAGE, latest editions), and mirrored across public university thesis/dissertation-proposal guideline pages (problem statement -> literature review/significance -> research questions -> methodology -> timeline). This is public, widely-taught convention, not a niche tacit process, matching this project's general-capability elicitation tier (CLAUDE.md principle 4) -- no expert interview needed. The structural-completeness validator shape (every required section must be present and non-empty, named exactly when missing) mirrors skills/legal-research-brief/scripts/validate_legal_brief.py's completeness check, adapted from a 7-section legal-brief structure to this 5-section academic-proposal structure -- unlike legal-research-brief, this skill has no per-claim source-citation requirement, since a proposal's required sections are a fixed document-structure check, not a claim-by-claim grounding check."
+    },
+    {
+      "skill_id": "essay-structure-scaffold",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "education"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "essay"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (public-source grounding, structured caller-supplied input only, no uncontrolled external input)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-29",
+        "note": "Self-audit. 1 script(s), stdlib only, zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed via grep across all scripts. Built by a background sub-agent under UPGRADE_PLAN_20260729.md Item 3, independently re-verified by the orchestrating session (validate_skill.py + syntax compile + security grep across all 17 Item-3 skills, plus a real re-run of a sample script from 2 of the 6 agent batches confirming claimed behavior for real)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Grounded in the standard five-paragraph/thesis-body-conclusion academic essay structure documented across widely-taught public sources on academic writing (e.g. Purdue OWL's argumentative-essay guidance, the standard 'topic sentence + evidence + link back to thesis' body-paragraph shape, and the 'conclusion restates without introducing new claims' rule taught in most university writing-center handouts) — general-capability tier per CLAUDE.md principle 4, public-source grounding, no expert interview needed. Scoped as a pure structural validator, never a content generator, matching the same 'checklist/template caller-supplied, script validates structure/arithmetic only' posture already established by competency-rubric-builder and assessment-builder in this repo (structure and lexical pattern-matching decide pass/fail, never a judgment call about content quality)."
+    },
+    {
+      "skill_id": "exam-ready-scaffold",
+      "version": "0.1.1",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "education"
+        ],
+        "task_type": [
+          "drafting"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "flashcard",
+          "quiz-item"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (public-source grounding, structured caller-supplied input only, no uncontrolled external input)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-29",
+        "note": "Self-audit. 2 script(s), stdlib only, zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed via grep across all scripts. Built by a background sub-agent under UPGRADE_PLAN_20260729.md Item 3, independently re-verified by the orchestrating session (validate_skill.py + syntax compile + security grep across all 17 Item-3 skills, plus a real re-run of a sample script from 2 of the 6 agent batches confirming claimed behavior for real)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "General-capability tier per CLAUDE.md principle 4 -- flashcard/retrieval-practice study tools are publicly documented pedagogy, not tacit knowledge. Grounded in outside_research/research_02/research_02_result_01.md section 5's real cited effect-size research on retrieval practice (Rowland 2014 meta-analysis, g ~= 0.50 for retrieval practice vs. re-reading; Latimier et al., g ~= 0.74 for spaced vs. massed retrieval practice) -- the same research brief that already grounds study-plan-builder's spaced-scheduling mechanism, applied here to the content-item shape (flashcard/MCQ) study-plan-builder deliberately left opaque ('a session is an opaque unit'). Structural posture (structure/validate content the caller supplies, never generate substantive content) mirrors assessment-builder's build_exam_matrix.py/validate_exam.py split (D:/elix/scriptorium/skills/assessment-builder/SKILL.md) -- same 'no LLM call, ever; a human or the calling agent supplies real content' discipline, scoped down from assessment-builder's full cognitive-level exam-matrix balancing to a simpler flashcard/MCQ-from-a-fact-list case appropriate for a student building their own study materials rather than a teacher building a formal exam."
+    },
+    {
+      "skill_id": "group-work-coordinator",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "raci-matrix",
+          "group-project"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (public-source grounding, structured caller-supplied input only, no uncontrolled external input)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-29",
+        "note": "Self-audit. 1 script(s), stdlib only, zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed via grep across all scripts. Built by a background sub-agent under UPGRADE_PLAN_20260729.md Item 3, independently re-verified by the orchestrating session (validate_skill.py + syntax compile + security grep across all 17 Item-3 skills, plus a real re-run of a sample script from 2 of the 6 agent batches confirming claimed behavior for real)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "General-capability tier per CLAUDE.md principle 4 — public-source grounding, no expert interview needed. RACI (Responsible/Accountable/Consulted/Informed) is a standard, widely-taught project-management responsibility-assignment convention (documented across public project-management references, e.g. PMI/PMBOK-adjacent materials and university project-management course guidance on responsibility assignment matrices), not a niche or tacit practice. The specific invariants encoded here — exactly one Accountable per task (the single most consistently taught RACI rule, since more than one Accountable defeats the point of the model), every named person must be a real team member, and no task should go unassigned — are the standard textbook RACI rules, not an invented interpretation. Scoped as a pure structural validator, matching this repo's own competency-rubric-builder/assessment-builder posture: the group decides the actual assignments, this only checks the resulting matrix is internally consistent."
+    },
+    {
+      "skill_id": "home-study-environment-guide",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "education"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "checklist"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (public-source grounding, structured caller-supplied input only, no uncontrolled external input)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-29",
+        "note": "Self-audit. 1 script(s), stdlib only, zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed via grep across all scripts. Built by a background sub-agent under UPGRADE_PLAN_20260729.md Item 3, independently re-verified by the orchestrating session (validate_skill.py + syntax compile + security grep across all 17 Item-3 skills, plus a real re-run of a sample script from 2 of the 6 agent batches confirming claimed behavior for real)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "General-capability tier per CLAUDE.md principle 4 -- public-source grounding, no expert interview needed. Grounded in 3 real, named, currently-live public sources, each verified via live web search on 2026-07-29 (not recalled from training-data memory alone): (1) American Academy of Pediatrics (AAP), 'Media and Young Minds' (Pediatrics, 2016, publications.aap.org/pediatrics/article/138/5/e20162591) and the AAP's own 2026 updated screen-time guidance (aap.org Center of Excellence on Social Media and Youth Mental Health; healthychildren.org Family Media Use Plan) -- confirmed live: avoid screen use other than video-chatting under 18 months; at most about 1 hour/day of high-quality content for ages 2-5; the AAP's 2026 update explicitly moved away from a single fixed-hours number for ages 6+ toward an individualized family media-use plan emphasizing quality/context/not displacing sleep, physical activity, or family time, and toward device-free bedrooms and mealtimes -- this skill does NOT invent a replacement fixed-hours number for ages 6+, matching that source's own explicit stance. (2) National Sleep Foundation, 'How Much Sleep Do Babies and Kids Need' (sleepfoundation.org / thensf.org) -- confirmed live age-banded sleep-duration ranges (0-3mo 14-17h, 4-11mo 12-15h, 1-2y 11-14h, 3-5y 10-13h, 6-13y 9-11h, 14-17y 8-10h), used verbatim as NSF_SLEEP_BANDS in scripts/validate_home_study_environment.py. (3) The general 'dedicated space + consistent routine + minimized distraction' shape for a home study environment is a widely-documented convention across public parenting/education-support literature (e.g. school-district and library 'homework help for parents' guidance), not attributed to one single named source -- kept as a structural-completeness check only (no invented numeric threshold attached to it), the same discipline grade-book-builder applies to its own weight/banding inputs. Every numeric value used in an advisory (never a hard-blocking check) traces to source (1) or (2) above; nothing was invented."
+    },
+    {
+      "skill_id": "knowledge-gap-analyzer",
+      "version": "0.1.1",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "education"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "self-assessment",
+          "skills-gap"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (public-source grounding, structured caller-supplied input only, no uncontrolled external input)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-29",
+        "note": "Self-audit. 1 script(s), stdlib only, zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed via grep across all scripts. Built by a background sub-agent under UPGRADE_PLAN_20260729.md Item 3, independently re-verified by the orchestrating session (validate_skill.py + syntax compile + security grep across all 17 Item-3 skills, plus a real re-run of a sample script from 2 of the 6 agent batches confirming claimed behavior for real)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Lifelong Learner / Upskilling Professional role-capability tier (general-capability, public-source grounding per CLAUDE.md principle 4). Self-assessed-confidence-against-required-competency shape is standard, publicly documented career-development/L&D practice (e.g. competency self-assessment matrices used in individual development plans, and O*NET-style skills-gap comparison of a worker's self-rated skill profile against an occupation's required skill profile). The 1-5 ordinal confidence scale mirrors common self-assessment rubric conventions (novice-to-expert style Likert scales widely used in competency frameworks) but this skill treats it as a plain caller-supplied ordinal number, not a scoring methodology of its own -- no expert interview needed for this general-capability tier; the comparison logic itself is original to this session."
+    },
+    {
+      "skill_id": "lab-practicum-guide",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "education"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "lab-guide"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (public-source grounding, structured caller-supplied input only, no uncontrolled external input)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-29",
+        "note": "Self-audit. 1 script(s), stdlib only, zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed via grep across all scripts. Built by a background sub-agent under UPGRADE_PLAN_20260729.md Item 3, independently re-verified by the orchestrating session (validate_skill.py + syntax compile + security grep across all 17 Item-3 skills, plus a real re-run of a sample script from 2 of the 6 agent batches confirming claimed behavior for real)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Grounded in the standard academic lab-manual structure documented broadly in public lab-safety and lab-instruction conventions: the requirement that a lab session states its hazards/safety notes before procedure steps follows the ACS 'Guidelines for Chemical Laboratory Safety in Academic Institutions' and the standard university lab-safety-plan template pattern (a stated safety section is mandatory, procedure follows). The 'procedure step + expected-outcome checkpoint' shape (each step names what equipment/materials it uses and what a student should observe/verify to know the step worked) is the same practical structure used across public university lab-manual templates and TA-training guides for running a lab section -- a widely-taught, publicly documented convention, not a niche tacit process, matching this project's general-capability elicitation tier (CLAUDE.md principle 4). The equipment-cross-reference check (every step's equipment_used must match a declared top-level equipment item) reuses the same 'flag an undeclared/typo'd key' discipline already proven in this repo's skills/legal-form-filler/scripts/fill_form.py. The structural-validator + Markdown-render shape (assets template, --render/--force, exit 0/1/2 codes) follows skills/competency-rubric-builder/scripts/validate_rubric.py and skills/legal-research-brief/scripts/validate_legal_brief.py."
+    },
+    {
+      "skill_id": "manuscript-journal-formatter",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "education"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "manuscript",
+          "citation",
+          "reference-list"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (public-source grounding, structured caller-supplied input only, no uncontrolled external input)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-29",
+        "note": "Self-audit. 1 script(s), stdlib only, zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed via grep across all scripts. Built by a background sub-agent under UPGRADE_PLAN_20260729.md Item 3, independently re-verified by the orchestrating session (validate_skill.py + syntax compile + security grep across all 17 Item-3 skills, plus a real re-run of a sample script from 2 of the 6 agent batches confirming claimed behavior for real)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Two real, publicly documented style guides are encoded, each cited to its actual public source (never invented): IEEE's numbered-bracket in-text citation + sequentially-numbered reference-list convention, from the IEEE Editorial Style Manual for Authors (https://ieeeauthorcenter.ieee.org/wp-content/uploads/IEEE-Editorial-Style-Manual-for-Authors.pdf) and the IEEE Reference Guide (https://journals.ieeeauthorcenter.ieee.org/wp-content/uploads/sites/7/IEEE_Reference_Guide.pdf); APA 7th edition's name-year in-text citation + alphabetically-ordered reference-list convention (including the a/b/c duplicate-author-year disambiguation rule, Ch. 9 section 9.42), from the APA Style website's citation guidance (https://apastyle.apa.org/style-grammar-guidelines/citations). citation-management's own SKILL.md explicitly states it 'doesn't validate citation STYLE consistency across a whole bibliography (APA vs Vancouver etc.)' -- this skill closes exactly that documented gap, applied to a manuscript's body text (in-text markers + reference list ordering), not bibliography generation from an identifier."
+    },
+    {
+      "skill_id": "parent-school-communicator",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "education"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "letter",
+          "email"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (public-source grounding, structured caller-supplied input only, no uncontrolled external input)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-29",
+        "note": "Self-audit. 1 script(s), stdlib only, zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed via grep across all scripts. Built by a background sub-agent under UPGRADE_PLAN_20260729.md Item 3, independently re-verified by the orchestrating session (validate_skill.py + syntax compile + security grep across all 17 Item-3 skills, plus a real re-run of a sample script from 2 of the 6 agent batches confirming claimed behavior for real)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Public-source grounding, general-capability tier per CLAUDE.md principle 4 (no expert interview needed -- this is not a niche-specializer skill). The required-content shape (who this is addressed to, who the child is, what actually happened, what the parent wants done, how to reach back) is the well-documented convention for a professional parent-to-school communication found across public school-communication guidance (e.g. PTA/parent-advocacy 'how to write to your child's teacher' guides, school-district 'contacting your child's teacher' pages) and mirrors the same required-content shape this project already validated and shipped in the opposite direction in skills/parent-communication/SKILL.md (a real previously-deployed EduStation skill, teacher-to-parent). Explicit boundary check performed against parent-communication before building this (see 'Why this skill, and why this scope' below): parent-communication validates a message flowing teacher->parent (school-authored, and its one hard-block is an unfilled STUDENT NAME on a single-student letter, with requested_action allowed to be empty for a pure-FYI message); this skill validates the opposite flow, parent->school (parent-authored, its equivalent hard-block is an unfilled RECIPIENT contact, and requested_action is never allowed to be empty because a parent initiating contact with a school is assumed to always want a concrete next step). The two skills share only the generic placeholder-detection regex and the two-tier errors/warnings validation shape already established by parent-communication -- the required-field set, the hard-block condition, and the tone lexicon (hostility toward the school/teacher, not harshness about the student) are each direction-specific and were re-derived, not copy-pasted assuming equivalence."
+    },
+    {
+      "skill_id": "reading-note-structurer",
+      "version": "0.1.1",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "education"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "reading-note"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (public-source grounding, structured caller-supplied input only, no uncontrolled external input)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-29",
+        "note": "Self-audit. 1 script(s), stdlib only, zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed via grep across all scripts. Built by a background sub-agent under UPGRADE_PLAN_20260729.md Item 3, independently re-verified by the orchestrating session (validate_skill.py + syntax compile + security grep across all 17 Item-3 skills, plus a real re-run of a sample script from 2 of the 6 agent batches confirming claimed behavior for real)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "General-capability tier per CLAUDE.md principle 4 -- both note structures are publicly documented, established study methods, not tacit knowledge. Cornell Notes is Walter Pauk's real, publicly documented note-taking method (Cornell University's Learning Strategies Center, 'How to Study in College') -- the cue-column/note-taking-column/summary three-part structure encoded here (entries[].cue, entries[].notes, summary) is that method's actual documented shape, not invented. Mind mapping's branching central-topic structure is Tony Buzan's publicly documented technique, widely taught as a K12 study/note-organization method. Structural-validator shape (caller supplies all content, script checks required fields present/non-empty, then renders to Markdown) mirrors competency-rubric-builder's validate_rubric.py (D:/elix/scriptorium/skills/competency-rubric-builder/SKILL.md) -- same 'never judge content quality, only structural completeness' discipline, applied to a student's own reading notes instead of a teacher's rubric."
+    },
+    {
+      "skill_id": "socratic-concept-helper",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "education"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N3",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "optional",
+        "object_type": [
+          "tutoring-response"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": true,
+        "stage4_reason": "elevated per docs/specs/STRATEGY_SPEC.md's own Student-tier research brief (research_02_result_01.md §7), which explicitly flags this exact candidate as needing a real student/teacher survey before skill-creator runs; built instead on general-capability public-source grounding per direct 2026-07-29 task dispatch — flagged for owner reconciliation in DECISIONS_PENDING.md, not silently resolved"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-29",
+        "note": "Self-audit. 1 script(s), stdlib only, zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed via grep across all scripts. Built by a background sub-agent under UPGRADE_PLAN_20260729.md Item 3, independently re-verified by the orchestrating session (validate_skill.py + syntax compile + security grep across all 17 Item-3 skills, plus a real re-run of a sample script from 2 of the 6 agent batches confirming claimed behavior for real)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "operational_status": {
+        "state": "paused",
+        "reason": "Owner decision (2026-07-29), two independent grounds: (1) a same-day deep-research follow-up (outside_research/research_06_socratic_helper/research_brief.json) confirmed public-source research does not substitute for the real student/teacher survey docs/specs/STRATEGY_SPEC.md's own research brief recommended before this skill was built; (2) a separate structural objection -- this skill's design assumes a K12 student directly operates an agent harness in real time, which does not match how K12 students actually access AI (chat apps, not agent CLIs), the same operator-mismatch reasoning already applied to the Teacher tier (a teacher operates grading-and-feedback on a student's behalf, not the student). Not deleted -- the mechanical restraint-linter (check_restraint.py) may be reusable once a real operator model (teacher/tutor-mediated, not student-direct) is settled. See docs/DECISIONS_PENDING.md resolved item 5.",
+        "date": "2026-07-29",
+        "decided_by": "owner"
+      },
+      "elicited_from": "General-capability tier per CLAUDE.md principle 4 (education/pedagogy knowledge is publicly documented, not tacit) -- grounded directly in outside_research/research_02/research_02_result_01.md's real 2025-2026 secondary research (already gathered this project, not re-derived here): College Board Oct 2025 (84% of US high-schoolers use generative AI for schoolwork), PEW 2025 (half of US teens use chatbots for schoolwork help), a faculty survey (92% concerned about AI-facilitated academic dishonesty), and arXiv:2605.21629 ('Faster Completion, Less Learning', 2026) showing generative-AI use measurably reduced both study time AND retained knowledge on math problems -- the quantified real-world risk this skill's restraint gate exists to mitigate. The behavioral design pattern itself -- never answer directly, ask a guiding question, trade immediate correctness for productive struggle -- is Khan Academy Khanmigo's publicly documented Socratic-tutoring approach (cited in the same research brief: 'AI Socratic Tutors: Teaching The World To Think', aicompetence.org; 'Khanmigo: Khan Academy's AI Tutor', tooldirectory.ai). The curriculum anchor (this is not just risk-avoidance but serves an actual mandated competency) is CT GDPT 2018 / Thong Tu 32/2018/TT-BGDDT's 'nang luc tu chu va tu hoc' (self-directed learning), one of exactly 3 'nang luc chung' the Vietnamese national curriculum is built to develop, already cited by lesson-plan-builder's competency vocabulary. NOTE for the registering session: docs/specs/STRATEGY_SPEC.md section 5.1's own research brief (research_02_result_01.md section 7) flags this exact candidate as needing a real student/teacher survey before a skill-creator run -- this build proceeds on direct owner/orchestrator instruction (2026-07-29 task dispatch) treating it as general-capability-tier (public pedagogy pattern, not a tacit niche-specializer process) rather than waiting on that survey; flagging the discrepancy for the registering session to reconcile against STRATEGY_SPEC's own stated bar, not resolving it unilaterally here. RESOLVED 2026-07-29: paused, see operational_status."
+    },
+    {
+      "skill_id": "student-progress-tracker",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "education"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "progress-record",
+          "report-card"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (public-source grounding, structured caller-supplied input only, no uncontrolled external input)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-29",
+        "note": "Self-audit. 1 script(s), stdlib only, zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed via grep across all scripts. Built by a background sub-agent under UPGRADE_PLAN_20260729.md Item 3, independently re-verified by the orchestrating session (validate_skill.py + syntax compile + security grep across all 17 Item-3 skills, plus a real re-run of a sample script from 2 of the 6 agent batches confirming claimed behavior for real)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "General-capability tier per CLAUDE.md principle 4 -- no expert interview needed; this is a mechanical restructuring of a task shape already elicited and shipped in skills/grade-book-builder/SKILL.md (grounded in EduStation's real previously-deployed grade_book skill). grade-book-builder aggregates ACROSS assessment categories within a single term (weighted TBM); this skill aggregates the same kind of already-scored data ACROSS terms/periods over time for a parent audience instead of a teacher audience -- same domain object (0-10 Vietnamese numeric scale, already documented and reused verbatim from grade-book-builder, not a new invented meaning), different axis of aggregation (time, not category-weight), different audience (parent tracking their own child longitudinally, not a teacher computing a class-wide term rollup). The one hard caveat grade-book-builder documents -- never assert an official weighting/classification number without a real cited source -- is carried forward identically here: this skill computes a plain unweighted mean labeled 'computed_unweighted_average' only when no caller-supplied 'reported_overall_average' is given, and never invents a significance threshold for what counts as a 'meaningful' trend change -- every delta is a bare arithmetic difference, direction is strictly sign-based (up/down/flat), with no invented cutoff for how large a change must be to matter."
+    },
+    {
+      "skill_id": "ta-grading-rubric-linter",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "education"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "gradebook",
+          "rubric"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (public-source grounding, structured caller-supplied input only, no uncontrolled external input)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-29",
+        "note": "Self-audit. 2 script(s), stdlib only, zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed via grep across all scripts. Built by a background sub-agent under UPGRADE_PLAN_20260729.md Item 3, independently re-verified by the orchestrating session (validate_skill.py + syntax compile + security grep across all 17 Item-3 skills, plus a real re-run of a sample script from 2 of the 6 agent batches confirming claimed behavior for real)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Two grounded pieces of public/in-repo knowledge, no fabricated interview. (1) The per-criterion max-cap hard-refusal rule is deliberately REUSED, not re-derived, from this repo's own skills/grading-and-feedback/scripts/grade_exam.py, which already encodes the discipline that an essay/rubric criterion score exceeding its declared max_points is refused outright, never silently clamped -- applied here to a TA's multi-student rubric-grading run instead of a single teacher's one-exam grading. (2) The statistical outlier layer is grounded in two publicly documented conventions, not invented thresholds: the isolated-criterion-usage and flatline-score checks follow the general rubric-grading calibration/norming practice described in Stevens & Levi, 'Introduction to Rubrics: A Practical Guide to Creating and Using Rubrics for Assessment Program Effectiveness' (2013) and widely-published university teaching-center rubric-calibration/norming guides, which recommend spot-checking for graders/scores showing no discrimination across criteria or isolated/inconsistent criterion use; the per-criterion outlier fence uses the standard box-plot 1.5xIQR convention from John W. Tukey, 'Exploratory Data Analysis' (1977), also documented at NIST/SEMATECH e-Handbook of Statistical Methods S7.1.6 (https://www.itl.nist.gov/div898/handbook/prc/section1/prc16.htm) -- a citable, off-the-shelf statistic, not a self-invented threshold."
+    },
+    {
+      "skill_id": "upskilling-roadmap-builder",
+      "version": "0.2.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "education"
+        ],
+        "task_type": [
+          "coordination"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "skills-gap",
+          "roadmap"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (public-source grounding, structured caller-supplied input only, no uncontrolled external input)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-07-29",
+        "note": "Re-audited at 0.2.0: build_roadmap.py + new from_gap_analysis.py, stdlib only (json/argparse/pathlib), zero network calls, no dynamic execution. from_gap_analysis.py verified real end-to-end against a real knowledge-gap-analyzer report feeding build_roadmap.py."
+      },
+      "dependencies": [
+        "study-plan-builder"
+      ],
+      "license_debt": null,
+      "elicited_from": "Lifelong Learner / Upskilling Professional role-capability tier (general-capability, public-source grounding per CLAUDE.md principle 4). Gap-analysis-then-sequence shape grounded in standard career-development practice: skills-gap analysis is a documented technique in competency-based HR/L&D frameworks (e.g. SHRM competency modeling, O*NET's skills-by-occupation database structure comparing a worker's current skill profile against an occupation's required skill profile). The scheduling core itself is NOT reinvented here -- it is imported directly from skills/study-plan-builder/scripts/build_study_plan.py (that skill's own interleaved-new-topics + periodic-review round-robin algorithm, original to that skill's session per its own SKILL.md), so this skill inherits that algorithm's grounding rather than duplicating or re-deriving it."
     }
   ]
 }

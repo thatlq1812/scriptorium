@@ -1,0 +1,13 @@
+{
+  "communication_type": "<one of: meeting_request, concern, follow_up, inquiry, absence_notice, complaint>",
+  "recipient_name": "<full name of the teacher/school staff this is addressed to>",
+  "recipient_role": "<e.g. Giao vien chu nhiem, Hieu truong, front-office admin>",
+  "sender_name": "<parent/guardian full name>",
+  "student_name": "<the child's full name -- REQUIRED, this is always about a specific student>",
+  "purpose": "<what this communication is for, in the parent's own words>",
+  "body_sections": [
+    "<content point 1 -- the actual situation/context being described>"
+  ],
+  "requested_action": "<the concrete ask -- what the parent wants the school/teacher to do (e.g. schedule a meeting on a specific date, review a grade, clarify a policy). Cannot be empty for this direction of communication -- a parent contacting a school almost always wants something to happen next, even if it's just 'please confirm receipt'.>",
+  "contact_info": "<phone/email for the school to reply to -- leave empty string if genuinely unavailable, do NOT invent one>"
+}

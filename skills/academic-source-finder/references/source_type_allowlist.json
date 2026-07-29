@@ -1,0 +1,53 @@
+{
+  "_comment": "What counts as an academic source, and what tier it falls in. Not a list of specific websites/URLs -- source_type describes the KIND of source (how it was published/vetted), separate from which database the calling agent happened to search (databases/repositories are listed separately below for the protocol's search-location guidance). Deliberately small and general-purpose, unlike legal-web-search's country-specific domain allowlist.",
+  "academic_source_types": {
+    "peer-reviewed-journal-article": {
+      "tier": "primary",
+      "note": "Published in a journal that uses peer review before acceptance. The single strongest source type for an academic essay."
+    },
+    "conference-paper": {
+      "tier": "primary",
+      "note": "Peer-reviewed proceedings from an academic/professional conference."
+    },
+    "academic-book-or-book-chapter": {
+      "tier": "primary",
+      "note": "Published by an academic or university press, not a self-published or trade-press book."
+    },
+    "government-report": {
+      "tier": "primary",
+      "note": "An official report/dataset from a government agency (e.g. a national statistics office, a federal department) -- authoritative but not peer-reviewed in the academic sense."
+    },
+    "thesis-or-dissertation": {
+      "tier": "secondary",
+      "note": "Reviewed by a thesis/dissertation committee, not by anonymous peer review -- credible but a narrower vetting process than a journal."
+    },
+    "preprint": {
+      "tier": "secondary",
+      "note": "Posted to a preprint server (e.g. arXiv, SSRN, medRxiv) before or without peer review -- useful for very recent work, but NOT yet peer-reviewed; must be tagged peer_reviewed: false."
+    },
+    "reputable-news-or-magazine-analysis": {
+      "tier": "secondary",
+      "note": "Long-form analysis from an established news/magazine outlet with editorial fact-checking -- useful for context or a current event, not a substitute for a primary academic source on the essay's core claims."
+    },
+    "non-academic": {
+      "tier": "non_academic",
+      "note": "Personal blog, forum post, unreviewed wiki article, marketing/company page, or any other source with no editorial or peer vetting. Allowed in a source list only when explicitly tagged non_academic: true with a justification -- never silently treated as equivalent to a primary/secondary source."
+    }
+  },
+  "recognized_academic_search_locations": [
+    "Google Scholar",
+    "JSTOR",
+    "PubMed / PubMed Central",
+    "IEEE Xplore",
+    "ScienceDirect",
+    "SpringerLink",
+    "ERIC (Education Resources Information Center)",
+    "SSRN",
+    "arXiv",
+    "Web of Science",
+    "Scopus",
+    "the institution's own library database/discovery search",
+    "an official government statistics/data portal"
+  ],
+  "_recognized_academic_search_locations_note": "This is a list of WHERE a lawyer-equivalent disciplined search would look first (same purpose as legal-web-search's domain allowlist), not an exhaustive or enforced allowlist -- the validator does not check which database a source was found through, only the source's own declared type/peer-review status/recency/citation completeness. A source found via a general web search is not disqualified by that alone if its source_type and peer_reviewed fields are honestly declared and it otherwise passes the checklist."
+}

@@ -1,0 +1,8 @@
+{
+  "rubric_id": "CS201-PS3-rubric",
+  "students": [
+    {"student_id": "S001", "scores": {"correctness": 5, "code_style": 2, "test_coverage": 1}},
+    {"student_id": "S002", "scores": {"correctness": 6, "code_style": 1, "test_coverage": 2}},
+    {"student_id": "S003", "scores": {"correctness": 4, "code_style": 2, "test_coverage": 2}}
+  ]
+}

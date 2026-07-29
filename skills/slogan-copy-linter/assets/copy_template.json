@@ -1,0 +1,6 @@
+{
+  "slogan": "Vị Ngon Mỗi Ngày",
+  "max_chars": 20,
+  "banned_words": ["rẻ nhất", "số 1 thế giới"],
+  "allow_all_caps": false
+}

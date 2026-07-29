@@ -1,0 +1,36 @@
+{
+  "title": "Ohm's Law Verification Lab",
+  "course": "PHYS 201 - Introductory Electronics",
+  "safety_notes": [
+    "Power off the breadboard circuit before making or changing any wiring connections.",
+    "Do not exceed the resistor's rated power dissipation (1/4 W) -- verify with the calculated I^2*R before applying voltage.",
+    "Report any component that becomes hot to the touch to the TA immediately and disconnect power."
+  ],
+  "equipment": [
+    "DC power supply",
+    "breadboard",
+    "digital multimeter",
+    "resistor kit",
+    "jumper wires"
+  ],
+  "steps": [
+    {
+      "step_number": 1,
+      "instruction": "Build the series circuit on the breadboard: power supply positive terminal -> 220 ohm resistor -> multimeter (current mode) -> power supply negative terminal.",
+      "equipment_used": ["breadboard", "resistor kit", "jumper wires", "digital multimeter"],
+      "expected_outcome": "Circuit is fully connected with no open connections; multimeter display shows 0.00 mA before power is applied."
+    },
+    {
+      "step_number": 2,
+      "instruction": "Set the DC power supply to 5.0V and enable the output.",
+      "equipment_used": ["DC power supply"],
+      "expected_outcome": "Power supply display confirms 5.0V output with current draw under 50 mA."
+    },
+    {
+      "step_number": 3,
+      "instruction": "Record the multimeter's current reading and compute the measured resistance using V=IR.",
+      "equipment_used": ["digital multimeter"],
+      "expected_outcome": "Computed resistance is within 10% of the resistor's rated 220 ohm value."
+    }
+  ]
+}

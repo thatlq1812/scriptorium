@@ -1,0 +1,27 @@
+{
+  "student_name": "<child's full name>",
+  "records": [
+    {
+      "period_label": "<e.g. HK1 2025-2026, Term 1 2026>",
+      "period_order": 1,
+      "date": "2026-01-10",
+      "_comment_date": "Optional, ISO YYYY-MM-DD. Not used for ordering -- period_order is the caller-declared, unambiguous chronological order.",
+      "subject_scores": {
+        "Toan": 8.0,
+        "Van": 7.0
+      },
+      "reported_overall_average": null,
+      "_comment_reported": "Optional. If the caller has a real official overall average from the actual report card, put it here. If null/omitted, this skill computes and reports a plain unweighted mean of subject_scores instead -- always labeled 'computed_unweighted_average' in the output, never presented as an official TBM, since no official weighting scheme is supplied (mirrors grade-book-builder's refusal to invent weights)."
+    },
+    {
+      "period_label": "<e.g. HK2 2025-2026, Term 2 2026>",
+      "period_order": 2,
+      "date": "2026-06-15",
+      "subject_scores": {
+        "Toan": 8.5,
+        "Van": 7.5
+      },
+      "reported_overall_average": null
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "child_name": "<child's full name>",
+  "child_age_years": 8,
+  "_comment_age": "Optional (int or float, e.g. 8 or 1.5). If omitted, only the age-independent checks (dedicated space, routine, device-free bedroom/mealtime) run -- the age-banded screen-time/sleep advisories below are skipped rather than guessed.",
+  "study_space": {
+    "location": "<e.g. desk in own room, corner of living room, dining table>",
+    "has_dedicated_desk_or_table": true,
+    "distraction_controls": [
+      "<e.g. phone stored outside the room during study time, TV off, siblings' play area separate>"
+    ]
+  },
+  "routine": {
+    "study_schedule": "<e.g. Mon-Fri 19:00-20:30, after dinner, before free time>",
+    "regular_bedtime": "21:30",
+    "regular_wake_time": "06:30",
+    "_comment_times": "bedtime/wake_time optional, 24h HH:MM. Used only for the National-Sleep-Foundation-range advisory below."
+  },
+  "screen_time_policy": {
+    "study_block_device_free": true,
+    "recreational_screen_hours_per_day": 1.0,
+    "device_free_bedroom": true,
+    "device_free_mealtime": true
+  }
+}

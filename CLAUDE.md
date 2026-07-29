@@ -1,12 +1,21 @@
-# CLAUDE.md
+# CLAUDE.md — Mandatory System Context
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+> [!IMPORTANT]
+> **Read this file first — before touching any code, building any skill, or executing any roadmap item.** This applies to every agent (Claude Code, Codex CLI, Kimi, Amp, any other harness) working in this repository. It is the single authoritative entry point for system rules, pipeline order, and non-negotiable constraints.
 
 ## What this repository is
 
 Scriptorium creates, quality-tests, security-audits, and catalogs portable **Agent Skills** (the open `SKILL.md` standard at agentskills.io, ~44 adopter platforms). It is **not** an app, chatbot, or agent harness — it produces skill *artifacts* that run on whatever harness/model the consuming agent already has. Scriptorium itself never calls an AI API (see "Non-negotiable principles" below).
 
-Read in this order before doing any non-trivial work: `docs/MASTER_CONTEXT.md` → `docs/STATUS.md` → `docs/DECISIONS_PENDING.md` → `docs/specs/STRATEGY_SPEC.md` → `docs/ROADMAP.md`.
+**Read in this order before doing any non-trivial work:**
+1. This file (`CLAUDE.md`) — you are here ✓
+2. `registry/SCHEMA.md` — registry field definitions and `quality_score` interpretation
+3. `docs/MASTER_CONTEXT.md` — architecture, scope, documentation conventions
+4. `docs/STATUS.md` — real skill status (verify against `registry/skills.json`)
+5. `docs/specs/STRATEGY_SPEC.md` — source of truth for pipeline, taxonomy, and strategy principles
+6. `docs/ROADMAP.md` — skill-expansion backlog
+7. `UPGRADE_PLAN_20260729.md` — active roadmap items ready for downstream execution (read §5 of that file for agent-specific instructions)
+8. `docs/DECISIONS_PENDING.md` — decisions awaiting owner confirmation (check before assuming anything is unresolved)
 
 ## Repo structure
 
@@ -35,7 +44,7 @@ When docs conflict: `skills/` + `registry/` beat every doc. Within docs, `specs/
 
 research → elicit tacit process from a real source → `skill-creator` → quality evaluation (≥2 harnesses) → security audit (separate stage, never merged with quality eval) → scout/harvester (existing prior art) → license-compliance check → dedup/novelty-check → registry entry.
 
-A skill is never "ready to use" until it clears stage 4 (quality eval) *and* stage 5 (security audit) — regardless of how much real use it's already seen while being built. **Running stage 4 on any skill is deliberately deferred by owner decision** — don't run it in a session without asking first.
+A skill is "officially ready" only after it clears stage 5 (security audit) and, *if applicable*, stage 4 (quality eval). **Stage 4 does not apply to every skill (owner decision, 2026-07-29)** — it's scoped, via each registry entry's `quality_score.stage4_required`, to (a) niche-specializer skills elicited from a real expert source, and (b) skills that ingest uncontrolled external input (arbitrary documents, web content, third-party repos, external API responses). Foundation/infrastructure and general-capability skills grounded in public sources are exempt by design, not just deferred — see `registry/SCHEMA.md`'s `quality_score` field for the exact rule and `docs/STATUS.md` for the current per-skill classification. **For the ~14 skills where `stage4_required: true`, running stage 4 is still deliberately not yet scheduled — do not run it without asking first.** This is a hold on the formal multi-harness scoring gate, not a statement about implementation quality: every skill in this repo has been tested against real and adversarial inputs, with real bugs found and fixed; security audit has passed for all skills. "Not yet through stage 4" means the formal QA scoring run hasn't been scheduled — it does not mean the skill is broken or ungrounded.
 
 Before starting a new skill, query `registry/skills.json` by domain/task_type/object_type — if an existing skill already covers ≥80% of scope, extend/version it instead of creating a parallel entry.
 
@@ -44,7 +53,10 @@ Before starting a new skill, query `registry/skills.json` by domain/task_type/ob
 1. Stick to the agentskills.io 6-field spec (`name`, `description`, `license`, `compatibility`, `metadata`, `allowed-tools`) — never invent extra top-level frontmatter fields; project-specific fields always live inside `metadata`.
 2. Quality evaluation and security audit are two different gates — never merge into one review pass.
 3. Never mark a skill harness-compatible from a vendor/showcase claim — only direct verification counts.
-4. Never let an agent self-generate a skill without input elicited from a real source (owner, real survey, or a real prior deployed system). `outside_research/`'s brainstormed skill lists are ideation, not elicitation, on their own.
+4. **Elicitation requirements vary by knowledge tier** — apply the right bar for each, not a single binary rule:
+   - **Infrastructure / bootstrap skills** (e.g. `python-env-bootstrap`, `xelatex-bootstrap`, `skill-creator`): grounded from open specs, public toolchain docs, and direct testing. No expert interview needed.
+   - **General-capability skills** (e.g. education, research, study-planning, writing): the knowledge is publicly documented in books, curriculum standards, pedagogy literature, and established best practices. Public-source grounding is sufficient — no expert interview needed before `skill-creator` runs.
+   - **Niche specializer skills** (e.g. Vietnamese legal workflows, niche industry procedures, domain-specific tacit processes): the knowledge is NOT publicly findable — it lives in experts' heads, un-written workflows, or locally-specific regulation. A real elicitation source is **mandatory** before `skill-creator` runs: an expert interview, a real prior deployed system (e.g. EduStation for the Teacher tier), a real practitioner survey, or direct owner instruction confirming the tacit process. `outside_research/`'s brainstormed skill lists are ideation, not elicitation, for this tier.
 5. Harvesting from an outside source goes through license-compliance-check before skill-creator. Controlled "license debt" is permitted during bootstrap (tag via `registry/SCHEMA.md`'s `license_debt` field, never distribute externally while in debt) — **except** sources with an explicit no-redistribution clause (e.g. Anthropic's docx/pdf/pptx/xlsx skills), which stay hard-BLOCKED, never debt-eligible.
 6. One skill that runs well, audits clean, and gets real use beats ten unused skills in the registry.
 7. Never commit a venv or binary environment into git. A Python skill declares `requirements.txt`; it installs into the ONE shared root `.venv` via `python-env-bootstrap`, never its own venv.
@@ -68,6 +80,7 @@ Other required fields: `elicited_from` (must be non-empty — the real tacit-kno
 - Scripts are stdlib-first; a skill only reaches for a real dependency (`docling`, `python-docx`, `playwright`, ...) when the task genuinely needs it, and always through the shared venv (see below), never a private one.
 - Deterministic-first: where a script can decide pass/fail mechanically, a script decides it — not a model's judgment call. Several skills follow a "2-step-review" shape: a script proposes candidate structure/matches (explicitly labeled unverified), the reviewing agent checks it, then a second script mechanically applies the reviewed result.
 - Grounding discipline: a factual claim without a real, citable source is treated as a bug. Skills refuse loudly (non-zero exit, clear stderr message) rather than silently guessing, dropping data, or fabricating a plausible-looking value — this is the single most consistently enforced behavior across the codebase (see `docs/STATUS.md`'s v0.2.0 hardening-round notes for concrete examples of the failure mode being guarded against).
+- Composability discipline (2026-07-29): when a new skill's output shape genuinely matches an existing skill's input shape (or vice versa), document it explicitly in both `SKILL.md`s — a "Chains into `<skill>`" note with a real, verified example (see `personal-profile-manager`/`legal-form-filler` or `knowledge-gap-analyzer`/`upskilling-roadmap-builder` for the pattern). This isn't optional polish: a consuming agent reading one `SKILL.md` in isolation has no way to know a real pipeline exists unless the skill itself says so, and a generic "minimize tool calls" instinct in a downstream agent's own system prompt will otherwise suppress exactly the multi-skill chaining this project is built to enable (`skill-exporter`'s exported `MANIFEST.md` also carries this reminder for real bundles, but don't rely on that alone — the cross-reference belongs in the skill itself).
 
 ## Running a Python skill
 

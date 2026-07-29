@@ -1,0 +1,20 @@
+{
+  "identity": {
+    "full_name": "Nguyễn Văn A",
+    "date_of_birth": "1990-01-01",
+    "id_number": "001090012345",
+    "id_issue_date": "2020-05-10",
+    "id_issue_place": "Cục Cảnh sát QLHC về TTXH"
+  },
+  "organization": {
+    "org_name": "Văn phòng Luật sư ABC",
+    "title": "Luật sư",
+    "tax_id": "0312345678",
+    "address": "123 Đường XYZ, Quận 1, TP.HCM"
+  },
+  "contact": {
+    "email": "example@example.com",
+    "phone": "+84901234567",
+    "address": "123 Đường XYZ, Quận 1, TP.HCM"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "canvas_w": 210,
+  "canvas_h": 297,
+  "logo_w": 30,
+  "logo_h": 20,
+  "anchor": "top-right",
+  "margin": 8,
+  "exclusion_zones": [
+    {"x": 0, "y": 0, "w": 50, "h": 15}
+  ]
+}

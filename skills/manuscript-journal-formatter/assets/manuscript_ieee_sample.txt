@@ -1,0 +1,3 @@
+Prior work established the baseline detection accuracy for this task [1]. A
+follow-up study extended the approach to noisy channels [2], [3]. Building on
+these results, we propose a unified model that improves on both [1]-[3].

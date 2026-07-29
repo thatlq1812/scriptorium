@@ -1,0 +1,7 @@
+{
+  "skills": [
+    {"name": "<skill name 1>", "confidence": 4},
+    {"name": "<skill name 2>", "confidence": 2},
+    {"name": "<skill name 3>", "confidence": 5}
+  ]
+}

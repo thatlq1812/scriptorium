@@ -9,7 +9,8 @@ metadata:
   risk_tier: N1
   source: self-authored
   elicited_from: "First skill for the 'Student (K12)' audience tier (docs/specs/STRATEGY_SPEC.md §5.1) -- no real student survey exists yet (tracked gap), so this was deliberately scoped to the simplest, least-controversial capability for that tier per owner direction (2026-07-26): pure scheduling arithmetic over a topic list, never touching subject content or answering questions, avoiding the 'doing the student's work' ethical line entirely. Candidate name and shape cross-checked against the 'learning-path-planner' idea in outside_research/research_01_lawer-work.md (external AI brainstorm, treated as ideation only, not elicited input) but the algorithm itself (interleaved round-robin new-topics + periodic review-everyone-so-far) is original to this session, not copied from that brainstorm or any external source."
-  version: 0.1.0
+  version: 0.1.1
+  changelog_0_1_1: "Doc-only: added a 'Who operates this' section clarifying the operator model after the Student(K12)/University Student tier merge (2026-07-29, docs/DECISIONS_PENDING.md resolved item 6) -- no script/behavior change."
   grounding: not_applicable
   object_type: ["study-plan"]
 ---
@@ -17,6 +18,10 @@ metadata:
 # study-plan-builder
 
 Turns a topic list into a day-by-day study/review schedule. Pure scheduling arithmetic — it never explains, answers, or does any of the actual studying.
+
+## Who operates this (2026-07-29 clarification — Student/Learner tier merge, `docs/DECISIONS_PENDING.md` resolved item 6)
+
+The "Student (K12)" and "University Student" audience tiers merged into one Student/Learner tier — skill *shape* doesn't differ by age, but *who drives the agent* usually does. A self-directed university student or adult learner working with an agent CLI can plausibly run this directly. A K12 student almost never does — they use a chat app, not an agent harness — so for that age group the realistic operator is a teacher, tutor, or parent generating the schedule on the student's behalf (the output is just a schedule; handing a printed/shared version to the student afterward doesn't require the student to touch the tool at all). This skill's own logic doesn't care who runs it — the distinction matters for how the skill gets distributed and who it's marketed to, not for its input/output contract.
 
 ## Why this skill, and why this scope
 

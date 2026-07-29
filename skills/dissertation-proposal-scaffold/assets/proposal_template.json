@@ -1,0 +1,17 @@
+{
+  "title": "Adaptive Retrieval Strategies for Low-Resource Question Answering",
+  "degree_level": "PhD",
+  "problem_statement": "Current retrieval-augmented QA systems degrade sharply when the target language or domain has little indexed text, yet most retrieval-strategy research assumes high-resource corpora. This gap leaves practitioners in low-resource settings without a principled way to choose or adapt a retrieval strategy.",
+  "literature_gap": "Prior work (Lewis et al. 2020; Karpukhin et al. 2020) evaluates dense retrieval almost exclusively on high-resource English benchmarks. Low-resource retrieval studies (e.g. Zhang et al. 2022) focus on translation-based pipelines rather than adaptive strategy selection, leaving open how a system should decide between sparse, dense, and hybrid retrieval as available indexed text shrinks.",
+  "research_questions": [
+    "How does retrieval strategy performance (sparse vs. dense vs. hybrid) degrade as indexed corpus size decreases across five typologically distinct languages?",
+    "Can a lightweight corpus-size signal be used to automatically select an appropriate retrieval strategy at query time?"
+  ],
+  "methodology": "A controlled corpus-subsampling study across five languages, comparing BM25, a dense bi-encoder, and a hybrid reranker at six corpus-size tiers, followed by training a lightweight strategy-selection classifier on the resulting performance curves and validating it on two held-out languages.",
+  "timeline": [
+    {"milestone": "Literature review and corpus preparation complete", "target_date": "2026-10-01"},
+    {"milestone": "Corpus-subsampling experiments complete for 5 languages", "target_date": "2027-02-01"},
+    {"milestone": "Strategy-selection classifier trained and validated", "target_date": "2027-06-01"},
+    {"milestone": "Dissertation draft complete", "target_date": "2027-11-01"}
+  ]
+}

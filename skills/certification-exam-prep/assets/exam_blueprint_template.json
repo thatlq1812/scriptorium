@@ -1,0 +1,44 @@
+{
+  "certification_name": "AWS Certified Cloud Practitioner (CLF-C02)",
+  "source_citation": "AWS official exam guide, published by Amazon Web Services at aws.amazon.com/certification/certified-cloud-practitioner/ -- domain names and weightings are taken from that published guide. Objective wording below is PARAPHRASED for fixture/illustration purposes, not copy-pasted verbatim from the PDF -- replace with the exact current wording from the live official exam guide before using this for real exam prep, since blueprints change between exam versions.",
+  "domains": [
+    {
+      "domain_name": "Cloud Concepts",
+      "weight_percent": 24,
+      "objectives": [
+        "Define the AWS Cloud value proposition",
+        "Identify aspects of AWS Cloud economics",
+        "List the different cloud architecture design principles"
+      ]
+    },
+    {
+      "domain_name": "Security and Compliance",
+      "weight_percent": 30,
+      "objectives": [
+        "Describe the AWS shared responsibility model",
+        "Describe AWS Cloud security, governance, and compliance concepts",
+        "Identify AWS access management capabilities",
+        "Identify components and resources for security"
+      ]
+    },
+    {
+      "domain_name": "Cloud Technology and Services",
+      "weight_percent": 34,
+      "objectives": [
+        "Define methods of deploying and operating in the AWS Cloud",
+        "Define the AWS global infrastructure",
+        "Identify the core AWS services",
+        "Identify resources for technology support"
+      ]
+    },
+    {
+      "domain_name": "Billing, Pricing, and Support",
+      "weight_percent": 12,
+      "objectives": [
+        "Compare and contrast the various pricing models for AWS",
+        "Recognize the various account structures in relation to AWS billing and pricing",
+        "Identify resources available for billing support"
+      ]
+    }
+  ]
+}

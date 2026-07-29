@@ -1,0 +1,8 @@
+{
+  "target_role": "<e.g. Data Analyst>",
+  "required_skills": [
+    "<skill name 1 -- required for target_role>",
+    "<skill name 2 -- required for target_role>",
+    "<skill name not present in self_assessment at all>"
+  ]
+}

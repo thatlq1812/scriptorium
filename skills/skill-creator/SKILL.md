@@ -10,9 +10,10 @@ metadata:
   pipeline_stage: 3
   source: self-authored
   elicited_from: "Owner tacit knowledge from the EduStation postmortem (docs/archive/pre-spec-2026-07-26/handoff.md) + deep research session 2026-07-26, distilled into docs/specs/STRATEGY_SPEC.md"
-  version: 0.3.1
+  version: 0.4.0
+  changelog_0_4_0: "Added Document Distillation Mode (UPGRADE_PLAN_20260729.md Item 5): scripts/scaffold_distillation.py (deterministic chapters/+glossary.md+patterns.md+cheatsheet.md+master-SKILL.md scaffolding, overwrite-protected) and scripts/validate_distillation.py (chapter-naming, leftover-placeholder, dangling-cross-reference, and approximate token-budget checks -- token counts are an explicit word-count*1.3 heuristic, never presented as exact). Directory shape adapted from outside_research/references/book-to-skill (MIT, license-compliance-checked 2026-07-27) -- scaffolding/validation automated, actual chapter content generation stays agent-authored (requires real reading comprehension of the source document, same division of labor as the rest of this skill: never invents domain content). Verified real end-to-end: scaffolded a 2-chapter distillation, filled it with real content distilled from registry/SCHEMA.md, validated clean; separately verified 4 violation cases (leftover placeholders, dangling Ch NN reference as a non-blocking warning, oversized SKILL.md body, missing supporting file) and the overwrite-protection refusal."
   changelog_0_3_1: "Added scripts/validate_skill.py: a mechanical validator for the 6-field spec + Scriptorium's required metadata fields (name==folder, description/compatibility length caps, elicited_from non-empty, risk_tier/task_type/source enum checks), stdlib-only. Closes a gap found comparing against github.com/anthropics/skills' skill-creator/scripts/quick_validate.py during this session's core-skill-package research round: this skill's own SKILL.md documented these structural constraints in prose but had no script gating them, relying entirely on an agent reading carefully. Running it retroactively against the full registry found 19 pre-existing real violations (compatibility field verification narrative accumulated past the 500-char cap over many sessions) -- all fixed the same session (moved to a 'Verified' section in each skill's own body)."
-  adapted_from: "The 'pushy description' pattern + trigger eval set adapted from github.com/anthropics/skills skills/skill-creator (Apache-2.0), cleared via skills/license-compliance-check on 2026-07-26. The gold-template + scaffold-script pattern adapted from D:/elix/edustation/skills/_templates/ (owner's prior project) -- kept the copy-a-skeleton principle and REQUIRED/CHOOSE comment legend, dropped the harness-specific tier/CI-enforcement machinery. validate_skill.py (v0.3.1) adapted from the same anthropics/skills skill-creator's quick_validate.py -- pattern/structure only (allowed-keys check, name/folder match), rewritten from scratch in Scriptorium's own field set, no code copied verbatim. Rewritten in Scriptorium's own language/conventions throughout, not copied verbatim."
+  adapted_from: "The 'pushy description' pattern + trigger eval set adapted from github.com/anthropics/skills skills/skill-creator (Apache-2.0), cleared via skills/license-compliance-check on 2026-07-26. The gold-template + scaffold-script pattern adapted from D:/elix/edustation/skills/_templates/ (owner's prior project) -- kept the copy-a-skeleton principle and REQUIRED/CHOOSE comment legend, dropped the harness-specific tier/CI-enforcement machinery. validate_skill.py (v0.3.1) adapted from the same anthropics/skills skill-creator's quick_validate.py -- pattern/structure only (allowed-keys check, name/folder match), rewritten from scratch in Scriptorium's own field set, no code copied verbatim. Document Distillation Mode (v0.4.0) adapted from outside_research/references/book-to-skill (MIT) -- directory shape and mode taxonomy only, scripts and prose rewritten from scratch in Scriptorium's own conventions, no code copied verbatim."
 ---
 
 # skill-creator
@@ -71,6 +72,41 @@ If the skill's own `SKILL.md` body references a script (e.g. "run `scripts/foo.p
 - The entire SKILL.md must stay under 500 lines.
 - The instructions section (body after frontmatter) must stay under 5000 tokens — if the process is long, split the detail into a supporting file in the same skill folder and reference it from SKILL.md (progressive disclosure); don't cram everything into one file.
 - Don't write in a narrative style — write as instructions another agent can follow without needing to ask clarifying questions.
+
+## Document Distillation Mode — turning a book/manual/document folder into an on-demand-reference skill
+
+A separate mode for a different input shape than the rest of this file: instead of an already-elicited procedural process, the input here is a large document (a book, manual, or document folder) whose knowledge needs distilling into a skill an agent can load progressively, not all at once. Directory/file shape (`chapters/ch<NN>-<slug>.md` + `glossary.md`/`patterns.md`/`cheatsheet.md` + a small master `SKILL.md` index) is adapted from a real, cloned, license-cleared reference project (`outside_research/references/book-to-skill`, MIT, license-compliance-checked 2026-07-27) — not invented from scratch. **What's automated here is only the scaffolding and structural validation** (deterministic, scripted); the actual chapter content — frameworks, mental models, worked examples, decision rules — requires real reading comprehension of the source document and is agent-authored, same division of labor as the rest of skill-creator (this tool never invents domain content, it structures/validates content a human or agent supplies).
+
+### 4 modes (route based on what's asked)
+
+1. **Full Conversion** (default) — given source document path(s), scaffold + write every chapter + supporting file + master index in one pass.
+2. **Analyze Only** — read the source, produce a structured extraction outline (chapters found, frameworks/concepts identified per chapter) for review; do NOT scaffold/write files yet. Use when the user wants to review the plan before committing to full generation.
+3. **Generate from Prior Analysis** — given an existing Analyze-Only outline, scaffold + write from it directly (skip re-reading the source).
+4. **Update / Fold-in** — given new source material and an existing distilled skill, add new chapter(s) or revise existing ones; re-run the validator afterward to confirm nothing broke.
+
+### Full Conversion steps
+
+1. Read the source document(s) in full. Identify chapter/major-section boundaries.
+2. Scaffold the structure:
+   ```bash
+   python skills/skill-creator/scripts/scaffold_distillation.py <skill_id> --chapters <n> [--force]
+   ```
+   Refuses on an existing target without `--force` — same overwrite-protection convention as `scaffold_skill.py`.
+3. For each chapter stub in `chapters/`, replace every `<...>` placeholder with real content extracted from the corresponding section of the source: Core Idea, Frameworks Introduced (preserve the author's exact naming — "The 5 Whys" is not interchangeable with "ask why multiple times"), Key Concepts, Key Takeaways, Connects To (only reference a `Ch NN` that actually exists in `chapters/`). Rename each file from the `ch<NN>-untitled.md` stub name to a real slug (`ch01-five-whys.md`, not `ch01-untitled.md`) — the validator's naming check only requires the `chNN-<slug>.md` shape, not the literal word "untitled".
+4. Fill `glossary.md` (alphabetical, `**Term** — definition (Ch NN)`), `patterns.md` (concrete techniques, `## Pattern Name` + When to use/How/Trade-offs), `cheatsheet.md` (decision rules and thresholds, not bare term/definition rows — that's what the glossary is for).
+5. Fill the master `SKILL.md`'s frontmatter (real `description`, `elicited_from` naming the actual source document, `grounding: required` since every claim traces to the source) and its Chapters section (one line per chapter, most important first — this file is always loaded, chapters are loaded on-demand, and truncation on overflow cuts from the end).
+6. Validate:
+   ```bash
+   python skills/skill-creator/scripts/validate_distillation.py <skill_dir>
+   ```
+   Exit 0 = valid. Checks (all real, mechanical, not a quality judgment): every chapter file matches `chNN-<slug>.md` naming; no leftover unfilled `<...>` placeholder in any chapter or the master SKILL.md; every `Ch NN` cross-reference resolves to a real existing chapter file (warns, doesn't block — a chapter written before a later one it references isn't necessarily wrong, just needs a human glance); the master SKILL.md body and each chapter file stay under a token budget (**approximate** — `word_count * 1.3`, a rough heuristic since this project has no tokenizer dependency; never read the reported number as exact); all 3 supporting files exist and are non-empty.
+7. Run `validate_skill.py` too (the standard 6-field-spec check) — Document Distillation Mode output is still a normal Scriptorium skill and must pass both validators, not just the distillation-specific one.
+
+### What Document Distillation Mode does NOT do
+
+- Does not decide chapter content itself — no LLM call inside any script here; the calling agent reads the source and writes the content, same as every other skill in this registry never calling an AI API internally.
+- Does not enforce an exact token count — the budget check is a rough approximation, deliberately documented as such rather than presented with false precision.
+- Does not merge/dedupe overlapping distilled skills automatically — if a new source substantially overlaps an already-distilled skill, that's the same dedup-novelty-check discipline as any other new skill candidate, not something this mode special-cases.
 
 ## What skill-creator does NOT do
 

@@ -1,0 +1,12 @@
+{
+  "title": "<proposal title>",
+  "specific_aims": "<specific aims narrative -- what the project will accomplish and why it matters>",
+  "significance": "<significance narrative -- why this problem matters and what gap it fills>",
+  "approach": "<approach/methodology narrative -- how the aims will be achieved>",
+  "timeline": [
+    {"milestone": "<milestone description>", "period": "<e.g. Months 1-6>"}
+  ],
+  "budget_justification": [
+    {"line_item_id": "<must match an id in budget.json>", "narrative": "<why this cost is needed>"}
+  ]
+}

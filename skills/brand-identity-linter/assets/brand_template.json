@@ -1,0 +1,17 @@
+{
+  "brand_name": "Quán Ăn Vặt Ví Dụ",
+  "colors": {
+    "primary": {"hex": "#4C9A5B", "usage": "large blocks: header/footer background, logo border"},
+    "secondary": {"hex": "#F5811F", "usage": "accent/support elements"},
+    "accent": {"hex": "#D6301F", "usage": "CTA badges, price tags, brand wordmark"}
+  },
+  "body_font_size_pt": 14,
+  "motifs": ["lá chuối", "khói nóng", "hoạ tiết dân gian"],
+  "elements": [
+    {"id": "item_name_1", "type": "text", "role": "menu_item", "font_size_pt": 18},
+    {"id": "cta_order", "type": "text", "role": "cta", "font_size_pt": 22},
+    {"id": "contact_phone", "type": "text", "role": "contact", "font_size_pt": 16},
+    {"id": "icon_steam", "type": "icon", "motif_ref": "khói nóng"},
+    {"id": "icon_leaf", "type": "icon", "motif_ref": "lá chuối"}
+  ]
+}

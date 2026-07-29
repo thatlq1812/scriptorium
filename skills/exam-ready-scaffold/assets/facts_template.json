@@ -1,0 +1,10 @@
+{
+  "topic": "Cell biology",
+  "facts": [
+    {"term": "Mitochondria", "definition": "The organelle that produces ATP through cellular respiration."},
+    {"term": "Nucleus", "definition": "The organelle that houses the cell's genetic material."},
+    {"term": "Ribosome", "definition": "The structure where proteins are synthesized from mRNA."},
+    {"term": "Golgi apparatus", "definition": "The organelle that modifies, sorts, and packages proteins for secretion."},
+    {"term": "Chloroplast", "definition": "The organelle in plant cells that carries out photosynthesis."}
+  ]
+}

@@ -5,11 +5,15 @@ reads registry/skills.json, no network.
 
 HARD EXCLUSION (never overridable by a filter, and enforced again by
 export_bundle.py -- this is not just a display filter): a skill with
-license_debt != null OR security_audit.status != "passed" is never listed
-as a candidate. registry/SCHEMA.md already states a license-debt skill "may
-not be distributed/published outside the internal repo while in debt" --
-this is the first place in the project that rule has real teeth, since
-nothing exported anything before this skill existed.
+license_debt != null, security_audit.status != "passed", OR
+operational_status.state == "paused" is never listed as a candidate.
+registry/SCHEMA.md already states a license-debt skill "may not be
+distributed/published outside the internal repo while in debt" -- this is
+the first place in the project that rule has real teeth, since nothing
+exported anything before this skill existed. operational_status (added
+2026-07-29) covers a skill that passed audit but was deliberately paused by
+the owner for a reason distinct from license/security -- see
+registry/SCHEMA.md's operational_status field.
 
 Filters are OR-within-axis, AND-across-axis: --domain legal general matches
 a skill tagged either legal OR general, but if --task-type is also given,
@@ -53,6 +57,9 @@ def is_exportable(skill: dict) -> tuple[bool, str]:
     audit = skill.get("security_audit", {})
     if audit.get("status") != "passed":
         return False, f"security_audit.status is {audit.get('status')!r}, not 'passed'"
+    op_status = skill.get("operational_status")
+    if isinstance(op_status, dict) and op_status.get("state") == "paused":
+        return False, f"operational_status is paused -- {op_status.get('reason', 'no reason recorded')}"
     return True, ""
 
 
@@ -109,7 +116,7 @@ def main() -> int:
         print("(pass -o to also write JSON for export_bundle.py)", file=sys.stderr)
 
     if excluded:
-        print(f"\n{len(excluded)} skill(s) excluded from candidacy (license_debt or failed security_audit):", file=sys.stderr)
+        print(f"\n{len(excluded)} skill(s) excluded from candidacy (license_debt, failed security_audit, or paused):", file=sys.stderr)
         for skill_id, reason in excluded:
             print(f"  - {skill_id}: {reason}", file=sys.stderr)
 

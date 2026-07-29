@@ -1,0 +1,9 @@
+{
+  "line_items": [
+    {
+      "id": "<line-item-id, e.g. personnel-pi>",
+      "category": "<budget category, e.g. Personnel - PI (2.4 calendar months)>",
+      "amount": 0
+    }
+  ]
+}
