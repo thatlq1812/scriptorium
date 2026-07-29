@@ -6,6 +6,7 @@
 | 1.1.0 | 2026-07-26 | Claude | Translated to English per owner directive: the whole system (excluding `docs/archive/` and content brought in from outside) must be in English. Refreshed stale references (`ROADMAP.md` now exists). |
 | 1.2.0 | 2026-07-26 | Claude | Added `outside_research/` as a recognized input directory (owner-authored active research on verticals/audiences, distilled into `docs/specs/`+`docs/ROADMAP.md`, kept verbatim like `docs/archive/` but living rather than frozen). See `docs/ROADMAP.md` §"Audience-tier expansion model" and `docs/specs/STRATEGY_SPEC.md` §5. |
 | 1.3.0 | 2026-07-27 | Claude | Added `docs/templates/` (reusable operational templates, e.g. `CLUSTER_SURVEY_TEMPLATE.md`) and `outside_agy/` (external LegalTech reference material surveyed via a cross-agent `request.md` discussion) to the repo structure diagram — both existed on disk already this session, diagram was stale. |
+| 1.4.0 | 2026-07-29 | Claude | Registry grew 39→62 skills in one session (`UPGRADE_PLAN_20260729.md`, full detail in `docs/STATUS.md`). Added `docs/guides/` (non-technical end-user documentation) and the repo-root `UPGRADE_PLAN_20260729.md` (active execution checklist) to the structure diagram — both new this session. Corrected §4's stated `DECISIONS_PENDING.md` convention ("remove an entry once decided") to match actual practice, which has kept a dated "Resolved" section for audit-trail purposes since before this session, not deleted resolved entries — the doc was already stale against real usage, not a new decision. |
 
 ---
 
@@ -49,6 +50,7 @@ scriptorium/
 │   ├── specs/                  # Official specs — current source of truth
 │   │   └── STRATEGY_SPEC.md
 │   ├── templates/               # Reusable operational templates (e.g. CLUSTER_SURVEY_TEMPLATE.md)
+│   ├── guides/                  # Non-technical end-user documentation (e.g. NON_TECH_USER_GUIDE.md)
 │   └── archive/                # History, not current state — see archive/README.md
 ├── outside_research/           # Owner-authored active research (surveys, external AI analysis)
 │                                # on verticals/audiences — living input, kept verbatim (like
@@ -60,6 +62,7 @@ scriptorium/
 ├── registry/
 │   ├── SCHEMA.md                # Multi-axis registry schema
 │   └── skills.json              # Registry data
+├── UPGRADE_PLAN_20260729.md    # Active execution checklist for downstream agents (repo root)
 └── .venv/                      # Shared Python venv for all Python-dependent skills (gitignored, never committed)
 ```
 
@@ -71,7 +74,7 @@ Directly referenced from how `D:/elix/platform/docs/` operates (README nav hub, 
 - **Real code/skills beat docs when they conflict.** `STATUS.md` must be verifiable against `registry/skills.json` + `skills/` — never written from memory or intent.
 - **`docs/archive/` is history, not a current source of truth.** When a major distillation round happens (like research → STRATEGY_SPEC), raw discussion/research files move into a date-named subfolder (`pre-spec-YYYY-MM-DD/`), content unchanged.
 - **`outside_research/` (repo root) is a living input, not history.** Unlike `docs/archive/`, it keeps growing — owner-authored surveys and external AI-assisted analysis about a candidate audience/vertical, gathered *before* a tier is built. Kept verbatim (original language, unedited) the same way `docs/archive/` is; insights get distilled into `docs/ROADMAP.md`/`docs/specs/STRATEGY_SPEC.md`, but the raw file itself is never treated as a source of truth on its own — and its brainstormed skill lists are candidate ideation, not elicited input (principle 4, `docs/specs/STRATEGY_SPEC.md` §7) — a real survey/interview or a real deployed prior system is still required before `skill-creator` runs for that audience.
-- **`DECISIONS_PENDING.md`** uses exactly one format per entry: question → recommendation + reasoning → action plan → `Decision: [ ] OK / [ ] Override: ___`. Remove an entry once the owner has decided — don't let it linger.
+- **`DECISIONS_PENDING.md`** uses exactly one format per entry: question → recommendation + reasoning → action plan → `Decision: [ ] OK / [ ] Override: ___`. An open (undecided) entry stays under `## Open`; once the owner decides, move it under `## Resolved` with the decision recorded — this is a dated audit trail of what was actually decided and why, not a to-do list to delete from once cleared.
 - **The entire system must be in English**, except `docs/archive/` (historical discussion, kept verbatim in its original language) and content brought in from outside purely for reference. Optimizes for both AI and human readers — a user can still discuss with the agent in any language and the skill still works well.
 
 ## 5. Language policy

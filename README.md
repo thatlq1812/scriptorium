@@ -19,15 +19,16 @@ Two more disciplines run through every skill in this repo:
 
 ## What's in here
 
-38 skills as of 2026-07-27: pipeline infrastructure (create/evaluate/audit/catalog/export a skill), general-purpose foundation tools (document structuring, PII masking, research discipline, translation, browser rendering, format bootstrapping), a Legal specializer network (contract review, citation/format checking, dossier tooling, disciplined legal web search), and an education audience-tier ladder (Teacher tier substantially staffed; Student tier has 1 skill plus a real research brief for what's next; University Student and a labeled Lecturer/Researcher tier don't exist yet). No skill has passed the quality-evaluation gate yet — none is "ready to use" in the strict sense defined here, even though several have already seen real use while being built. Full real status, verified against the registry (never from memory): `docs/STATUS.md`.
+62 skills as of 2026-07-29: pipeline infrastructure (create/evaluate/audit/catalog/export a skill, now including a "Document Distillation Mode" for turning a book/manual into an on-demand-reference skill), general-purpose foundation tools (document structuring, PII masking, research discipline, translation, browser rendering, format bootstrapping, personal-profile/workspace scaffolding, a deterministic Light Design cluster for posters/signage/logos), a Legal specializer network (contract review, citation/format checking, dossier tooling, disciplined legal web search), and a merged Student/Learner audience tier spanning K12 through university, plus substantially-staffed Teacher, Parent/Guardian, TA/Graduate, Lecturer/Researcher, and Lifelong Learner tiers. Formal stage-4 quality evaluation is scoped (not blanket-deferred): exempt for foundation/general-capability skills, required only for niche-specializer skills elicited from a real expert source or skills ingesting uncontrolled external input — see `registry/SCHEMA.md`'s `quality_score` field. One skill (`socratic-concept-helper`) is deliberately paused pending a real student/teacher survey rather than treated as production-ready. Full real status, verified against the registry (never from memory): `docs/STATUS.md`.
 
 ## Structure
 
-- `docs/` — `MASTER_CONTEXT.md` (architecture + documentation convention), `STATUS.md` (real status), `DECISIONS_PENDING.md`, `specs/` (official specs), `templates/` (reusable operational templates), `archive/` (historical discussion/raw research).
+- `docs/` — `MASTER_CONTEXT.md` (architecture + documentation convention), `STATUS.md` (real status), `DECISIONS_PENDING.md`, `specs/` (official specs), `templates/` (reusable operational templates), `guides/` (non-technical end-user documentation), `archive/` (historical discussion/raw research).
 - `skills/` — each skill is a subfolder containing a `SKILL.md` matching the agentskills.io 6-field spec (`name`, `description`, `license`, `compatibility`, `metadata`, `allowed-tools`).
 - `registry/` — the multi-axis identity backbone (domain, task-type, risk-tier, grounding, harness-compatibility). Schema: `registry/SCHEMA.md`. Data: `registry/skills.json`.
 - `outside_research/` — living input gathered before a tier is built (owner-authored surveys, AI-assisted research briefs), kept verbatim, never a source of truth on its own. See `docs/MASTER_CONTEXT.md` §3-4.
 - `outside_agy/` — reference material surveyed from external LegalTech skill/playbook models (Harvey AI, CoCounsel, Ironclad-inspired), used for comparison only, not copied.
+- `UPGRADE_PLAN_20260729.md` (repo root) — the current active execution checklist for downstream agents; see `CLAUDE.md`'s read order for where it fits.
 
 ## Non-negotiable principles
 
