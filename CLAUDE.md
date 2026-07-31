@@ -14,13 +14,16 @@ Scriptorium creates, quality-tests, security-audits, and catalogs portable **Age
 4. `docs/STATUS.md` — real skill status (verify against `registry/skills.json`)
 5. `docs/specs/STRATEGY_SPEC.md` — source of truth for pipeline, taxonomy, and strategy principles
 6. `docs/ROADMAP.md` — skill-expansion backlog
-7. `UPGRADE_PLAN_20260729.md` — active roadmap items ready for downstream execution (read §5 of that file for agent-specific instructions)
-8. `docs/DECISIONS_PENDING.md` — decisions awaiting owner confirmation (check before assuming anything is unresolved)
+7. `docs/DECISIONS_PENDING.md` — decisions awaiting owner confirmation (check before assuming anything is unresolved)
+8. `SKILLS_MAP.md` (repo root) — Mermaid overview of the full registry by cluster and real cross-skill dependency; a snapshot, regenerate by hand when the registry count changes, `registry/skills.json` always wins if they diverge
+
+Completed execution plans move to `docs/archive/<name>-<date>/` once every checklist item is done (e.g. `docs/archive/upgrade-plan-2026-07-29/`) — check there for prior rounds' full reasoning before assuming a past decision wasn't documented.
 
 ## Repo structure
 
 ```
 scriptorium/
+├── SKILLS_MAP.md               # Mermaid overview of the registry (snapshot, regenerate by hand)
 ├── docs/
 │   ├── MASTER_CONTEXT.md      # architecture, scope, documentation convention
 │   ├── STATUS.md               # real status, must be verifiable against registry/skills.json
@@ -28,7 +31,7 @@ scriptorium/
 │   ├── ROADMAP.md              # skill-expansion backlog
 │   ├── specs/STRATEGY_SPEC.md  # source of truth for strategy/pipeline/taxonomy
 │   ├── templates/              # e.g. CLUSTER_SURVEY_TEMPLATE.md (elicitation before skill-creator)
-│   └── archive/                # history, not current state (original language kept verbatim)
+│   └── archive/                # history, not current state (original language kept verbatim); completed execution plans (e.g. UPGRADE_PLAN_*.md) live here once fully checked off
 ├── outside_research/           # living input (owner surveys, external AI research) — ideation only, not elicited input on its own
 ├── outside_agy/                # external LegalTech reference material — comparison only, never copied
 ├── skills/<skill_id>/SKILL.md  # each skill is its own subfolder, 6-field agentskills.io spec
@@ -47,6 +50,16 @@ research → elicit tacit process from a real source → `skill-creator` → qua
 A skill is "officially ready" only after it clears stage 5 (security audit) and, *if applicable*, stage 4 (quality eval). **Stage 4 does not apply to every skill (owner decision, 2026-07-29)** — it's scoped, via each registry entry's `quality_score.stage4_required`, to (a) niche-specializer skills elicited from a real expert source, and (b) skills that ingest uncontrolled external input (arbitrary documents, web content, third-party repos, external API responses). Foundation/infrastructure and general-capability skills grounded in public sources are exempt by design, not just deferred — see `registry/SCHEMA.md`'s `quality_score` field for the exact rule and `docs/STATUS.md` for the current per-skill classification. **For the ~14 skills where `stage4_required: true`, running stage 4 is still deliberately not yet scheduled — do not run it without asking first.** This is a hold on the formal multi-harness scoring gate, not a statement about implementation quality: every skill in this repo has been tested against real and adversarial inputs, with real bugs found and fixed; security audit has passed for all skills. "Not yet through stage 4" means the formal QA scoring run hasn't been scheduled — it does not mean the skill is broken or ungrounded.
 
 Before starting a new skill, query `registry/skills.json` by domain/task_type/object_type — if an existing skill already covers ≥80% of scope, extend/version it instead of creating a parallel entry.
+
+### Scouting a brand-new skill type before `skill-creator` runs
+
+Standing practice (owner directive, first applied 2026-07-29 and generalized here so it survives beyond any one execution plan): *"Search và clone các repo tiêu biểu cho cùng một chủ đề và tham khảo trước khi tạo kiểu skill đó."* Applies to any genuinely new skill type — not a version bump of an existing skill.
+
+1. Search for 2-4 representative real-world repos/projects on the same topic (`WebSearch`, or `scout-harvester`'s `github_scout.py` for GitHub specifically).
+2. Shallow-clone the most relevant 1-3 into `outside_research/references/<topic>/` via `scout-harvester`'s `clone_candidate.py` (never inside `skills/`, never committed as a dependency — reference-only).
+3. Run `license-compliance-check` on anything whose patterns/code might get adapted (not just wholesale-copied) — per principle 5 below, harvesting/adapting goes through this gate before `skill-creator`.
+4. Record what was found/adapted/rejected in the new skill's own `SKILL.md` (`metadata.elicited_from` or an explicit "Reference material" note) — so a later session can see the grounding without re-deriving it.
+5. Only then run `skill-creator`, following the elicitation tier that applies (principle 4 below: infra/bootstrap → no interview needed; general-capability → public-source grounding sufficient; niche specializer → mandatory real elicitation source).
 
 ## Non-negotiable principles
 

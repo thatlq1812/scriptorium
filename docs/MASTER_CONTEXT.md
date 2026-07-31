@@ -7,6 +7,7 @@
 | 1.2.0 | 2026-07-26 | Claude | Added `outside_research/` as a recognized input directory (owner-authored active research on verticals/audiences, distilled into `docs/specs/`+`docs/ROADMAP.md`, kept verbatim like `docs/archive/` but living rather than frozen). See `docs/ROADMAP.md` §"Audience-tier expansion model" and `docs/specs/STRATEGY_SPEC.md` §5. |
 | 1.3.0 | 2026-07-27 | Claude | Added `docs/templates/` (reusable operational templates, e.g. `CLUSTER_SURVEY_TEMPLATE.md`) and `outside_agy/` (external LegalTech reference material surveyed via a cross-agent `request.md` discussion) to the repo structure diagram — both existed on disk already this session, diagram was stale. |
 | 1.4.0 | 2026-07-29 | Claude | Registry grew 39→62 skills in one session (`UPGRADE_PLAN_20260729.md`, full detail in `docs/STATUS.md`). Added `docs/guides/` (non-technical end-user documentation) and the repo-root `UPGRADE_PLAN_20260729.md` (active execution checklist) to the structure diagram — both new this session. Corrected §4's stated `DECISIONS_PENDING.md` convention ("remove an entry once decided") to match actual practice, which has kept a dated "Resolved" section for audit-trail purposes since before this session, not deleted resolved entries — the doc was already stale against real usage, not a new decision. |
+| 1.5.0 | 2026-08-01 | Claude | `UPGRADE_PLAN_20260729.md` fully executed (all 7 items done) — archived to `docs/archive/upgrade-plan-2026-07-29/` alongside `request.md`, removed from the structure diagram and `CLAUDE.md`'s read order. Its still-live "scout before a new skill type" working rule was extracted into `CLAUDE.md`'s pipeline section (a standing rule, not tied to one execution round) before archiving, so it isn't lost. Added repo-root `SKILLS_MAP.md` (Mermaid registry overview) to the structure diagram. |
 
 ---
 
@@ -62,7 +63,7 @@ scriptorium/
 ├── registry/
 │   ├── SCHEMA.md                # Multi-axis registry schema
 │   └── skills.json              # Registry data
-├── UPGRADE_PLAN_20260729.md    # Active execution checklist for downstream agents (repo root)
+├── SKILLS_MAP.md                # Mermaid overview of the registry (repo root, snapshot)
 └── .venv/                      # Shared Python venv for all Python-dependent skills (gitignored, never committed)
 ```
 
