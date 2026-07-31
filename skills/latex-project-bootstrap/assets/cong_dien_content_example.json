@@ -1,0 +1,30 @@
+{
+  "doc_kieu": "cong_dien",
+  "co_quan_chu_quan": "UỶ BAN NHÂN DÂN TỈNH X",
+  "co_quan_ban_hanh": "VĂN PHÒNG UBND TỈNH",
+  "so": 12,
+  "ky_hieu": "CĐ-VPUB",
+  "dia_danh": "Hà Nội",
+  "ngay": 27,
+  "thang": 7,
+  "nam": 2026,
+  "trich_yeu": "Chủ động ứng phó với áp thấp nhiệt đới trên Biển Đông",
+  "nguoi_dung_dau": "Chủ tịch Ủy ban nhân dân tỉnh X",
+  "nguoi_nhan_dien": [
+    "Chủ tịch UBND các huyện, thị xã, thành phố",
+    "Giám đốc Sở Nông nghiệp và Môi trường"
+  ],
+  "noi_dung_doan": [
+    "Theo bản tin của Trung tâm Dự báo khí tượng thủy văn quốc gia, một áp thấp nhiệt đới đang hoạt động trên Biển Đông, có khả năng ảnh hưởng trực tiếp đến vùng biển và đất liền tỉnh X trong 48 giờ tới.",
+    "Chủ tịch Ủy ban nhân dân tỉnh yêu cầu các đơn vị chủ động rà soát phương án ứng phó, thông báo cho tàu thuyền đang hoạt động trên biển biết vị trí, hướng di chuyển để chủ động phòng tránh."
+  ],
+  "nguoi_ky": {
+    "quyen_han": "KT.",
+    "chuc_vu": "CHỦ TỊCH",
+    "ho_ten": "Nguyễn Văn A"
+  },
+  "noi_nhan": [
+    "Như trên",
+    "Lưu: VT, VP"
+  ]
+}

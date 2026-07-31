@@ -14,6 +14,24 @@ CLAUDE.md principle 8).
 Canvas presets are real ISO 216 paper sizes in mm (A1 594x841, A4 210x297),
 used directly as the SVG viewBox/width/height units.
 
+Max text-coverage check: the total area of all `typography_frame` zones
+must not exceed 40% of the canvas area -- ported from a real statistical
+rules corpus (D:/elix/archive/platform_archive/modules/presentation/scoring/design_rules.py,
+CONTENT_DENSITY["max_text_coverage_pct"], derived from 10 Canva + 149
+Slidesgo templates / 7,854 slides). Zone area (`w_pct * h_pct`) is used as
+the text-density proxy since that's the only content measure this zone
+taxonomy actually carries -- `typography_frame` is the zone type whose sole
+purpose is holding text. The source's companion rule,
+CONTENT_DENSITY["min_whitespace_pct"] (>= 30% of the canvas must be empty),
+is deliberately NOT ported: this taxonomy's own bundled fixture has a
+`background_canvas` zone spanning the full 100% of the canvas by design
+(see assets/layout_template.json's "master_anchor" zone), and zones are
+documented as allowed to intentionally overlap (decorative elements over
+content). A canvas-wide "sum of zone areas" whitespace measure would be
+either meaningless (full-bleed background always "fills" 100%) or wrong
+(overlap makes the sum overcount actual covered area) for this schema --
+a forced fit, so it is skipped rather than contorting the skill.
+
 Usage:
     python render_layout.py <layout.json> -o poster.svg
 
@@ -50,6 +68,10 @@ ZONE_DEFAULT_FILL = {
 }
 
 REQUIRED_ZONE_KEYS = {"id", "type", "x_pct", "y_pct", "w_pct", "h_pct"}
+
+# CONTENT_DENSITY["max_text_coverage_pct"] from design_rules.py (10 Canva +
+# 149 Slidesgo templates / 7,854 slides).
+MAX_TEXT_COVERAGE_PCT = 40.0
 
 
 def _validate_layout(layout: dict) -> list[str]:
@@ -91,6 +113,21 @@ def _validate_layout(layout: dict) -> list[str]:
 
         if zone["type"] == "typography_frame" and not zone.get("text_label"):
             errors.append(f"zones[{i}] ('{zid}'): typography_frame zones must declare a non-empty 'text_label' (interior placeholder text)")
+
+    total_text_coverage_pct = 0.0
+    for zone in zones:
+        if not isinstance(zone, dict) or zone.get("type") != "typography_frame":
+            continue
+        w_val, h_val = zone.get("w_pct"), zone.get("h_pct")
+        if isinstance(w_val, (int, float)) and isinstance(h_val, (int, float)):
+            total_text_coverage_pct += (w_val * h_val) / 100.0
+    if total_text_coverage_pct > MAX_TEXT_COVERAGE_PCT:
+        errors.append(
+            f"zones: typography_frame zones cover {total_text_coverage_pct:.1f}% of the canvas, "
+            f"exceeds max text coverage of {MAX_TEXT_COVERAGE_PCT}% (design_rules.py "
+            "CONTENT_DENSITY['max_text_coverage_pct'], derived from 10 Canva + 149 Slidesgo "
+            "templates / 7,854 slides)"
+        )
 
     return errors
 

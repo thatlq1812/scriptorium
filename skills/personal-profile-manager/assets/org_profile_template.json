@@ -1,0 +1,42 @@
+{
+  "org_profile": {
+    "name": "Trường THPT Chu Văn An",
+    "parent_org_name": "Sở Giáo dục và Đào tạo Hà Nội",
+    "abbreviation": "THPTCVA",
+    "locality": "Hà Nội",
+    "logo": null,
+    "address": "10 Thụy Khuê, Tây Hồ, Hà Nội",
+    "contact_phone": "+84243456789",
+    "contact_email": "vanphong@thptcva.edu.vn",
+    "departments": [
+      { "id": "van_phong", "name": "Văn phòng", "abbreviation": "VP" },
+      { "id": "to_chuyen_mon", "name": "Tổ chuyên môn", "abbreviation": "TCM" }
+    ],
+    "signatory_roles": [
+      {
+        "id": "hieu_truong",
+        "code": "hieu_truong",
+        "label_full": "Hiệu trưởng",
+        "label_short": "HT",
+        "default_signing_authority": "none",
+        "department_id": null
+      },
+      {
+        "id": "pho_hieu_truong",
+        "code": "pho_hieu_truong",
+        "label_full": "Phó Hiệu trưởng",
+        "label_short": "PHT",
+        "default_signing_authority": "KT.",
+        "department_id": null
+      },
+      {
+        "id": "chanh_van_phong",
+        "code": "chanh_van_phong",
+        "label_full": "Chánh Văn phòng",
+        "label_short": "CVP",
+        "default_signing_authority": "TL.",
+        "department_id": "van_phong"
+      }
+    ]
+  }
+}

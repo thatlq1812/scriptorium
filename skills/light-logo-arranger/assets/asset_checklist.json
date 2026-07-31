@@ -1,0 +1,21 @@
+{
+  "required": [
+    {"key": "logo-icon", "description": "Square app icon / logo mark (source for derived favicons and adaptive-icon)."},
+    {"key": "logo-wordmark", "description": "Full logo (icon + wordmark) for dark backgrounds."},
+    {"key": "logo-wordmark-light", "description": "Full logo (icon + wordmark) for light backgrounds -- color-inverted variant."},
+    {"key": "banner-hero", "description": "Landscape hero banner for the landing page."},
+    {"key": "banner-og", "description": "Open Graph / social-share preview image."},
+    {"key": "splash-screen", "description": "Mobile app splash/loading screen (source for derived Expo splash icon)."},
+    {"key": "admin-login-bg", "description": "Background pattern for admin/auth login screens."},
+    {"key": "pattern-tile", "description": "Seamless tileable background pattern (edges must connect on all 4 sides)."}
+  ],
+  "derived": [
+    {"key": "favicon-16", "description": "16x16 favicon, resized from logo-icon."},
+    {"key": "favicon-32", "description": "32x32 favicon, resized from logo-icon."},
+    {"key": "favicon-48", "description": "48x48 favicon, resized from logo-icon."},
+    {"key": "favicon-192", "description": "192x192 favicon, resized from logo-icon."},
+    {"key": "favicon-512", "description": "512x512 favicon, resized from logo-icon."},
+    {"key": "adaptive-icon-foreground", "description": "Android adaptive-icon foreground, logo-icon cropped to a 72/108 safe zone on a 512x512 canvas."},
+    {"key": "expo-splash-icon", "description": "Expo splash icon, splash-screen center-cropped to a square and resized to 288x288."}
+  ]
+}

@@ -226,6 +226,12 @@ Recorded from owner direction and real non-tech user pilot (`request.md`):
 - **Purpose**: Address the traction/usability gap by creating accessible, non-technical documentation for end-users (teachers, lawyers, students).
 - **Deliverables**: Step-by-step visual and plain-language guides (`docs/guides/NON_TECH_USER_GUIDE.md`) demonstrating how to package, import, and run Scriptorium skills on popular harnesses (Claude Desktop, Kimi CLI, Codex CLI, etc.).
 
+## Next candidate: `slide-deck-builder` (deliberately parked, 2026-08-01)
+
+Found during the Document-standard/Light Design upgrade round's survey of `D:/elix/archive/platform_archive` (owner's own archived prior Elixverse platform): `modules/presentation/` is a genuinely rich, statistically-grounded deterministic slide-design engine — not found anywhere comparable on GitHub during the same round's external scouting (the public "slide generation" space is dominated by AI-generate-the-whole-deck tools, off-thesis for this project). Real components surveyed (not yet ported): `scoring/design_rules.py` (rules corpus from real analysis of 149 Slidesgo templates/7,854 slides + 10 Canva templates — font-hierarchy ratios, layout-proportion tables per slide archetype, content-density caps), `template_intel/palette_binding.py` (color-role fallback chain + chart-series tonal-shift algorithm — the more sophisticated companion to what `brand-identity-linter` got this round), `layout_registry/taxonomy.py` (840-line deterministic hash-seeded slide-sequence planner), `layout_registry/typography.py`/`template_factory/font_pairing.py` (x-height-ratio font-pairing algorithm + curated Vietnamese-safe pairing table), `art_direction.py` (tone-driven default palette table).
+
+**Owner decision (2026-08-01): parked, not started.** Explicitly scoped out of the same-session Document-standard/Light Design round — this is a new-skill-sized initiative (rewrite ~7-8 interlocking modules clean, not a version-bump), deserves its own dedicated scoping session rather than being folded in alongside smaller version-bumps, per the same roadmap-inflation discipline flagged elsewhere in this file. Candidate name `slide-deck-builder`, likely shaped like `svg-poster-builder`'s zone-taxonomy pattern but slide-specific. Scope discipline that must carry over from the Light Design cluster: deterministic layout/scoring/palette-resolution + OOXML pptx rendering only — content authoring (the actual slide text/story) stays agent-executed, never an AI-generation black box inside the skill itself.
+
 
 
 

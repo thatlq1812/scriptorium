@@ -21,7 +21,14 @@ book/report scaffold mode elsewhere in this skill stays on XeLaTeX
 deliberately -- see SKILL.md "Engine per mode" for why.
 
 Supported doc_kieu: "cong_van", "quyet_dinh_truc_tiep", "van_ban_ten_loai",
-"nghi_quyet", "bien_ban".
+"nghi_quyet", "bien_ban", "cong_dien" (Mẫu 1.6), "giay_moi" (Mẫu 1.7).
+
+Density presets (v0.5.0, --density): "tiet_kiem_giay", "tieu_chuan",
+"trang_trong" -- an optional knob bundling margin + Quốc hiệu/Tiêu ngữ/
+Địa danh/body font size + first-line indent + line spacing into ONE named
+choice, ported from a real prior production system's DENSITY_PRESETS table
+(see SKILL.md metadata.elicited_from). Omitting --density leaves every
+default byte-identical to pre-v0.5.0 behavior.
 
 Số/ký hiệu convention: every doc_kieu this skill covers is a "văn bản hành
 chính cá biệt" (an individual administrative act -- a specific decision/
@@ -63,13 +70,31 @@ SHARED_TYPST_DIR = REPO_ROOT / ".tools" / "typst"
 _SEGMENT = r"[A-ZĐ][A-Za-zĐđ]*"  # e.g. "QĐ", "BGDĐT", "GDTrH" (mixed-case agency abbreviations are real)
 SO_HIEU_RE = re.compile(rf"^\d{{1,6}}/{_SEGMENT}(-{_SEGMENT})*$")
 QUYEN_HAN_VALUES = {"", "TM.", "Q.", "KT.", "TL.", "TUQ."}
-DOC_KIEU_VALUES = {"cong_van", "quyet_dinh_truc_tiep", "van_ban_ten_loai", "nghi_quyet", "bien_ban"}
+DOC_KIEU_VALUES = {
+    "cong_van", "quyet_dinh_truc_tiep", "van_ban_ten_loai", "nghi_quyet", "bien_ban",
+    "cong_dien", "giay_moi",
+}
 DOC_KIEU_WITH_TEN_LOAI = {"quyet_dinh_truc_tiep": "QUYẾT ĐỊNH", "nghi_quyet": "NGHỊ QUYẾT"}
 
 # NĐ 30/2020 Phụ lục I Mục I.3 permitted ranges (mm). A caller may override
 # the concrete default within these ranges via --margin-*, never outside them.
 MARGIN_RANGES_MM = {
     "top": (20, 25), "bottom": (20, 25), "left": (30, 35), "right": (15, 20),
+}
+
+# v0.5.0: named density presets (--density), an optional knob bundling
+# margin + font-size + indent + line-spacing into one choice. Font-size/
+# indent/line-spacing live in assets/vnnd30.typ's nd-density-presets (Typst
+# reads its own copy); margins are validated/applied here in Python (single
+# source of truth for the legal-range check already enforced by
+# MARGIN_RANGES_MM). Both tables' concrete numbers are ported from the same
+# real prior production system's DENSITY_PRESETS table (see SKILL.md
+# metadata.elicited_from, v0.5.0 entry) and stay within MARGIN_RANGES_MM.
+DENSITY_PRESET_VALUES = {"tiet_kiem_giay", "tieu_chuan", "trang_trong"}
+DENSITY_PRESET_MARGINS_MM = {
+    "tiet_kiem_giay": {"top": 20, "bottom": 20, "left": 30, "right": 20},
+    "tieu_chuan": {"top": 20, "bottom": 20, "left": 30, "right": 20},
+    "trang_trong": {"top": 25, "bottom": 25, "left": 35, "right": 20},
 }
 
 
@@ -209,6 +234,35 @@ def validate(content: dict) -> list[str]:
         if not content.get("noi_dung_doan"):
             errors.append("van_ban_ten_loai requires a non-empty noi_dung_doan list")
 
+    elif doc_kieu == "cong_dien":
+        # Mẫu 1.6 (Phụ lục III Mục II, trang 10 của PDF gốc): trích yếu +
+        # "<người đứng đầu> điện:" + danh sách nơi nhận điện + nội dung điện.
+        if not content.get("trich_yeu"):
+            errors.append("cong_dien requires trich_yeu")
+        if not content.get("nguoi_dung_dau"):
+            errors.append("cong_dien requires nguoi_dung_dau (chú thích 6 của mẫu thật: tên cơ quan/chức danh người đứng đầu ban hành điện)")
+        if not content.get("nguoi_nhan_dien") or not isinstance(content["nguoi_nhan_dien"], list):
+            errors.append("cong_dien requires a non-empty nguoi_nhan_dien list (chú thích 7: tên cơ quan/tổ chức nhận điện)")
+        if not content.get("noi_dung_doan"):
+            errors.append("cong_dien requires a non-empty noi_dung_doan list")
+
+    elif doc_kieu == "giay_moi":
+        # Mẫu 1.7 (Phụ lục III Mục II, trang 11 của PDF gốc): trích yếu (tên
+        # cuộc họp) + người được mời + nội dung cuộc họp + chủ trì/thời
+        # gian/địa điểm; "các vấn đề cần lưu ý" (chú thích 8) is optional.
+        if not content.get("trich_yeu"):
+            errors.append("giay_moi requires trich_yeu (chú thích 5 của mẫu thật: trích yếu nội dung cuộc họp)")
+        if not content.get("nguoi_duoc_moi"):
+            errors.append("giay_moi requires nguoi_duoc_moi (chú thích 6: tên cơ quan/họ tên, chức vụ, đơn vị công tác của người được mời)")
+        if not content.get("noi_dung_cuoc_hop"):
+            errors.append("giay_moi requires noi_dung_cuoc_hop (chú thích 7: tên/nội dung cuộc họp, hội thảo, hội nghị)")
+        if not content.get("chu_tri"):
+            errors.append("giay_moi requires chu_tri")
+        if not content.get("thoi_gian"):
+            errors.append("giay_moi requires thoi_gian")
+        if not content.get("dia_diem"):
+            errors.append("giay_moi requires dia_diem")
+
     return errors
 
 
@@ -253,10 +307,13 @@ def _typ_list(items: list[str]) -> str:
     return "(" + ", ".join(_typ_str(x) for x in items) + ("," if len(items) == 1 else "") + ")"
 
 
-def build_typst(content: dict, margins: dict[str, int] | None = None) -> str:
+def build_typst(content: dict, margins: dict[str, int] | None = None, density: str | None = None) -> str:
     doc_kieu = content["doc_kieu"]
     margins = margins or {}
-    setup_args = ", ".join(f"margin-{k}: {v}mm" for k, v in margins.items())
+    setup_arg_list = [f"margin-{k}: {v}mm" for k, v in margins.items()]
+    if density is not None:
+        setup_arg_list.append(f'density: "{density}"')
+    setup_args = ", ".join(setup_arg_list)
     setup_call = f'#show: nd-setup.with({setup_args})' if setup_args else "#show: nd-setup"
 
     parts: list[str] = [
@@ -310,6 +367,22 @@ def build_typst(content: dict, margins: dict[str, int] | None = None) -> str:
         parts.append(f'#nd-tenloai-trichyeu({_typ_str(content["ten_loai"]["hien_thi"])}, {_typ_str(content["trich_yeu"])})')
         parts.append(f"#nd-noidung({_typ_list(content['noi_dung_doan'])})")
 
+    elif doc_kieu == "cong_dien":
+        parts.append(f'#nd-tenloai-trichyeu("CÔNG ĐIỆN", {_typ_str(content["trich_yeu"])})')
+        parts.append(f"#nd-dien({_typ_str(content['nguoi_dung_dau'])}, {_typ_list(content['nguoi_nhan_dien'])})")
+        parts.append(f"#nd-noidung({_typ_list(content['noi_dung_doan'])})")
+
+    elif doc_kieu == "giay_moi":
+        parts.append(f'#nd-tenloai-trichyeu("GIẤY MỜI", {_typ_str(content["trich_yeu"])})')
+        giaymoi_args = (
+            f"{_typ_str(content['co_quan_ban_hanh'])}, {_typ_str(content['nguoi_duoc_moi'])}, "
+            f"{_typ_str(content['noi_dung_cuoc_hop'])}, {_typ_str(content['chu_tri'])}, "
+            f"{_typ_str(content['thoi_gian'])}, {_typ_str(content['dia_diem'])}"
+        )
+        if content.get("luu_y"):
+            giaymoi_args += f", luu-y: {_typ_str(content['luu_y'])}"
+        parts.append(f"#nd-giaymoi-noidung({giaymoi_args})")
+
     nguoi_ky = content["nguoi_ky"]
     parts.append("")
     if nguoi_ky.get("tap_the"):
@@ -351,7 +424,10 @@ def _build_typst_bien_ban(content: dict, parts: list[str]) -> str:
 
 
 def _parse_margins(args: argparse.Namespace) -> dict[str, int]:
-    margins: dict[str, int] = {}
+    # Start from the density preset's margins (if --density was given) --
+    # an explicit --margin-* always wins over the preset for that one side,
+    # since it's the more specific, manually-chosen value.
+    margins: dict[str, int] = dict(DENSITY_PRESET_MARGINS_MM[args.density]) if args.density else {}
     for side in ("top", "bottom", "left", "right"):
         value = getattr(args, f"margin_{side}")
         if value is None:
@@ -372,6 +448,10 @@ def main() -> int:
     parser.add_argument("--margin-bottom", type=int, default=None, help="mm, must be within 20-25")
     parser.add_argument("--margin-left", type=int, default=None, help="mm, must be within 30-35")
     parser.add_argument("--margin-right", type=int, default=None, help="mm, must be within 15-20")
+    parser.add_argument(
+        "--density", choices=sorted(DENSITY_PRESET_VALUES), default=None,
+        help="optional named preset bundling margin+font-size+indent+line-spacing; omit to keep pre-v0.5.0 defaults",
+    )
     args = parser.parse_args()
 
     try:
@@ -402,7 +482,7 @@ def main() -> int:
         return 1
 
     try:
-        typ_source = build_typst(content, margins)
+        typ_source = build_typst(content, margins, args.density)
     except ContentError as exc:
         print(f"MALFORMED: {exc}", file=sys.stderr)
         return 2

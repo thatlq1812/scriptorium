@@ -584,7 +584,7 @@
     },
     {
       "skill_id": "office-doc-creator",
-      "version": "0.1.1",
+      "version": "0.2.0",
       "source": {
         "type": "self-authored"
       },
@@ -615,8 +615,8 @@
       },
       "security_audit": {
         "status": "passed",
-        "date": "2026-07-26",
-        "note": "3 scripts only read local JSON, write local Office files, no network calls, no secret handling. No finding."
+        "date": "2026-08-01",
+        "note": "Re-audited at 0.2.0 (2026-08-01): added docx_numbering.py (new module) + font/list-block handling in create_docx.py. Still stdlib+python-docx/python-pptx/openpyxl only, zero network, no dynamic execution. Grep for subprocess/os.system/eval/exec/urllib/requests/socket/shell=True: clean (one false-positive substring \"font requests\" in a docstring, confirmed by inspection). Writes only to caller-supplied output path."
       },
       "dependencies": [
         "python-docx==1.2.0",
@@ -625,7 +625,7 @@
         "python-env-bootstrap"
       ],
       "license_debt": null,
-      "elicited_from": "Owner (2026-07-26): extend scouting beyond Anthropic for office skills; scout-harvester found python-docx/python-pptx/openpyxl (MIT, verified directly), implementation written from scratch"
+      "elicited_from": "Owner (2026-07-26): extend scouting beyond Anthropic for office skills; scout-harvester found python-docx/python-pptx/openpyxl (MIT, verified directly), implementation written from scratch v0.2.0 (2026-08-01): Vietnamese-diacritics rFonts fix + real OOXML list numbering ported from the owner's own prior production system (D:/elix/archive/platform_archive/modules/document/v6/renderers/docx/styles.py + numbering.py)."
     },
     {
       "skill_id": "dedup-novelty-check",
@@ -741,7 +741,7 @@
     },
     {
       "skill_id": "latex-project-bootstrap",
-      "version": "0.4.0",
+      "version": "0.5.0",
       "source": {
         "type": "self-authored"
       },
@@ -771,8 +771,8 @@
       },
       "security_audit": {
         "status": "passed",
-        "date": "2026-07-27",
-        "note": "Re-audited at 0.4.0: render_nd30_document.py rewritten for Typst (json/re/shutil/subprocess/argparse/platform, still pure stdlib), export_nd30_docx.py/build_reference_docx.py unchanged. Writes only to the caller-given output path, subprocess calls to typst/pandoc use fixed argument lists (no shell=True, no string interpolation into a shell command). No network/secrets. No finding."
+        "date": "2026-08-01",
+        "note": "Re-audited at 0.5.0 (2026-08-01): vnnd30 mode gained --density preset + 2 new doc_kieu (cong_dien, giay_moi). No new subprocess/shell/network call introduced -- typst/pandoc subprocess calls unchanged from 0.4.0 audit (fixed argument lists, no shell=True, no shell string interpolation)."
       },
       "dependencies": [
         "xelatex",
@@ -781,7 +781,7 @@
         "pandoc"
       ],
       "license_debt": null,
-      "elicited_from": "Grounded in the owner's real LaTeX project (D:/elix/researches/textbooks) -- XeLaTeX + polyglossia/fontspec, build sequence xelatex->biber->xelatex->xelatex (book/report scaffold mode only). vnnd30 mode elicited from the real Nghi dinh 30/2020/ND-CP PDF (downloaded directly from vanban.chinhphu.vn 2026-07-27). v0.3.0's DOCX reference-doc patch recipe adapted from a real fix in D:/elix/praxis_csc/resources/templates/reference-vn.docx. v0.4.0: owner directed switching vnnd30 mode's engine from XeLaTeX to Typst after comparing praxis_csc's own docs/CHANGELOG.md, which records that project independently making the identical switch for the identical portability reason."
+      "elicited_from": "Grounded in the owner's real LaTeX project (D:/elix/researches/textbooks) -- XeLaTeX + polyglossia/fontspec, build sequence xelatex->biber->xelatex->xelatex (book/report scaffold mode only). vnnd30 mode elicited from the real Nghi dinh 30/2020/ND-CP PDF (downloaded directly from vanban.chinhphu.vn 2026-07-27). v0.3.0's DOCX reference-doc patch recipe adapted from a real fix in D:/elix/praxis_csc/resources/templates/reference-vn.docx. v0.4.0: owner directed switching vnnd30 mode's engine from XeLaTeX to Typst after comparing praxis_csc's own docs/CHANGELOG.md, which records that project independently making the identical switch for the identical portability reason. v0.5.0 (2026-08-01): vnnd30 mode's --density preset ported from D:/elix/archive/platform_archive/modules/document/v6/config/law_constants.py; cong_dien/giay_moi doc_kieu grounded directly in the real NĐ 30/2020 PDF (outside_research/research_03_nd30/30.signed.pdf, Phụ lục III Mục II)."
     },
     {
       "skill_id": "image-generator-gemini",
@@ -1560,7 +1560,7 @@
     },
     {
       "skill_id": "personal-profile-manager",
-      "version": "0.1.1",
+      "version": "0.2.0",
       "source": {
         "type": "self-authored"
       },
@@ -1590,12 +1590,12 @@
       },
       "security_audit": {
         "status": "passed",
-        "date": "2026-07-29",
-        "note": "Self-audit. 4 scripts, stdlib only (json/argparse/pathlib/collections), zero network calls, no dynamic execution (no eval/exec/subprocess/os.system), no secret handling — SKILL.md explicitly documents profile.json is not a credentials store. Local file writes only, path-scoped by caller-supplied arguments (no path traversal beyond what the caller explicitly names)."
+        "date": "2026-08-01",
+        "note": "Re-audited at 0.2.0 (2026-08-01): added org_profile optional section (init_profile.py --with-org-profile, validate_profile.py cross-field checks). New import is stdlib re only. Still zero network, no dynamic execution, no secret handling. Inherits existing /personal gitignore privacy-by-default (confirmed, org_profile lives in the same profile.json)."
       },
       "dependencies": [],
       "license_debt": null,
-      "elicited_from": "Owner direction 2026-07-29 (docs/ROADMAP.md 'New planned roadmap items', UPGRADE_PLAN_20260729.md Item 1), grounded in a real non-tech-user pilot need (repeating identity/org details across forms/dossiers/contracts/lesson plans). Field schema cross-checked against legal-form-filler/office-doc-creator/lesson-plan-builder's own input schemas rather than invented from scratch; local-config-file convention lightly grounded against AWS CLI's config/credentials split and cookiecutter's variables-file pattern (public-convention survey, no dependency adopted — kept stdlib-only)."
+      "elicited_from": "Owner direction 2026-07-29 (docs/ROADMAP.md 'New planned roadmap items', UPGRADE_PLAN_20260729.md Item 1), grounded in a real non-tech-user pilot need (repeating identity/org details across forms/dossiers/contracts/lesson plans). Field schema cross-checked against legal-form-filler/office-doc-creator/lesson-plan-builder's own input schemas rather than invented from scratch; local-config-file convention lightly grounded against AWS CLI's config/credentials split and cookiecutter's variables-file pattern (public-convention survey, no dependency adopted — kept stdlib-only). v0.2.0 (2026-08-01): org_profile section ported from the owner's own prior production system (D:/elix/archive/platform_archive/modules/document/v6/co_quan_profile/schemas.py)."
     },
     {
       "skill_id": "project-workspace-initializer",
@@ -1637,7 +1637,7 @@
     },
     {
       "skill_id": "svg-poster-builder",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "source": {
         "type": "self-authored"
       },
@@ -1667,16 +1667,16 @@
       },
       "security_audit": {
         "status": "passed",
-        "date": "2026-07-29",
-        "note": "Self-audit. 1 script, stdlib only (json/argparse/pathlib), zero network calls, no dynamic execution. Output is a plain SVG file written to a caller-supplied path; input is structured JSON only, no arbitrary code/markup injection surface."
+        "date": "2026-08-01",
+        "note": "Re-audited at 0.2.0 (2026-08-01): added max-text-coverage (40%) hard check on typography_frame zones. Still stdlib only (json/argparse/pathlib), zero network, no dynamic execution. Output remains a plain SVG file to a caller-supplied path."
       },
       "dependencies": [],
       "license_debt": null,
-      "elicited_from": "Zone taxonomy and full-bleed/no-overflow placement discipline grounded in a real production A1-poster rendering pipeline's own documented component-type schema (D:/Document/May052026/scripts/component_types.md, per UPGRADE_PLAN_20260729.md Item 4). Canvas presets are the real public ISO 216 standard (A1/A4)."
+      "elicited_from": "Zone taxonomy and full-bleed/no-overflow placement discipline grounded in a real production A1-poster rendering pipeline's own documented component-type schema (D:/Document/May052026/scripts/component_types.md, per UPGRADE_PLAN_20260729.md Item 4). Canvas presets are the real public ISO 216 standard (A1/A4). v0.2.0 (2026-08-01): max-text-coverage rule ported from D:/elix/archive/platform_archive/modules/presentation/scoring/design_rules.py."
     },
     {
       "skill_id": "brand-identity-linter",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "source": {
         "type": "self-authored"
       },
@@ -1706,12 +1706,12 @@
       },
       "security_audit": {
         "status": "passed",
-        "date": "2026-07-29",
-        "note": "Self-audit. 1 script, stdlib only (json/re/pathlib), zero network calls, no dynamic execution."
+        "date": "2026-08-01",
+        "note": "Re-audited at 0.2.0 (2026-08-01): added color-role fallback-chain resolution, max-3-accent-colors check, background-not-pure-white check. Still stdlib only (json/re/pathlib), zero network, no dynamic execution."
       },
       "dependencies": [],
       "license_debt": null,
-      "elicited_from": "Grounded in a real signboard/menu revision session this project has direct access to (D:/elix/temp_project_20260728/brand-data.json + its PROJECT.md client-feedback log, per UPGRADE_PLAN_20260729.md Item 4): a real color-priority role system, a real client note on CTA/contact emphasis, and a real client complaint about orphan icons. Fixture is a generic anonymized example, not the real client's business data."
+      "elicited_from": "Grounded in a real signboard/menu revision session this project has direct access to (D:/elix/temp_project_20260728/brand-data.json + its PROJECT.md client-feedback log, per UPGRADE_PLAN_20260729.md Item 4): a real color-priority role system, a real client note on CTA/contact emphasis, and a real client complaint about orphan icons. Fixture is a generic anonymized example, not the real client's business data. v0.2.0 (2026-08-01): color-role fallback chain + max-accent/background rules ported from D:/elix/archive/platform_archive/modules/presentation/template_intel/palette_binding.py and scoring/design_rules.py (statistically sourced from real Canva/Slidesgo template analysis)."
     },
     {
       "skill_id": "slogan-copy-linter",
@@ -1753,7 +1753,7 @@
     },
     {
       "skill_id": "light-logo-arranger",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "source": {
         "type": "self-authored"
       },
@@ -1783,12 +1783,12 @@
       },
       "security_audit": {
         "status": "passed",
-        "date": "2026-07-29",
-        "note": "Self-audit. 1 script, stdlib only (json/pathlib), zero network calls, no dynamic execution, no file writes at all (pure computation, prints coordinates only)."
+        "date": "2026-08-01",
+        "note": "Re-audited at 0.2.0 (2026-08-01): added check_asset_completeness.py and resolve_font_fallback.py (2 new scripts + 2 bundled read-only JSON reference files). Still stdlib only (json/pathlib), zero network, no dynamic execution, zero file writes across all 3 scripts."
       },
       "dependencies": [],
       "license_debt": null,
-      "elicited_from": "Anchor-then-exclude placement concept lightly grounded in a real production layout pipeline's own component-chaining idea (D:/Document/May052026/scripts/component_types.md's master_anchor/group_anchor chain hierarchy, per UPGRADE_PLAN_20260729.md Item 4), simplified to single-point named-anchor placement."
+      "elicited_from": "Anchor-then-exclude placement concept lightly grounded in a real production layout pipeline's own component-chaining idea (D:/Document/May052026/scripts/component_types.md's master_anchor/group_anchor chain hierarchy, per UPGRADE_PLAN_20260729.md Item 4), simplified to single-point named-anchor placement. v0.2.0 (2026-08-01): asset-completeness checklist ported from D:/elix/archive/platform_archive/scripts/gen/gen_brand_identity.py (checklist only, not the AI-generation mechanism); font-fallback table ported verbatim (data) from modules/presentation/pptx/font_fallback_map.py."
     },
     {
       "skill_id": "academic-grant-proposal",

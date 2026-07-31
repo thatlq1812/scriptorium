@@ -107,6 +107,34 @@ def build_markdown(content: dict) -> str:
         lines += [f"**{esc(content['ten_loai']['hien_thi'])}**", f"**{esc(content['trich_yeu'])}**", ""]
         lines.extend(esc(p) for p in content["noi_dung_doan"])
 
+    elif doc_kieu == "cong_dien":
+        lines += [f"**CÔNG ĐIỆN**", f"**{esc(content['trich_yeu'])}**", ""]
+        lines.append(f"{esc(content['nguoi_dung_dau'])} điện:")
+        lines.extend(f"- {esc(x)};" for x in content["nguoi_nhan_dien"])
+        lines.append("")
+        lines.extend(esc(p) for p in content["noi_dung_doan"])
+
+    elif doc_kieu == "giay_moi":
+        lines += [f"**GIẤY MỜI**", f"**{esc(content['trich_yeu'])}**", ""]
+        lines.append(f"{esc(content['co_quan_ban_hanh'])} trân trọng kính mời: {esc(content['nguoi_duoc_moi'])}")
+        lines.append("")
+        lines.append(f"Tới dự {esc(content['noi_dung_cuoc_hop'])}")
+        lines.append("")
+        lines.append(f"Chủ trì: {esc(content['chu_tri'])}")
+        lines.append("")
+        lines.append(f"Thời gian: {esc(content['thoi_gian'])}")
+        lines.append("")
+        lines.append(f"Địa điểm: {esc(content['dia_diem'])}")
+        if content.get("luu_y"):
+            lines.append("")
+            lines.append(esc(content["luu_y"]))
+
+    else:
+        raise ContentError(
+            f"build_markdown: doc_kieu {doc_kieu!r} passed validate() but has no Markdown-rendering "
+            f"branch here -- refusing rather than silently emitting a header/footer-only DOCX with no body content"
+        )
+
     nguoi_ky = content["nguoi_ky"]
     quyen_han = nguoi_ky.get("quyen_han", "")
     chuc_vu = nguoi_ky["chuc_vu"]
