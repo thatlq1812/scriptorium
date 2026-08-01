@@ -18,9 +18,11 @@ content.json shape:
     {
       "slides": [
         {"layout": "title", "markdown": "# Deck Title\\nA subtitle line"},
-        {"layout": "standard", "markdown": "## Slide heading\\n- bullet one\\n- bullet two"},
+        {"layout": "standard", "markdown": "## Slide heading\\n- bullet one\\n- bullet two",
+         "source_slide_idx": 4},
         {"layout": "two_column", "markdown": "## Compare\\n### Left\\n- a\\n### Right\\n- b"},
-        {"layout": "image", "markdown": "## Caption title\\nCaption text"},
+        {"layout": "image", "markdown": "## Caption title\\nCaption text",
+         "image_path": "assets/photo.jpg"},
         {"layout": "quote", "markdown": "# A standalone statement"},
         {"layout": "section", "markdown": "## Section N\\nSection subtitle"}
       ]
@@ -29,6 +31,37 @@ content.json shape:
 ``layout`` must be one of the 6 keys in constants.LAYOUT_NAME_MAP --
 see SKILL.md "Known limitations" for the ~14 layout types NOT built in
 this pass (refused with a clear error, never silently downgraded).
+
+``source_slide_idx`` (optional, int): explicitly picks which real
+template slide (0-based, ``prs.slides[source_slide_idx]``) to clone
+for this output slide, bypassing ``pick_source_slide_index``'s
+geometry-based heuristic entirely for that slide. RECOMMENDED
+workflow for quality-sensitive decks: render ``thumbnail_grid.py``
+first, look at the labeled grid, then supply the exact index you
+chose. The hard structural checks (a scorable title shape, and
+whichever `layout` needs, enough body-candidate shapes) still run --
+an explicit choice that genuinely can't support the layout is refused
+loudly (exit 2), never silently guessed past. Omit this field to keep
+the existing automatic heuristic exactly as before (default,
+backward-compatible path, still a legitimate lower-effort fallback).
+
+``image_path`` (optional, str, only meaningful for ``"image"``
+layout): path to a real caller-supplied image file (resolved relative
+to the content.json file's own directory if not absolute) that
+replaces the cloned slide's actual picture -- not just leaving the
+template's original photo untouched. Refused loudly if the file
+doesn't exist or isn't a decodable raster image. A markdown
+``![alt](path)`` image reference inside the slide's own ``markdown``
+field is honored as a fallback source when ``image_path`` is omitted.
+
+``generate_placeholder_image`` (optional, bool, only meaningful for
+``"image"`` layout): when true, injects a deterministic, network-free
+Pillow-generated placeholder (same engine as
+``placeholder_images.generate_placeholder_png``) instead of requiring
+a real file -- the no-network fallback path. Ignored if ``image_path``
+is also set (the real file wins). If neither is set and the layout is
+``"image"``, the template's own original picture is left untouched
+exactly as before (full backward compatibility).
 
 Exit codes: 0 = success, 2 = malformed/invalid input (refuse loudly,
 never guess), 3 = template structurally unusable (e.g. zero slides).
@@ -52,6 +85,7 @@ import font_manager
 import font_engine
 import font_vietnamese
 import font_size_balance
+import image_injector
 
 for _stream in (sys.stdout, sys.stderr):
     if hasattr(_stream, "reconfigure"):
@@ -86,6 +120,20 @@ def load_content_spec(path: Path) -> list[dict]:
                 f"Supported: {sorted(C.LAYOUT_NAME_MAP)}. See SKILL.md 'Known limitations' "
                 f"for the layout types not yet built -- refusing rather than silently "
                 f"downgrading to a layout you didn't ask for."
+            )
+        if "source_slide_idx" in item and item["source_slide_idx"] is not None:
+            idx = item["source_slide_idx"]
+            if not isinstance(idx, int) or isinstance(idx, bool) or idx < 0:
+                raise ComposerError(
+                    f"slides[{i}].source_slide_idx must be a non-negative integer slide "
+                    f"index, got {idx!r}"
+                )
+        if "image_path" in item and item["image_path"] is not None and not isinstance(item["image_path"], str):
+            raise ComposerError(f"slides[{i}].image_path must be a string path, got {item['image_path']!r}")
+        if "generate_placeholder_image" in item and not isinstance(item["generate_placeholder_image"], bool):
+            raise ComposerError(
+                f"slides[{i}].generate_placeholder_image must be a boolean, "
+                f"got {item['generate_placeholder_image']!r}"
             )
     return slides
 
@@ -254,6 +302,25 @@ def _required_title_capacity(layout_type: str, content) -> int:
     if layout_type == C.LAYOUT_QUOTE and content.title:
         return max(len(content.title), _MIN_PROSE_CAPACITY_CHARS)
     return 0
+
+
+def _hard_structural_fit(prs, slide_idx: int, min_body: int) -> tuple[bool, str]:
+    """The minimum, non-negotiable structural bar an EXPLICITLY chosen
+    ``source_slide_idx`` must clear: a scorable title shape, and at
+    least as many scorable body candidates as the requested layout
+    needs. Deliberately does NOT run the softer capacity/shape-count
+    heuristics that ``_fits`` applies during automatic selection --
+    those are proxies for "does this look like a good visual fit,"
+    which a caller who already looked at a rendered thumbnail grid
+    (see thumbnail_grid.py) has already judged directly. Returns
+    (ok, reason) so the caller can refuse loudly with a concrete
+    explanation rather than a bare boolean."""
+    has_title, body_count = _title_and_body_counts(prs, slide_idx)
+    if not has_title:
+        return False, "no scorable title shape found on this slide"
+    if body_count < min_body:
+        return False, f"only {body_count} scorable body shape(s) found, this layout needs >= {min_body}"
+    return True, ""
 
 
 def pick_source_slide_index(
@@ -491,11 +558,34 @@ def compile_deck(
         required_capacity = _required_body_capacity(layout_type, content)
         required_title_capacity = _required_title_capacity(layout_type, content)
 
-        source_idx, structural_match = pick_source_slide_index(
-            prs, layout_type, position, total, classification, original_count, layout_round_robin,
-            required_capacity_chars=required_capacity,
-            required_title_capacity_chars=required_title_capacity,
-        )
+        explicit_idx = item.get("source_slide_idx")
+        if explicit_idx is not None:
+            # RECOMMENDED workflow for quality-sensitive decks (see
+            # thumbnail_grid.py + SKILL.md): the caller already looked
+            # at a rendered thumbnail grid and deliberately chose this
+            # exact slide -- skip the geometry heuristic entirely, but
+            # still refuse loudly if the choice is structurally
+            # impossible for the requested layout (never silently
+            # guess past a real mismatch).
+            if explicit_idx >= original_count:
+                raise ComposerError(
+                    f"slides[{position}].source_slide_idx={explicit_idx} is out of range "
+                    f"-- template has {original_count} slide(s) (valid: 0..{original_count - 1})"
+                )
+            min_body_explicit = _MIN_BODY_REQUIRED.get(layout_type, 0)
+            ok, reason = _hard_structural_fit(prs, explicit_idx, min_body_explicit)
+            if not ok:
+                raise ComposerError(
+                    f"slides[{position}]: explicit source_slide_idx={explicit_idx} does not "
+                    f"structurally support layout {item['layout']!r}: {reason}"
+                )
+            source_idx, structural_match = explicit_idx, True
+        else:
+            source_idx, structural_match = pick_source_slide_index(
+                prs, layout_type, position, total, classification, original_count, layout_round_robin,
+                required_capacity_chars=required_capacity,
+                required_title_capacity_chars=required_title_capacity,
+            )
         source_slide = prs.slides[source_idx]
         new_slide = slide_duplicator.duplicate_slide(prs, source_slide)
 
@@ -514,6 +604,7 @@ def compile_deck(
         record = {
             "position": position, "layout": item["layout"], "source_slide_idx": source_idx,
             "structural_match": structural_match,
+            "source_slide_idx_explicit": explicit_idx is not None,
             "title_shape_found": title_info is not None, "body_shapes_found": len(body_infos),
         }
         slide_plan.append(record)
@@ -574,9 +665,6 @@ def compile_deck(
                 used_shape_ids.add(id(cols[1]["shape"]._element))
 
         elif layout_type == C.LAYOUT_IMG:
-            # v1 does NOT replace the template's own picture -- see
-            # SKILL.md "Known limitations": image content injection is
-            # text-only in this pass.
             if title_info is not None:
                 pt = _size_for(title_info, content.title, "title")
                 _inject_single_line(title_info["shape"], content.title, font_name=resolved_heading_font, font_size_pt=pt)
@@ -585,6 +673,43 @@ def compile_deck(
                 pt = _size_for(cap_info, content.caption, "body")
                 _inject_single_line(cap_info["shape"], content.caption, font_name=resolved_body_font, font_size_pt=pt)
                 used_shape_ids.add(id(cap_info["shape"]._element))
+
+            # Real picture injection (see image_injector.py). Only
+            # attempted when the caller actually asked for it --
+            # image_path / generate_placeholder_image / a markdown
+            # ![alt](path) reference -- otherwise the template's own
+            # original picture is left exactly as cloned, unchanged
+            # from this skill's pre-existing behavior (full backward
+            # compatibility with every earlier content.json).
+            wants_placeholder = bool(item.get("generate_placeholder_image", False))
+            image_path_raw = item.get("image_path") or content.image_ref
+            if wants_placeholder or image_path_raw:
+                resolved_image_path = None
+                if image_path_raw and not wants_placeholder:
+                    candidate = Path(image_path_raw)
+                    if not candidate.is_absolute():
+                        candidate = content_path.parent / candidate
+                    if not candidate.is_file():
+                        raise ComposerError(
+                            f"slides[{position}]: image_path/image_ref {image_path_raw!r} "
+                            f"not found (resolved to {candidate})"
+                        )
+                    resolved_image_path = candidate
+                seed = content.caption or content.title or f"slide-{position}"
+                try:
+                    image_report = image_injector.inject_slide_image(
+                        new_slide, prs.slide_width, prs.slide_height,
+                        image_path=resolved_image_path, placeholder_seed=seed,
+                    )
+                except image_injector.ImageInjectorError as e:
+                    raise ComposerError(f"slides[{position}]: image injection failed: {e}") from e
+                if image_report is None:
+                    raise ComposerError(
+                        f"slides[{position}]: image injection requested but the source "
+                        f"slide (idx={source_idx}) has no top-level picture shape to "
+                        f"inject into -- refusing rather than silently skipping"
+                    )
+                record["image_injection"] = image_report
 
         elif layout_type == C.LAYOUT_QUOTE:
             if title_info is not None:

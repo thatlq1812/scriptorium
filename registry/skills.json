@@ -2458,7 +2458,7 @@
     },
     {
       "skill_id": "slide-deck-composer",
-      "version": "0.1.1",
+      "version": "0.2.0",
       "source": {
         "type": "self-authored"
       },
@@ -2489,13 +2489,14 @@
       "security_audit": {
         "status": "passed",
         "date": "2026-08-01",
-        "note": "Re-audited at 0.1.1 (2026-08-01): added scripts/shape_capacity.py (dimension-only EMU capacity estimate, no new dependency) and rebalanced shape_roles.py's scoring / compile_deck.py's source-slide-selection logic after a hands-on visual-review round (render to JPG via libreoffice, inspect, fix, re-render) found and fixed 5 more real bugs. Grep for subprocess/os.system/eval(/exec(/urllib/requests/socket/shell=True across scripts/*.py: clean, no new hits."
+        "note": "Re-audited at 0.2.0 (2026-08-01, SOTA upgrade round): added scripts/thumbnail_grid.py (one new legitimate subprocess call -- LibreOffice --headless --convert-to pdf, fixed arg list, shell=False, same pattern as latex-project-bootstrap's typst/pandoc calls), scripts/image_injector.py (python-pptx relationship-part-level image swap, no new I/O surface), scripts/validate_deck.py (read-only structural checks). Grep for subprocess/os.system/eval(/exec(/urllib/requests/socket/shell=True: clean except the one documented LibreOffice call. Confirmed no Slidesgo template filename/path bundled or hardcoded (BYOT unchanged)."
       },
       "dependencies": [
         "python-pptx==1.0.2",
         "lxml==6.1.1",
         "Pillow==12.3.0",
-        "python-env-bootstrap"
+        "python-env-bootstrap",
+        "pypdfium2==5.12.1"
       ],
       "license_debt": null,
       "elicited_from": "Owner's own archived prior production platform, Elixverse (D:/elix/archive/platform_archive/modules/presentation/ -- no license issue, owner's own code). Clone-and-inject architecture (not build-from-scratch) chosen after explicit owner direction across a multi-turn discussion this session -- see docs/STATUS.md's 2026-08-01 entry for the full reasoning and per-file port mapping. BYOT (Bring Your Own Template): real Slidesgo .pptx templates under data/slidesgo_templates/ (gitignored, local-only) used exclusively as this skill's own development/test fixtures -- never bundled, never redistributed (Slidesgo's license does not permit redistributing raw template files). Vietnamese-font-safety data cross-checked against layout_registry/font_config.py + template_factory/font_pairing.py (both from the same archive) and this repo's own office-doc-creator ALLOWED_FONTS allowlist. Font-size-balancing heuristic is a new, self-designed feature per the owner's own stated framing (no direct port)."
