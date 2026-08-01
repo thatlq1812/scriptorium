@@ -495,7 +495,8 @@ def _clear_unused_text_shapes(all_infos: list[dict], used_shape_ids: set[int]) -
     real output. Returns the number of shapes cleared."""
     cleared = 0
     for info in all_infos:
-        if info["is_decorative"] or info["is_watermark"]:
+        is_vendor_caption = shape_roles.is_vendor_instructional_caption(info["text"])
+        if (info["is_decorative"] or info["is_watermark"]) and not is_vendor_caption:
             continue
         if id(info["shape"]._element) in used_shape_ids:
             continue

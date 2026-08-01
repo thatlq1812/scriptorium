@@ -25,6 +25,24 @@ _INSTRUCTION_MARKERS: tuple[str, ...] = (
     # classification (not shape geometry) can catch.
     "fonts & colors used", "fonts and colors used", "colors used",
     "this presentation has been made using the following",
+    # Real bug found via a real showcase-deck dogfooding round (v0.7.1,
+    # 2026-08-02): a real "Infographics" instructional slide (how to
+    # add/edit/ungroup/resize a bundled infographic element -- real
+    # text: "Choose your favourite infographic...", "Keep source
+    # formatting", "Group the elements again by...") matched none of
+    # the markers above (no shared vocabulary with the fonts/credits/
+    # resources instruction pages already covered) and no single shape
+    # was long enough alone to trip the watermark-paragraph check
+    # either (the instructions were split across ~7 separate short
+    # step-boxes). It passed every existing structural filter (a
+    # normal-looking title + several body shapes of real capacity) and
+    # got picked by the automatic heuristic for 4 different output
+    # slides in the same real compile, each rendering the SAME
+    # irrelevant numbered-flowchart graphic with content crammed into
+    # one small step-box. "keep source formatting" and "choose your
+    # favourite infographic" are specific, idiomatic Slidesgo-editing
+    # phrases no real content would ever coincidentally contain.
+    "keep source formatting", "choose your favourite infographic",
 )
 
 _TITLE_KEYWORDS: tuple[str, ...] = ("title", "cover", "intro", "opening")
@@ -58,7 +76,22 @@ _CLOSING_KEYWORDS: tuple[str, ...] = (
 _BRAND_WATERMARK_WORDS: tuple[str, ...] = (
     "slidesgo", "freepik", "flaticon", "storyset", "wepik",
 )
-_INSTRUCTION_PARAGRAPH_MIN_CHARS = 40
+# Real bug found via a real showcase-deck dogfooding round (v0.7.1,
+# 2026-08-02): "This template has been created by Slidesgo" -- the
+# standard, ubiquitous Slidesgo attribution footer present on nearly
+# every real slide of nearly every real Slidesgo template checked this
+# session -- is 42 characters, 2 over the old 40-char threshold, so it
+# was itself misclassified as "long instructional paragraph" and
+# flagged output slides that used perfectly normal template slides as
+# leaking vendor content. It never leaked anything; it's the exact
+# short, legitimate footer this check's own docstring says must be
+# protected. Raised to 60: comfortably above every real short
+# attribution footer checked (this one, and others seen this session),
+# while still well below both real instructional-paragraph bugs this
+# check was built to catch (bug #4's Portuguese "About this template"
+# paragraph, bug #10's 306-char "Fonts & colors used" credits text) --
+# neither of those would have slipped through at 60.
+_INSTRUCTION_PARAGRAPH_MIN_CHARS = 60
 
 
 def is_instruction_slide(slide) -> bool:

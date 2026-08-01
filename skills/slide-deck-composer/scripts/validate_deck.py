@@ -228,12 +228,18 @@ def check_no_leaked_vendor_text(path: Path) -> dict:
                 text = shape.text_frame.text or ""
             except Exception:
                 continue
-            if len(text) > 40 and shape_roles.is_watermark_text(text):
+            if len(text) > slide_classifier._INSTRUCTION_PARAGRAPH_MIN_CHARS and shape_roles.is_watermark_text(text):
                 failures.append(
                     f"output slide {i}, shape {getattr(shape, 'shape_id', '?')}: "
                     f"long text ({len(text)} chars) matches watermark/vendor-brand "
                     f"pattern -- likely leaked instructional content, not a "
                     f"legitimate short attribution footer"
+                )
+            if shape_roles.is_vendor_instructional_caption(text):
+                failures.append(
+                    f"output slide {i}, shape {getattr(shape, 'shape_id', '?')}: "
+                    f"text matches a vendor chart-editing caption pattern -- "
+                    f"leaked instructional filler, not real content"
                 )
     return {
         "check": "no_leaked_vendor_text", "ok": not failures,

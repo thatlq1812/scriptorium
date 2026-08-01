@@ -21,6 +21,29 @@ DECORATIVE_TEXT_PATTERNS: tuple[str, ...] = WATERMARK_TEXT_PATTERNS + (
     "click to edit", "click here",
 )
 
+# Real bug found via a real showcase-deck dogfooding round (v0.7.1,
+# 2026-08-02): "Follow the link in the graph to modify its data and
+# then paste the new one here. For more info, click here" -- the
+# standard Slidesgo caption glued to every native chart in this
+# template -- leaked straight into real compiled output on two
+# different generated slides. It escaped every existing filter for a
+# compounding reason: (1) it contains no brand word, so
+# is_watermark_text (brand-substring only) never matches it; (2) its
+# real position sits in the same bottom strip as the legitimate
+# short attribution footer, so is_decorative_text's position
+# heuristic (top_pct > 0.88, meant to protect that footer from being
+# cleared) also protects THIS text -- but "leave alone, it's a real
+# footer" is the wrong call for a placeholder caption that must
+# always be replaced/cleared, not preserved. Chart captions are a
+# distinct category from watermarks: a watermark is legitimate
+# content to protect from clearing; a chart caption is vendor
+# instructional filler that must always be cleared, regardless of
+# where it happens to sit on the slide.
+VENDOR_INSTRUCTIONAL_CAPTION_PATTERNS: tuple[str, ...] = (
+    "follow the link in the graph", "modify its data and then paste",
+    "for more info, click here",
+)
+
 
 def is_watermark_text(text: str | None) -> bool:
     if not text:
@@ -29,6 +52,18 @@ def is_watermark_text(text: str | None) -> bool:
     if not clean:
         return False
     return any(pattern in clean for pattern in WATERMARK_TEXT_PATTERNS)
+
+
+def is_vendor_instructional_caption(text: str | None) -> bool:
+    """A chart/graph editing caption glued next to native charts in
+    some templates (e.g. Slidesgo infographic decks) -- always vendor
+    filler to be cleared, never a legitimate footer to protect."""
+    if not text:
+        return False
+    clean = text.strip().lower()
+    if not clean:
+        return False
+    return any(pattern in clean for pattern in VENDOR_INSTRUCTIONAL_CAPTION_PATTERNS)
 
 
 def is_decorative_text(text: str | None, top_pct: float, area_pct: float) -> bool:
