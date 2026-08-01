@@ -2455,6 +2455,50 @@
       ],
       "license_debt": null,
       "elicited_from": "Lifelong Learner / Upskilling Professional role-capability tier (general-capability, public-source grounding per CLAUDE.md principle 4). Gap-analysis-then-sequence shape grounded in standard career-development practice: skills-gap analysis is a documented technique in competency-based HR/L&D frameworks (e.g. SHRM competency modeling, O*NET's skills-by-occupation database structure comparing a worker's current skill profile against an occupation's required skill profile). The scheduling core itself is NOT reinvented here -- it is imported directly from skills/study-plan-builder/scripts/build_study_plan.py (that skill's own interleaved-new-topics + periodic-review round-robin algorithm, original to that skill's session per its own SKILL.md), so this skill inherits that algorithm's grounding rather than duplicating or re-deriving it."
+    },
+    {
+      "skill_id": "slide-deck-composer",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "document-conversion"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "presentation",
+          "pptx"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": true,
+        "stage4_reason": "ingests an arbitrary caller-supplied .pptx template file (uncontrolled external input, same class as document-ai-structurer/browser-web-renderer) -- the XML-clone/inject engine parses real third-party-authored OOXML it did not create."
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-01",
+        "note": "Self-audit. 13 scripts, python-pptx/lxml/Pillow (via shared venv) + stdlib only, zero network calls, no dynamic execution. Grep for subprocess/os.system/eval(/exec(/urllib/requests/socket/shell=True across scripts/*.py: clean (one false-positive substring match, confirmed by inspection). Verified the skill folder bundles/references no specific template file (BYOT architecture) -- grepped for Slidesgo filenames/data/ paths, none found; the 2 real 'slidesgo' string literals present are vendor-watermark/instruction-text DETECTION keywords used at runtime against a caller-supplied template, not a bundled asset reference."
+      },
+      "dependencies": [
+        "python-pptx==1.0.2",
+        "lxml==6.1.1",
+        "Pillow==12.3.0",
+        "python-env-bootstrap"
+      ],
+      "license_debt": null,
+      "elicited_from": "Owner's own archived prior production platform, Elixverse (D:/elix/archive/platform_archive/modules/presentation/ -- no license issue, owner's own code). Clone-and-inject architecture (not build-from-scratch) chosen after explicit owner direction across a multi-turn discussion this session -- see docs/STATUS.md's 2026-08-01 entry for the full reasoning and per-file port mapping. BYOT (Bring Your Own Template): real Slidesgo .pptx templates under data/slidesgo_templates/ (gitignored, local-only) used exclusively as this skill's own development/test fixtures -- never bundled, never redistributed (Slidesgo's license does not permit redistributing raw template files). Vietnamese-font-safety data cross-checked against layout_registry/font_config.py + template_factory/font_pairing.py (both from the same archive) and this repo's own office-doc-creator ALLOWED_FONTS allowlist. Font-size-balancing heuristic is a new, self-designed feature per the owner's own stated framing (no direct port)."
     }
   ]
 }

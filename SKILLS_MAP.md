@@ -1,15 +1,15 @@
 # Scriptorium — Skills Map
 
-Generated from `registry/skills.json` (62 skills, 2026-08-01). Clusters follow the audience-tier/domain grouping documented in `docs/STATUS.md` and `docs/specs/STRATEGY_SPEC.md` §5 — not invented for this diagram. Regenerate by hand whenever the registry count changes; this file is a snapshot, not a source of truth (`registry/skills.json` always wins if they diverge).
+Generated from `registry/skills.json` (63 skills, 2026-08-01). Clusters follow the audience-tier/domain grouping documented in `docs/STATUS.md` and `docs/specs/STRATEGY_SPEC.md` §5 — not invented for this diagram. Regenerate by hand whenever the registry count changes; this file is a snapshot, not a source of truth (`registry/skills.json` always wins if they diverge).
 
 Split into one diagram per layer instead of one giant flowchart — a single 62-node/10-subgraph graph doesn't render reliably in most Mermaid viewers. Each layer diagram below is self-contained (its own `skill-creator` note: linted independently). Edges that cross layers (e.g. `document-ai-structurer` feeding a Legal-tier skill) are listed as text under **Cross-layer dependencies**, not forced into a single-layer diagram.
 
-## Layer 0 — Overview (10 clusters, 62 skills)
+## Layer 0 — Overview (10 clusters, 63 skills)
 
 ```mermaid
 flowchart TB
   Pipeline["Pipeline & Meta (8)"]
-  Foundation["Foundation & Document/Research Tools (19)"]
+  Foundation["Foundation & Document/Research Tools (20)"]
   LightDesign["Light Design (4)"]
   Legal["Legal Specializer Network (6)"]
   Teacher["Teacher Tier (7)"]
@@ -44,7 +44,7 @@ flowchart LR
   skill_creator --> quality_eval --> security_audit --> scout_harvester --> license_compliance_check --> dedup_novelty_check --> registry_db --> skill_exporter
 ```
 
-## Layer 2 — Foundation & Document/Research Tools (19)
+## Layer 2 — Foundation & Document/Research Tools (20)
 
 General-capability skills not tied to one audience: document structuring, citation/research discipline, document-generation engines.
 
@@ -69,6 +69,7 @@ flowchart TB
   office_doc_creator["office-doc-creator"]
   mermaid_diagram_designer["mermaid-diagram-designer"]
   browser_web_renderer["browser-web-renderer"]
+  slide_deck_composer["slide-deck-composer"]
 
   citation_management --> literature_review
   typst_bootstrap --> latex_project_bootstrap
@@ -176,7 +177,7 @@ Real dependencies that cross a layer boundary — not drawable inside a single-l
 
 | From (layer) | To (layer) | Relationship |
 | --- | --- | --- |
-| `python-env-bootstrap` (L1) | `document-ai-structurer`, `office-doc-creator`, `image-generator-gemini`, `browser-web-renderer` (L2) | shared-venv bootstrap dependency (`registry/skills.json` `dependencies`) |
+| `python-env-bootstrap` (L1) | `document-ai-structurer`, `office-doc-creator`, `image-generator-gemini`, `browser-web-renderer`, `slide-deck-composer` (L2) | shared-venv bootstrap dependency (`registry/skills.json` `dependencies`) |
 | `document-ai-structurer` (L2) | `legal-citation-checker`, `legal-form-filler` (L4) | registry `dependencies` field |
 | `personal-profile-manager` (L2) | `legal-form-filler` (L4) | `autofill.py` output = `fill_form.py`'s `form_data.json` shape, documented chain |
 | `office-doc-creator` (L2) | `assessment-builder` (L5) | DOCX render delegate |
@@ -185,4 +186,5 @@ Real dependencies that cross a layer boundary — not drawable inside a single-l
 ## Reading this map
 
 - `socratic-concept-helper` (Layer 6) is drawn dashed/greyed — registered but `operational_status: paused`, excluded from `skill-exporter` bundles.
+- `slide-deck-composer` (Layer 2, added 2026-08-01) is BYOT (Bring Your Own Template) — never bundles a template file itself; composes with `image-generator-gemini` (picture-placeholder fill) and `personal-profile-manager`'s `org_profile` (title-slide identity), documented within-layer, not drawn as an edge.
 - Linted with `skills/mermaid-diagram-designer/scripts/lint_mermaid.py` (structural check only, not a real render) — each layer's fenced block extracted and linted independently.
