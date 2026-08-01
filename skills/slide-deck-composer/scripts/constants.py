@@ -46,9 +46,11 @@ LAYOUT_2COL = "LAYOUT_2COL"        # two-column comparison
 LAYOUT_IMG = "LAYOUT_IMG"          # image + caption/text
 LAYOUT_QUOTE = "LAYOUT_QUOTE"      # centered quote/statement
 LAYOUT_SECTION = "LAYOUT_SECTION"  # section divider
+LAYOUT_CUSTOM = "LAYOUT_CUSTOM"    # caller-declared ad-hoc slot mapping, see SKILL.md "Custom layout"
 
 SUPPORTED_LAYOUTS = frozenset({
     LAYOUT_TITLE, LAYOUT_STD, LAYOUT_2COL, LAYOUT_IMG, LAYOUT_QUOTE, LAYOUT_SECTION,
+    LAYOUT_CUSTOM,
 })
 
 # Caller-facing layout name -> internal LAYOUT_* constant.
@@ -60,12 +62,18 @@ LAYOUT_NAME_MAP: dict[str, str] = {
     "image": LAYOUT_IMG,
     "quote": LAYOUT_QUOTE,
     "section": LAYOUT_SECTION,
+    "custom": LAYOUT_CUSTOM,
 }
 
-# NOT YET BUILT (documented explicitly, never silently dropped - see
-# SKILL.md "Known limitations"): three_column, table, code, timeline,
-# chart, stat, diagram, pros_cons, steps, qa, icon_grid, center_generic,
-# end_card, fullbleed_image.
+# NOT covered by a NAMED layout above, and not a candidate for one
+# either (use "custom" instead, see SKILL.md "Custom layout"): three_column,
+# table, code, timeline, chart, stat, diagram, pros_cons, steps, qa,
+# icon_grid, center_generic, end_card, fullbleed_image. These aren't a
+# roadmap of layouts to eventually hardcode one at a time -- "custom"
+# is the general answer to all of them, a real named layout only gets
+# added when a shape recurs often enough to be worth a purpose-built,
+# validated content schema (e.g. "quote" already gets font-size
+# balancing, autofit, and a specific 1-slot contract "custom" doesn't).
 
 # =============================================================================
 # TEXT CHARACTER LIMITS (heuristic auto-fit)

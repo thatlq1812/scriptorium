@@ -24,13 +24,36 @@ content.json shape:
         {"layout": "image", "markdown": "## Caption title\\nCaption text",
          "image_path": "assets/photo.jpg"},
         {"layout": "quote", "markdown": "# A standalone statement"},
-        {"layout": "section", "markdown": "## Section N\\nSection subtitle"}
+        {"layout": "section", "markdown": "## Section N\\nSection subtitle"},
+        {"layout": "custom", "source_slide_idx": 10,
+         "slots": [{"role": "title", "text": "$4.5M"},
+                   {"role": "body", "text": "Budget for the new products/services"}]}
       ]
     }
 
-``layout`` must be one of the 6 keys in constants.LAYOUT_NAME_MAP --
-see SKILL.md "Known limitations" for the ~14 layout types NOT built in
-this pass (refused with a clear error, never silently downgraded).
+``layout`` must be one of the 7 keys in constants.LAYOUT_NAME_MAP --
+see SKILL.md "Known limitations" for the ~14 layout SHAPES not built
+as a NAMED layout (use "custom" for those, see below); an unrecognized
+name is refused with a clear error, never silently downgraded.
+
+``layout: "custom"`` (no ``markdown`` field; ``source_slide_idx`` and
+``slots`` instead): an ad-hoc slot mapping for a real template slide
+whose shape doesn't match one of the 6 named layouts (a stat callout,
+an org chart, a 3-column agenda, an icon grid, ...) -- see SKILL.md
+"Custom layout". ``source_slide_idx`` is MANDATORY for this layout
+(there's no generic pool to search automatically -- render
+``thumbnail_grid.py``, look at the slide, count its real distinct text
+areas, then declare that many slots). ``slots`` is a list of
+``{"role": "title"|"body", "text": "..."|["...", "..."]}``: at most one
+``role: "title"`` slot (matched to the slide's one scorable title
+shape); ``role: "body"`` slots are matched, in the order written, to
+the slide's scorable body shapes in their own ranked (best-first)
+order -- the caller already judged this slide's real layout by eye, so
+this positional match trusts that judgment rather than re-deriving it.
+``text`` as a plain string injects one line (autofit/font-size-balanced
+same as every other layout); as a list of strings, injects a bulleted
+list into that one shape. Refuses loudly (never silently truncates or
+drops) if more slots are declared than the slide has matching shapes.
 
 ``source_slide_idx`` (optional, int): explicitly picks which real
 template slide (0-based, ``prs.slides[source_slide_idx]``) to clone
@@ -112,8 +135,8 @@ def load_content_spec(path: Path) -> list[dict]:
     if not isinstance(slides, list) or not slides:
         raise ComposerError("content.slides must be a non-empty array")
     for i, item in enumerate(slides):
-        if not isinstance(item, dict) or "layout" not in item or "markdown" not in item:
-            raise ComposerError(f"slides[{i}] must be an object with 'layout' and 'markdown' keys")
+        if not isinstance(item, dict) or "layout" not in item:
+            raise ComposerError(f"slides[{i}] must be an object with at least a 'layout' key")
         if item["layout"] not in C.LAYOUT_NAME_MAP:
             raise ComposerError(
                 f"slides[{i}].layout={item['layout']!r} is not implemented. "
@@ -121,6 +144,9 @@ def load_content_spec(path: Path) -> list[dict]:
                 f"for the layout types not yet built -- refusing rather than silently "
                 f"downgrading to a layout you didn't ask for."
             )
+        is_custom = C.LAYOUT_NAME_MAP[item["layout"]] == C.LAYOUT_CUSTOM
+        if not is_custom and "markdown" not in item:
+            raise ComposerError(f"slides[{i}] must have a 'markdown' key (all layouts except 'custom')")
         if "source_slide_idx" in item and item["source_slide_idx"] is not None:
             idx = item["source_slide_idx"]
             if not isinstance(idx, int) or isinstance(idx, bool) or idx < 0:
@@ -135,6 +161,40 @@ def load_content_spec(path: Path) -> list[dict]:
                 f"slides[{i}].generate_placeholder_image must be a boolean, "
                 f"got {item['generate_placeholder_image']!r}"
             )
+        if is_custom:
+            # "custom" is the ad-hoc escape hatch for a real template
+            # slide shape that doesn't match one of the 6 named layouts
+            # (see SKILL.md "Custom layout") -- it has NO automatic
+            # heuristic (there's nothing generic to search a pool for),
+            # so an explicit source_slide_idx is mandatory, not optional.
+            if item.get("source_slide_idx") is None:
+                raise ComposerError(
+                    f"slides[{i}]: layout='custom' requires an explicit source_slide_idx "
+                    f"-- there is no automatic heuristic for an ad-hoc slot mapping. Render "
+                    f"thumbnail_grid.py, look at the slide, then supply its index."
+                )
+            slots = item.get("slots")
+            if not isinstance(slots, list) or not slots:
+                raise ComposerError(f"slides[{i}]: layout='custom' requires a non-empty 'slots' array")
+            title_slots = 0
+            for j, slot in enumerate(slots):
+                if not isinstance(slot, dict) or "role" not in slot or "text" not in slot:
+                    raise ComposerError(f"slides[{i}].slots[{j}] must be an object with 'role' and 'text' keys")
+                if slot["role"] not in ("title", "body"):
+                    raise ComposerError(f"slides[{i}].slots[{j}].role must be 'title' or 'body', got {slot['role']!r}")
+                text = slot["text"]
+                if not (isinstance(text, str) or (isinstance(text, list) and all(isinstance(t, str) for t in text))):
+                    raise ComposerError(
+                        f"slides[{i}].slots[{j}].text must be a string (single line) or a list "
+                        f"of strings (bullets), got {text!r}"
+                    )
+                if slot["role"] == "title":
+                    title_slots += 1
+            if title_slots > 1:
+                raise ComposerError(
+                    f"slides[{i}]: only one slots[].role='title' is allowed (a slide has one "
+                    f"title shape), got {title_slots}"
+                )
     return slides
 
 
@@ -553,10 +613,19 @@ def compile_deck(
         # Parsed BEFORE source-slide selection so pick_source_slide_index
         # can reject a structurally-plausible-but-too-small candidate
         # (see _fits's bug-2 docstring) -- selection needs to know the
-        # real content length, not just the layout type.
-        content = text_utils.parse_slide_content(layout_type, item["markdown"])
-        required_capacity = _required_body_capacity(layout_type, content)
-        required_title_capacity = _required_title_capacity(layout_type, content)
+        # real content length, not just the layout type. "custom" has no
+        # markdown at all (content lives in item["slots"] instead), and
+        # no automatic selection either (source_slide_idx is mandatory
+        # for it, enforced in load_content_spec), so this whole
+        # content-parsing/capacity-estimation step is meaningless for it.
+        if layout_type == C.LAYOUT_CUSTOM:
+            content = None
+            required_capacity = 0
+            required_title_capacity = 0
+        else:
+            content = text_utils.parse_slide_content(layout_type, item["markdown"])
+            required_capacity = _required_body_capacity(layout_type, content)
+            required_title_capacity = _required_title_capacity(layout_type, content)
 
         explicit_idx = item.get("source_slide_idx")
         if explicit_idx is not None:
@@ -572,7 +641,13 @@ def compile_deck(
                     f"slides[{position}].source_slide_idx={explicit_idx} is out of range "
                     f"-- template has {original_count} slide(s) (valid: 0..{original_count - 1})"
                 )
-            min_body_explicit = _MIN_BODY_REQUIRED.get(layout_type, 0)
+            if layout_type == C.LAYOUT_CUSTOM:
+                # Real required body-slot count comes from THIS slide's
+                # own declared slots, not a static per-layout table --
+                # every "custom" slide can ask for a different number.
+                min_body_explicit = sum(1 for s in item["slots"] if s["role"] == "body")
+            else:
+                min_body_explicit = _MIN_BODY_REQUIRED.get(layout_type, 0)
             ok, reason = _hard_structural_fit(prs, explicit_idx, min_body_explicit)
             if not ok:
                 raise ComposerError(
@@ -735,6 +810,49 @@ def compile_deck(
                 pt = _size_for(sub_info, subtitle_text, "body")
                 _inject_single_line(sub_info["shape"], subtitle_text, font_name=resolved_body_font, font_size_pt=pt)
                 used_shape_ids.add(id(sub_info["shape"]._element))
+
+        elif layout_type == C.LAYOUT_CUSTOM:
+            # Ad-hoc slot mapping for a real template slide shape that
+            # doesn't match one of the 6 named layouts (see SKILL.md
+            # "Custom layout"). load_content_spec already validated
+            # slots is a non-empty list with at most one role="title";
+            # _hard_structural_fit already confirmed enough body shapes
+            # exist. Positional match: the declared title slot (if any)
+            # -> title_info; body slots, in the order the caller wrote
+            # them, -> body_infos in shape_roles' own ranked order (best
+            # candidate first) -- the caller chose that ranking implicitly
+            # by looking at the rendered thumbnail and picking this slide.
+            body_slot_idx = 0
+            for slot in item["slots"]:
+                text = slot["text"]
+                is_bullets = isinstance(text, list)
+                joined = "\n".join(text) if is_bullets else text
+                if slot["role"] == "title":
+                    if title_info is None:
+                        raise ComposerError(
+                            f"slides[{position}]: slots declares role='title' but source "
+                            f"slide {source_idx} has no scorable title shape"
+                        )
+                    pt = _size_for(title_info, joined, "title")
+                    if is_bullets:
+                        _inject_bullets(title_info["shape"], text, font_name=resolved_heading_font, font_size_pt=pt)
+                    else:
+                        _inject_single_line(title_info["shape"], text, font_name=resolved_heading_font, font_size_pt=pt)
+                else:
+                    if body_slot_idx >= len(body_infos):
+                        raise ComposerError(
+                            f"slides[{position}]: slots declares more role='body' entries than "
+                            f"source slide {source_idx} has scorable body shapes "
+                            f"({len(body_infos)} available)"
+                        )
+                    info = body_infos[body_slot_idx]
+                    body_slot_idx += 1
+                    pt = _size_for(info, joined, "body")
+                    if is_bullets:
+                        _inject_bullets(info["shape"], text, font_name=resolved_body_font, font_size_pt=pt)
+                    else:
+                        _inject_single_line(info["shape"], text, font_name=resolved_body_font, font_size_pt=pt)
+                    used_shape_ids.add(id(info["shape"]._element))
 
         record["stale_text_shapes_cleared"] = _clear_unused_text_shapes(all_text_infos, used_shape_ids)
 
