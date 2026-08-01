@@ -17,13 +17,29 @@ Checks (always run):
      ``_txBody``/``_element`` tree into something that LOOKS right in
      python-pptx's in-memory object graph but serializes to broken
      XML (python-pptx itself won't catch this at save-time).
-  3. No dangling relationship references -- every ``r:id``/``r:embed``/
+  3. Every slide part's XML is VALID against the real ECMA-376
+     PresentationML schema (v0.7.0, ``ooxml_schema_valid``) -- a
+     stronger, categorically different check than #2: well-formed XML
+     can still violate the schema (wrong element order, a required
+     attribute missing, an out-of-enum value) in ways PowerPoint may
+     silently "fix"/reinterpret or outright refuse to open, and #2
+     alone cannot catch any of that. Uses ``assets/xsd/pml.xsd`` (the
+     real ECMA-376 schema set, copied verbatim from ``python-pptx``'s
+     own repo under the same MIT license this skill's core dependency
+     already carries -- see ``assets/xsd/NOTICE.md``) via
+     ``lxml.etree.XMLSchema``, no new dependency. Feasibility (does a
+     real-world OOXML producer's output actually pass strict schema
+     validation, or is this too strict to be useful against real
+     Slidesgo/Google-Slides-exported templates) was confirmed
+     empirically before adoption, not assumed -- see SKILL.md
+     "Verified" v0.7.0.
+  4. No dangling relationship references -- every ``r:id``/``r:embed``/
      ``r:link`` attribute actually used inside a slide's XML resolves
      to a real relationship in that slide's own ``.rels`` part. A
      stale/removed relationship reference here is exactly the class of
      bug ``image_injector.py``'s blip-swap or ``slide_duplicator.py``'s
      rId-remap could silently produce if either had an off-by-one.
-  4. No leaked vendor instructional/watermark text -- reuses this
+  5. No leaked vendor instructional/watermark text -- reuses this
      skill's own real, tested detection strings
      (``slide_classifier._INSTRUCTION_MARKERS`` /
      ``shape_roles.WATERMARK_TEXT_PATTERNS``) as a REGRESSION check
@@ -32,17 +48,17 @@ Checks (always run):
      output before those fixes) -- if either pattern set ever regresses,
      this check catches it mechanically instead of requiring another
      manual visual-review round to notice.
-  5. Slide dimensions match the compiled output's own declared
+  6. Slide dimensions match the compiled output's own declared
      presentation size (sanity check that nothing corrupted
      ``p:sldSz`` during compile).
 
 Checks (only with --original, informational/baseline-only, never a
 hard fail -- these exist so a TEMPLATE's own pre-existing quirks
 aren't mistaken for a defect this skill introduced):
-  6. Output slide dimensions vs. the original template's own
+  7. Output slide dimensions vs. the original template's own
      dimensions (hard fail if they differ -- this skill's compile
      pipeline never intentionally resizes a slide).
-  7. Theme major/minor font: reports whether the output's theme fonts
+  8. Theme major/minor font: reports whether the output's theme fonts
      differ from the original template's (informational only --
      ``--heading-font``/``--body-font`` deliberately change this, so a
      difference is not itself a defect).
@@ -71,6 +87,28 @@ for _stream in (sys.stdout, sys.stderr):
 
 _NS_R = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
 _RID_ATTRS = (f"{{{_NS_R}}}id", f"{{{_NS_R}}}embed", f"{{{_NS_R}}}link")
+
+_XSD_DIR = Path(__file__).resolve().parent.parent / "assets" / "xsd"
+_PML_XSD_PATH = _XSD_DIR / "pml.xsd"
+_pml_schema_cache: "etree.XMLSchema | None" = None
+
+
+def _load_pml_schema() -> etree.XMLSchema:
+    """Lazily load and cache the real ECMA-376 PresentationML schema
+    (see assets/xsd/NOTICE.md for provenance/license). Loading parses
+    24 interconnected .xsd files (pml.xsd xsd:include/import-s the
+    DrawingML and shared-type schemas also in that directory) -- cached
+    at module level so validating many slides in one run only pays
+    this cost once."""
+    global _pml_schema_cache
+    if _pml_schema_cache is None:
+        if not _PML_XSD_PATH.is_file():
+            raise ValidateDeckError(
+                f"OOXML schema not found at {_PML_XSD_PATH} -- assets/xsd/ appears to be "
+                f"missing or incomplete, cannot run the schema-validity check"
+            )
+        _pml_schema_cache = etree.XMLSchema(etree.parse(str(_PML_XSD_PATH)))
+    return _pml_schema_cache
 
 
 class ValidateDeckError(Exception):
@@ -106,6 +144,34 @@ def check_slide_xml_wellformed(path: Path) -> dict:
     return {
         "check": "slide_xml_wellformed", "ok": not failures,
         "detail": failures or "all slide parts well-formed XML",
+    }
+
+
+def check_ooxml_schema_valid(path: Path) -> dict:
+    """Validate every slide part against the real ECMA-376
+    PresentationML schema (v0.7.0) -- see module docstring check #3
+    and assets/xsd/NOTICE.md. A categorically stronger check than
+    well-formedness alone: well-formed XML can still violate the
+    schema (wrong element order, a required attribute missing, an
+    out-of-enum value)."""
+    schema = _load_pml_schema()
+    failures: list[str] = []
+    with zipfile.ZipFile(path) as zf:
+        for name in _slide_part_names(zf):
+            try:
+                doc = etree.fromstring(zf.read(name))
+            except etree.XMLSyntaxError:
+                # Already reported by check_slide_xml_wellformed --
+                # don't double-report the same defect under a
+                # different check name, and schema-validating
+                # unparseable XML isn't meaningful anyway.
+                continue
+            if not schema.validate(doc):
+                for error in schema.error_log:
+                    failures.append(f"{name}:{error.line}: {error.message}")
+    return {
+        "check": "ooxml_schema_valid", "ok": not failures,
+        "detail": failures or f"all slide parts valid against ECMA-376 PresentationML schema ({_PML_XSD_PATH.name})",
     }
 
 
@@ -241,6 +307,7 @@ def validate_deck(output_path: Path, original_path: Path | None) -> dict:
 
     checks.extend([
         check_slide_xml_wellformed(output_path),
+        check_ooxml_schema_valid(output_path),
         check_no_dangling_relationships(output_path),
         check_no_leaked_vendor_text(output_path),
         check_slide_dimensions_self_consistent(output_path),

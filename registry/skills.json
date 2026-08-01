@@ -2458,7 +2458,7 @@
     },
     {
       "skill_id": "slide-deck-composer",
-      "version": "0.6.0",
+      "version": "0.7.0",
       "source": {
         "type": "self-authored"
       },
@@ -2489,7 +2489,7 @@
       "security_audit": {
         "status": "passed",
         "date": "2026-08-02",
-        "note": "Re-audited at 0.6.0 (2026-08-02): font_manager.py gained resolve_effective_font (pure XML attribute reading via lxml/python-pptx's own element tree, no new I/O). compile_deck.py's font resolution restructured to a per-shape closure, no new dependency or subprocess call. font_vietnamese.py gained one new table entry (Libre Baskerville, real web-search-cited data, not a script-executed lookup -- static table edit). Grep for subprocess/os.system/eval(/exec(/urllib/requests/socket/shell=True: clean, no new hits."
+        "note": "Re-audited at 0.7.0 (2026-08-02): added assets/xsd/ (24 real ECMA-376 XSD files, copied verbatim from scanny/python-pptx's own MIT-licensed repo -- static schema data, no executable code, no new dependency) and validate_deck.py's ooxml_schema_valid check (uses lxml.etree.XMLSchema, already a dependency). Grep for subprocess/os.system/eval(/exec(/urllib/requests/socket/shell=True: clean, no new hits. Confirmed no Slidesgo template filename/path bundled (BYOT unchanged, the new assets/xsd/ files are OOXML SPEC schemas, not template content)."
       },
       "dependencies": [
         "python-pptx==1.0.2",
