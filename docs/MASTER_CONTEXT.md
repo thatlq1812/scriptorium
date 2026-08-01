@@ -8,6 +8,7 @@
 | 1.3.0 | 2026-07-27 | Claude | Added `docs/templates/` (reusable operational templates, e.g. `CLUSTER_SURVEY_TEMPLATE.md`) and `outside_agy/` (external LegalTech reference material surveyed via a cross-agent `request.md` discussion) to the repo structure diagram — both existed on disk already this session, diagram was stale. |
 | 1.4.0 | 2026-07-29 | Claude | Registry grew 39→62 skills in one session (`UPGRADE_PLAN_20260729.md`, full detail in `docs/STATUS.md`). Added `docs/guides/` (non-technical end-user documentation) and the repo-root `UPGRADE_PLAN_20260729.md` (active execution checklist) to the structure diagram — both new this session. Corrected §4's stated `DECISIONS_PENDING.md` convention ("remove an entry once decided") to match actual practice, which has kept a dated "Resolved" section for audit-trail purposes since before this session, not deleted resolved entries — the doc was already stale against real usage, not a new decision. |
 | 1.5.0 | 2026-08-01 | Claude | `UPGRADE_PLAN_20260729.md` fully executed (all 7 items done) — archived to `docs/archive/upgrade-plan-2026-07-29/` alongside `request.md`, removed from the structure diagram and `CLAUDE.md`'s read order. Its still-live "scout before a new skill type" working rule was extracted into `CLAUDE.md`'s pipeline section (a standing rule, not tied to one execution round) before archiving, so it isn't lost. Added repo-root `SKILLS_MAP.md` (Mermaid registry overview) to the structure diagram. |
+| 1.6.0 | 2026-08-01 | Claude | Registry grew 62→63 skills: `slide-deck-composer` (clone-and-inject `.pptx` generation from a caller-supplied real template), built and then upgraded twice more the same day (v0.1.0→v0.1.1 bug-fix round, v0.1.1→v0.2.0 thumbnail-grid/image-injection round) — full detail in `docs/STATUS.md`'s 2026-08-01 entries. Added gitignored `data/` (local dev/test fixtures, e.g. real Slidesgo templates — never bundled into a skill's shipped assets) to the structure diagram. |
 
 ---
 
@@ -58,6 +59,9 @@ scriptorium/
 │                                # docs/archive/), distilled into docs/specs/ + docs/ROADMAP.md
 ├── outside_agy/                 # External LegalTech reference material (playbooks/skill models
 │                                # from other products), comparison only, not copied
+├── data/                        # Gitignored local fixtures (e.g. real Slidesgo .pptx templates for
+│                                # slide-deck-composer's own dev/test use) — never bundled into a
+│                                # skill's shipped assets, never a source of truth
 ├── skills/
 │   └── <skill_id>/SKILL.md     # Each skill is its own subfolder
 ├── registry/
