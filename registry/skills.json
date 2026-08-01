@@ -2458,7 +2458,7 @@
     },
     {
       "skill_id": "slide-deck-composer",
-      "version": "0.4.0",
+      "version": "0.5.0",
       "source": {
         "type": "self-authored"
       },
@@ -2488,8 +2488,8 @@
       },
       "security_audit": {
         "status": "passed",
-        "date": "2026-08-01",
-        "note": "Re-audited at 0.4.0 (2026-08-01): shape_roles.py gained recursive group-shape traversal (iter_shapes_with_absolute_bbox/_group_transform/find_all_pictures) and image_injector.py was updated to use it -- pure geometry/XML-attribute reading, no new I/O surface, no new dependency. Grep for subprocess/os.system/eval(/exec(/urllib/requests/socket/shell=True: clean, no new hits (still only the 1 documented thumbnail_grid.py LibreOffice call)."
+        "date": "2026-08-02",
+        "note": "Re-audited at 0.5.0 (2026-08-02): compile_deck.py's _inject_bullets gained an optional heading param, LAYOUT_2COL/LAYOUT_CUSTOM branches updated (report a new slot_mapping field for custom layout, no new I/O). Found and fixed via an independent cold-agent usability test. Grep for subprocess/os.system/eval(/exec(/urllib/requests/socket/shell=True: clean, no new hits."
       },
       "dependencies": [
         "python-pptx==1.0.2",

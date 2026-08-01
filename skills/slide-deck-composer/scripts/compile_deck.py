@@ -339,7 +339,9 @@ def _required_body_capacity(layout_type: str, content) -> int:
     if layout_type == C.LAYOUT_STD:
         raw = len("\n".join(content.bullets))
     elif layout_type == C.LAYOUT_2COL:
-        raw = max(len("\n".join(content.left_column)), len("\n".join(content.right_column)))
+        left = "\n".join([content.left_header, *content.left_column]) if content.left_header else "\n".join(content.left_column)
+        right = "\n".join([content.right_header, *content.right_column]) if content.right_header else "\n".join(content.right_column)
+        raw = max(len(left), len(right))
     elif layout_type == C.LAYOUT_IMG:
         raw = len(content.caption)
     elif layout_type == C.LAYOUT_SECTION:
@@ -556,14 +558,41 @@ def _inject_single_line(
 
 def _inject_bullets(
     shape, bullets: list[str], *, font_name: str | None, font_size_pt: float,
+    heading: str | None = None,
 ) -> None:
+    """Inject a bullet list into `shape`'s text frame, optionally
+    preceded by a bold heading paragraph in the same shape.
+
+    `heading` closes a real bug found via a cold-agent usability test
+    (2026-08-02): text_utils._parse_two_column_slide already parses a
+    two_column slide's "### Left"/"### Right" markdown into
+    ParsedSlideContent.left_header/right_header, but LAYOUT_2COL's
+    injection branch never read either field -- the sub-heading text
+    was silently discarded with no error, no warning, and not counted
+    in stale_text_shapes_cleared. The tester (a fresh agent with no
+    prior context on this skill, given a real client brief) found this
+    the hard way and worked around it by folding the heading into the
+    first bullet line; that workaround shouldn't be necessary. This
+    shape only has ONE text frame per column (no separate heading
+    placeholder to inject into), so the fix is to inject the heading
+    as a bold first paragraph inside the same shape, ahead of the
+    bullets -- not a second shape, since none exists for it.
+    """
     tf = shape.text_frame
     while len(tf.paragraphs) > 1:
         tf._txBody.remove(tf.paragraphs[-1]._p)
     if not bullets:
         bullets = [""]
-    for i, bullet in enumerate(bullets):
-        p = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
+    first = True
+    if heading and heading.strip():
+        p = tf.paragraphs[0]
+        clean = text_utils.clean_markdown_formatting(heading)
+        runs = rich_text.parse_inline_formatting(clean)
+        rich_text.apply_runs_to_paragraph(p, runs, base_font_name=font_name, base_font_size_pt=font_size_pt, base_bold=True)
+        first = False
+    for bullet in bullets:
+        p = tf.paragraphs[0] if first else tf.add_paragraph()
+        first = False
         clean = text_utils.clean_markdown_formatting(bullet)
         runs = rich_text.parse_inline_formatting(clean)
         rich_text.apply_runs_to_paragraph(p, runs, base_font_name=font_name, base_font_size_pt=font_size_pt)
@@ -731,12 +760,14 @@ def compile_deck(
                 _inject_single_line(title_info["shape"], content.title, font_name=resolved_heading_font, font_size_pt=pt)
             cols = sorted(body_infos[:2], key=lambda i: i["left_pct"])
             if len(cols) >= 1 and content.left_column:
-                pt = _size_for(cols[0], "\n".join(content.left_column), "body")
-                _inject_bullets(cols[0]["shape"], content.left_column, font_name=resolved_body_font, font_size_pt=pt)
+                sized_text = "\n".join([content.left_header, *content.left_column]) if content.left_header else "\n".join(content.left_column)
+                pt = _size_for(cols[0], sized_text, "body")
+                _inject_bullets(cols[0]["shape"], content.left_column, font_name=resolved_body_font, font_size_pt=pt, heading=content.left_header)
                 used_shape_ids.add(id(cols[0]["shape"]._element))
             if len(cols) >= 2 and content.right_column:
-                pt = _size_for(cols[1], "\n".join(content.right_column), "body")
-                _inject_bullets(cols[1]["shape"], content.right_column, font_name=resolved_body_font, font_size_pt=pt)
+                sized_text = "\n".join([content.right_header, *content.right_column]) if content.right_header else "\n".join(content.right_column)
+                pt = _size_for(cols[1], sized_text, "body")
+                _inject_bullets(cols[1]["shape"], content.right_column, font_name=resolved_body_font, font_size_pt=pt, heading=content.right_header)
                 used_shape_ids.add(id(cols[1]["shape"]._element))
 
         elif layout_type == C.LAYOUT_IMG:
@@ -822,11 +853,26 @@ def compile_deck(
             # them, -> body_infos in shape_roles' own ranked order (best
             # candidate first) -- the caller chose that ranking implicitly
             # by looking at the rendered thumbnail and picking this slide.
+            # Real friction found via a cold-agent usability test
+            # (2026-08-02): a caller has no way to know which physical
+            # shape a given body slot's RANKED position corresponds to
+            # before compiling -- the thumbnail grid shows the whole
+            # slide, not each candidate shape's individual rank, so a
+            # tester matched slots to a team-photo slide by visual
+            # left-to-right reading and got a male founder's bio
+            # swapped under a female stock photo, only caught by
+            # rendering and looking. slot_mapping (added to `record`
+            # below) reports each slot's actual target shape position
+            # (left_pct/top_pct/area_pct, from the same shape_roles
+            # metadata already computed) so a caller can cross-check
+            # against a rendered thumbnail WITHOUT a second compile.
+            slot_mapping: list[dict] = []
             body_slot_idx = 0
             for slot in item["slots"]:
                 text = slot["text"]
                 is_bullets = isinstance(text, list)
                 joined = "\n".join(text) if is_bullets else text
+                preview = (text[0] if is_bullets and text else joined)[:60]
                 if slot["role"] == "title":
                     if title_info is None:
                         raise ComposerError(
@@ -838,6 +884,12 @@ def compile_deck(
                         _inject_bullets(title_info["shape"], text, font_name=resolved_heading_font, font_size_pt=pt)
                     else:
                         _inject_single_line(title_info["shape"], text, font_name=resolved_heading_font, font_size_pt=pt)
+                    slot_mapping.append({
+                        "role": "title", "text_preview": preview,
+                        "target_left_pct": round(title_info["left_pct"], 3),
+                        "target_top_pct": round(title_info["top_pct"], 3),
+                        "target_area_pct": round(title_info["area_pct"], 3),
+                    })
                 else:
                     if body_slot_idx >= len(body_infos):
                         raise ComposerError(
@@ -847,12 +899,19 @@ def compile_deck(
                         )
                     info = body_infos[body_slot_idx]
                     body_slot_idx += 1
+                    slot_mapping.append({
+                        "role": "body", "text_preview": preview,
+                        "target_left_pct": round(info["left_pct"], 3),
+                        "target_top_pct": round(info["top_pct"], 3),
+                        "target_area_pct": round(info["area_pct"], 3),
+                    })
                     pt = _size_for(info, joined, "body")
                     if is_bullets:
                         _inject_bullets(info["shape"], text, font_name=resolved_body_font, font_size_pt=pt)
                     else:
                         _inject_single_line(info["shape"], text, font_name=resolved_body_font, font_size_pt=pt)
                     used_shape_ids.add(id(info["shape"]._element))
+            record["slot_mapping"] = slot_mapping
 
         record["stale_text_shapes_cleared"] = _clear_unused_text_shapes(all_text_infos, used_shape_ids)
 
