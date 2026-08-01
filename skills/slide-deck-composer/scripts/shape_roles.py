@@ -9,6 +9,8 @@ from __future__ import annotations
 
 from typing import Any
 
+import shape_capacity
+
 WATERMARK_TEXT_PATTERNS: tuple[str, ...] = (
     "slidesgo", "freepik", "flaticon", "storyset", "pexels",
     "unsplash", "iconfinder", "icon8", "icon-8",
@@ -102,6 +104,10 @@ def analyze_text_shape(shape, slide_width_emu: int, slide_height_emu: int) -> di
     except Exception:
         shape_id = None
 
+    capacity_chars = shape_capacity.estimate_character_capacity(
+        width, height, font_size_pt=font_size_pt or 14.0,
+    )
+
     return {
         "shape": shape,
         "shape_id": shape_id,
@@ -114,7 +120,10 @@ def analyze_text_shape(shape, slide_width_emu: int, slide_height_emu: int) -> di
         "left_pct": left_pct,
         "width_pct": width_pct,
         "area_pct": area_pct,
+        "width_emu": width,
+        "height_emu": height,
         "font_size_pt": font_size_pt,
+        "capacity_chars": capacity_chars,
         "is_decorative": decorative,
         "is_watermark": watermark,
         "is_grouped": False,
@@ -178,28 +187,45 @@ def score_title_shape(info: dict[str, Any]) -> float:
 
 
 def score_body_shape(info: dict[str, Any]) -> float:
+    """Score a text shape as a candidate to hold this slide's real body
+    content.
+
+    Real bug found in a hands-on visual review (rendered to JPG via
+    LibreOffice and inspected): the old scoring gave a flat +1000 bonus
+    to ANY shape typed BODY/OBJECT/CONTENT, regardless of its actual
+    size. A template's 6-item icon-grid slide has 6 tiny CONTENT-typed
+    caption placeholders (each maybe 30-40 char capacity) sitting next
+    to decorative icon shapes -- one of those tiny captions scored
+    highest purely from the placeholder-type bonus and got a whole
+    4-bullet paragraph crammed into it, unreadable, while the 6 large
+    unrelated icons dominated the visual. Fixed: the placeholder-type
+    bonus is now capped well below what a real capacity_chars term can
+    swing, so a genuinely spacious BODY placeholder still wins over a
+    same-typed tiny one, and a large non-placeholder textbox can
+    outscore a tiny placeholder when that's all a template offers.
+    """
     if info["is_decorative"] or info.get("is_grouped"):
         return -1
     score = 0.0
     ph = info["ph_type"]
     if ph in ("BODY", "OBJECT", "CONTENT"):
-        score += 1000
+        score += 150
     elif ph == "SUBTITLE":
-        score += 400
-    if info["para_count"] >= 3:
-        score += 400
-    elif info["para_count"] == 2:
-        score += 200
-    if info["char_count"] >= 100:
-        score += 200
-    elif info["char_count"] >= 40:
         score += 80
+    if info["para_count"] >= 3:
+        score += 100
+    elif info["para_count"] == 2:
+        score += 50
+    # Dominant term: real character capacity from actual shape
+    # dimensions, not just placeholder type or existing text length --
+    # capped so one enormous shape can't make every other signal moot.
+    score += min(info.get("capacity_chars", 0), 600)
     if 0.20 <= info["top_pct"] <= 0.70:
-        score += 150
-    if info["area_pct"] >= 0.15:
-        score += 150
-    elif info["area_pct"] >= 0.06:
         score += 60
+    if info["area_pct"] >= 0.15:
+        score += 100
+    elif info["area_pct"] >= 0.06:
+        score += 40
     return score
 
 

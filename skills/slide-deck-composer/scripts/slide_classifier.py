@@ -14,6 +14,17 @@ _INSTRUCTION_MARKERS: tuple[str, ...] = (
     "flaticon", "storyset", "videvo", "wepik", "thanks slide",
     "infographic resources", "slidesgo | blog", "slidesgo |  blog",
     "credits and acknowledgements",
+    # Real bug found in a fifth hands-on visual review: "Fonts & colors
+    # used" (a Slidesgo template meta-slide documenting its own design
+    # system, not real content) didn't match "fonts used" above because
+    # of the "& colors" in between -- close but not a substring match.
+    # This slide has a normal-sized, normal-capacity body shape (306
+    # chars, 24% area), so none of the capacity/shape-count filters in
+    # compile_deck.py caught it either: the defect here isn't "too
+    # small," it's "real text, wrong semantic content," which only
+    # classification (not shape geometry) can catch.
+    "fonts & colors used", "fonts and colors used", "colors used",
+    "this presentation has been made using the following",
 )
 
 _TITLE_KEYWORDS: tuple[str, ...] = ("title", "cover", "intro", "opening")

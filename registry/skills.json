@@ -2458,7 +2458,7 @@
     },
     {
       "skill_id": "slide-deck-composer",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "source": {
         "type": "self-authored"
       },
@@ -2489,7 +2489,7 @@
       "security_audit": {
         "status": "passed",
         "date": "2026-08-01",
-        "note": "Self-audit. 13 scripts, python-pptx/lxml/Pillow (via shared venv) + stdlib only, zero network calls, no dynamic execution. Grep for subprocess/os.system/eval(/exec(/urllib/requests/socket/shell=True across scripts/*.py: clean (one false-positive substring match, confirmed by inspection). Verified the skill folder bundles/references no specific template file (BYOT architecture) -- grepped for Slidesgo filenames/data/ paths, none found; the 2 real 'slidesgo' string literals present are vendor-watermark/instruction-text DETECTION keywords used at runtime against a caller-supplied template, not a bundled asset reference."
+        "note": "Re-audited at 0.1.1 (2026-08-01): added scripts/shape_capacity.py (dimension-only EMU capacity estimate, no new dependency) and rebalanced shape_roles.py's scoring / compile_deck.py's source-slide-selection logic after a hands-on visual-review round (render to JPG via libreoffice, inspect, fix, re-render) found and fixed 5 more real bugs. Grep for subprocess/os.system/eval(/exec(/urllib/requests/socket/shell=True across scripts/*.py: clean, no new hits."
       },
       "dependencies": [
         "python-pptx==1.0.2",

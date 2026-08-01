@@ -121,18 +121,139 @@ def _title_and_body_counts(prs, slide_idx: int) -> tuple[bool, int]:
     return title is not None, len(bodies)
 
 
-def _fits(prs, slide_idx: int, min_body: int) -> bool:
-    """A candidate source slide is usable only when it has BOTH a
-    scorable title shape AND enough body candidates. Real bug found in
-    self-test round 3 against an actual Slidesgo template ("Elegant
-    Black & White Style"): its closing slide is a pure full-bleed
-    picture ("BLANK" layout, a single Picture shape, zero text frames)
-    -- min_body=0 for a "quote" layout let it through the old filter
-    (which only checked body count), so the quote's whole title text
-    silently had nowhere to go and vanished from the output. A
-    has_title check was missing entirely; fixed here."""
+def _best_body_capacity(prs, slide_idx: int) -> int:
+    """Largest capacity_chars among this slide's scored body candidates
+    (0 if none)."""
+    _title, bodies = shape_roles.find_title_and_body(
+        prs.slides[slide_idx].shapes, prs.slide_width, prs.slide_height
+    )
+    if not bodies:
+        return 0
+    return max(b.get("capacity_chars", 0) for b in bodies)
+
+
+# Slack factor applied to a candidate slide's best body capacity before
+# comparing against the real content length: font-size balancing can
+# still shrink text somewhat, so a slide doesn't need 100% headroom to
+# be usable -- but it must clear at least this fraction, or the content
+# is being crammed rather than fitted.
+_CAPACITY_SLACK = 0.6
+
+
+def _title_capacity(prs, slide_idx: int) -> int:
+    title, _bodies = shape_roles.find_title_and_body(
+        prs.slides[slide_idx].shapes, prs.slide_width, prs.slide_height
+    )
+    return title.get("capacity_chars", 0) if title else 0
+
+
+def _fits(
+    prs, slide_idx: int, min_body: int, min_capacity_chars: int = 0,
+    min_title_capacity_chars: int = 0, max_unused_body_shapes: int | None = None,
+) -> bool:
+    """A candidate source slide is usable only when it has a scorable
+    title shape, enough body candidates, AND (when real content length
+    is known) at least one body candidate with real character capacity
+    for that content.
+
+    Two real bugs found this way:
+    1. (self-test round 3, "Elegant Black & White Style" template) its
+       closing slide is a pure full-bleed picture (BLANK layout, a
+       single Picture shape, zero text frames) -- min_body=0 for a
+       "quote" layout let it through the old filter (body count only),
+       so the quote's whole title text silently had nowhere to go and
+       vanished. Fixed with the has_title check below.
+    2. (hands-on visual review, rendered to JPG and inspected) a
+       template's 6-item icon-grid slide has 6 tiny CONTENT-typed
+       caption placeholders that satisfy any min_body>=1 count check,
+       so a real multi-bullet paragraph kept getting crammed into one
+       tiny caption box while 6 unrelated icons dominated the slide
+       visually. Counting body shapes was never enough -- their actual
+       SIZE has to be checked against the real content about to be
+       injected. Fixed with the capacity check below.
+    """
     has_title, body_count = _title_and_body_counts(prs, slide_idx)
-    return has_title and body_count >= min_body
+    if not (has_title and body_count >= min_body):
+        return False
+    if min_title_capacity_chars > 0 and _title_capacity(prs, slide_idx) < min_title_capacity_chars * _CAPACITY_SLACK:
+        return False
+    if max_unused_body_shapes is not None and body_count > max_unused_body_shapes:
+        # Real bug found in a third visual review: a QUOTE/TITLE layout
+        # only injects into the title shape, so a candidate slide's body
+        # capacity is never actually checked for those layouts -- but a
+        # 6-icon-grid slide still passes every other check (it has a
+        # normal-sized title placeholder, separate from its 6 tiny icon
+        # captions) and gets picked, leaving 6 unrelated icons visually
+        # dominating an otherwise-clean quote slide. A title/quote slide
+        # is expected to be visually minimal; a slide with many small
+        # body/caption shapes is a structural signal of an icon-grid or
+        # stat-card design, not a clean statement slide -- reject it
+        # here regardless of whether the title text itself would fit.
+        return False
+    if min_capacity_chars <= 0:
+        return True
+    return _best_body_capacity(prs, slide_idx) >= min_capacity_chars * _CAPACITY_SLACK
+
+
+# Absolute floor for any layout that injects real prose into a body
+# shape, independent of how short the caller's actual text happens to
+# be. Without this, a short section subtitle (e.g. "Why Scriptorium
+# exists", ~23 chars) still clears a tiny icon-grid caption box's
+# capacity via the relative _CAPACITY_SLACK check, but the box remains
+# the wrong SHAPE for prose -- surrounded by 6 unrelated decorative
+# icons that stay visually dominant regardless of how little text goes
+# in. A real prose box, even for one short line, should be sized like
+# a sentence, not a numeral badge. Found via a second hands-on visual
+# review after the first capacity fix only helped the longer slides.
+_MIN_PROSE_CAPACITY_CHARS = 120
+
+# A normal single-message template slide (title+bullets, two-column,
+# caption+image, section divider) has a small, coherent number of body
+# candidates -- typically 1-4. A slide scoring far more than that is a
+# strong structural signal of an infographic/map/diagram slide (many
+# small per-region/per-item labels scattered over a decorative
+# graphic), not a plain content slide -- wrong shape for prose
+# injection regardless of any single candidate's capacity. Found via a
+# fourth hands-on visual review: a real Slidesgo template slide with a
+# decorative world-map graphic and 19 scored body candidates (small
+# per-country label boxes) got picked for a plain 6-bullet "standard"
+# slide, producing a map irrelevant to the content with bullets jammed
+# into one of the tiny label boxes.
+_MAX_BODY_SHAPES_FOR_PROSE = 8
+
+
+def _required_body_capacity(layout_type: str, content) -> int:
+    """Character length of the largest body block this layout will try
+    to inject, used to reject a structurally-plausible-but-too-small
+    source slide before it's picked. 0 means "no body content to size
+    against" (title/quote layouts check title capacity separately, not
+    via this path)."""
+    if layout_type == C.LAYOUT_STD:
+        raw = len("\n".join(content.bullets))
+    elif layout_type == C.LAYOUT_2COL:
+        raw = max(len("\n".join(content.left_column)), len("\n".join(content.right_column)))
+    elif layout_type == C.LAYOUT_IMG:
+        raw = len(content.caption)
+    elif layout_type == C.LAYOUT_SECTION:
+        raw = len(content.subtitle or " ".join(content.bullets))
+    elif layout_type == C.LAYOUT_TITLE:
+        raw = len(content.subtitle)
+    else:
+        return 0
+    if raw <= 0:
+        return 0
+    return max(raw, _MIN_PROSE_CAPACITY_CHARS)
+
+
+def _required_title_capacity(layout_type: str, content) -> int:
+    """Quote content is injected into the TITLE shape, not a body shape
+    (see compile_deck's LAYOUT_QUOTE branch) -- a long standalone quote
+    needs a title shape sized for a real sentence, not just any slide
+    with a scorable title. Other layouts' titles are short headings by
+    convention and don't need this extra check."""
+    if layout_type == C.LAYOUT_QUOTE and content.title:
+        return max(len(content.title), _MIN_PROSE_CAPACITY_CHARS)
+    return 0
 
 
 def pick_source_slide_index(
@@ -143,6 +264,8 @@ def pick_source_slide_index(
     classification: dict[str, list[int]],
     original_count: int,
     layout_round_robin: dict[str, int],
+    required_capacity_chars: int = 0,
+    required_title_capacity_chars: int = 0,
 ) -> tuple[int, bool]:
     """Pick a structurally-compatible template slide to clone for this
     output slide. Returns (source_slide_idx, structural_match)."""
@@ -156,7 +279,12 @@ def pick_source_slide_index(
     min_body = _MIN_BODY_REQUIRED.get(layout_type, 0)
 
     if layout_type == C.LAYOUT_TITLE:
-        candidates = [i for i in (title_pool or content_pool or all_pool) if _fits(prs, i, 0)]
+        candidates = [
+            i for i in (title_pool or content_pool or all_pool)
+            if _fits(prs, i, 0, max_unused_body_shapes=2)
+        ]
+        if not candidates:
+            candidates = [i for i in (title_pool or content_pool or all_pool) if _fits(prs, i, 0)]
         if candidates:
             return candidates[0], True
         # No title-pool slide has a scorable title shape (rare, but a
@@ -174,6 +302,33 @@ def pick_source_slide_index(
             return closing_candidates[0], True
 
     search_pool = content_pool or all_pool
+
+    # Capacity-aware search first: reject slides whose best body shape
+    # is too small for the real content about to be injected (see
+    # _fits docstring, bug 2). Only falls back to the capacity-blind
+    # search when NO slide in the template clears the bar -- a
+    # template that is uniformly tight on space shouldn't refuse to
+    # compile, but a template that genuinely HAS a spacious slide
+    # should never lose to a tiny one via round-robin luck.
+    # Quote/title-only layouts never touch body shapes, so a slide with
+    # many small body/caption shapes (an icon-grid/stat-card design)
+    # would otherwise pass on title capacity alone while leaving those
+    # unrelated shapes visually dominant. Cap it very low for those
+    # layouts; other layouts still get the general infographic/map cap
+    # (_MAX_BODY_SHAPES_FOR_PROSE) since they DO use one body shape but
+    # a 19-candidate slide is still structurally wrong regardless.
+    max_unused = 2 if layout_type in (C.LAYOUT_QUOTE, C.LAYOUT_TITLE) else _MAX_BODY_SHAPES_FOR_PROSE
+
+    if required_capacity_chars > 0 or required_title_capacity_chars > 0 or max_unused is not None:
+        capacity_matching = [
+            i for i in search_pool
+            if _fits(prs, i, min_body, required_capacity_chars, required_title_capacity_chars, max_unused)
+        ]
+        if capacity_matching:
+            counter = layout_round_robin.get(layout_type, 0)
+            layout_round_robin[layout_type] = counter + 1
+            return capacity_matching[counter % len(capacity_matching)], True
+
     matching = [i for i in search_pool if _fits(prs, i, min_body)]
     if not matching:
         matching = [i for i in all_pool if _fits(prs, i, min_body)]
@@ -327,13 +482,22 @@ def compile_deck(
 
     for position, item in enumerate(slides_spec):
         layout_type = C.LAYOUT_NAME_MAP[item["layout"]]
+
+        # Parsed BEFORE source-slide selection so pick_source_slide_index
+        # can reject a structurally-plausible-but-too-small candidate
+        # (see _fits's bug-2 docstring) -- selection needs to know the
+        # real content length, not just the layout type.
+        content = text_utils.parse_slide_content(layout_type, item["markdown"])
+        required_capacity = _required_body_capacity(layout_type, content)
+        required_title_capacity = _required_title_capacity(layout_type, content)
+
         source_idx, structural_match = pick_source_slide_index(
             prs, layout_type, position, total, classification, original_count, layout_round_robin,
+            required_capacity_chars=required_capacity,
+            required_title_capacity_chars=required_title_capacity,
         )
         source_slide = prs.slides[source_idx]
         new_slide = slide_duplicator.duplicate_slide(prs, source_slide)
-
-        content = text_utils.parse_slide_content(layout_type, item["markdown"])
 
         # Captured once, before any injection, so (a) role scoring sees
         # the template's real original text/geometry and (b) the later
