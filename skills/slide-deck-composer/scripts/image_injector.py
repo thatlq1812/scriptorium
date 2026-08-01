@@ -21,12 +21,14 @@ targeted. Adding/relating a fresh image part per replacement keeps
 each slide's swap independent.
 
 Granularity actually achieved (be honest, per SKILL.md discipline):
-per-slide, single-picture -- `pick_best_picture` selects ONE top-level
-(non-grouped, matching this skill's existing group-skip convention)
-`Picture` shape per slide via `shape_roles.score_picture_shape`
-(largest/most-centered wins). Multiple distinct pictures on the same
-slide are not independently addressable in this round; only the
-best-scoring one is replaced.
+per-slide, single-picture -- `pick_best_picture` selects ONE `Picture`
+shape per slide (v0.4.0: anywhere in the shape tree, including nested
+inside a `<p:grpSp>` group -- see `shape_roles.find_all_pictures`/
+`iter_shapes_with_absolute_bbox`) via `shape_roles.score_picture_shape`
+(largest/most-centered wins, using each candidate's correct absolute
+bounding box regardless of nesting depth). Multiple distinct pictures
+on the same slide are still not independently addressable in this
+round; only the best-scoring one is replaced.
 
 Aspect-ratio handling actually achieved: the replacement bitmap is
 letterboxed (padded, not stretched) to match the TARGET SHAPE's own
@@ -48,7 +50,6 @@ from pathlib import Path
 from typing import Any
 
 from PIL import Image
-from pptx.enum.shapes import MSO_SHAPE_TYPE
 from pptx.oxml.ns import qn
 
 import placeholder_images
@@ -62,34 +63,40 @@ class ImageInjectorError(Exception):
 _LETTERBOX_PAD_RGB = (245, 245, 245)
 
 
-def find_top_level_pictures(shapes) -> list[Any]:
-    """Top-level Picture shapes only -- matches shape_roles.
-    collect_text_shapes' deliberate decision to skip `<p:grpSp>` groups
-    (see that module's docstring): a picture nested inside a decorative
-    group is preserved untouched by the clone, never a valid injection
-    target in this skill's v1/v2 scope."""
-    out = []
-    for shape in shapes:
-        try:
-            if shape.shape_type == MSO_SHAPE_TYPE.PICTURE:
-                out.append(shape)
-        except Exception:
-            continue
-    return out
+def find_all_pictures(shapes) -> list[dict[str, Any]]:
+    """Every Picture shape anywhere in the tree, recursing into groups
+    (v0.4.0) -- thin re-export of `shape_roles.find_all_pictures` so
+    callers of this module don't need to import shape_roles directly
+    for this. See that function's docstring for the absolute-bbox
+    contract."""
+    return shape_roles.find_all_pictures(shapes)
 
 
 def pick_best_picture(shapes, slide_width_emu: int, slide_height_emu: int):
-    """Return the largest/most-centered top-level Picture shape on the
-    slide, or None if the slide has no top-level picture at all."""
-    candidates = find_top_level_pictures(shapes)
+    """Return (picture_shape, absolute_bbox) for the largest/most-
+    centered Picture shape anywhere on the slide (including nested
+    inside a group, v0.4.0), or (None, None) if the slide has no
+    picture at all. `absolute_bbox` is `(left, top, width, height)` in
+    EMU, correct regardless of nesting -- pass it through to
+    `replace_picture_image`'s `frame_bbox` so letterboxing uses the
+    picture's real DISPLAYED size, not a group-local one that could be
+    wrong under a non-identity group scale transform."""
+    candidates = find_all_pictures(shapes)
     if not candidates:
-        return None
+        return None, None
     scored = [
-        (shape_roles.score_picture_shape(s, slide_width_emu, slide_height_emu), s)
-        for s in candidates
+        (
+            shape_roles.score_picture_shape(
+                c["shape"], slide_width_emu, slide_height_emu,
+                bbox=(c["left"], c["top"], c["width"], c["height"]),
+            ),
+            c,
+        )
+        for c in candidates
     ]
     scored.sort(key=lambda t: -t[0])
-    return scored[0][1]
+    best = scored[0][1]
+    return best["shape"], (best["left"], best["top"], best["width"], best["height"])
 
 
 def _letterbox_to_frame_aspect(image: Image.Image, frame_w_emu: int, frame_h_emu: int) -> Image.Image:
@@ -122,13 +129,23 @@ def _letterbox_to_frame_aspect(image: Image.Image, frame_w_emu: int, frame_h_emu
     return canvas
 
 
-def replace_picture_image(picture_shape, slide_part, image_bytes: bytes) -> dict:
+def replace_picture_image(
+    picture_shape, slide_part, image_bytes: bytes,
+    frame_bbox: tuple[int, int, int, int] | None = None,
+) -> dict:
     """Replace `picture_shape`'s underlying image with `image_bytes`,
     letterboxed to the shape's own frame aspect ratio, and clear any
     pre-existing `<a:srcRect>` crop (see module docstring for why).
     The shape's position/size/effects/rotation XML is otherwise
     untouched -- only the blip relationship target and (if present)
     the crop rectangle are modified.
+
+    `frame_bbox` (absolute left/top/width/height in EMU), when given,
+    overrides `picture_shape.width`/`.height` for the letterbox aspect-
+    ratio computation -- required when the picture is nested inside a
+    group under a non-identity scale transform (v0.4.0), where the
+    shape's own raw `.width`/`.height` are group-local, not the size
+    it's actually displayed at.
 
     Raises ImageInjectorError if `image_bytes` isn't a decodable
     raster image, or the shape has no `<a:blip>` element (i.e. isn't a
@@ -140,8 +157,11 @@ def replace_picture_image(picture_shape, slide_part, image_bytes: bytes) -> dict
     except Exception as e:
         raise ImageInjectorError(f"replacement image bytes are not a decodable raster image: {e}") from e
 
-    frame_w = int(picture_shape.width or 0)
-    frame_h = int(picture_shape.height or 0)
+    if frame_bbox is not None:
+        _left, _top, frame_w, frame_h = frame_bbox
+    else:
+        frame_w = int(picture_shape.width or 0)
+        frame_h = int(picture_shape.height or 0)
     letterboxed = _letterbox_to_frame_aspect(source_img, frame_w, frame_h)
 
     buf = io.BytesIO()
@@ -193,7 +213,7 @@ def inject_slide_image(
     see compile_deck.py's LAYOUT_IMG branch, which treats it as a hard
     refuse when the caller explicitly asked for an image swap).
     """
-    picture = pick_best_picture(new_slide.shapes, slide_width_emu, slide_height_emu)
+    picture, frame_bbox = pick_best_picture(new_slide.shapes, slide_width_emu, slide_height_emu)
     if picture is None:
         return None
 
@@ -206,7 +226,7 @@ def inject_slide_image(
         data = placeholder_images.generate_placeholder_png(placeholder_seed)
         source = f"generated_placeholder:{hashlib.md5(placeholder_seed.encode('utf-8')).hexdigest()[:8]}"
 
-    report = replace_picture_image(picture, new_slide.part, data)
+    report = replace_picture_image(picture, new_slide.part, data, frame_bbox=frame_bbox)
     report["source"] = source
     report["shape_id"] = getattr(picture, "shape_id", None)
     return report

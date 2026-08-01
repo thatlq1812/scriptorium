@@ -2458,7 +2458,7 @@
     },
     {
       "skill_id": "slide-deck-composer",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "source": {
         "type": "self-authored"
       },
@@ -2489,7 +2489,7 @@
       "security_audit": {
         "status": "passed",
         "date": "2026-08-01",
-        "note": "Re-audited at 0.3.0 (2026-08-01): added 'custom' layout (constants.py new LAYOUT_CUSTOM entry, compile_deck.py new validation + injection branch) -- ad-hoc slot mapping for real template slide shapes the 6 named layouts don't cover, mandatory explicit source_slide_idx (no new automatic-selection surface). Grep for subprocess/os.system/eval(/exec(/urllib/requests/socket/shell=True: clean, no new hits (still only the 1 documented thumbnail_grid.py LibreOffice call). No new dependency."
+        "note": "Re-audited at 0.4.0 (2026-08-01): shape_roles.py gained recursive group-shape traversal (iter_shapes_with_absolute_bbox/_group_transform/find_all_pictures) and image_injector.py was updated to use it -- pure geometry/XML-attribute reading, no new I/O surface, no new dependency. Grep for subprocess/os.system/eval(/exec(/urllib/requests/socket/shell=True: clean, no new hits (still only the 1 documented thumbnail_grid.py LibreOffice call)."
       },
       "dependencies": [
         "python-pptx==1.0.2",
