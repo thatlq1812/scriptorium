@@ -2458,7 +2458,7 @@
     },
     {
       "skill_id": "slide-deck-composer",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "source": {
         "type": "self-authored"
       },
