@@ -60,6 +60,16 @@ _FONT_TABLE: dict[str, tuple[str, bool]] = {
     "Noto Serif": ("serif", True),
     "Playfair Display": ("serif", True),
     "Merriweather": ("serif", True),
+    # Added v0.6.0: real Google Font, confirmed via direct web search
+    # (2026-08-02) to have NO Vietnamese language subset -- its
+    # character set covers 103 Latin languages but Vietnamese is not
+    # among them (Google Fonts specimen page + googlefonts-discuss
+    # thread confirm Vietnamese support for this family was discussed
+    # but never shipped). Found because a real template
+    # ("Vintage Recipe Book by Slidesgo.pptx") uses it as its actual
+    # title font, declared at the slide-layout level (not the theme
+    # scheme) -- see font_manager.resolve_effective_font.
+    "Libre Baskerville": ("serif", False),
     # monospace
     "Consolas": ("monospace", True),
     "Courier New": ("monospace", True),

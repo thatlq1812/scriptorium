@@ -2458,7 +2458,7 @@
     },
     {
       "skill_id": "slide-deck-composer",
-      "version": "0.5.0",
+      "version": "0.6.0",
       "source": {
         "type": "self-authored"
       },
@@ -2489,7 +2489,7 @@
       "security_audit": {
         "status": "passed",
         "date": "2026-08-02",
-        "note": "Re-audited at 0.5.0 (2026-08-02): compile_deck.py's _inject_bullets gained an optional heading param, LAYOUT_2COL/LAYOUT_CUSTOM branches updated (report a new slot_mapping field for custom layout, no new I/O). Found and fixed via an independent cold-agent usability test. Grep for subprocess/os.system/eval(/exec(/urllib/requests/socket/shell=True: clean, no new hits."
+        "note": "Re-audited at 0.6.0 (2026-08-02): font_manager.py gained resolve_effective_font (pure XML attribute reading via lxml/python-pptx's own element tree, no new I/O). compile_deck.py's font resolution restructured to a per-shape closure, no new dependency or subprocess call. font_vietnamese.py gained one new table entry (Libre Baskerville, real web-search-cited data, not a script-executed lookup -- static table edit). Grep for subprocess/os.system/eval(/exec(/urllib/requests/socket/shell=True: clean, no new hits."
       },
       "dependencies": [
         "python-pptx==1.0.2",

@@ -622,10 +622,18 @@ def compile_deck(
 
     theme = font_manager.FontManager(prs).get_theme_fonts()
     font_log: list[dict] = []
-    resolved_heading_font = _resolve_font_name(heading_font, theme.major_font, vietnamese, "heading", font_log)
-    resolved_body_font = _resolve_font_name(body_font, theme.minor_font, vietnamese, "body", font_log)
-
+    # Only pre-resolve a GLOBAL font when the caller explicitly requested
+    # a font swap (--heading-font/--body-font) -- that's a real request
+    # to validate and apply upfront, unlike the plain --vietnamese case,
+    # which is now handled per-shape below (_font_for) using each
+    # shape's own real effective font (see font_manager.resolve_
+    # effective_font's docstring, v0.6.0) rather than blindly checking
+    # only the theme's fontScheme for every shape in the deck.
+    resolved_heading_font: str | None = None
+    resolved_body_font: str | None = None
     if heading_font or body_font:
+        resolved_heading_font = _resolve_font_name(heading_font, theme.major_font, vietnamese, "heading", font_log)
+        resolved_body_font = _resolve_font_name(body_font, theme.minor_font, vietnamese, "body", font_log)
         applied_heading = resolved_heading_font or theme.major_font
         applied_body = resolved_body_font or theme.minor_font
         if applied_heading and applied_body:
@@ -733,51 +741,89 @@ def compile_deck(
                 })
             return decision.balanced_pt
 
+        def _font_for(shape, role: str) -> str | None:
+            """Per-SHAPE font resolution (v0.6.0), replacing a single
+            deck-wide theme-only decision. See font_manager.
+            resolve_effective_font's docstring for the real bug this
+            fixes (found via a cold-agent usability test): a template
+            can declare its real display font at the slide-layout or
+            master level, invisible to a theme-only check, and forcing
+            the theme font onto every run discarded that real
+            typography even when the theme font itself was 'safe'.
+            """
+            explicit = heading_font if role == "title" else body_font
+            if explicit:
+                # An explicit --heading-font/--body-font request is a
+                # real global override -- applies uniformly, already
+                # resolved (and validated) once before this loop.
+                return resolved_heading_font if role == "title" else resolved_body_font
+            if not vietnamese:
+                return None  # no override requested at all -- leave inherited font alone
+            shape_font = font_manager.resolve_effective_font(shape, new_slide)
+            theme_font = theme.major_font if role == "title" else theme.minor_font
+            effective = shape_font or theme_font
+            if not effective:
+                return None
+            check = font_vietnamese.check_font_vietnamese_safety(effective)
+            if check.status == "unknown":
+                raise ComposerError(
+                    f"slides[{position}]: --vietnamese requested but the {role} shape's "
+                    f"effective font '{effective}' has unknown Vietnamese glyph coverage: "
+                    f"{check.reason}"
+                )
+            resolved = check.substitute if check.status == "substitute" else check.font_name
+            font_log.append({
+                "position": position, "role": role, "requested_or_theme": effective,
+                "status": check.status, "resolved": resolved,
+                "source": "shape/layout/master" if shape_font else "theme",
+            })
+            return resolved
+
         if layout_type == C.LAYOUT_TITLE:
             if title_info is not None:
                 pt = _size_for(title_info, content.title, "title")
-                _inject_single_line(title_info["shape"], content.title, font_name=resolved_heading_font, font_size_pt=pt)
+                _inject_single_line(title_info["shape"], content.title, font_name=_font_for(title_info["shape"], "title"), font_size_pt=pt)
             if content.subtitle and body_infos:
                 sub_info = body_infos[0]
                 pt = _size_for(sub_info, content.subtitle, "body")
-                _inject_single_line(sub_info["shape"], content.subtitle, font_name=resolved_body_font, font_size_pt=pt)
+                _inject_single_line(sub_info["shape"], content.subtitle, font_name=_font_for(sub_info["shape"], "body"), font_size_pt=pt)
                 used_shape_ids.add(id(sub_info["shape"]._element))
 
         elif layout_type == C.LAYOUT_STD:
             if title_info is not None:
                 pt = _size_for(title_info, content.title, "title")
-                _inject_single_line(title_info["shape"], content.title, font_name=resolved_heading_font, font_size_pt=pt)
+                _inject_single_line(title_info["shape"], content.title, font_name=_font_for(title_info["shape"], "title"), font_size_pt=pt)
             if body_infos:
                 body_info = body_infos[0]
                 joined = "\n".join(content.bullets)
                 pt = _size_for(body_info, joined, "body")
-                _inject_bullets(body_info["shape"], content.bullets, font_name=resolved_body_font, font_size_pt=pt)
+                _inject_bullets(body_info["shape"], content.bullets, font_name=_font_for(body_info["shape"], "body"), font_size_pt=pt)
                 used_shape_ids.add(id(body_info["shape"]._element))
 
         elif layout_type == C.LAYOUT_2COL:
             if title_info is not None:
                 pt = _size_for(title_info, content.title, "title")
-                _inject_single_line(title_info["shape"], content.title, font_name=resolved_heading_font, font_size_pt=pt)
+                _inject_single_line(title_info["shape"], content.title, font_name=_font_for(title_info["shape"], "title"), font_size_pt=pt)
             cols = sorted(body_infos[:2], key=lambda i: i["left_pct"])
             if len(cols) >= 1 and content.left_column:
                 sized_text = "\n".join([content.left_header, *content.left_column]) if content.left_header else "\n".join(content.left_column)
                 pt = _size_for(cols[0], sized_text, "body")
-                _inject_bullets(cols[0]["shape"], content.left_column, font_name=resolved_body_font, font_size_pt=pt, heading=content.left_header)
+                _inject_bullets(cols[0]["shape"], content.left_column, font_name=_font_for(cols[0]["shape"], "body"), font_size_pt=pt, heading=content.left_header)
                 used_shape_ids.add(id(cols[0]["shape"]._element))
             if len(cols) >= 2 and content.right_column:
                 sized_text = "\n".join([content.right_header, *content.right_column]) if content.right_header else "\n".join(content.right_column)
                 pt = _size_for(cols[1], sized_text, "body")
-                _inject_bullets(cols[1]["shape"], content.right_column, font_name=resolved_body_font, font_size_pt=pt, heading=content.right_header)
+                _inject_bullets(cols[1]["shape"], content.right_column, font_name=_font_for(cols[1]["shape"], "body"), font_size_pt=pt, heading=content.right_header)
                 used_shape_ids.add(id(cols[1]["shape"]._element))
 
         elif layout_type == C.LAYOUT_IMG:
             if title_info is not None:
                 pt = _size_for(title_info, content.title, "title")
-                _inject_single_line(title_info["shape"], content.title, font_name=resolved_heading_font, font_size_pt=pt)
+                _inject_single_line(title_info["shape"], content.title, font_name=_font_for(title_info["shape"], "title"), font_size_pt=pt)
             if body_infos and content.caption:
                 cap_info = body_infos[0]
                 pt = _size_for(cap_info, content.caption, "body")
-                _inject_single_line(cap_info["shape"], content.caption, font_name=resolved_body_font, font_size_pt=pt)
+                _inject_single_line(cap_info["shape"], content.caption, font_name=_font_for(cap_info["shape"], "body"), font_size_pt=pt)
                 used_shape_ids.add(id(cap_info["shape"]._element))
 
             # Real picture injection (see image_injector.py). Only
@@ -820,12 +866,12 @@ def compile_deck(
         elif layout_type == C.LAYOUT_QUOTE:
             if title_info is not None:
                 pt = _size_for(title_info, content.title, "title")
-                _inject_single_line(title_info["shape"], content.title, font_name=resolved_heading_font, font_size_pt=pt)
+                _inject_single_line(title_info["shape"], content.title, font_name=_font_for(title_info["shape"], "title"), font_size_pt=pt)
 
         elif layout_type == C.LAYOUT_SECTION:
             if title_info is not None:
                 pt = _size_for(title_info, content.title, "title")
-                _inject_single_line(title_info["shape"], content.title, font_name=resolved_heading_font, font_size_pt=pt)
+                _inject_single_line(title_info["shape"], content.title, font_name=_font_for(title_info["shape"], "title"), font_size_pt=pt)
             # Real bug found in self-test round 1: markdown with a single
             # "## Heading\nplain text line" (no second heading) parses
             # via text_utils' standard-slide path, which routes an
@@ -839,7 +885,7 @@ def compile_deck(
             if subtitle_text and body_infos:
                 sub_info = body_infos[0]
                 pt = _size_for(sub_info, subtitle_text, "body")
-                _inject_single_line(sub_info["shape"], subtitle_text, font_name=resolved_body_font, font_size_pt=pt)
+                _inject_single_line(sub_info["shape"], subtitle_text, font_name=_font_for(sub_info["shape"], "body"), font_size_pt=pt)
                 used_shape_ids.add(id(sub_info["shape"]._element))
 
         elif layout_type == C.LAYOUT_CUSTOM:
@@ -881,9 +927,9 @@ def compile_deck(
                         )
                     pt = _size_for(title_info, joined, "title")
                     if is_bullets:
-                        _inject_bullets(title_info["shape"], text, font_name=resolved_heading_font, font_size_pt=pt)
+                        _inject_bullets(title_info["shape"], text, font_name=_font_for(title_info["shape"], "title"), font_size_pt=pt)
                     else:
-                        _inject_single_line(title_info["shape"], text, font_name=resolved_heading_font, font_size_pt=pt)
+                        _inject_single_line(title_info["shape"], text, font_name=_font_for(title_info["shape"], "title"), font_size_pt=pt)
                     slot_mapping.append({
                         "role": "title", "text_preview": preview,
                         "target_left_pct": round(title_info["left_pct"], 3),
@@ -907,9 +953,9 @@ def compile_deck(
                     })
                     pt = _size_for(info, joined, "body")
                     if is_bullets:
-                        _inject_bullets(info["shape"], text, font_name=resolved_body_font, font_size_pt=pt)
+                        _inject_bullets(info["shape"], text, font_name=_font_for(info["shape"], "body"), font_size_pt=pt)
                     else:
-                        _inject_single_line(info["shape"], text, font_name=resolved_body_font, font_size_pt=pt)
+                        _inject_single_line(info["shape"], text, font_name=_font_for(info["shape"], "body"), font_size_pt=pt)
                     used_shape_ids.add(id(info["shape"]._element))
             record["slot_mapping"] = slot_mapping
 
