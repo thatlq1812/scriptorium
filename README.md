@@ -1,6 +1,6 @@
 # Scriptorium
 
-Scriptorium is a system for **creating, quality-testing, security-auditing, and cataloging portable [Agent Skills](https://agentskills.io)** — the open `SKILL.md` standard that lets an agent's capabilities be packaged, shared, and run across any harness that supports the spec (~44 platforms as of mid-2026: Claude Code, Codex CLI, Kimi Code CLI, Grok Build, and others). It is not a chatbot, not a dedicated app, and not an agent harness of its own — it produces the skill *artifacts* other agents run, and never sits in the middle as an AI-calling service itself.
+Scriptorium is a system for **creating, quality-testing, security-auditing, and cataloging portable [Agent Skills](https://agentskills.io)** — the open `SKILL.md` standard that lets an agent's capabilities be packaged and run across any harness that supports the spec (~44 platforms as of mid-2026: Claude Code, Codex CLI, Kimi Code CLI, Grok Build, and others). It is not a chatbot, not a dedicated app, and not an agent harness of its own — it produces the skill *artifacts* other agents run, and never sits in the middle as an AI-calling service itself. The registry is built to that open format for cross-harness compatibility, but its content is proprietary — distributed commercially, not published to the public agentskills.io ecosystem.
 
 ## Why this exists
 

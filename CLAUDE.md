@@ -7,6 +7,8 @@
 
 Scriptorium creates, quality-tests, security-audits, and catalogs portable **Agent Skills** (the open `SKILL.md` standard at agentskills.io, ~44 adopter platforms). It is **not** an app, chatbot, or agent harness — it produces skill *artifacts* that run on whatever harness/model the consuming agent already has. Scriptorium itself never calls an AI API (see "Non-negotiable principles" below).
 
+Skills are built to that open `SKILL.md` format for cross-harness technical compatibility only — the registry itself (`skills/`, `registry/skills.json`) is proprietary, not published to the public agentskills.io showcase/community. Distribution is commercial: whole skills or curated packs, exported via `skill-exporter`, sold retail — never given away as an open contribution. (Owner decision, 2026-08-02.)
+
 **Read in this order before doing any non-trivial work:**
 1. This file (`CLAUDE.md`) — you are here ✓
 2. `registry/SCHEMA.md` — registry field definitions and `quality_score` interpretation
