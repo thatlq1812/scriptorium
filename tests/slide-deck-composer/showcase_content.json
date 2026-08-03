@@ -1,0 +1,64 @@
+{
+  "slides": [
+    {
+      "layout": "title",
+      "markdown": "# slide-deck-composer\nA clone-and-inject engine for real .pptx decks, hardened one real bug at a time",
+      "source_slide_idx": 0
+    },
+    {
+      "layout": "standard",
+      "markdown": "## What changed after the first ship\n- Grouped shapes: text and pictures nested inside a group are now real, scorable candidates, not invisible\n- A custom layout: any real template shape becomes usable, not just the 6 named ones\n- Per-shape font resolution: checks a shape's real font, not just the theme's declared one\n- Real ECMA-376 schema validation: 24 real XSD files, not 7 self-authored guesses",
+      "source_slide_idx": 5
+    },
+    {
+      "layout": "custom",
+      "source_slide_idx": 6,
+      "slots": [
+        {"role": "title", "text": "Four rounds, each earning the next"},
+        {"role": "body", "text": "Four hardening rounds, one real deck compiled and rendered each time"},
+        {"role": "body", "text": "v0.1-0.3: clone-and-inject engine, 6 layouts, Vietnamese font-safety, font-size balancing"},
+        {"role": "body", "text": "v0.4: real OOXML group support -- text and pictures nested in a group finally became visible"},
+        {"role": "body", "text": "v0.5: a cold agent's real client brief found 2 real bugs no self-test had caught"},
+        {"role": "body", "text": "v0.6-0.7: per-shape font resolution, then real ECMA-376 schema validation"}
+      ]
+    },
+    {
+      "layout": "custom",
+      "source_slide_idx": 12,
+      "slots": [
+        {"role": "title", "text": "Every number here is real"},
+        {"role": "body", "text": "Grouped shapes were invisible to this engine until v0.4 -- real templates hide content in them"},
+        {"role": "body", "text": "A cold agent chose the custom layout for 5 of 9 slides on its first real client brief"},
+        {"role": "body", "text": "Font safety used to check only the theme -- a real template's font hid one layer deeper"},
+        {"role": "body", "text": "+1 custom"},
+        {"role": "body", "text": "3 rounds"},
+        {"role": "body", "text": "0 false positives"},
+        {"role": "body", "text": "real files"},
+        {"role": "body", "text": "Layout types available"},
+        {"role": "body", "text": "Real bugs found and fixed"},
+        {"role": "body", "text": "Schema checks passed"},
+        {"role": "body", "text": "Templates in the test corpus"},
+        {"role": "body", "text": "7"},
+        {"role": "body", "text": "13"},
+        {"role": "body", "text": "24/24"},
+        {"role": "body", "text": "149"},
+        {"role": "body", "text": "Every fix here was verified by rendering the output, not by trusting a clean report"}
+      ]
+    },
+    {
+      "layout": "two_column",
+      "markdown": "## Two things this build got right\n### Infrastructure, not judgment\n- A thumbnail grid, not a heuristic guessing the right slide\n- shape_roles scores real geometry; the agent decides which slide actually fits\n### Verify before trusting\n- Every claim in this deck was rendered and looked at, not assumed from a JSON report\n- A cold agent with a real brief found two real bugs no self-test caught",
+      "source_slide_idx": 4
+    },
+    {
+      "layout": "quote",
+      "markdown": "# One working, audited skill beats ten unused ones in the registry",
+      "source_slide_idx": 7
+    },
+    {
+      "layout": "section",
+      "markdown": "## What's next\nLayout coverage for stat callouts and icon grids -- now that custom has proven exactly where the real demand is",
+      "source_slide_idx": 9
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "slides": [
+    {
+      "layout": "title",
+      "source_slide_idx": 0,
+      "markdown": "# Rang Mộc\nCà phê rang thủ công, minh bạch từ nông trại đến tách cà phê — gọi vốn vòng hạt giống"
+    },
+    {
+      "layout": "standard",
+      "source_slide_idx": 6,
+      "markdown": "## Vấn đề: chuỗi cung ứng cà phê Việt Nam thiếu minh bạch\n- Nông dân ở Đắk Lắk thường chỉ nhận 30-40% giá trị cuối cùng của hạt cà phê, phần còn lại rơi vào 3-4 lớp trung gian\n- Người tiêu dùng không biết hạt cà phê mình uống đến từ nông trại nào, rang vào ngày nào, theo mẻ nào\n- Giá cà phê nhân xô biến động mạnh theo thị trường thế giới, đẩy rủi ro tài chính lên vai người nông dân trước tiên"
+    },
+    {
+      "layout": "custom",
+      "source_slide_idx": 24,
+      "slots": [
+        {"role": "title", "text": "Rang thủ công theo mẻ nhỏ"},
+        {"role": "body", "text": "Chọn hạt: tuyển thủ công từng mẻ hạt xanh trước khi rang"},
+        {"role": "body", "text": "Rang mẻ nhỏ: mỗi mẻ 12kg, canh nhiệt độ và thời gian bằng tay"},
+        {"role": "body", "text": "Kiểm định hương vị: cupping từng mẻ trước khi đóng gói"},
+        {"role": "body", "text": "Đóng gói tươi: giao trong 48 giờ sau khi rang xong"},
+        {"role": "body", "text": "Rang Mộc"}
+      ]
+    },
+    {
+      "layout": "custom",
+      "source_slide_idx": 22,
+      "slots": [
+        {"role": "title", "text": "Vì sao chúng tôi làm direct-trade với nông dân Đắk Lắk"},
+        {"role": "body", "text": "Đắk Lắk: hợp tác trực tiếp với 12 hộ nông dân tại Cư M'gar, trả giá cao hơn thị trường 20-30%"},
+        {"role": "body", "text": "Không qua trung gian: loại bỏ 3 lớp thương lái, rút ngắn thời gian từ nông trại đến xưởng rang còn 48 giờ"}
+      ]
+    },
+    {
+      "layout": "custom",
+      "source_slide_idx": 18,
+      "slots": [
+        {"role": "title", "text": "Thị trường cà phê đặc sản Việt Nam đang tăng trưởng"},
+        {"role": "body", "text": "8.500 tỷ VNĐ — quy mô ước tính của thị trường cà phê đặc sản Việt Nam năm 2026"},
+        {"role": "body", "text": "18%/năm — tốc độ tăng trưởng kép ước tính của phân khúc cà phê rang xay cao cấp, 2024-2028"},
+        {"role": "body", "text": "Dưới 5% — tỷ trọng cà phê đặc sản trong tổng sản lượng cà phê Việt Nam hiện nay, dư địa còn rất lớn"}
+      ]
+    },
+    {
+      "layout": "two_column",
+      "source_slide_idx": 7,
+      "markdown": "## Mô hình kinh doanh\n### D2C — Bán trực tiếp\n- D2C — Bán trực tiếp qua website riêng\n- Giao hàng tận nơi trong 48 giờ sau khi rang\n- Biên lợi nhuận gộp khoảng 65%, xây dựng quan hệ trực tiếp với người uống cà phê\n### Wholesale — Bán sỉ cho quán cà phê\n- Wholesale — Bán sỉ cho quán cà phê độc lập\n- Hợp đồng cung cấp định kỳ tại TP.HCM và Hà Nội\n- Đơn hàng ổn định, biên lợi nhuận gộp khoảng 40%, mở rộng quy mô nhanh hơn"
+    },
+    {
+      "layout": "custom",
+      "source_slide_idx": 28,
+      "slots": [
+        {"role": "title", "text": "Đội ngũ sáng lập"},
+        {"role": "body", "text": "Trần Thu Hà — Vận hành & Tài chính, phụ trách chuỗi cung ứng và mở rộng kênh phân phối"},
+        {"role": "body", "text": "Nguyễn Minh Quân — Master Roaster, 8 năm kinh nghiệm rang cà phê chuyên nghiệp"}
+      ]
+    },
+    {
+      "layout": "custom",
+      "source_slide_idx": 16,
+      "slots": [
+        {"role": "title", "text": "200.000 USD"},
+        {"role": "body", "text": "Vốn gọi vòng hạt giống để mở rộng xưởng rang và đội xe giao hàng lạnh, đủ dùng trong 18 tháng tới"}
+      ]
+    },
+    {
+      "layout": "quote",
+      "source_slide_idx": 12,
+      "markdown": "# \"Chúng tôi tin mỗi mẻ cà phê nên minh bạch, từ nông trại Đắk Lắk đến tách cà phê trong tay bạn.\"\n—Rang Mộc | hello@rangmoc.vn"
+    }
+  ]
+}

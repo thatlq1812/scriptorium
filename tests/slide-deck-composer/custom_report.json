@@ -1,0 +1,75 @@
+{
+  "output": "tests (ignore)\\slide-deck-composer\\custom_test.pptx",
+  "slides_generated": 2,
+  "template_classification": {
+    "title": [
+      0
+    ],
+    "content": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      21,
+      22,
+      23,
+      27,
+      29,
+      30,
+      31,
+      32,
+      33,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40
+    ],
+    "closing": [
+      41
+    ]
+  },
+  "theme_fonts": {
+    "major": "Arial",
+    "minor": "Arial"
+  },
+  "font_resolution_log": [],
+  "slide_plan": [
+    {
+      "position": 0,
+      "layout": "title",
+      "source_slide_idx": 0,
+      "structural_match": true,
+      "source_slide_idx_explicit": true,
+      "title_shape_found": true,
+      "body_shapes_found": 1,
+      "stale_text_shapes_cleared": 0
+    },
+    {
+      "position": 1,
+      "layout": "custom",
+      "source_slide_idx": 10,
+      "structural_match": true,
+      "source_slide_idx_explicit": true,
+      "title_shape_found": true,
+      "body_shapes_found": 1,
+      "stale_text_shapes_cleared": 0
+    }
+  ],
+  "font_size_balancing_applied": []
+}
