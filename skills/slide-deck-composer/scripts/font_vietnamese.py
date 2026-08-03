@@ -86,6 +86,37 @@ _FONT_TABLE: dict[str, tuple[str, bool]] = {
     "Malgun Gothic": ("sans_serif", False),
     # handwriting
     "Dancing Script": ("handwriting", True),
+    # display
+    # Added v0.8.0: real Google Font, confirmed via direct fetch of its
+    # own METADATA.pb on Google's font repo (2026-08-03) -- subsets are
+    # exactly ["latin", "latin-ext", "menu"], no "vietnamese" entry.
+    # Found because a real template ("AI Automation by Slidesgo.pptx")
+    # uses it as its actual title font on the cover slide, declared at
+    # the slide-layout level (not the theme scheme) -- resolved via
+    # font_manager.resolve_effective_font, same pattern as the Libre
+    # Baskerville finding above.
+    "Silkscreen": ("display", False),
+    # sans_serif
+    # Added v0.8.0: real Google Font, confirmed via direct fetch of its
+    # own METADATA.pb on Google's font repo (2026-08-03) -- subsets are
+    # exactly ["latin", "latin-ext", "menu"], no "vietnamese" entry.
+    # Found in the same real template ("AI Automation by Slidesgo.pptx")
+    # as Silkscreen above, on a content-body shape -- the run-level font
+    # name PowerPoint actually wrote is the weight-suffixed variant
+    # ("Schibsted Grotesk Medium"), which is the exact string
+    # resolve_effective_font reports and therefore the exact string this
+    # table must key on to catch it (the base family and other weight
+    # suffixes are NOT automatically covered by this entry).
+    "Schibsted Grotesk Medium": ("sans_serif", False),
+    "Schibsted Grotesk": ("sans_serif", False),
+    # Added v0.8.0: real Google Font, confirmed via direct fetch of its
+    # own METADATA.pb on Google's font repo (2026-08-03) -- subsets are
+    # exactly ["latin", "latin-ext", "menu"], no "vietnamese" entry.
+    # Designed for the Taiwan Space Agency's rebrand (Taiwanese
+    # Romanization glyphs, not Vietnamese) -- found in the same real
+    # template as the two entries above, run-level name as PowerPoint
+    # actually wrote it ("TASA Orbiter Medium").
+    "TASA Orbiter Medium": ("sans_serif", False),
 }
 
 # Same-category, supports_vietnamese=True substitutes, ranked best-first.

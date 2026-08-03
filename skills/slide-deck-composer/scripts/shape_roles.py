@@ -46,12 +46,40 @@ VENDOR_INSTRUCTIONAL_CAPTION_PATTERNS: tuple[str, ...] = (
 
 
 def is_watermark_text(text: str | None) -> bool:
+    """Real bug found via a real 20-slide showcase-deck dogfooding round
+    (v0.8.0, 2026-08-03): a real template's own generic placeholder
+    contact block -- "DO YOU HAVE ANY QUESTIONS? YOUREMAIL@FREEPIK.COM
+    +00 000 000 000 YOURWEBSITE.COM" -- matched this check purely
+    because the brand word "freepik" happens to appear inside a
+    PLACEHOLDER EMAIL DOMAIN, not a real attribution notice. That
+    false match then protected obviously-fake demo contact info
+    ("YOUREMAIL@FREEPIK.COM") from ever being cleared, even when
+    unused -- a real caller's shipped deck would leak template filler
+    contact details, not a genuine required Slidesgo/Freepik credit
+    line. Fixed: a brand-word occurrence immediately preceded by "@"
+    or immediately followed by "." (the exact shape of an email/domain
+    token) no longer counts as a real attribution match -- a genuine
+    attribution phrase ("Icons by Freepik", "created by Slidesgo")
+    never has the brand word glued to an "@" or a domain suffix like
+    this, so this doesn't weaken protection for the real case."""
     if not text:
         return False
     clean = text.strip().lower()
     if not clean:
         return False
-    return any(pattern in clean for pattern in WATERMARK_TEXT_PATTERNS)
+    for pattern in WATERMARK_TEXT_PATTERNS:
+        start = 0
+        while True:
+            idx = clean.find(pattern, start)
+            if idx == -1:
+                break
+            end = idx + len(pattern)
+            preceded_by_at = idx > 0 and clean[idx - 1] == "@"
+            followed_by_dot = end < len(clean) and clean[end] == "."
+            if not (preceded_by_at or followed_by_dot):
+                return True
+            start = end
+    return False
 
 
 def is_vendor_instructional_caption(text: str | None) -> bool:
