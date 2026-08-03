@@ -117,6 +117,25 @@ _FONT_TABLE: dict[str, tuple[str, bool]] = {
     # template as the two entries above, run-level name as PowerPoint
     # actually wrote it ("TASA Orbiter Medium").
     "TASA Orbiter Medium": ("sans_serif", False),
+    # Added v0.8.2: real Google Font, confirmed via direct fetch of its
+    # own METADATA.pb on Google's font repo (2026-08-03) -- subsets are
+    # ["devanagari", "latin", "latin-ext", "menu"], no "vietnamese"
+    # entry. Poppins is one of the most widely-used Google Fonts, which
+    # makes this a genuinely useful, non-obvious finding, not a guess
+    # confirmed after the fact -- found on a real template's title
+    # ("Federal Law Enforcement Training Center by Slidesgo.pptx"),
+    # first as the weight variant "Poppins ExtraBold". Keyed on the
+    # base family name only -- every weight/style variant (ExtraBold,
+    # Black, Medium, ...) now resolves via check_font_vietnamese_safety's
+    # weight-suffix-stripping fallback, no per-weight duplicate entry
+    # needed.
+    "Poppins": ("sans_serif", False),
+    # Added v0.8.2: real Google Font, confirmed via direct fetch of its
+    # own METADATA.pb on Google's font repo (2026-08-03) -- subsets are
+    # ["cyrillic", "japanese", "latin", "latin-ext", "menu"], no
+    # "vietnamese" entry (a Japanese-designed family, consistent with
+    # its real subset list). Same real template as Poppins above.
+    "Zen Kaku Gothic New": ("sans_serif", False),
 }
 
 # Same-category, supports_vietnamese=True substitutes, ranked best-first.
@@ -146,15 +165,55 @@ class VietnameseFontCheck:
     reason: str = ""
 
 
+# Real, recurring friction found via v0.8.1/v0.8.2 dogfooding rounds:
+# _FONT_TABLE is keyed on the exact run-level font name string, and two
+# different real templates both used multiple WEIGHT variants of the
+# same family (Schibsted Grotesk / Schibsted Grotesk Medium; Poppins
+# ExtraBold / Poppins Black) -- the same real Unicode glyph coverage,
+# but each variant needed its own near-duplicate table entry. A weight
+# or style suffix never changes a font family's Unicode glyph
+# repertoire (only its visual weight/slant), so once the BASE family is
+# verified, every weight/style variant is safe to resolve the same way
+# -- this is a real, grounded fact about how font families work, not a
+# fuzzy guess. Kept deliberately narrow to avoid the exact risk noted
+# when this was first deferred: only a FIXED, unambiguous suffix
+# vocabulary is stripped, never a prefix/fuzzy match, so two unrelated
+# families that merely share a name prefix (e.g. "Roboto" vs "Roboto
+# Slab", a genuinely different family, not a weight variant) can never
+# be conflated -- "Slab" is not a weight/style word and stays unstripped.
+_WEIGHT_STYLE_SUFFIXES: tuple[str, ...] = (
+    "extralight italic", "semibold italic", "extrabold italic",
+    "light italic", "black italic", "bold italic", "thin italic",
+    "medium italic", "regular italic",
+    "extralight", "semibold", "extrabold", "regular", "medium",
+    "light", "black", "bold", "thin", "italic",
+)
+
+
+def _strip_weight_style_suffix(name: str) -> str | None:
+    """Strip exactly one trailing weight/style token from `name`,
+    returning the base family name -- or None if no known suffix
+    token is present (never a fuzzy/prefix match, see module comment
+    above `_WEIGHT_STYLE_SUFFIXES`)."""
+    lower = name.lower()
+    for suffix in _WEIGHT_STYLE_SUFFIXES:
+        needle = " " + suffix
+        if lower.endswith(needle) and len(lower) > len(needle):
+            return name[: -len(needle)].strip()
+    return None
+
+
 def check_font_vietnamese_safety(font_name: str) -> VietnameseFontCheck:
     """
     Report whether ``font_name`` is Vietnamese-diacritic-safe.
 
-    Case-insensitive exact match against the verified table. Never
-    guesses: a font absent from the table returns status="unknown" with
-    no substitute, so the caller can refuse loudly rather than silently
-    risk garbled diacritics (see module docstring for the discipline
-    this mirrors).
+    Case-insensitive exact match against the verified table, falling
+    back to a weight/style-suffix-stripped base-family match (see
+    `_strip_weight_style_suffix`) before giving up. Never guesses
+    beyond that: a font absent from the table (even after stripping)
+    returns status="unknown" with no substitute, so the caller can
+    refuse loudly rather than silently risk garbled diacritics (see
+    module docstring for the discipline this mirrors).
     """
     if not font_name or not font_name.strip():
         return VietnameseFontCheck(font_name=font_name, status="unknown", reason="empty font name")
@@ -163,12 +222,36 @@ def check_font_vietnamese_safety(font_name: str) -> VietnameseFontCheck:
     lower_lookup = {k.lower(): k for k in _FONT_TABLE}
     canonical = lower_lookup.get(name.lower())
     if canonical is None:
+        base = _strip_weight_style_suffix(name)
+        base_canonical = lower_lookup.get(base.lower()) if base else None
+        if base_canonical is not None:
+            # Real match via the base family -- report under the
+            # ORIGINAL requested name (the specific weight variant
+            # actually used on the run), not the stripped base, so a
+            # "safe" result keeps applying the exact font PowerPoint
+            # already has, and a "substitute" result's reason names
+            # what was actually checked.
+            category, supports_vi = _FONT_TABLE[base_canonical]
+            if supports_vi:
+                return VietnameseFontCheck(font_name=name, status="safe")
+            chain = _SUBSTITUTE_CHAINS.get(base_canonical, ())
+            substitute = chain[0] if chain else _CATEGORY_DEFAULT_SAFE_FONT.get(category, "Calibri")
+            return VietnameseFontCheck(
+                font_name=name,
+                status="substitute",
+                substitute=substitute,
+                reason=(
+                    f"'{name}' (base family '{base_canonical}') lacks confirmed Vietnamese "
+                    f"diacritic support; substituting with '{substitute}' (same category: {category})."
+                ),
+            )
         return VietnameseFontCheck(
             font_name=name,
             status="unknown",
             reason=(
                 f"'{name}' is not in the verified {len(_FONT_TABLE)}-font Vietnamese-support "
-                f"table (ported from platform_archive's font_config.py FONT_METRICS). "
+                f"table (ported from platform_archive's font_config.py FONT_METRICS), even after "
+                f"stripping a recognized weight/style suffix. "
                 f"Refusing to guess -- verify the font's Vietnamese glyph coverage manually "
                 f"and add it to _FONT_TABLE in font_vietnamese.py before using it for "
                 f"Vietnamese content."

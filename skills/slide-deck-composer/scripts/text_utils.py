@@ -218,14 +218,47 @@ def strip_leading_bullet_marker(text: str) -> str:
 
 
 def clean_markdown_formatting(text: str) -> str:
-    """Strip Markdown formatting characters, leaving plain text."""
+    """Strip a leading list-marker prefix and stray HTML comments,
+    leaving the real Markdown emphasis/link/code syntax untouched for
+    `rich_text.parse_inline_formatting` to actually render as styled
+    runs (bold/italic/code/hyperlink).
+
+    Real, significant bug found via a real dogfooding round (v0.8.2,
+    2026-08-03): every caller of this function immediately pipes its
+    output through `rich_text.parse_inline_formatting`, the real
+    run-based formatter that turns `**bold**`/`*italic*`/`` `code` ``/
+    `[text](url)` into actually-styled PowerPoint runs -- but this
+    function used to run FIRST and, via bare regex substitution
+    (`\\*{1,3}(.+?)\\*{1,3}` -> plain text, `_{1,3}(.+?)_{1,3}` ->
+    plain text, `` `(.+?)` `` -> plain text, `[text](url)` -> just
+    `text`, discarding the url entirely), silently stripped every one
+    of those markers down to plain text BEFORE `parse_inline_formatting`
+    ever got a chance to see them. Net effect, confirmed both by direct
+    testing and by rendering real compiled output: Markdown bold,
+    italic, code, and hyperlink formatting had never actually rendered
+    as styled text in any output this skill has ever produced --
+    `**bold**` silently became plain unstyled "bold", not because
+    `parse_inline_formatting` was broken (it works correctly on its
+    own, verified directly), but because this function destroyed the
+    markers first. The bug that actually surfaced this round was even
+    more damaging for plain content: a v3 legal-briefing deck's real
+    content included literal Python filenames with underscores
+    ("validate_legal_brief.py") -- the underscore-stripping regex
+    matched ANY pair of underscores anywhere in the string (not just
+    genuine emphasis pairs) and deleted them outright, corrupting
+    "validate_legal_brief.py" into "validatelegalbrief.py" with no
+    error, no warning; confirmed by rendering the compiled output.
+    Fixed by removing every regex this function shared responsibility
+    for with `parse_inline_formatting` -- there was no real formatting
+    behavior being preserved by running both, only corruption risk.
+    Only `strip_leading_bullet_marker` (a leading "- "/"* " list marker,
+    a different concern `parse_inline_formatting` doesn't touch) and
+    HTML-comment removal (likewise outside `parse_inline_formatting`'s
+    scope) remain here.
+    """
     if not text:
         return ""
     text = strip_leading_bullet_marker(text)
-    text = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", text)
-    text = re.sub(r"\*{1,3}(.+?)\*{1,3}", r"\1", text)
-    text = re.sub(r"_{1,3}(.+?)_{1,3}", r"\1", text)
-    text = re.sub(r"`(.+?)`", r"\1", text)
     text = re.sub(r"<!--.*?-->", "", text, flags=re.DOTALL)
     return text.strip()
 
