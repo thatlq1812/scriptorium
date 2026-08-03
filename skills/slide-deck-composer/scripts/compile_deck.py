@@ -366,22 +366,79 @@ def _required_title_capacity(layout_type: str, content) -> int:
     return 0
 
 
-def _hard_structural_fit(prs, slide_idx: int, min_body: int) -> tuple[bool, str]:
+# Real bug found via a real 20-slide showcase-deck dogfooding round done
+# in a SEPARATE session (v0.8.0, 2026-08-03, test/Aug032026/): an agent
+# that HAD looked at a rendered thumbnail grid still explicitly chose a
+# real "3 parallel ideas" template slide (3 numbered-badge + heading +
+# description card clusters, 6 real scorable body shapes total) as the
+# source for a plain 2-slot `two_column` request. `_hard_structural_fit`
+# only checked `body_count >= min_body` (2), which a 6-body-shape slide
+# trivially clears -- but `find_title_and_body`'s ranking picks its N
+# best-SCORING body shapes in isolation, with no notion that 2 of those
+# 6 shapes are a matched header+description PAIR belonging to one card
+# and the other 4 belong to two entirely different cards. The result,
+# confirmed by rendering: content landed in 2 shapes that don't even
+# belong to the same card, while the other 2 cards' badges ("2", "3")
+# were left with headings/descriptions completely blank -- a much worse
+# defect than a stale-text leak, since real content silently vanished
+# from 2 of the deck's visual "cards" with no error anywhere in the
+# compile report. A rendered thumbnail is too small to show this at a
+# glance -- a 3-card cluster and a genuine 6-item bullet list can look
+# identical in a scaled-down grid cell. Fixed with the same "shape-count
+# is a structural signal" principle proven in bugs #6-9: a layout that
+# only needs `min_body` slots being offered several times that many real
+# body shapes is itself evidence of a multi-card cluster the layout's
+# flat slot model cannot address correctly, independent of what the
+# thumbnail looked like. `_MAX_BODY_SLACK` caps how far above `min_body`
+# an explicitly-chosen slide may go before this refuses loudly and
+# names `custom` (one slot per real shape) as the correct tool instead.
+_MAX_BODY_SLACK: dict[str, int] = {
+    C.LAYOUT_TITLE: 2,
+    C.LAYOUT_STD: _MAX_BODY_SHAPES_FOR_PROSE,
+    C.LAYOUT_2COL: 3,
+    C.LAYOUT_IMG: 4,
+    C.LAYOUT_QUOTE: 2,
+    C.LAYOUT_SECTION: 4,
+}
+
+
+def _hard_structural_fit(
+    prs, slide_idx: int, min_body: int, *, layout_type: str | None = None,
+) -> tuple[bool, str]:
     """The minimum, non-negotiable structural bar an EXPLICITLY chosen
-    ``source_slide_idx`` must clear: a scorable title shape, and at
-    least as many scorable body candidates as the requested layout
-    needs. Deliberately does NOT run the softer capacity/shape-count
-    heuristics that ``_fits`` applies during automatic selection --
-    those are proxies for "does this look like a good visual fit,"
-    which a caller who already looked at a rendered thumbnail grid
-    (see thumbnail_grid.py) has already judged directly. Returns
-    (ok, reason) so the caller can refuse loudly with a concrete
-    explanation rather than a bare boolean."""
+    ``source_slide_idx`` must clear: a scorable title shape, at least
+    as many scorable body candidates as the requested layout needs,
+    and (see ``_MAX_BODY_SLACK`` above) not drastically more than that
+    either -- a caller who already looked at a rendered thumbnail grid
+    has judged visual fit directly, but cannot see from a small
+    thumbnail whether a slide's body shapes form one flat pool or
+    several unrelated card clusters, so that specific check still runs
+    even on an explicit choice. ``layout_type`` is optional only for
+    ``LAYOUT_CUSTOM`` callers, which pass their own exact declared slot
+    count as ``min_body`` and are exempt from the slack cap -- custom
+    already addresses every real shape it uses by an explicit slot, so
+    there is no flat-pool-vs-cluster ambiguity to guard against there.
+    Returns (ok, reason) so the caller can refuse loudly with a
+    concrete explanation rather than a bare boolean."""
     has_title, body_count = _title_and_body_counts(prs, slide_idx)
     if not has_title:
         return False, "no scorable title shape found on this slide"
     if body_count < min_body:
         return False, f"only {body_count} scorable body shape(s) found, this layout needs >= {min_body}"
+    if layout_type is not None and layout_type != C.LAYOUT_CUSTOM:
+        max_body = min_body + _MAX_BODY_SLACK.get(layout_type, _MAX_BODY_SHAPES_FOR_PROSE)
+        if body_count > max_body:
+            display_name = next(
+                (k for k, v in C.LAYOUT_NAME_MAP.items() if v == layout_type), layout_type
+            )
+            return False, (
+                f"{body_count} scorable body shape(s) found, but layout {display_name!r} only "
+                f"uses {min_body} of them -- this many real shapes on one slide usually means "
+                f"several parallel content 'cards' (e.g. a 3-column icon/stat layout), which a "
+                f"flat {display_name!r} slot model will fill unevenly, leaving some cards blank. "
+                f"Use the 'custom' layout with one slot per real shape instead, or choose a "
+                f"source slide with fewer body shapes."
+            )
     return True, ""
 
 
@@ -442,11 +499,14 @@ def pick_source_slide_index(
     # Quote/title-only layouts never touch body shapes, so a slide with
     # many small body/caption shapes (an icon-grid/stat-card design)
     # would otherwise pass on title capacity alone while leaving those
-    # unrelated shapes visually dominant. Cap it very low for those
-    # layouts; other layouts still get the general infographic/map cap
-    # (_MAX_BODY_SHAPES_FOR_PROSE) since they DO use one body shape but
-    # a 19-candidate slide is still structurally wrong regardless.
-    max_unused = 2 if layout_type in (C.LAYOUT_QUOTE, C.LAYOUT_TITLE) else _MAX_BODY_SHAPES_FOR_PROSE
+    # unrelated shapes visually dominant. Every layout now shares the
+    # same per-layout cap `_hard_structural_fit` enforces on an explicit
+    # choice (see `_MAX_BODY_SLACK` and its v0.8.0 docstring) -- the
+    # automatic path was previously looser (a flat 8-shape cap for every
+    # non-quote/title layout), which is exactly wide enough to have let
+    # the real card-cluster mismatch bug through here too, not just via
+    # an explicit source_slide_idx.
+    max_unused = min_body + _MAX_BODY_SLACK.get(layout_type, _MAX_BODY_SHAPES_FOR_PROSE)
 
     if required_capacity_chars > 0 or required_title_capacity_chars > 0 or max_unused is not None:
         capacity_matching = [
@@ -686,7 +746,7 @@ def compile_deck(
                 min_body_explicit = sum(1 for s in item["slots"] if s["role"] == "body")
             else:
                 min_body_explicit = _MIN_BODY_REQUIRED.get(layout_type, 0)
-            ok, reason = _hard_structural_fit(prs, explicit_idx, min_body_explicit)
+            ok, reason = _hard_structural_fit(prs, explicit_idx, min_body_explicit, layout_type=layout_type)
             if not ok:
                 raise ComposerError(
                     f"slides[{position}]: explicit source_slide_idx={explicit_idx} does not "
@@ -966,6 +1026,27 @@ def compile_deck(
     output_path.parent.mkdir(parents=True, exist_ok=True)
     prs.save(str(output_path))
 
+    # Real finding from the same v0.8.0 dogfooding round: a real deck
+    # reused the same source slide (e.g. one section-divider design for
+    # 3 of 5 different parts, one bullet-slide design for 4 unrelated
+    # content slides) with no signal anywhere that it had happened --
+    # visually monotonous at best, and actively misleading when the
+    # reused source slide carries its own baked-in decorative ordinal
+    # (a "01" badge on a slide reused for "Part V") that this skill
+    # cannot rewrite (see SKILL.md's "Known limitations"). This can't
+    # be silently auto-fixed -- reusing a source slide is sometimes the
+    # genuinely right choice when content truly repeats a shape -- but
+    # the caller (or a reviewing agent) should see it without having to
+    # cross-reference slide_plan by hand.
+    source_idx_counts: dict[int, list[int]] = {}
+    for rec in slide_plan:
+        source_idx_counts.setdefault(rec["source_slide_idx"], []).append(rec["position"])
+    repeated_source_slides = [
+        {"source_slide_idx": idx, "positions": positions, "count": len(positions)}
+        for idx, positions in sorted(source_idx_counts.items())
+        if len(positions) > 1
+    ]
+
     return {
         "output": str(output_path),
         "slides_generated": len(slides_spec),
@@ -974,6 +1055,7 @@ def compile_deck(
         "font_resolution_log": font_log,
         "slide_plan": slide_plan,
         "font_size_balancing_applied": size_decisions,
+        "repeated_source_slides": repeated_source_slides,
     }
 
 

@@ -2458,7 +2458,7 @@
     },
     {
       "skill_id": "slide-deck-composer",
-      "version": "0.7.1",
+      "version": "0.8.0",
       "source": {
         "type": "self-authored"
       },
@@ -2488,8 +2488,8 @@
       },
       "security_audit": {
         "status": "passed",
-        "date": "2026-08-02",
-        "note": "Re-audited at 0.7.1 (2026-08-02): 3 real bugs found via a real showcase-deck dogfooding round against a new real Slidesgo template (Data Infographics), fixed in slide_classifier.py/shape_roles.py/compile_deck.py/validate_deck.py -- no new scripts, no new dependency. Grep for subprocess/os.system/eval(/exec(/urllib/requests/socket/shell=True: clean, no new hits. Confirmed no Slidesgo template filename/path bundled (BYOT unchanged)."
+        "date": "2026-08-03",
+        "note": "Re-audited at 0.8.0 (2026-08-03): card-cluster cardinality mismatch fixed in compile_deck.py (_MAX_BODY_SLACK cap on _hard_structural_fit and pick_source_slide_index, new repeated_source_slides report field) -- no new scripts, no new dependency. Grep for subprocess/os.system/eval(/exec(/urllib/requests/socket/shell=True: clean, no new hits. Confirmed no Slidesgo template filename/path bundled (BYOT unchanged)."
       },
       "dependencies": [
         "python-pptx==1.0.2",
