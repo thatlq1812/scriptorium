@@ -4,7 +4,7 @@ Scriptorium is a system for **creating, quality-testing, security-auditing, and 
 
 ## Why this exists
 
-Scriptorium's predecessor was **EduStation**, an agentic app built as "Claude Code for Vietnamese teachers." EduStation didn't fail on engineering — its core (agentic loop, tool dispatcher) had substantially landed. It stalled from **governance-before-traction**: 18 enforcement rules, a 5-tier compliance engine, and a fully vendored legal corpus, all built before a single real pilot with real teachers ever ran.
+Scriptorium was born from a fundamental strategic realization: dedicated agent harnesses, custom desktop apps, and standalone chatbots are being commoditized fast across the AI industry. Building complex application governance and custom UI harnesses before establishing a disciplined pipeline for portable skill artifacts creates governance-before-traction friction.
 
 The pivot: stop building a dedicated harness — that layer is being commoditized fast across the whole industry — and build the layer nobody has actually solved yet: a disciplined pipeline for turning a real expert's tacit process into a portable, audited skill, verified across harnesses before anyone calls it "ready."
 

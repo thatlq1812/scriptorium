@@ -25,7 +25,7 @@ The "Student (K12)" and "University Student" audience tiers merged into one Stud
 
 ## Why this skill, and why this scope
 
-This is the first skill for the **Student (K12)** audience tier (`docs/specs/STRATEGY_SPEC.md` §5.1) — the one tier with no real elicitation source yet (no student survey exists, unlike the Teacher tier which has EduStation, or the legal vertical which has a real practitioner survey). Rather than build from an external AI's brainstormed list directly, this was scoped to the single most defensible capability: schedule arithmetic. It carries no risk of "doing the assignment for the student" (a real ethical line for a student-facing tool) and needs zero subject-matter knowledge to be correct, so it doesn't inherit the hallucination risk that content-generating student tools would.
+This is the first skill for the **Student (K12)** audience tier (`docs/specs/STRATEGY_SPEC.md` §5.1) — the one tier with no real elicitation source yet (no student survey exists, unlike the Teacher tier which has prior system, or the legal vertical which has a real practitioner survey). Rather than build from an external AI's brainstormed list directly, this was scoped to the single most defensible capability: schedule arithmetic. It carries no risk of "doing the assignment for the student" (a real ethical line for a student-facing tool) and needs zero subject-matter knowledge to be correct, so it doesn't inherit the hallucination risk that content-generating student tools would.
 
 ## Algorithm (v0.1.0)
 

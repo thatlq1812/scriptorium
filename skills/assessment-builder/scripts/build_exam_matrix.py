@@ -46,7 +46,7 @@ DEFAULT_RATIO: dict[str, float] = {
 
 # A named ratio-set is a *label*, not an official regulation lookup -- see
 # SKILL.md "Known limitations". "qd4068_thpt" mirrors the same 40/30/20/10
-# default EduStation's tn_thpt_review skill used for the QD 4068 THPT
+# default prior system's tn_thpt_review skill used for the QD 4068 THPT
 # graduation-exam profile (per the 18/10/2024 sample-exam Bloom ratio for
 # the natural-science group); it is NOT a per-subject official ratio table
 # and must not be presented as one.

@@ -19,7 +19,7 @@
 | **Project Name** | Scriptorium (`elix/scriptorium`) |
 | **Project Type** | System for creating / quality-evaluating / security-auditing / cataloging portable Agent Skills |
 | **Core Philosophy** | Skill-first, no harness-building. Elicit → research → skill-creator → quality eval → security audit → registry, order not negotiable. |
-| **Predecessor** | EduStation (`D:/elix/edustation`) — pivoted due to governance-before-traction, not a flawed architecture. See `docs/specs/STRATEGY_SPEC.md` §1. |
+| **Primary focus** | Vietnamese domain-specific workflows & cross-industry portable skills. |
 | **Pilot vertical** | Vietnamese legal — positioned at the meta layer (producing + auditing skills), not a legal-lookup chatbot. |
 | **AI backend** | None, by design — Scriptorium never calls any AI API; skill artifacts run on the consuming agent's own backend. See `docs/specs/STRATEGY_SPEC.md` §2, §6. |
 
