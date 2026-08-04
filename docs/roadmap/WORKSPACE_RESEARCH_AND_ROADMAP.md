@@ -78,6 +78,7 @@ D:/my_workspace/
 
 ## 4. Tài liệu Tham chiếu Nội bộ trong Thư mục Cách ly
 
+- **Đặc tả Kỹ thuật Triển khai cho AI Agent**: [PRAXIS_BLUEPRINT_SPEC.md](file:///D:/elix/scriptorium/docs/roadmap/PRAXIS_BLUEPRINT_SPEC.md) (Chứa 15 quy tắc R-rules, cấu trúc React+FastAPI+pywebview, NDJSON protocol & quy trình xây dựng).
 - Báo cáo chi tiết: [Scriptorium Workspace Research Roadmap (1).md](file:///D:/elix/scriptorium/docs/roadmap/researches/Scriptorium%20Workspace%20Research%20Roadmap%20%281%29.md)
 - Báo cáo kiến trúc tổng quan: [Scriptorium Workspace Research Roadmap.md](file:///D:/elix/scriptorium/docs/roadmap/researches/Scriptorium%20Workspace%20Research%20Roadmap.md)
 - Tham chiếu API Elixverse: [API_REFERENCE.md](file:///D:/elix/platform/docs/API_REFERENCE.md)
