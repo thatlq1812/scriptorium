@@ -5,22 +5,33 @@
 
 ---
 
-## 1. Bối cảnh & Định hướng Tổng quan
+## 1. Bối cảnh & Lý do Chiến lược (Market Insights & Opportunities)
 
 Scriptorium đóng vai trò là nhà xưởng nghiên cứu, kiểm thử bảo mật và cataloging các **Agent Skills** chuẩn mở (`SKILL.md`). 
 
-Tiếp nối nó, **Scriptorium Workspace** được định hình như một ứng dụng GUI trực quan dành cho người dùng phổ thông tại Việt Nam, vận hành dựa trên cơ chế **Local-First Workspace** (ví dụ `D:/my_workspace`), tự động hóa việc khởi tạo dự án và gọi các CLI Agent thực thi công việc dựa trên các gói Skill đặc chủng.
+Tiếp nối nó, **Scriptorium Workspace** được định hình là ván cược chiến lược (Strategic Bet) giải quyết trực tiếp các điểm nghẽn của thị trường Việt Nam:
+1. **Thói quen tiêu dùng PAYG (Pay-As-You-Go)**: Người dùng Việt Nam ít khi dùng hết hạn mức $20/tháng của các gói cố định (ChatGPT Plus / Claude Pro), họ quen và thích cơ chế trả tiền theo mức độ sử dụng thực tế (PAYG).
+2. **Rào cản BYOK (Bring Your Own Key)**: Hầu hết ứng dụng PAYG hiện nay đều bắt người dùng "Bring Your Own Key" (phải tự có thẻ VISA/Mastercard nạp vào OpenAI/Anthropic), tạo rào cản rất lớn cho người dùng phổ thông.
+3. **Lợi thế của Elixverse AI Provider Router**: Elixverse đóng vai trò là API Router chuẩn hóa (`POST /chat/completions`, `POST /images/generations`...) điều phối đa nhà cung cấp (Gemini, Anthropic, OpenAI, DeepSeek...), tự động tính phí linh hoạt (Dynamic Pricing) và quản lý ví nạp tiền nội địa, giải quyết triệt để vấn đề BYOK cho người dùng cuối.
+4. **Sức mạnh từ Bộ Skill Đã Chuẩn Hóa**: Kết hợp với bộ Skill đặc chủng của Scriptorium giúp Agent làm việc chính xác, chuẩn nghiệp vụ Việt Nam, tiết kiệm token và đạt hiệu quả công việc tối đa.
 
 ---
 
-## 2. Nguyên tắc Kiến trúc & Quyết định Kỹ thuật (Key Directives)
+## 2. Nguyên tắc Kiến trúc & Triết lý UX (Minimalist IDE & Open Intent)
 
-### 2.1. Lựa chọn Công nghệ GUI: Reject Tauri $\rightarrow$ Khuyên dùng React / Web-First
+### 2.1. Triết lý Giao diện Tối giản (Minimalist IDE Layout)
+* **Bố cục Tối giản**: Phân chia dạng `Folders` (Cây thư mục bên trái) | `Editor / Reviewer / Chat` (Màn hình chính bên phải), tương tự như VS Code nhưng được đơn giản hóa tối đa cho người dùng phổ thông.
+* **Không khóa cứng tác vụ (Loại bỏ vết xe đổ EduStation)**: 
+  * Không bắt người dùng chọn các nút bấm cứng như "Tạo hợp đồng" hay "Soạn bài giảng KHBD 5512" (việc khóa cứng mục tiêu làm hệ thống trở nên yếu và cứng nhắc).
+  * **Mô hình Chat Phi Lập trình**: Người dùng chỉ gõ 1 dòng chat tự nhiên (ví dụ: *"Hãy hỗ trợ tôi tạo một báo tường"* hay *"Xem giúp tôi tài liệu này"*).
+  * **Agent Trung Gian tự chủ (Orchestrator)**: Tự hiểu ý định của người dùng, tự tạo project mới hoặc load project cũ, tự tìm Skill phù hợp trong `skills/`, và tự động thực thi tới khi ra sản phẩm hoàn chỉnh nhất trong khả năng của hệ thống (không gượng ép từng bước).
+
+### 2.2. Lựa chọn Công nghệ GUI: Reject Tauri $\rightarrow$ Khuyên dùng React / Web-First
 * **Quyết định**: **Bác bỏ hoàn toàn Tauri (Rust)**.
 * **Lý do**: Mặc dù Tauri nhẹ, việc kết hợp Rust với Python backend và xử lý IPC/Subprocess stream mang lại độ phức tạp cực kỳ lớn (High Friction), gây khó khăn trong việc bảo trì và tích hợp giao diện.
 * **Hướng đi mới**: Sử dụng **React** (React.js / Next.js hoặc React + Electron Wrapper). Việc phát triển trên React giúp xây dựng UI linh hoạt, dễ dàng tích hợp các thư viện UI hiện đại, quản lý WebSocket/StdIO stream mượt mà với Python subprocess backend.
 
-### 2.2. Đánh giá & Lựa chọn Worker CLI Agent: Cần Research Độc lập
+### 2.3. Đánh giá & Lựa chọn Worker CLI Agent: Cần Research Độc lập
 * **Quyết định**: Không ấn định hay phán đoán trước bất kỳ Worker CLI Agent cụ thể nào (như Claude Code CLI, Codex CLI, Aider, OpenHands...).
 * **Yêu cầu**: Cần tổ chức một đợt **Research & Benchmark riêng** để đánh giá các CLI Agent mã nguồn mở dựa trên các tiêu chí:
   1. Khả năng chạy ngầm (Headless execution stability).
@@ -28,7 +39,7 @@ Tiếp nối nó, **Scriptorium Workspace** được định hình như một �
   3. Mức độ an toàn khi thao tác file local.
   4. Chi phí token & hiệu năng thực thi.
 
-### 2.3. Cấu trúc Workspace Cá nhân (`D:/my_workspace`)
+### 2.4. Cấu trúc Workspace Cá nhân (`D:/my_workspace`)
 Workspace là thư mục cá nhân local của người dùng, nơi dữ liệu được lưu trữ an toàn và các Agent đối chiếu thông tin:
 ```
 D:/my_workspace/
