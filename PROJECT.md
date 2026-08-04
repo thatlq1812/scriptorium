@@ -29,3 +29,12 @@ Phần 3, với các kđề xuất kiến trúc của bạn,
 Tạo một thư mục ở docs, có thể là roadmap hoặc tên gì hợp lý và xây dựng kế hoạch ngay trong đó nhỉ
 
 Về dọn dẹp tàng tích của edustation, cứ triển khai nhé, vì nó cũng không nhiều
+
+===
+
+Theo tôi, còn một số lý do khởi nguyên khiến việc tạo ra scriptorium và scriptorium workspace là một ván cược tốt, đó là:
+1. Hành vi tiêu dùng của người Việt, trên cơ chế làm việc, họ ít khi tiêu hết 20USD AI cho một tháng, và quen với cơ chế PAYG,
+2. NHƯNG các cơ chế PAYG hiện nay luôn đi song song với BYOK, tức là chả khác gì cái kia, vẫn phải ói thẻ tín dụng cá nhân ra
+3. Vẫn chưa có nhiều Provider Router như Elixverse, nếu có thì họ chỉ làm nữa vời và không thật sự nhắm tới cơ chế tối ưu cho người dùng, bạn có thể đọc tại "D:\elix\platform\docs\API_REFERENCE.md"
+4. Vì vậy, khi Elix Scriptorium Workspace ra đời, nó giải quyết được các vấn đề đó, VÀ
+5. Có sẵn các bộ skill được nghiên cứu và chuẩn hóa giúp cho Agent làm việc tối ưu hơn, bạn có thể xem qua và nhận xét thử, đó là chưa kể tôi có thể triển khai nghiên cứu khai thác chuyên sâu hơn so với hiện tại
