@@ -2,7 +2,7 @@
 name: security-audit
 description: Multi-layer security audit for a skill before the registry is allowed to mark it "ready to use" — static pattern scan + a semantic read of the full content (not just regex matching) + cross-check against the OWASP Agentic Skills Top 10. Use after the skill already exists (past skill-creator), independent of quality-eval's order but MUST be a separate run — never combined into one review pass with quality-eval. Do NOT use to evaluate whether a skill is useful/functionally correct (that's quality-eval).
 license: MIT
-compatibility: A read + analyze process, no harness dependency. Verified running clean: Claude Code (2026-07-26, applied for real to Scriptorium's 5 existing skills at the time).
+compatibility: 'A read + analyze process, no harness dependency. Verified running clean: Claude Code (2026-07-26, applied for real to Scriptorium''s 5 existing skills at the time).'
 metadata:
   domain: meta
   task_type: review-qa

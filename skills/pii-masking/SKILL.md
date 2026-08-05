@@ -2,7 +2,7 @@
 name: pii-masking
 description: Masks sensitive values (names, ID/CCCD/CMND numbers, phone numbers, emails, keyword-flagged account/tax numbers) in a text/markdown document before it enters an LLM context, and reverses the mask afterward. Two-step by design — scan_sensitive_patterns.py only proposes candidate structured identifiers for review, mask_terms.py mechanically masks an agent/human-approved term list (which must include any personal name or address, since those have no reliable regex and are not auto-detected), unmask.py reverses it using a LOCAL-ONLY mapping file. Use before sending any document containing real personal data (contracts, client files, student records) to an LLM call this skill doesn't control. Do NOT use as a substitute for reviewing the approved term list yourself — it masks exactly what it's told to, nothing more.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only, no dependencies. Verified running clean: Claude Code (2026-07-27, real round-trip test against a synthetic fixture with fake CCCD/phone/email/names).
+compatibility: 'Requires Python 3.11+, stdlib only, no dependencies. Verified running clean: Claude Code (2026-07-27, real round-trip test against a synthetic fixture with fake CCCD/phone/email/names).'
 metadata:
   domain: general
   task_type: document-conversion

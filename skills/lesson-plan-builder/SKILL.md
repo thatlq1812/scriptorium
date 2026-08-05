@@ -1,8 +1,8 @@
 ---
 name: lesson-plan-builder
-description: Validates a K-12 Vietnamese lesson plan (KHBD) record against the mandatory structure of Phu luc IV, Cong van 5512/BGDDT-GDTrH — exactly 4 activities in fixed order, each with all 4 required sub-parts, a fixed competency/quality-trait vocabulary (CT GDPT 2018), and level-appropriate assessment language (TT27 for tieu hoc: no scores; TT22 for THCS/THPT: scores allowed) — then renders a clean Markdown KHBD. Use when drafting or checking a lesson plan for structural completeness before class. Do NOT use this to judge whether the pedagogy itself is good — it validates structure and fixed vocabulary only, never teaching quality.
+description: 'Validates a K-12 Vietnamese lesson plan (KHBD) record against the mandatory structure of Phu luc IV, Cong van 5512/BGDDT-GDTrH — exactly 4 activities in fixed order, each with all 4 required sub-parts, a fixed competency/quality-trait vocabulary (CT GDPT 2018), and level-appropriate assessment language (TT27 for tieu hoc: no scores; TT22 for THCS/THPT: scores allowed) — then renders a clean Markdown KHBD. Use when drafting or checking a lesson plan for structural completeness before class. Do NOT use this to judge whether the pedagogy itself is good — it validates structure and fixed vocabulary only, never teaching quality.'
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, re, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.
+compatibility: 'Requires Python 3.11+, stdlib only (json, re, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.'
 metadata:
   domain: education
   task_type: review-qa

@@ -2,7 +2,7 @@
 name: study-plan-builder
 description: Turns a flat list of study topics into a day-by-day study/review schedule — spaces out topics so the same one is never studied twice in a row, and inserts periodic review sessions cycling through everything introduced so far. Use when a student wants to plan how to work through a syllabus/topic list over N days before an exam or deadline. Do NOT use this to answer questions, solve problems, or do the work itself — it only decides WHEN to study WHAT; the studying stays entirely the student's own.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse, math) — no dependency, no venv needed, local-only, zero network calls of any kind. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.
+compatibility: 'Requires Python 3.11+, stdlib only (json, argparse, math) — no dependency, no venv needed, local-only, zero network calls of any kind. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.'
 metadata:
   domain: education
   task_type: coordination

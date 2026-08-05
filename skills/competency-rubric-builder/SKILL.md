@@ -2,7 +2,7 @@
 name: competency-rubric-builder
 description: Validates a competency/product/activity assessment rubric (rubric đánh giá năng lực/sản phẩm/hoạt động) record — a criteria × performance-levels table (3 or 4 levels, e.g. "Tốt / Đạt / Cần cố gắng") — checking every criterion has a non-empty observable-behavior description for every level, that criterion weights sum exactly to the declared total scale, and flagging (as a warning) any criterion whose level descriptions were copy-pasted identically across levels; then renders a clean Markdown rubric table. Use when drafting or checking a rubric before grading with it. Do NOT use this to judge whether the described behaviors are pedagogically appropriate for the subject/grade — it validates structure, arithmetic, and literal duplication only, never teaching quality.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.
+compatibility: 'Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.'
 metadata:
   domain: education
   task_type: review-qa

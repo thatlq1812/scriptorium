@@ -2,7 +2,7 @@
 name: skill-exporter
 description: Packages one or more skills from this repo into a single .zip for someone outside this project — a colleague, a friend, another project — to drop into their own agent. Use when a user says something like "prepare a skill pack for me/a friend for [purpose/workflow]" — the calling agent interviews the user (free-form, no fixed script; a suggested checklist is below) to figure out who it's for and what they need, maps that to registry tags, then runs the bundled scripts to list candidates, export, and optionally exclude by skill_id or tag pattern. Do NOT export a skill with license_debt set, a security_audit status other than "passed", or operational_status.state == "paused" — both scripts hard-refuse all 3, no override flag exists.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse, zipfile, shutil, hashlib) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29). See "Verified" section below for real test-case detail.
+compatibility: 'Requires Python 3.11+, stdlib only (json, argparse, zipfile, shutil, hashlib) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29). See "Verified" section below for real test-case detail.'
 metadata:
   domain: meta
   task_type: coordination

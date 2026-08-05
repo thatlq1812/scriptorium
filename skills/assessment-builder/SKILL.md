@@ -2,7 +2,7 @@
 name: assessment-builder
 description: Balances a Vietnamese K-12 exam matrix (ma trận đề) — topics × 4 cognitive levels (Nhận biết/Thông hiểu/Vận dụng/Vận dụng cao) — into an exact question-count + point allocation using a largest-remainder deterministic method, then validates that an actual exam (MCQ + essay) structurally and numerically matches that matrix. Use when a teacher needs to balance question/point counts for a test, quiz, question bank, exam set, sample/reference exam, or review outline, or to check a drafted exam against its intended matrix before printing. Do NOT use this to generate question CONTENT (no LLM call, ever — a human or the calling agent supplies the actual question text/answers) or to judge subject-matter correctness/difficulty — this validates matrix balance and structural conformance only.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.
+compatibility: 'Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.'
 metadata:
   domain: education
   task_type: drafting

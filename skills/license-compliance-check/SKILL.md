@@ -1,8 +1,8 @@
 ---
 name: license-compliance-check
-description: Determines the real license of a candidate skill/repo to harvest and decides go/no-go before that content touches skill-creator. Use right after the scout/harvester skill (step 6), mandatory before any harvested content becomes input to skill-creator (step 3) — no "internal reference only" exception. Do NOT use to draft a new skill yourself (that's skill-creator) — this skill only answers one question: is this source allowed to be used, and to what extent.
+description: 'Determines the real license of a candidate skill/repo to harvest and decides go/no-go before that content touches skill-creator. Use right after the scout/harvester skill (step 6), mandatory before any harvested content becomes input to skill-creator (step 3) — no "internal reference only" exception. Do NOT use to draft a new skill yourself (that''s skill-creator) — this skill only answers one question: is this source allowed to be used, and to what extent.'
 license: MIT
-compatibility: A pure read-and-classify process, no dependency on a specific harness. Verified running clean: Claude Code (2026-07-26, applied for real to github.com/anthropics/skills via `gh api`).
+compatibility: 'A pure read-and-classify process, no dependency on a specific harness. Verified running clean: Claude Code (2026-07-26, applied for real to github.com/anthropics/skills via `gh api`).'
 metadata:
   domain: meta
   task_type: review-qa

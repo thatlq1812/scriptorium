@@ -2,7 +2,7 @@
 name: deep-research
 description: A protocol for conducting rigorous multi-source research on an open question and packaging the result as a grounded, machine-checkable brief — not a research API. The calling agent does the actual searching/reading using whatever tools it already has (web search, file access, a database); this skill supplies the decomposition/grounding discipline and a validator that catches a fabricated or mistyped citation before the brief is trusted. Use when a question needs multiple sources triangulated and an honest account of gaps/contradictions/confidence, not a single quick lookup. Do NOT use this skill expecting it to search or call an AI itself — it has no network access and calls no AI backend; it is instructions + a validator, executed by whichever agent's own model is already running.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse, re) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-27). See "Known limitations" section below for real test-case detail.
+compatibility: 'Requires Python 3.11+, stdlib only (json, argparse, re) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-27). See "Known limitations" section below for real test-case detail.'
 metadata:
   domain: general
   task_type: research

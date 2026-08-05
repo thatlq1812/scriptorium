@@ -2,7 +2,7 @@
 name: contract-consistency-linter
 description: Lints a Vietnamese contract text for three purely mechanical consistency errors — Điều (article) numbering (sequential, no gaps/duplicates), cross-reference integrity (every "Điều N" mention resolves to a real heading), and party-label consistency (only the declared parties, e.g. "Bên A"/"Bên B", appear — catches leftover copy-paste like a stray "Bên C" from a template). Use before finalizing or sending a contract. Do NOT use this to assess legal risk, clause fairness, or compliance — that's `contract-risk-log`'s job; this is a mechanical proofreading pass only, not a legal review.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (re, json, argparse) — no dependency, no venv needed, local-only, zero network calls of any kind. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for the real test cases.
+compatibility: 'Requires Python 3.11+, stdlib only (re, json, argparse) — no dependency, no venv needed, local-only, zero network calls of any kind. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for the real test cases.'
 metadata:
   domain: legal
   task_type: review-qa

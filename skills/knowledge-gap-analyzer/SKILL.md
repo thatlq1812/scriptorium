@@ -2,7 +2,7 @@
 name: knowledge-gap-analyzer
 description: Flags skills below a caller-declared confidence threshold (or never self-assessed at all) that are required for a caller-declared target role, given a caller-declared self-assessment of skill x confidence-level pairs. `--json` output chains directly into `upskilling-roadmap-builder`'s `from_gap_analysis.py` to turn this diagnostic into an actionable day-by-day schedule. Use when a professional wants to know exactly which of a target role's required skills their own self-assessment doesn't yet clear a stated confidence bar. Do NOT use this to generate a confidence score, assess a person's actual competence, or invent a scoring methodology -- confidence values are always caller-supplied input, never computed, inferred, or estimated by this skill.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse) -- no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29).
+compatibility: 'Requires Python 3.11+, stdlib only (json, argparse) -- no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29).'
 metadata:
   domain: education
   task_type: review-qa

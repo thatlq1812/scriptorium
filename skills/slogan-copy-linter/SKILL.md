@@ -2,7 +2,7 @@
 name: slogan-copy-linter
 description: Structure/tone linter for short marketing copy (slogans, taglines, signboard headlines). `validate_copy.py` checks a slogan against a caller-declared character cap (no built-in default -- the right cap depends on the physical medium), a caller-declared banned-word/phrase list (case-insensitive substring match, e.g. unverifiable superlative claims like "so 1 the gioi"), and warns (non-blocking) on an all-caps ("shouting") slogan unless the caller explicitly declares that's the intended brand style. Use when reviewing draft marketing copy for a signboard, menu, banner, or flyer before finalizing it. Do NOT use this to judge whether a slogan is creatively good -- only the 3 mechanical checks above.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, pathlib) -- no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29).
+compatibility: 'Requires Python 3.11+, stdlib only (json, pathlib) -- no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29).'
 metadata:
   domain: general
   task_type: review-qa

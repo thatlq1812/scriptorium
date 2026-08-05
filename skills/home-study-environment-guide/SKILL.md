@@ -2,7 +2,7 @@
 name: home-study-environment-guide
 description: Checks a parent/guardian's home study-environment setup (dedicated study space, daily routine, screen-time policy) for structural completeness, and prints non-blocking advisory comparisons against real, named public guidance (AAP screen-time recommendations, National Sleep Foundation sleep-duration ranges) when the caller supplies a child's age and/or sleep schedule. Use when a parent wants to check their home study setup covers the basics before relying on it, or wants a mechanical sanity-check against published age-band guidance. Do NOT use this to prescribe a study plan or curriculum (that's study-plan-builder), to enforce any number as a mandatory rule (every advisory is a warning, never a hard block), or as authority on a specific child's individual needs -- it restates cited public reference ranges, it does not replace a pediatrician's or teacher's judgment.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, re, argparse) -- no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29). See "Verified" section below for real test-case detail.
+compatibility: 'Requires Python 3.11+, stdlib only (json, re, argparse) -- no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29). See "Verified" section below for real test-case detail.'
 metadata:
   domain: education
   task_type: review-qa

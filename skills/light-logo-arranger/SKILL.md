@@ -2,7 +2,7 @@
 name: light-logo-arranger
 description: Deterministic icon/logo anchor-position calculator plus two companion checklist tools. `compute_anchor.py` computes (x, y) placement of a logo/icon within a canvas given a named anchor point and margin, refusing if the result overlaps a caller-declared exclusion zone. Unit-agnostic (mm/px/percentage). `check_asset_completeness.py` reports which deliverables from a standard brand-identity asset checklist (icon, wordmark variants, banners, splash, login background, pattern tile) are missing from a caller-declared produced-assets set. `resolve_font_fallback.py` reports whether a declared wordmark font is system-safe or needs a substitute, against a fixed geometric-similarity mapping table, refusing loudly for unmapped fonts. Use to compute logo placement, gap-check a brand-asset set, or resolve a font substitute — no manual pixel math or guessing. Do NOT use for automatic layout optimization, actual asset generation, or font file download/embedding — pure coordinate arithmetic and checklist lookup.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, pathlib) -- no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29, 2026-08-01).
+compatibility: 'Requires Python 3.11+, stdlib only (json, pathlib) -- no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29, 2026-08-01).'
 metadata:
   domain: general
   task_type: drafting

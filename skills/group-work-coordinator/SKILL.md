@@ -2,7 +2,7 @@
 name: group-work-coordinator
 description: Validates a caller-declared RACI matrix (Responsible/Accountable/Consulted/Informed) for a group project's task list — checks every task has exactly one Accountable person, every person named in the matrix is a declared group member (no phantom assignees), and no task is orphaned (assigned to nobody); warns (non-blocking) on a task with no Responsible person and on a declared member who never appears in any task. Renders a validated matrix to a clean Markdown table. Use when assigning or reviewing who owns what on a group project before work starts, to catch an unowned task or a double-accountable task early. Do NOT use this to decide WHO should be assigned to what — task assignment is a group decision this skill never makes; it only checks that a matrix the group already agreed on is structurally sound.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29). See "Verified" section below for real test-case detail.
+compatibility: 'Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29). See "Verified" section below for real test-case detail.'
 metadata:
   domain: general
   task_type: review-qa

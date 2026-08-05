@@ -2,7 +2,7 @@
 name: grading-and-feedback
 description: Deterministically aggregates/validates ONE exam's scores (MCQ answer-key matching + human-scored essay/rubric criteria capped at each criterion's declared max) into per-student totals and class statistics, lints qualitative student remarks for level-appropriate assessment language (TT27 tiểu học forbids scoring language, TT22 THCS/THPT allows it — reusing lesson-plan-builder's proven SCORE_LANGUAGE_RE pattern), and provides a local-only HSnn roster-anonymization round-trip. Use when grading one assessment (MCQ/essay/mixed) or drafting student remarks for one reporting period. Do NOT use this to compute a term average (TBM) or overall grade classification (xếp loại) across multiple assessments — that is grade-book-builder's job. Do NOT use this to produce the final .docx/.xlsx report — delegate that to office-doc-creator. This never grades essay content itself and never calls an LLM/AI API — it only aggregates/validates scores a human (or an upstream process) already assigned.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, re, argparse, collections) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.
+compatibility: 'Requires Python 3.11+, stdlib only (json, re, argparse, collections) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.'
 metadata:
   domain: education
   task_type: review-qa

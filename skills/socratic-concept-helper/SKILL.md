@@ -1,8 +1,8 @@
 ---
 name: socratic-concept-helper
-description: "PAUSED 2026-07-29 (owner decision, not production-ready, see Known limitations) -- do not deploy." Instructs the calling agent to help a K12 student understand a concept through guiding questions rather than a direct final answer to a stated homework/graded problem (Khan Academy Khanmigo's public "Socratic restraint" pattern). Bundles `check_restraint.py`, a deterministic text-pattern linter checking a DRAFTED response for restraint violations -- giveaway final-answer phrasing, zero guiding questions, a leaked arithmetic result. Do NOT use this to generate the tutoring response itself; do NOT treat a clean lint run as proof of genuine restraint -- see "Known limitations".
+description: 'PAUSED 2026-07-29 (owner decision, not production-ready, see Known limitations) -- do not deploy." Instructs the calling agent to help a K12 student understand a concept through guiding questions rather than a direct final answer to a stated homework/graded problem (Khan Academy Khanmigo''s public "Socratic restraint" pattern). Bundles `check_restraint.py`, a deterministic text-pattern linter checking a DRAFTED response for restraint violations -- giveaway final-answer phrasing, zero guiding questions, a leaked arithmetic result. Do NOT use this to generate the tutoring response itself; do NOT treat a clean lint run as proof of genuine restraint -- see "Known limitations".'
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse, ast, re) -- no dependency, no venv needed, local-only, zero network calls of any kind. Verified running clean: Claude Code (2026-07-29). See "Verified" section below for real test-case detail.
+compatibility: 'Requires Python 3.11+, stdlib only (json, argparse, ast, re) -- no dependency, no venv needed, local-only, zero network calls of any kind. Verified running clean: Claude Code (2026-07-29). See "Verified" section below for real test-case detail.'
 metadata:
   domain: education
   task_type: review-qa

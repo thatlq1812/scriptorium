@@ -2,7 +2,7 @@
 name: pandoc-bootstrap
 description: Detects whether `pandoc` is present on this machine, and only when explicitly run, installs it via the platform's package manager (winget/brew/apt). Use before any skill needs to convert between .tex/.docx/.pdf/.html and hasn't confirmed pandoc is already installed. Converting TO .pdf additionally needs a working LaTeX engine (see xelatex-bootstrap) — this skill only manages pandoc itself. Do NOT run the install script speculatively — always run check_pandoc.py first.
 license: MIT
-compatibility: check_pandoc.py is stdlib-only (shutil, subprocess, platform), no dependency, no venv. install_pandoc.ps1 requires winget (Windows); install_pandoc.sh requires brew (macOS) or apt-get (Debian/Ubuntu Linux). Verified running clean: Claude Code, Windows (2026-07-27). See "Verified" section below for real test-case detail.
+compatibility: 'check_pandoc.py is stdlib-only (shutil, subprocess, platform), no dependency, no venv. install_pandoc.ps1 requires winget (Windows); install_pandoc.sh requires brew (macOS) or apt-get (Debian/Ubuntu Linux). Verified running clean: Claude Code, Windows (2026-07-27). See "Verified" section below for real test-case detail.'
 metadata:
   domain: general
   task_type: coordination

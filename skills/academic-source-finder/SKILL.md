@@ -2,7 +2,7 @@
 name: academic-source-finder
 description: A protocol for finding citable academic sources, not a search service — the calling agent does the actual searching using whatever web/database tools it already has (Google Scholar, JSTOR, PubMed, an institutional library search, etc.); this skill supplies the checklist for what makes a source citable (recognized source_type, honest peer-reviewed declaration, a resolvable doi_or_url, a recorded access date, and an optional recency threshold) and a deterministic validator that checks a caller-declared source list against it, catching an unvetted or under-documented source before it's cited. Use when assembling a source list for an academic essay/paper and you want a mechanical check that every source is honestly documented before citing it. Do NOT use this skill expecting it to search the web or an academic database itself — it has no network access and calls no AI backend; it is a checklist + a validator, executed against a source list the calling agent already assembled with its own tools.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, re, argparse) — no dependency, no venv needed, local-only, zero network calls of any kind. Verified running clean: Claude Code (2026-07-29). See "Verified" section below for real test-case detail.
+compatibility: 'Requires Python 3.11+, stdlib only (json, re, argparse) — no dependency, no venv needed, local-only, zero network calls of any kind. Verified running clean: Claude Code (2026-07-29). See "Verified" section below for real test-case detail.'
 metadata:
   domain: education
   task_type: research

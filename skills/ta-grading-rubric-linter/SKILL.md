@@ -2,7 +2,7 @@
 name: ta-grading-rubric-linter
 description: Validates a TA's rubric-based grading run for one class against a rubric definition — every criterion score is checked against its declared max (a score exceeding its max is refused outright, never silently clamped, same discipline as grading-and-feedback's own per-criterion capping rule), rubric criteria weights are checked to sum exactly to the declared total, and a statistics pass (stdlib `statistics` only) flags cross-student consistency patterns worth a human double-check — a criterion scored for only one student out of many, a per-criterion Tukey 1.5×IQR outlier, or a student whose score is identical across every criterion (flatline) while the class otherwise shows variance. Use after a TA finishes grading a batch of students with one rubric, before scores are finalized/returned. Do NOT use this to judge whether a score is pedagogically correct, to grade content itself, or to compute a term/course grade across multiple assignments — it only checks internal consistency of one already-graded rubric run.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse, statistics, collections) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29). See "Verified" section below for real test-case detail.
+compatibility: 'Requires Python 3.11+, stdlib only (json, argparse, statistics, collections) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29). See "Verified" section below for real test-case detail.'
 metadata:
   domain: education
   task_type: review-qa

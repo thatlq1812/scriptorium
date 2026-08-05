@@ -2,7 +2,7 @@
 name: exam-ready-scaffold
 description: Deterministic flashcard/quiz-item builder from a caller-supplied topic/fact list -- `build_deck.py` turns a list of {term, definition} facts into flashcards and/or 4-choice MCQ items whose distractors are OTHER real definitions from the same supplied list (never a fabricated wrong answer), selected and ordered by a fixed rule (no randomness, same input always produces the same output); `validate_deck.py` structurally checks a deck (hand-authored or generated) for missing fields, duplicate terms, wrong choice counts, and an answer label that doesn't point at a real choice. Use when a student/teacher has a topic's facts already written down and wants them turned into study-ready flashcards/quiz items, or wants a drafted deck checked before use. Do NOT use this to invent facts, definitions, or distractor content that the caller didn't supply -- every word of the substantive content (term, definition, distractor text) traces back to the caller's own facts.json; this skill only reshapes and validates structure.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse) -- no dependency, no venv needed, local-only, zero network calls of any kind. Verified running clean: Claude Code (2026-07-29). See "Verified" section below for real test-case detail.
+compatibility: 'Requires Python 3.11+, stdlib only (json, argparse) -- no dependency, no venv needed, local-only, zero network calls of any kind. Verified running clean: Claude Code (2026-07-29). See "Verified" section below for real test-case detail.'
 metadata:
   domain: education
   task_type: drafting

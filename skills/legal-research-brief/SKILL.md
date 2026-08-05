@@ -2,7 +2,7 @@
 name: legal-research-brief
 description: Validates that a structured legal research brief (legal question → verified facts → statutory grounds → application analysis → alternative interpretations → risk evaluation) grounds every factual/statutory claim in a caller-supplied source — catching a fabricated or mistyped citation before it reaches a client or court filing. Use after drafting a legal brief/memo to verify every claim traces to a real, declared source. Do NOT use this to search the web or a legal database for sources (it has none — sources must already be supplied); do NOT use it to judge whether the legal analysis itself is correct — it validates grounding and structure only.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls of any kind. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.
+compatibility: 'Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls of any kind. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.'
 metadata:
   domain: legal
   task_type: review-qa

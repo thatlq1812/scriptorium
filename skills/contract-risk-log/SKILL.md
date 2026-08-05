@@ -2,7 +2,7 @@
 name: contract-risk-log
 description: Validates a structured contract risk-review log — every flagged issue must name a clause, a concern, a specific (not vague) recommended action, a severity, and a category; the log must state whether a systematic review found zero issues or simply wasn't done. Also validates a batch/tabular review of N contracts against the same M review columns (a due-diligence pass across several agreements) — every document x column cell must be a value with a verbatim quote + location, "not_present", or "needs_review" with a reason; a missing cell is refused, never silently blank. Use after reviewing one contract for risk (single-log mode) or several contracts against a shared checklist (batch mode). Do NOT use this to automatically detect contract risk or extract clause values — that requires legal judgment this skill does not attempt; it only checks a human/agent-authored assessment is structurally complete and grounded.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls of any kind. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.
+compatibility: 'Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls of any kind. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.'
 metadata:
   domain: legal
   task_type: review-qa

@@ -2,7 +2,7 @@
 name: office-doc-creator
 description: Creates real Word (.docx), PowerPoint (.pptx), Excel (.xlsx) files from a simple JSON content spec, using MIT-licensed libraries (python-docx, python-pptx, openpyxl) — not hand-writing XML, no dependency on Anthropic or any AI service. Use when an agent's output (a report, contract, official letter, data table, slides) needs to become a real Office file openable in Word/Excel/PowerPoint. Do NOT use to READ/analyze an existing Office file (that's `document-ai-structurer`) — this skill only CREATES new files.
 license: MIT
-compatibility: Requires Python 3.11+ + `python-docx`/`python-pptx`/`openpyxl` (bootstrapped via `python-env-bootstrap`). Verified running clean: Claude Code, Windows via PowerShell (2026-07-26, smoke-tested all 3 formats, confirmed correct Vietnamese-diacritic content by reading it back; 2026-08-01, re-verified the docx path with the rFonts fix and real Word-native numbering — unzipped and inspected `word/styles.xml`/`word/numbering.xml`/`word/document.xml` directly, see "Changelog" below).
+compatibility: 'Requires Python 3.11+ + `python-docx`/`python-pptx`/`openpyxl` (bootstrapped via `python-env-bootstrap`). Verified running clean: Claude Code, Windows via PowerShell (2026-07-26, smoke-tested all 3 formats, confirmed correct Vietnamese-diacritic content by reading it back; 2026-08-01, re-verified the docx path with the rFonts fix and real Word-native numbering — unzipped and inspected `word/styles.xml`/`word/numbering.xml`/`word/document.xml` directly, see "Changelog" below).'
 metadata:
   domain: general
   task_type: drafting

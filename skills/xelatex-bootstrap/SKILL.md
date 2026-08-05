@@ -2,7 +2,7 @@
 name: xelatex-bootstrap
 description: Detects whether the XeLaTeX toolchain (xelatex, biber, the fontspec LaTeX package) is present on this machine, and only when explicitly run, installs it via the platform's package manager (winget/brew/apt). Use before latex-project-bootstrap on a machine where the toolchain hasn't already been confirmed present — latex-project-bootstrap assumes xelatex/biber already exist and doesn't install them itself. Do NOT run the install script speculatively — always run check_toolchain.py first; installing is a multi-minute, several-hundred-MB system change and should only happen when detection actually shows something missing.
 license: MIT
-compatibility: check_toolchain.py is stdlib-only (shutil, subprocess, platform), no dependency, no venv. install_toolchain.ps1 requires winget (Windows); install_toolchain.sh requires brew (macOS) or apt-get (Debian/Ubuntu Linux). Verified running clean: Claude Code, Windows (2026-07-27). See "Verified" section below for real test-case detail.
+compatibility: 'check_toolchain.py is stdlib-only (shutil, subprocess, platform), no dependency, no venv. install_toolchain.ps1 requires winget (Windows); install_toolchain.sh requires brew (macOS) or apt-get (Debian/Ubuntu Linux). Verified running clean: Claude Code, Windows (2026-07-27). See "Verified" section below for real test-case detail.'
 metadata:
   domain: general
   task_type: coordination

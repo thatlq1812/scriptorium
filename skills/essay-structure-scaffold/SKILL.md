@@ -2,7 +2,7 @@
 name: essay-structure-scaffold
 description: Validates/scaffolds an academic essay's structural outline — checks a thesis statement is present, every body paragraph has a topic sentence, non-empty supporting evidence, and an explicit link back to the thesis, and the conclusion restates the thesis rather than silently going missing; a lexical (not semantic) heuristic also flags when a paragraph's link-back shares no words with the thesis or when the conclusion contains words absent from the rest of the outline, a possible sign of a new claim. Renders a validated outline to clean Markdown. Use when drafting or reviewing an essay's argumentative skeleton before or instead of full prose. Do NOT use this to write, grade, or judge the quality/persuasiveness of essay content — the writer (or the calling agent working with the writer) always supplies the actual thesis/topic-sentence/evidence/conclusion text; this only checks the outline's structure and does simple word-overlap heuristics.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, re, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29). See "Verified" section below for real test-case detail.
+compatibility: 'Requires Python 3.11+, stdlib only (json, re, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29). See "Verified" section below for real test-case detail.'
 metadata:
   domain: education
   task_type: review-qa

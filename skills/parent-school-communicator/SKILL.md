@@ -2,7 +2,7 @@
 name: parent-school-communicator
 description: Checks a parent/guardian's message TO a school or teacher (meeting request, concern, follow-up, inquiry, absence notice, complaint) for structural completeness and tone before it's sent -- required fields present (who it's addressed to, who the child is, what's being asked), no leftover template placeholder, a concrete requested action always present (this direction of communication has no valid pure-FYI case), and no hostile/threatening escalation language toward the teacher/school. Use when a parent or an agent acting on a parent's behalf has drafted a message to a school and wants it checked before sending. Do NOT use this to generate the message content itself (no LLM/AI call -- it only checks a filled-in record), to judge writing quality/persuasiveness, or to draft a teacher-to-parent message (that is the opposite direction, covered by parent-communication).
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, re, argparse) -- no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29). See "Verified" section below for real test-case detail.
+compatibility: 'Requires Python 3.11+, stdlib only (json, re, argparse) -- no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29). See "Verified" section below for real test-case detail.'
 metadata:
   domain: education
   task_type: review-qa

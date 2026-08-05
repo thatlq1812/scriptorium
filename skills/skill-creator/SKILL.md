@@ -2,7 +2,7 @@
 name: skill-creator
 description: Standardize procedural knowledge already elicited from a real source (an expert, or the owner's tacit knowledge) plus grounded research, into a portable Agent Skill following the agentskills.io open spec (6-field frontmatter). Use when elicited-process input + research are ready for a specific, repeatable procedure. Do NOT use to self-infer a new skill without elicited/research input — a self-generated skill that skipped elicitation has been measured as "no benefit on average" (SkillsBench).
 license: MIT
-compatibility: Portable per the agentskills.io open spec (6-field frontmatter, no extensions). Verified running clean: Claude Code (2026-07-26). Not yet verified: OpenAI Codex CLI, Kimi Code CLI, Antigravity CLI — do not mark compatible until tested directly.
+compatibility: 'Portable per the agentskills.io open spec (6-field frontmatter, no extensions). Verified running clean: Claude Code (2026-07-26). Not yet verified: OpenAI Codex CLI, Kimi Code CLI, Antigravity CLI — do not mark compatible until tested directly.'
 metadata:
   domain: meta
   task_type: skill-authoring

@@ -2,7 +2,7 @@
 name: certification-exam-prep
 description: Deterministic exam-readiness checklist validator -- checks a caller-declared study log's covered topics against a caller-declared certification exam blueprint's domain/objective list and flags every uncovered objective plus per-domain and overall coverage percentages. Use when a professional preparing for a real certification wants to know exactly which published exam objectives their study log hasn't covered yet. Do NOT use this to generate, guess, or assert real exam questions or a certification's real content -- the blueprint (domains, objectives, weightings) is always caller-supplied and any bundled example must cite the real certification body's own published exam guide.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse) -- no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29).
+compatibility: 'Requires Python 3.11+, stdlib only (json, argparse) -- no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29).'
 metadata:
   domain: education
   task_type: review-qa

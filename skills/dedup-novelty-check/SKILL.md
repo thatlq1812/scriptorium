@@ -2,7 +2,7 @@
 name: dedup-novelty-check
 description: Checks whether a candidate skill significantly overlaps an existing skill in the registry, using a script that scores overlap on domain/task_type/description — not eyeballed guessing. Use right before starting skill-creator for a new skill. Do NOT use to evaluate quality or license (that's quality-eval and license-compliance-check).
 license: MIT
-compatibility: Pure Python 3 stdlib script (argparse/json/re), no dependency to install, no venv needed. Verified running clean: Claude Code, Windows (2026-07-26, tested both a flagged case and a safe case against the real registry).
+compatibility: 'Pure Python 3 stdlib script (argparse/json/re), no dependency to install, no venv needed. Verified running clean: Claude Code, Windows (2026-07-26, tested both a flagged case and a safe case against the real registry).'
 metadata:
   domain: meta
   task_type: review-qa

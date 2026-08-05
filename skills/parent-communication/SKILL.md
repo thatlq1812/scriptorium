@@ -2,7 +2,7 @@
 name: parent-communication
 description: Checks a homeroom teacher's message to parents (a one-off letter/notice or a periodic weekly/monthly brief) for completeness and tone before it goes out — required fields present, no leftover template placeholder (especially an unfilled student name on a single-student letter), a concrete requested action if one is stated, and no harsh/accusatory language about the student. Use when a teacher or agent has drafted a parent letter or periodic brief and wants it checked before sending. Do NOT use this to generate the message content itself (no LLM/AI call — it only checks a filled-in record), to judge writing quality/persuasiveness, or for school-administration paperwork (reports, decisions, correspondence logs — out of scope for this tier).
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, re, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.
+compatibility: 'Requires Python 3.11+, stdlib only (json, re, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.'
 metadata:
   domain: education
   task_type: review-qa

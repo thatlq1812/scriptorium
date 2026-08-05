@@ -2,7 +2,7 @@
 name: project-workspace-initializer
 description: Scaffolds a date-indexed project workspace (`projects/project_YYYYMMDD_NN/`) with structured subdirectories (`source/`, `work/`, `draft/`, `deliverables/`, `archives/` by default, or whatever a profession template declares) plus a generated `PROJECT.md` control-panel file with pre-formulated prompts, so a non-tech user can drive the calling agent through a multi-step task without navigating the directory tree manually. `scaffold_workspace.py` reads a profession template (start from `assets/templates/legal-practitioner/template.json`), auto-increments the day's sequence number by scanning existing project directories (never guesses, never overwrites), and writes both the subdirectory tree and `PROJECT.md`. Use when starting a new real-world matter/project spanning multiple work sessions. Do NOT use this for a one-off single-file task.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse, re, datetime, pathlib) -- no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29).
+compatibility: 'Requires Python 3.11+, stdlib only (json, argparse, re, datetime, pathlib) -- no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29).'
 metadata:
   domain: general
   task_type: coordination

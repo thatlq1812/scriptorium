@@ -2,7 +2,7 @@
 name: svg-poster-builder
 description: Deterministic SVG layout renderer for posters/banners/flyers at real ISO 216 paper sizes (A1 594x841mm, A4 210x297mm). `render_layout.py` reads a caller-declared layout.json (canvas preset + a list of percentage-positioned zones typed as hero_image/content_scene/vignette/decorative_element/background_canvas/typography_frame) and renders labeled placeholder rectangles as valid SVG -- it never generates the actual illustration/imagery content itself. Enforces a max-40%-canvas-area text-coverage cap across typography_frame zones (statistically-grounded content-density rule). Use for planning/prototyping a poster's composition (zone sizes, positions, overlap-free layout) before real artwork is dropped into each zone by hand or another tool. Do NOT use this for AI image generation -- Scriptorium never calls an AI API (CLAUDE.md principle 8); pair this with image-generator-gemini or a design tool for actual imagery.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse, pathlib) -- no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29, re-verified 2026-08-01 for v0.2.0).
+compatibility: 'Requires Python 3.11+, stdlib only (json, argparse, pathlib) -- no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29, re-verified 2026-08-01 for v0.2.0).'
 metadata:
   domain: general
   task_type: drafting

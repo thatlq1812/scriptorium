@@ -2,7 +2,7 @@
 name: brand-identity-linter
 description: Signboard/menu brand-identity structural linter. `validate_brand.py` checks (1) a primary color-role is declared, with secondary/accent RESOLVED via a deterministic fallback chain when not explicitly declared (reports "declared" vs. "resolved via fallback" per role, never silently blank), (2) max 3 accent colors, (3) background is never pure white, (4) any element flagged role "cta"/"contact" has a font size at or above the declared body font size (emphasis discipline), (5) every icon element references a declared motif, catching "orphan icons" placed with no thematic anchor. Use when reviewing a signboard/menu/banner's declared color-and-typography spec before final render. Do NOT use this to judge subjective aesthetic quality -- it only checks the mechanical rules above, never a holistic design opinion.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, re, pathlib) -- no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29, re-verified 2026-08-01 for v0.2.0).
+compatibility: 'Requires Python 3.11+, stdlib only (json, re, pathlib) -- no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29, re-verified 2026-08-01 for v0.2.0).'
 metadata:
   domain: general
   task_type: review-qa

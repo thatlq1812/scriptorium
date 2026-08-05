@@ -2,7 +2,7 @@
 name: legal-form-filler
 description: A generic dossier-completeness checker and form-field-fill validator for legal/administrative procedures — the checklist and form template are always caller-supplied, never hard-coded, since this project has no real government procedure data. `check_dossier.py` checks a provided-documents list against a required-documents checklist (case/whitespace-normalized exact match); `fill_form.py` validates that every required form field has a value and flags data keys that don't match any declared field (catches typos); `checklist_from_catalog.py` mechanically extracts a checklist from a real Điều's Khoản list in a document-ai-structurer catalog.json, instead of the checklist being hand-typed with no source. Use when preparing a legal dossier or filling a form template. Do NOT use this to determine WHICH checklist/form applies to a given procedure — that selection judgment isn't automated here; the caller (or the agent, after reading the real Điều) supplies or picks the correct checklist/template.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls of any kind. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.
+compatibility: 'Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls of any kind. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.'
 metadata:
   domain: legal
   task_type: drafting

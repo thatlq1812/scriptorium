@@ -2,7 +2,7 @@
 name: grade-book-builder
 description: Aggregates already-scored assessment results into a class-wide term gradebook (so tong hop diem) — deterministically computes each student's weighted term average (TBM) across multiple assessment categories (e.g. mieng/giua_ky/cuoi_ky), classifies each student against user-declared bands (e.g. Gioi/Kha/Trung binh/Yeu), and produces class statistics — then renders a Markdown summary table. Use when a teacher/giao vu already has per-assessment scores for a class and needs the term-level rollup. Do NOT use this to grade or score an individual assessment (that's `grading-and-feedback`), and do NOT use it as a source of official TT22/2021 weight percentages or classification thresholds — those are required inputs the caller must declare, this skill does not assert or invent them.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.
+compatibility: 'Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.'
 metadata:
   domain: education
   task_type: drafting

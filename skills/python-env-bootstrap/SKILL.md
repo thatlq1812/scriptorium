@@ -2,7 +2,7 @@
 name: python-env-bootstrap
 description: Create/extend ONE shared Python venv at the repo root (sibling to `skills/`), even on a machine that does NOT have Python installed — uses uv (Astral), a static binary that downloads a standard Python itself. Use when another skill declares a `requirements.txt` and needs to be installed into the shared runtime environment. Do NOT use to permanently install Python system-wide or to replace the user's package manager — this only manages the repo's shared venv.
 license: MIT
-compatibility: Requires downloading/installing `uv` (the official astral.sh install script, no pre-existing Python needed). Verified running clean: Claude Code, Windows via real PowerShell (2026-07-26). See "Verified" section below for real test-case detail.
+compatibility: 'Requires downloading/installing `uv` (the official astral.sh install script, no pre-existing Python needed). Verified running clean: Claude Code, Windows via real PowerShell (2026-07-26). See "Verified" section below for real test-case detail.'
 metadata:
   domain: meta
   task_type: coordination

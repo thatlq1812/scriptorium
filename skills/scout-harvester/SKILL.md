@@ -2,7 +2,7 @@
 name: scout-harvester
 description: Finds and preliminarily evaluates outside candidates (GitHub repos, libraries, papers, existing skills) for a specific Scriptorium skill need, before any content touches license-compliance-check (step 7). Can also shallow-clone a chosen candidate for closer reading. Use when starting a new skill and wanting to know "has anyone already solved this, and how" before designing from scratch. Does NOT decide harvest/use on its own — only proposes candidates with a preliminary evaluation (and, if cloned, a local copy to read); the legal go/no-go decision always belongs to license-compliance-check.
 license: MIT
-compatibility: A research process (web search + reading code/docs), no harness dependency for the process itself. `scripts/github_scout.py` and `scripts/clone_candidate.py` require the `gh` CLI / `git` on PATH respectively; `scripts/pypi_license_check.py` is stdlib-only. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.
+compatibility: 'A research process (web search + reading code/docs), no harness dependency for the process itself. `scripts/github_scout.py` and `scripts/clone_candidate.py` require the `gh` CLI / `git` on PATH respectively; `scripts/pypi_license_check.py` is stdlib-only. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.'
 metadata:
   domain: meta
   task_type: research

@@ -2,7 +2,7 @@
 name: typst-bootstrap
 description: Detects whether the Typst typesetting binary is available (checked at the shared repo-local `.tools/typst/` location first, then PATH), and only when explicitly run, downloads the official static binary from github.com/typst/typst releases into that shared location — no system package manager, no multi-GB TeX distribution, ~50MB total. Use before latex-project-bootstrap's vnnd30 mode on a machine where Typst hasn't already been confirmed present. Do NOT run the install script speculatively — always run check_typst.py first.
 license: MIT
-compatibility: check_typst.py and install_typst.py are both stdlib-only (shutil/subprocess/platform/urllib/zipfile/tarfile), no dependency, no venv. Verified running clean: Claude Code, Windows (2026-07-27) — real end-to-end install (downloaded typst 0.15.1 from the official GitHub release, extracted, verified via `typst --version`), plus a real idempotent re-run (already-present short-circuit).
+compatibility: 'check_typst.py and install_typst.py are both stdlib-only (shutil/subprocess/platform/urllib/zipfile/tarfile), no dependency, no venv. Verified running clean: Claude Code, Windows (2026-07-27) — real end-to-end install (downloaded typst 0.15.1 from the official GitHub release, extracted, verified via `typst --version`), plus a real idempotent re-run (already-present short-circuit).'
 metadata:
   domain: general
   task_type: coordination

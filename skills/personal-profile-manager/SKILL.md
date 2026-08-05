@@ -2,7 +2,7 @@
 name: personal-profile-manager
 description: Local-only personal profile store and behavior-adaptation proposal generator for non-tech users. `init_profile.py` scaffolds a local `personal/profile.json` (identity, organization, tax ID, contact, plus an optional org_profile issuing-organization/letterhead section) from a bundled template; `validate_profile.py` checks required sections/fields, including org_profile's cross-field checks (signatory-to-department reference integrity, no duplicate ids); `autofill.py` resolves a caller-declared field_map against the profile, refusing to invent unresolved values; `propose_style_update.py` turns a feedback log into a PROPOSED instruction-update block, never auto-applied. Use when a user wants to stop re-typing identity/org details into every form/contract, wants tone/register to adapt to feedback, or needs an org's letterhead identity stored separately from personal contact details. Do NOT auto-apply a style change without human review, and do NOT use as a secrets store — plain local JSON only.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse, pathlib, re) -- no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-08-01).
+compatibility: 'Requires Python 3.11+, stdlib only (json, argparse, pathlib, re) -- no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-08-01).'
 metadata:
   domain: general
   task_type: coordination

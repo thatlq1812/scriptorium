@@ -2,7 +2,7 @@
 name: lab-practicum-guide
 description: Validates a lab-session practicum guide record — a required non-empty safety-notes section, a declared equipment list, and a sequential step-by-step procedure where every step has a clear instruction and a non-empty expected-outcome checkpoint — catching a step that references undeclared equipment (a typo or an omission), a gap/duplicate in step numbering, and (as a non-blocking warning) equipment declared but never used by any step; then renders a clean Markdown guide. Use when drafting or checking a lab session guide before it's handed to students. Do NOT use this to judge whether the safety notes are actually sufficient for the specific hazards involved, whether the science/procedure itself is correct, or whether the expected outcomes are calibrated right — it validates structure and cross-reference consistency only, content is always caller-supplied.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29). See "Verified" section below for real test-case detail.
+compatibility: 'Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29). See "Verified" section below for real test-case detail.'
 metadata:
   domain: education
   task_type: review-qa

@@ -2,7 +2,7 @@
 name: dissertation-proposal-scaffold
 description: Validates a Master's/PhD dissertation-proposal document has the five standard required sections — problem statement, literature gap, research questions, methodology, timeline — each non-empty (a blank/placeholder section, an empty research-questions list, or a timeline milestone missing its target date is a hard error naming the exact missing piece), then renders a clean Markdown scaffold. Use when drafting or checking a thesis/dissertation proposal's structure before submitting it to an advisor or committee. Do NOT use this to judge whether the problem is significant, the literature gap is real, the research questions are answerable, or the methodology is sound — it validates document structure/completeness only, never intellectual content.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29). See "Verified" section below for real test-case detail.
+compatibility: 'Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29). See "Verified" section below for real test-case detail.'
 metadata:
   domain: education
   task_type: review-qa

@@ -2,7 +2,7 @@
 name: legal-citation-checker
 description: Validates the FORMAT of Vietnamese legal citations (Điều/Khoản/Điểm + văn bản số hiệu, e.g. "Điều 12 Khoản 2 Điểm a, Nghị định 30/2020/NĐ-CP") against known numbering conventions, and flags the same document being cited with two different titles. Optionally, given a --catalog from document-ai-structurer's build_catalog.py, also checks that a cited Điều number actually exists in a structured local corpus; given a --web-record from legal-web-search, also surfaces a disclosed live-source hint (what an official source page displayed, dated). Reports an explicit access_mode (no-source/user-supplied/live-source) per citation. Use when finalizing a legal document's citations before it goes to a client or gets filed. Do NOT use this to verify that a cited document is currently in effect (hiệu lực) — no free Vietnamese legal-document database exists for this project to query, and neither local corpus existence nor a live-source hint is the same claim as hiệu lực; that verification remains a human task.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (re, json, argparse) — no dependency, no venv needed, zero network calls of any kind. Verified running clean: Claude Code (2026-07-26, 2026-07-27). See "Verified" section below for real test-case detail.
+compatibility: 'Requires Python 3.11+, stdlib only (re, json, argparse) — no dependency, no venv needed, zero network calls of any kind. Verified running clean: Claude Code (2026-07-26, 2026-07-27). See "Verified" section below for real test-case detail.'
 metadata:
   domain: legal
   task_type: review-qa

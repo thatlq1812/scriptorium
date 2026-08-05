@@ -2,7 +2,7 @@
 name: student-progress-tracker
 description: Deterministic aggregator/validator for a parent/guardian tracking a child's report-card/progress data across multiple periods over time -- validates structural completeness of a multi-period record (unique caller-declared period order, subject scores on the 0-10 scale, valid dates), then computes a plain arithmetic trend (per-subject and overall score deltas between consecutive periods, direction up/down/flat). Use when a parent has already-recorded scores from 2 or more report periods and wants a structural check plus a mechanical trend summary. Do NOT use this to grade or score any individual assessment (that's grading-and-feedback), and do NOT use it as a source of official weighting/classification logic -- like grade-book-builder, it never invents an official average; a caller-supplied reported_overall_average is used as-is, and if omitted this only computes a plainly-labeled unweighted mean, never presented as an official TBM.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, re, argparse) -- no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29). See "Verified" section below for real test-case detail.
+compatibility: 'Requires Python 3.11+, stdlib only (json, re, argparse) -- no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-29). See "Verified" section below for real test-case detail.'
 metadata:
   domain: education
   task_type: review-qa

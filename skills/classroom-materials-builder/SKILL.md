@@ -2,7 +2,7 @@
 name: classroom-materials-builder
 description: Validates the structural completeness of a student-facing classroom material record (in-class worksheet, take-home homework sheet with answer key, or classroom learning game) before it goes to students — every item has a task, every homework item's answer key covers every item with no gaps, worksheets are flagged if an item has no described response space, games are flagged if their rules are missing or don't reference the declared lesson topic — then renders it to clean Markdown. Use when checking a worksheet/homework sheet/game JSON record for shipping-safety gaps (an unanswered homework question, a task with no place for the student to respond, a game with no rules) before printing or handing it out. Do NOT use this to generate the actual tasks/questions/answers (no LLM/AI call, ever) — that stays a human/agent authoring job — and do NOT use it to judge whether the content is pedagogically good, factually correct, or age-appropriate; it checks structure only.
 license: MIT
-compatibility: Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.
+compatibility: 'Requires Python 3.11+, stdlib only (json, argparse) — no dependency, no venv needed, local-only, zero network calls. Verified running clean: Claude Code (2026-07-26). See "Verified" section below for real test-case detail.'
 metadata:
   domain: education
   task_type: review-qa
