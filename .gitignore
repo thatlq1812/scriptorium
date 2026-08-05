@@ -9,3 +9,6 @@ __pycache__/
 /personal
 /data
 /test
+
+/*.md
+!/README.md
