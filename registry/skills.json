@@ -47,7 +47,7 @@
     },
     {
       "skill_id": "skill-exporter",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "source": {
         "type": "self-authored"
       },
@@ -1628,12 +1628,12 @@
       },
       "security_audit": {
         "status": "passed",
-        "date": "2026-08-04",
-        "note": "Re-audited at 0.2.0 (2026-08-04): 2 scripts (scaffold_workspace.py, init_root_workspace.py), all stdlib-only (json/argparse/re/pathlib/datetime), zero network calls, no dynamic execution."
+        "date": "2026-08-05",
+        "note": "Re-audited at 0.2.0 (2026-08-05): 2 scripts (scaffold_workspace.py, init_workspace.py), all stdlib-only (json/argparse/re/shutil/pathlib/datetime), zero network calls, no dynamic execution. Corrects a stale 2026-08-04 note that referenced a nonexistent 'init_root_workspace.py' -- confirmed via `git log --all` that file never existed in this repo; init_workspace.py is the real script now built to close that gap."
       },
       "dependencies": [],
       "license_debt": null,
-      "elicited_from": "Grounded in a real non-tech-user pilot (a legal-practitioner workspace deployment, recorded in docs/ROADMAP.md's 2026-07-29 entry — the pilot deployment directory is no longer directly accessible on this machine, so the already-recorded workflow description is treated as the elicitation record). Only one real profession template built (legal-practitioner) — no template invented for a profession without a real pilot behind it, same discipline as legal-form-filler's refusal to guess a form-selection procedure."
+      "elicited_from": "Grounded in a real non-tech-user pilot (a legal-practitioner workspace deployment, recorded in docs/ROADMAP.md's 2026-07-29 entry — the pilot deployment directory is no longer directly accessible on this machine, so the already-recorded workflow description is treated as the elicitation record). Only one real profession template built (legal-practitioner) — no template invented for a profession without a real pilot behind it, same discipline as legal-form-filler's refusal to guess a form-selection procedure. init_workspace.py's workspace_subdirs/workspace_md_prompts (2026-08-05) are grounded in the same ROADMAP.md record's own description of the pilot's `d:/my-workspace` deployment (`projects/` root + `projects/_templates/` template location), not a new elicitation source."
     },
     {
       "skill_id": "svg-poster-builder",

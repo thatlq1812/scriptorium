@@ -193,9 +193,28 @@ def build_manifest(purpose: str | None, included: list[str], non_skill_deps: lis
             lines.append(f"- `{dep}`")
     lines += [
         "",
+        "## Where to install",
+        "",
+        "Different agent harnesses look for skills in different directories -- there is no single "
+        "universal path, and this bundle doesn't know which harness will consume it at export time. "
+        "Known conventions:",
+        "",
+        "- **Claude Code**: `.claude/skills/<skill_id>/`",
+        "- **goose (Agent Client Protocol)**: `.agents/skills/<skill_id>/` (also checks "
+        "`.goose/skills/` and `.claude/skills/` project-local, plus a few global paths under "
+        "`$HOME` -- reported from real testing, not independently verified in this repo)",
+        "- **Cursor**: `.cursor/skills/<skill_id>/` (per Cursor's own docs -- not independently "
+        "verified in this repo)",
+        "",
+        "This bundle ships every skill under a flat `skills/<skill_id>/` folder at the zip root. "
+        "Copy (or symlink/junction) each skill's folder into whichever directory your harness "
+        "actually scans, then don't leave a second copy under this bundle's own `skills/` path lying "
+        "around where your harness might also pick it up -- two registrations of the same skill_id "
+        "is a conflict, not redundancy. If you're not sure which directory your harness uses, check "
+        "its own docs.",
+        "",
         "## How to use",
         "",
-        "Drop the `skills/` folder from this bundle into your own project's `skills/` directory. "
         "Each skill's own `SKILL.md` documents how to run it and any environment setup it needs "
         "(e.g. `python-env-bootstrap` for the shared Python venv, if a dependency above names it). "
         "See `dependency-tree.md` for why each skill is here, and `skills.lock` if you need to "
