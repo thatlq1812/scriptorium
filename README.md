@@ -28,7 +28,6 @@ Two more disciplines run through every skill in this repo:
 - `registry/` — the multi-axis identity backbone (domain, task-type, risk-tier, grounding, harness-compatibility). Schema: `registry/SCHEMA.md`. Data: `registry/skills.json`.
 - `outside_research/` — living input gathered before a tier is built (owner-authored surveys, AI-assisted research briefs), kept verbatim, never a source of truth on its own. See `docs/MASTER_CONTEXT.md` §3-4.
 - `outside_agy/` — reference material surveyed from external LegalTech skill/playbook models (Harvey AI, CoCounsel, Ironclad-inspired), used for comparison only, not copied.
-- `SKILLS_MAP.md` (repo root) — Mermaid overview of the full registry by cluster and real cross-skill dependency; a snapshot, not a source of truth.
 
 Completed execution plans (e.g. the 2026-07-29 upgrade round that grew the registry 39→62 skills) move to `docs/archive/` once every checklist item is done — see `CLAUDE.md`'s read order.
 

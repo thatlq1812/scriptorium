@@ -785,14 +785,14 @@
     },
     {
       "skill_id": "image-generator-gemini",
-      "version": "0.3.0",
+      "version": "0.4.2",
       "source": {
         "type": "self-authored"
       },
       "license": "MIT",
       "tags": {
         "domain": [
-          "general"
+          "media"
         ],
         "task_type": [
           "drafting"
@@ -807,23 +807,40 @@
         ]
       },
       "quality_score": {
-        "stage4_formal": null,
+        "stage4_formal": {
+          "contract_conformance": {
+            "claims_checked": 6,
+            "holds": 6,
+            "violated": 0,
+            "untestable": 2,
+            "untestable_note": "batch full-manifest generation and --anchor-profile's actual image output require a real GEMINI_API_KEY, not available in this evaluation environment -- skip-if-exists behavior around them WAS verified for real with a dummy key (API call attempted and failed cleanly only for the non-skipped entry)."
+          },
+          "harnesses_tested": [
+            "claude-code"
+          ],
+          "test_cases": 0,
+          "delta_pass_rate": {},
+          "verdict": "pass-a-only",
+          "date": "2026-08-05",
+          "note": "Pass A run for real: missing-GEMINI_API_KEY refusal HOLDS; --anchor-profile vs raw-flags mutual-exclusivity HOLDS (parser.error before any API call); batch skip-if-exists HOLDS (verified against a real pre-existing file, no wasted call). 2 VIOLATED claims found in extract_pdf_page.py (uncaught traceback on a corrupt PDF and on an out-of-range --page index) -- both fixed in v0.4.2, re-verified HOLDS. Pass B (with-skill vs baseline delta) NOT RUN: this skill has only 1 verified harness (claude-code); quality-eval's own precondition requires >=2 -- per its Known Limitations, Pass B 'cannot run at all' below that bar, not relaxed unilaterally."
+        },
         "content_grounding": "auto-verified",
         "stage4_required": true,
         "stage4_reason": "ingests uncontrolled external content (arbitrary user images + external Gemini API)"
       },
       "security_audit": {
         "status": "passed",
-        "date": "2026-07-26",
-        "note": "generate_image.py + analyze_style.py: read GEMINI_API_KEY from env (bring-your-own-key, never hardcoded), external API calls are clearly declared in SKILL.md, never write/persist the key to a file. extract_pdf_page.py: no API calls, purely local rendering via pypdfium2. No finding."
+        "date": "2026-08-05",
+        "note": "Re-audited at 0.4.2 (stage-4 Pass A round, 2026-08-05): extract_pdf_page.py gained 2 except clauses (pdfium.PdfiumError, ValueError) around an existing local-only call -- no new import, no new network/subprocess/eval call introduced. No finding."
       },
       "dependencies": [
         "google-genai==2.14.0",
         "pypdfium2==5.12.1",
-        "python-env-bootstrap"
+        "python-env-bootstrap",
+        "media-anchor-profile"
       ],
       "license_debt": null,
-      "elicited_from": "Grounded in D:/elix/platform/scripts/gen/gen_illustrations.py + D:/UNI/S9_SP26/MLN131/project/scripts/gen-images-v2.mjs + gen-slide-images.mjs (owner's own projects): batch + skip-if-exists + style-ref anchoring + double-base64-decode fallback. Verified for real via actual API calls (model gemini-3.1-flash-lite-image)."
+      "elicited_from": "Grounded in D:/elix/platform/scripts/gen/gen_illustrations.py + D:/UNI/S9_SP26/MLN131/project/scripts/gen-images-v2.mjs + gen-slide-images.mjs (owner's own projects): batch + skip-if-exists + style-ref anchoring + double-base64-decode fallback. Verified for real via actual API calls (model gemini-3.1-flash-lite-image). v0.4.0/0.4.1 upgrade (2026-08-05, GenVid project) additionally grounded in a GitHub architecture survey of 5 diffusion-adapter repos (IP-Adapter, InstantID, PhotoMaker, PuLID -- all verified Apache-2.0 via their own LICENSE files, license-compliance-check 2026-08-05; ComfyUI_IPAdapter_plus -- GPL-3.0, idea-only, no code copied), recorded in data/references/style-anchored-image/NOTES.md: decoupled identity/style channels (IP-Adapter/InstantID), multi-image stacking (PhotoMaker), 'preserve identity, don't suppress pose/scene changes' (PuLID). Added --anchor-profile consuming the new media-anchor-profile skill's shared schema. Real API tests: identity-ref (strict) + style-ref (moderate) combined correctly held character/palette across a pose+style change; --anchor-profile produced the same result as equivalent raw flags."
     },
     {
       "skill_id": "citation-management",
@@ -2501,6 +2518,355 @@
       ],
       "license_debt": null,
       "elicited_from": "Owner's own archived prior production platform, Elixverse (D:/elix/archive/platform_archive/modules/presentation/ -- no license issue, owner's own code). Clone-and-inject architecture (not build-from-scratch) chosen after explicit owner direction across a multi-turn discussion this session -- see docs/STATUS.md's 2026-08-01 entry for the full reasoning and per-file port mapping. BYOT (Bring Your Own Template): real Slidesgo .pptx templates under data/slidesgo_templates/ (gitignored, local-only) used exclusively as this skill's own development/test fixtures -- never bundled, never redistributed (Slidesgo's license does not permit redistributing raw template files). Vietnamese-font-safety data cross-checked against layout_registry/font_config.py + template_factory/font_pairing.py (both from the same archive) and this repo's own office-doc-creator ALLOWED_FONTS allowlist. Font-size-balancing heuristic is a new, self-designed feature per the owner's own stated framing (no direct port)."
+    },
+    {
+      "skill_id": "ffmpeg-bootstrap",
+      "version": "0.2.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "media"
+        ],
+        "task_type": [
+          "coordination"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": []
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/infrastructure skill (binary path resolution only), no uncontrolled external input, grounded in public toolchain docs + direct testing"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-05",
+        "note": "check_ffmpeg.py/resolve_ffmpeg.py: local-portable-first resolution via imageio_ffmpeg.get_ffmpeg_exe() (reads a file already on disk, zero network), system PATH shutil.which() as fallback only. install_ffmpeg_system.ps1/.sh: OS-package-manager installs (winget/brew/apt/dnf/pacman) -- blind-trust-adjacent but lower risk than the already-accepted python-env-bootstrap curl|sh precedent (uses the OS's own vetted package manager, not a third-party script piped into a shell); optional/secondary, never invoked by resolve_ffmpeg_path(). No finding."
+      },
+      "dependencies": [
+        "imageio-ffmpeg==0.6.0"
+      ],
+      "license_debt": null,
+      "elicited_from": "Reuses the bootstrap-skill architecture already proven by python-env-bootstrap (shared venv, uv-based, portable rather than relying on system state). Owner-directed correction (2026-08-05, GenVid project): an initial draft defaulted to system-PATH-first detection with OS-package-manager install as primary -- owner flagged this as wrong for this class of tool (portable means the resource lives local in the workspace, not depending on the host system). Verified for real: imageio-ffmpeg's installed wheel already contains the actual ffmpeg binary (~88MB on Windows) immediately after uv pip install, no lazy/runtime download. Redesigned around this finding: local-first resolution, system PATH demoted to last-resort fallback."
+    },
+    {
+      "skill_id": "media-anchor-profile",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "media"
+        ],
+        "task_type": [
+          "coordination"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "character-profile",
+          "style-profile"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "pure schema/validator/loader, zero network calls, zero AI ingestion -- structural validation only, same exemption class as ffmpeg-bootstrap"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-05",
+        "note": "validate_profile.py/load_profile.py: stdlib-only (json/pathlib/argparse), zero network calls, reads only caller-declared local reference-image paths (resolved relative to the profile file's own directory, must exist on disk -- no arbitrary path traversal beyond normal filesystem access). No finding."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Distilled from a recurring pattern across 5 style/identity-anchoring repos surveyed for image-generator-gemini's v0.4.0 upgrade (data/references/style-anchored-image/NOTES.md, GenVid project 2026-08-05; licenses verified via license-compliance-check 2026-08-05): IP-Adapter/InstantID/PuLID/PhotoMaker (Apache-2.0) and ComfyUI_IPAdapter_plus (GPL-3.0, idea-only) all separate an identity/style anchor concept from the per-call generation prompt; PhotoMaker specifically stacks multiple reference images into one profile. Factors that recurring concept into a shared, generator-agnostic schema. Self-authored, same-day as image-generator-gemini's own v0.4.0 design."
+    },
+    {
+      "skill_id": "video-generator-gemini",
+      "version": "0.1.1",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "media"
+        ],
+        "task_type": [
+          "drafting"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "optional",
+        "object_type": [
+          "video"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": {
+          "contract_conformance": {
+            "claims_checked": 4,
+            "holds": 4,
+            "violated": 0,
+            "untestable": 1,
+            "untestable_note": "actual Veo video generation requires a real GEMINI_API_KEY, not available in this evaluation environment -- the client-side duration_seconds=(4,6,8) gate and the --last-frame/--image validation were both verified without needing a successful generation call."
+          },
+          "harnesses_tested": [
+            "claude-code"
+          ],
+          "test_cases": 0,
+          "delta_pass_rate": {},
+          "verdict": "pass-a-only",
+          "date": "2026-08-05",
+          "note": "Pass A run for real: missing-GEMINI_API_KEY refusal HOLDS; duration_seconds=7 rejected client-side via argparse choices before any API call HOLDS. 1 VIOLATED claim found: --last-frame/--image were read via .read_bytes() before validating '--last-frame requires --image' or that either path exists, crashing with a raw traceback on a missing file -- fixed in v0.1.1, re-verified HOLDS (clean exit 2 in both cases). Pass B NOT RUN: only 1 verified harness (claude-code), below quality-eval's >=2 precondition."
+        },
+        "content_grounding": "auto-verified",
+        "stage4_required": true,
+        "stage4_reason": "ingests uncontrolled external content (arbitrary user images + prompts via the external Veo API), same class as image-generator-gemini"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-05",
+        "note": "Re-audited at 0.1.1 (stage-4 Pass A round, 2026-08-05): generate_video.py's --image/--last-frame existence + ordering fix only reorders existing local Path checks -- no new import, no new network/subprocess/eval call introduced. No finding."
+      },
+      "dependencies": [
+        "google-genai==2.14.0",
+        "ffmpeg-bootstrap"
+      ],
+      "license_debt": null,
+      "elicited_from": "Grounded in a GitHub architecture survey of 5 image-to-video repos (Stability-AI/generative-models (SVD) -- MIT; DynamiCrafter, CogVideo, AnimateDiff -- Apache-2.0; HunyuanVideo-I2V -- Tencent Community License, technique read-only, no code/weights used), recorded in data/references/image-to-video/NOTES.md (GenVid project 2026-08-05; licenses verified via license-compliance-check 2026-08-05). Image-as-fixed-frame-0 (CogVideoX framing) motivated treating --image as an anchor the model animates from; dual-channel visual-anchor/motion-directive split (DynamiCrafter, SVD) motivated the --motion-intensity phrasing wrapper. Exact API surface and real model names (veo-3.1-generate-preview et al.) verified directly against a real client.models.list() call against the owner's own API key, not guessed from documentation."
+    },
+    {
+      "skill_id": "audio-generator-gemini",
+      "version": "0.1.1",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "media"
+        ],
+        "task_type": [
+          "drafting"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "optional",
+        "object_type": [
+          "audio"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": {
+          "contract_conformance": {
+            "claims_checked": 4,
+            "holds": 4,
+            "violated": 0,
+            "untestable": 1,
+            "untestable_note": "actual TTS generation requires a real GEMINI_API_KEY, not available in this evaluation environment -- the 2-speaker-count gate and the consent-gate refusal were both verified without needing a successful generation call."
+          },
+          "harnesses_tested": [
+            "claude-code"
+          ],
+          "test_cases": 0,
+          "delta_pass_rate": {},
+          "verdict": "pass-a-only",
+          "date": "2026-08-05",
+          "note": "Pass A run for real: missing-GEMINI_API_KEY refusal HOLDS; exactly-2-speakers gate HOLDS (clean message, no crash); voice-cloning consent gate HOLDS (refuses with --clone-voice-sample and no --clone-consent, no override). 1 VIOLATED claim found: --clone-voice-sample/--clone-consent were read via .read_bytes() before checking either path exists, crashing with a raw traceback on a missing file -- fixed in v0.1.1, re-verified HOLDS. Pass B NOT RUN: only 1 verified harness (claude-code), below quality-eval's >=2 precondition."
+        },
+        "content_grounding": "auto-verified",
+        "stage4_required": true,
+        "stage4_reason": "ingests uncontrolled external content (arbitrary user text/voice-sample input via the external Gemini TTS API)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-05",
+        "note": "Re-audited at 0.1.1 (stage-4 Pass A round, 2026-08-05): generate_speech.py's --clone-voice-sample/--clone-consent existence check only adds a local Path.is_file() check before an existing read -- no new import, no new network/subprocess/eval call introduced. No finding."
+      },
+      "dependencies": [
+        "google-genai==2.14.0"
+      ],
+      "license_debt": null,
+      "elicited_from": "Grounded in a GitHub architecture survey of 5 TTS/audio repos (chatterbox, kokoro, F5-TTS, audiocraft -- MIT/Apache-2.0 code, non-commercial weight licenses flagged and not used; coqui-ai-TTS fork -- MPL-2.0), recorded in data/references/audio-voice-gen/NOTES.md (GenVid project 2026-08-05; licenses verified via license-compliance-check 2026-08-05). chatterbox's built-in AI-audio watermarking motivated treating Gemini's own consent_audio requirement for voice cloning as a hard, non-optional gate. Exact API surface (response_modalities, SpeechConfig/VoiceConfig/ReplicatedVoiceConfig, real audio/l16 rate=24000 output format) verified against the installed SDK and real API calls, including real TTS model names from a live client.models.list() call."
+    },
+    {
+      "skill_id": "video-assembly-composer",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "media"
+        ],
+        "task_type": [
+          "document-conversion"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "timeline"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "zero AI/LLM call of any kind (confirmed no genai import) -- pure deterministic ffmpeg assembly of already-produced local media, not an ingestion/injection risk surface stage 4 targets"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-05",
+        "note": "render_timeline.py/validate_timeline.py: ffmpeg invoked via ffmpeg-python's filter-graph API (no shell string interpolation, no shell=True); requires ffmpeg-bootstrap as a declared sibling dependency. Confirmed zero network calls, zero genai import anywhere in this skill's scripts, matching its own SKILL.md claim. No finding."
+      },
+      "dependencies": [
+        "ffmpeg-python==0.2.0",
+        "imageio-ffmpeg==0.6.0",
+        "ffmpeg-bootstrap"
+      ],
+      "license_debt": null,
+      "elicited_from": "Grounded in a GitHub architecture survey of 5 auto-video-editing repos (auto-editor -- Unlicense; auto-subtitle, faster-auto-subtitle, automatic_video_editing -- MIT; OpenTimelineIO -- Apache-2.0), recorded in data/references/auto-video-editing/NOTES.md (GenVid project 2026-08-05; licenses verified via license-compliance-check 2026-08-05). OpenTimelineIO's Timeline/Track/Clip data model directly motivated the plan/render split (timeline JSON validated before any ffmpeg call); auto-subtitle's ffmpeg subtitles-filter pattern motivated burning captions natively instead of a per-frame overlay. A real bug found and fixed during testing: sidechaincompress truncates to its shorter input -- fixed by padding both voice and music streams to the timeline's total duration before ducking, re-verified with a real 9.00s render."
+    },
+    {
+      "skill_id": "poster-generator",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "media"
+        ],
+        "task_type": [
+          "drafting"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "optional",
+        "object_type": [
+          "poster"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": {
+          "contract_conformance": {
+            "claims_checked": 5,
+            "holds": 5,
+            "violated": 0,
+            "untestable": 1,
+            "untestable_note": "suggest_layout.py's real Gemini layout proposal (and its 3-attempt retry-with-feedback loop) requires a real GEMINI_API_KEY, not available in this evaluation environment -- its pre-API-call element-type validation WAS verified for real."
+          },
+          "harnesses_tested": [
+            "claude-code"
+          ],
+          "test_cases": 0,
+          "delta_pass_rate": {},
+          "verdict": "pass-a-only",
+          "date": "2026-08-05",
+          "note": "Pass A run for real: validate_content.py correctly refuses a missing zone id and an extra/typo'd zone id (both, exact cases from SKILL.md); render_poster.py correctly refuses (no file written) when content.json doesn't match layout.json; suggest_layout.py correctly refuses an invalid element type before any API call. All HOLD, 0 violations found. Pass B NOT RUN: only 1 verified harness (claude-code), below quality-eval's >=2 precondition."
+        },
+        "content_grounding": "auto-verified",
+        "stage4_required": true,
+        "stage4_reason": "the optional suggest_layout.py path ingests/acts on an external Gemini API response (proposed layout JSON) -- deterministic render_poster.py core path alone would not require this, but the skill as a whole includes the AI-ingestion surface"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-05",
+        "note": "render_poster.py/validate_content.py: deterministic, no AI call, reads only local caller-supplied assets and system font paths. suggest_layout.py: GEMINI_API_KEY from env only; the model's proposed layout is never trusted blindly -- verified in code (not just SKILL.md claim) that element ids/types are diffed against the caller's own request and the geometry is re-validated through svg-poster-builder's real structural validator before use, with a bounded (3-attempt) retry on rejection. No finding."
+      },
+      "dependencies": [
+        "google-genai==2.14.0",
+        "Pillow==12.3.0",
+        "svg-poster-builder"
+      ],
+      "license_debt": null,
+      "elicited_from": "Grounded in a GitHub architecture survey of 4 poster/graphic-design-AI repos (PosterCraft -- FLUX.1 non-commercial, idea-only; CreatiPoster -- no license, idea-only; PosterLLaVA -- CC BY-NC 4.0, idea-only; auto-poster-generator -- Apache-2.0, pattern reused directly), recorded in data/references/poster-design-ai/NOTES.md (GenVid project 2026-08-05; licenses verified via license-compliance-check 2026-08-05). auto-poster-generator's config-driven template+PIL-overlay pattern is the direct basis for render_poster.py; PosterLLaVA's 'LLM proposes layout JSON, a separate step renders it' split motivated suggest_layout.py, deliberately mapped onto this project's already-existing svg-poster-builder zone schema instead of inventing a new layout format (reused via cross-skill import, not duplicated, per this project's dedup-over-parallel-implementation discipline -- confirmed intentional, non-redundant overlap by dedup-novelty-check 2026-08-05)."
+    },
+    {
+      "skill_id": "media-pipeline-orchestrator",
+      "version": "0.1.1",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "media"
+        ],
+        "task_type": [
+          "coordination"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": []
+      },
+      "quality_score": {
+        "stage4_formal": {
+          "contract_conformance": {
+            "claims_checked": 5,
+            "holds": 5,
+            "violated": 0,
+            "untestable": 2,
+            "untestable_note": "the actual per-scene Gemini/Veo generation calls (images/videos/audio/assembly content) require a real GEMINI_API_KEY, not available in this evaluation environment -- verified instead via a real end-to-end run in the GenVid source project with a real key (see this skill's own SKILL.md Verified section). The 'no interactive input()' claim was not separately re-exercised here."
+          },
+          "harnesses_tested": [
+            "claude-code"
+          ],
+          "test_cases": 0,
+          "delta_pass_rate": {},
+          "verdict": "pass-a-only",
+          "date": "2026-08-05",
+          "note": "Pass A run for real: pipeline_state.py's is_done/mark_done persists correctly across a fresh reload HOLDS; retry.py's with_retry() raises after exactly max_retries attempts (tested max_retries=3) HOLDS; the script-approval checkpoint correctly returns before touching the images stage when --approve-script is omitted, even with scenes.json already present, HOLDS; images-stage skip-if-exists correctly avoided any API call for an already-generated scene even inside a full pipeline run HOLDS; videos stage retried exactly 2 times (the documented reduced cap for Veo) before exiting via an uncaught traceback -- matches this skill's OWN documented behavior verbatim, not a violation. 0 violations found. Pass B NOT RUN: only 1 verified harness (claude-code), below quality-eval's >=2 precondition."
+        },
+        "content_grounding": "auto-verified",
+        "stage4_required": true,
+        "stage4_reason": "drives 4 uncontrolled-external-content-ingesting Gemini calls (script/image/video/audio) end-to-end from a single arbitrary caller-supplied topic string"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-05",
+        "note": "run_pipeline.py/generate_script.py: reads GEMINI_API_KEY from env only. Cross-skill sibling imports use fixed Path(__file__).resolve().parents[N] constants (not attacker-influenced input) -- a portability concern when a sibling skill folder is missing (fails loudly with a clear error, not silently), tracked separately from security, not a finding. v0.1.1: generate_script.py's VALID_SCENE_SECONDS now imports video-generator-gemini's VALID_DURATIONS_SECONDS directly instead of redefining it (single source of truth, re-verified both modules import cleanly). No finding."
+      },
+      "dependencies": [
+        "google-genai==2.14.0",
+        "image-generator-gemini",
+        "video-generator-gemini",
+        "audio-generator-gemini",
+        "video-assembly-composer",
+        "ffmpeg-bootstrap"
+      ],
+      "license_debt": null,
+      "elicited_from": "Grounded in a GitHub architecture survey of 5 end-to-end AI video pipeline repos (youtube-shorts-pipeline -- MIT; Text-To-Video-AI -- MIT; openshorts -- MIT core; OpenMontage -- AGPL-3.0, idea-only; Viral-Faceless-Shorts-Generator -- no license, idea-only), recorded in data/references/e2e-pipeline/NOTES.md (GenVid project 2026-08-05; licenses verified via license-compliance-check 2026-08-05). youtube-shorts-pipeline's state-embedded-in-data + retry-decorator patterns reimplemented independently (own code, not copied); Viral-Faceless-Shorts-Generator's human-in-the-loop script-approval step motivated the --approve-script checkpoint; openshorts' category-vs-number prompting finding is the same principle this project's own generate_script.py learned for duration_seconds. Real end-to-end run (2 scenes): script checkpoint pause, a real Veo duration_seconds failure and clean resume-by-artifact after the fix, final assembled 11.92s video produced."
     }
   ]
 }

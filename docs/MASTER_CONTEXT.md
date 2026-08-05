@@ -67,7 +67,6 @@ scriptorium/
 ├── registry/
 │   ├── SCHEMA.md                # Multi-axis registry schema
 │   └── skills.json              # Registry data
-├── SKILLS_MAP.md                # Mermaid overview of the registry (repo root, snapshot)
 └── .venv/                      # Shared Python venv for all Python-dependent skills (gitignored, never committed)
 ```
 

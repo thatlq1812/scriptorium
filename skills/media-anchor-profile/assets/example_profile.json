@@ -1,0 +1,13 @@
+{
+  "profile_id": "hero-fox",
+  "identity": {
+    "description": "A friendly orange-and-cream cartoon fox with a white-tipped tail, round eyes, always smiling.",
+    "reference_images": ["character_face.png"],
+    "strength": "strict"
+  },
+  "style": {
+    "description": "Soft watercolor children's-book illustration, pastel palette, loose visible brushstrokes.",
+    "reference_images": ["style_sample.png"],
+    "strength": "moderate"
+  }
+}

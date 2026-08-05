@@ -44,7 +44,12 @@ def main() -> int:
     if not args.input_pdf.exists():
         sys.exit(f"Not found: {args.input_pdf}")
 
-    width, height = extract(args.input_pdf, args.output_png, args.page, args.scale)
+    try:
+        width, height = extract(args.input_pdf, args.output_png, args.page, args.scale)
+    except pdfium.PdfiumError as exc:
+        sys.exit(f"Not a valid/readable PDF ({args.input_pdf}): {exc}")
+    except ValueError as exc:
+        sys.exit(str(exc))
     print(f"OK: wrote {args.output_png} ({width}x{height})")
     return 0
 

@@ -17,7 +17,6 @@ Skills are built to that open `SKILL.md` format for cross-harness technical comp
 5. `docs/specs/STRATEGY_SPEC.md` — source of truth for pipeline, taxonomy, and strategy principles
 6. `docs/ROADMAP.md` — skill-expansion backlog
 7. `docs/DECISIONS_PENDING.md` — decisions awaiting owner confirmation (check before assuming anything is unresolved)
-8. `SKILLS_MAP.md` (repo root) — Mermaid overview of the full registry by cluster and real cross-skill dependency; a snapshot, regenerate by hand when the registry count changes, `registry/skills.json` always wins if they diverge
 
 Completed execution plans move to `docs/archive/<name>-<date>/` once every checklist item is done (e.g. `docs/archive/upgrade-plan-2026-07-29/`) — check there for prior rounds' full reasoning before assuming a past decision wasn't documented.
 
@@ -25,7 +24,6 @@ Completed execution plans move to `docs/archive/<name>-<date>/` once every check
 
 ```
 scriptorium/
-├── SKILLS_MAP.md               # Mermaid overview of the registry (snapshot, regenerate by hand)
 ├── docs/
 │   ├── MASTER_CONTEXT.md      # architecture, scope, documentation convention
 │   ├── STATUS.md               # real status, must be verifiable against registry/skills.json
