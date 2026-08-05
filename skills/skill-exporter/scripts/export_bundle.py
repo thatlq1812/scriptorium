@@ -3,8 +3,8 @@
 can drop into their own agent project -- copies each skill's whole folder
 (SKILL.md + scripts/ + assets/ + references/), auto-resolves any
 registry-declared dependency that is itself a skill_id in this registry
-(recursively), and writes MANIFEST.md, dependency-tree.md, and skills.lock
-at the zip root.
+(recursively), and writes MANIFEST.md, dependency-tree.md, skills.lock, and
+START_HERE.md at the zip root.
 
 Stdlib only (json, argparse, zipfile, shutil, hashlib), local, deterministic
 -- no network, no AI call.
@@ -15,7 +15,10 @@ requested skill_id with license_debt != null, security_audit.status !=
 "passed", or operational_status.state == "paused" (added 2026-07-29, see
 registry/SCHEMA.md) is refused, the whole export fails, nothing is written.
 This is not a per-skill skip -- an export bundle either fully honors the
-rule or doesn't happen.
+rule or doesn't happen. --all (added v0.3.0) is the one exception to "refuse
+the whole export": a non-exportable skill is silently skipped from an --all
+selection (same posture as list_candidates.py), since nothing was explicitly
+requested by name.
 
 NEGATIVE DEPENDENCIES (--exclude, added v0.2.0): remove a skill from an
 otherwise-resolved bundle by exact skill_id or by tag pattern
@@ -32,13 +35,33 @@ the current registry via verify_lock.py -- the same reproducibility idea as
 package-lock.json/Cargo.lock, adapted to a plain content hash since skills
 have no package registry to pin a version against.
 
+--all (added v0.3.0): export every skill in the registry that passes the
+hard-exclusion rule, instead of listing skill_ids by hand. Exists to replace
+an unsafe habit observed in practice -- manually zipping the whole skills/
+and registry/ folders to hand off a full snapshot, which bypasses every
+license_debt/security_audit/paused gate this skill exists to enforce. --all
+still goes through the same gate (skips non-exportable skills, same as
+list_candidates.py, rather than shipping them). Combine with --exclude to
+express "everything except X".
+
+START_HERE.md (added v0.3.0): a short, ordered first-run checklist written
+into every bundle -- install the skills into the recipient's own harness
+directory, bootstrap a shared Python venv if any bundled skill needs one, run
+project-workspace-initializer's init_workspace.py if it's in the bundle, then
+delete START_HERE.md and the bundle's own skills/ folder, leaving a clean
+workspace. MANIFEST.md/dependency-tree.md/skills.lock remain the detailed
+reference (what's included, why, per-harness install paths); START_HERE.md
+is deliberately the one file meant to be read first and then thrown away.
+
 Exit codes: 0 = exported, 1 = a requested skill_id doesn't exist, fails the
 hard-exclusion rule, or an --exclude removes a hard dependency, 2 =
-malformed registry / output already exists.
+malformed registry / output already exists / bad argument combination.
 
 Usage:
     python export_bundle.py <skill_id> [<skill_id> ...] -o bundle.zip \\
         [--for "description"] [--exclude domain:education] [--exclude some-skill-id] [--force]
+    python export_bundle.py --all -o bundle.zip [--for "description"] \\
+        [--exclude domain:education] [--force]
 """
 from __future__ import annotations
 
@@ -265,9 +288,81 @@ def build_dependency_tree(requested: list[str], included: list[str], reasons: di
     return "\n".join(lines) + "\n"
 
 
+def build_start_here(purpose: str | None, included: list[str], non_skill_deps: list[str]) -> str:
+    lines = ["# Start Here", ""]
+    intro = "This is a Scriptorium skill bundle"
+    if purpose:
+        intro += f" ({purpose})"
+    intro += (
+        ". If this is the first time you're opening it in a new workspace, follow these "
+        "steps in order, then do step "
+    )
+    needs_venv = "python-env-bootstrap" in included or bool(non_skill_deps)
+    has_workspace_initializer = "project-workspace-initializer" in included
+    step_n = 2
+    step_numbers = {"install": 1}
+    if needs_venv:
+        step_numbers["venv"] = step_n
+        step_n += 1
+    if has_workspace_initializer:
+        step_numbers["workspace"] = step_n
+        step_n += 1
+    step_numbers["cleanup"] = step_n
+    intro += f"{step_numbers['cleanup']} (clean up)."
+    lines += [intro, ""]
+
+    lines += [
+        "## 1. Install the skills",
+        "",
+        "Copy each folder under `skills/` into your agent harness's own skill directory -- "
+        "see `MANIFEST.md`'s \"Where to install\" section for the exact path for your harness "
+        "(Claude Code, goose, Cursor, ...). Install once at your workspace root, not per project.",
+    ]
+
+    if needs_venv:
+        lines += [
+            "",
+            f"## {step_numbers['venv']}. Bootstrap the shared Python environment",
+            "",
+            "At least one skill in this bundle needs non-stdlib Python packages. See `MANIFEST.md`'s "
+            "\"Python environment\" section -- bootstrap ONE shared venv at your workspace root (not "
+            "one per project, not one per skill), and always invoke scripts through that venv's own "
+            "interpreter, not a bare `python`/`python3`.",
+        ]
+
+    if has_workspace_initializer:
+        lines += [
+            "",
+            f"## {step_numbers['workspace']}. Set up this workspace's project structure",
+            "",
+            "Run `init_workspace.py <template.json> .` (from `project-workspace-initializer`, now "
+            "installed per step 1) once, at this workspace's root, to create the project-tracking "
+            "structure (`projects/`, a local template copy, `WORKSPACE.md`). Follow `WORKSPACE.md`'s "
+            "own prompts from there for each new matter/project.",
+        ]
+
+    lines += [
+        "",
+        f"## {step_numbers['cleanup']}. Clean up",
+        "",
+        "Once the skills are installed (step 1)"
+        + (f" and the workspace is set up (step {step_numbers['workspace']})" if has_workspace_initializer else "")
+        + ", delete this file and this bundle's own `skills/` folder from wherever you unzipped it -- "
+        "what matters now lives in your harness's own skill directory"
+        + (" and `WORKSPACE.md`" if has_workspace_initializer else "")
+        + ". `MANIFEST.md`/`dependency-tree.md`/`skills.lock` are safe to keep or discard -- they're a "
+        "record of what was in this bundle and why, not something any skill reads at runtime. This "
+        "bundle deliberately does not include a raw copy of `registry/skills.json` -- `MANIFEST.md` "
+        "and `dependency-tree.md` already cover what's included and why, without shipping internal "
+        "metadata for skills that aren't in this bundle.",
+    ]
+    return "\n".join(lines) + "\n"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("skill_ids", nargs="+")
+    parser.add_argument("skill_ids", nargs="*")
+    parser.add_argument("--all", action="store_true", help="Export every skill in the registry that passes the hard-exclusion rule, instead of listing skill_ids by hand.")
     parser.add_argument("-o", "--output", type=Path, required=True)
     parser.add_argument("--for", dest="purpose", default=None, help="short description of who/what this bundle is for, written into MANIFEST.md")
     parser.add_argument(
@@ -277,16 +372,42 @@ def main() -> int:
     parser.add_argument("--force", action="store_true")
     args = parser.parse_args()
 
+    if args.all and args.skill_ids:
+        print("REFUSED: cannot combine explicit skill_ids with --all -- use --exclude to narrow an --all export instead.", file=sys.stderr)
+        return 2
+    if not args.all and not args.skill_ids:
+        print("REFUSED: specify one or more skill_ids, or pass --all.", file=sys.stderr)
+        return 2
+
     if args.output.exists() and not args.force:
         print(f"REFUSED: {args.output} already exists, use --force to overwrite", file=sys.stderr)
         return 2
 
     registry = load_registry()
-    included, non_skill_deps, reasons = resolve_with_dependencies(args.skill_ids, registry)
+
+    if args.all:
+        requested = []
+        skipped = []
+        for skill_id, skill in registry.items():
+            ok, reason = is_exportable(skill)
+            if ok:
+                requested.append(skill_id)
+            else:
+                skipped.append((skill_id, reason))
+        requested.sort()
+        if skipped:
+            print(f"--all: skipped {len(skipped)} non-exportable skill(s):", file=sys.stderr)
+            for skill_id, reason in sorted(skipped):
+                print(f"  - {skill_id}: {reason}", file=sys.stderr)
+    else:
+        requested = args.skill_ids
+
+    included, non_skill_deps, reasons = resolve_with_dependencies(requested, registry)
     included = apply_exclusions(included, reasons, args.exclude, registry)
 
     manifest = build_manifest(args.purpose, included, non_skill_deps, reasons, registry)
-    dep_tree = build_dependency_tree(args.skill_ids, included, reasons)
+    dep_tree = build_dependency_tree(requested, included, reasons)
+    start_here = build_start_here(args.purpose, included, non_skill_deps)
 
     lock = {
         skill_id: {
@@ -297,6 +418,7 @@ def main() -> int:
     }
 
     with zipfile.ZipFile(args.output, "w", zipfile.ZIP_DEFLATED) as zf:
+        zf.writestr("START_HERE.md", start_here)
         zf.writestr("MANIFEST.md", manifest)
         zf.writestr("dependency-tree.md", dep_tree)
         zf.writestr("skills.lock", json.dumps(lock, ensure_ascii=False, indent=2) + "\n")
@@ -313,7 +435,7 @@ def main() -> int:
 
     print(f"OK: {len(included)} skill(s) -> {args.output}")
     for skill_id in included:
-        extra = f" ({reasons.get(skill_id)})" if skill_id not in args.skill_ids else ""
+        extra = f" ({reasons.get(skill_id)})" if skill_id not in requested else ""
         print(f"  - {skill_id}{extra}")
     if non_skill_deps:
         print(f"NOTE: {len(non_skill_deps)} non-skill dependency(ies) not bundled, listed in MANIFEST.md: {non_skill_deps}", file=sys.stderr)
