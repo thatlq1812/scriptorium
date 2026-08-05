@@ -322,12 +322,12 @@ def build_start_here(purpose: str | None, included: list[str], non_skill_deps: l
     if needs_venv:
         lines += [
             "",
-            f"## {step_numbers['venv']}. Bootstrap the shared Python environment",
+            f"## {step_numbers['venv']}. Bootstrap the shared Python environment (required)",
             "",
             "At least one skill in this bundle needs non-stdlib Python packages. See `MANIFEST.md`'s "
             "\"Python environment\" section -- bootstrap ONE shared venv at your workspace root (not "
-            "one per project, not one per skill), and always invoke scripts through that venv's own "
-            "interpreter, not a bare `python`/`python3`.",
+            "one per project, not one per skill) now, before running any skill, and always invoke "
+            "scripts through that venv's own interpreter afterward, not a bare `python`/`python3`.",
         ]
 
     if has_workspace_initializer:
@@ -347,8 +347,10 @@ def build_start_here(purpose: str | None, included: list[str], non_skill_deps: l
         "",
         "Once the skills are installed (step 1)"
         + (f" and the workspace is set up (step {step_numbers['workspace']})" if has_workspace_initializer else "")
-        + ", delete this file and this bundle's own `skills/` folder from wherever you unzipped it -- "
-        "what matters now lives in your harness's own skill directory"
+        + ", delete this file (`START_HERE.md`), this bundle's own `skills/` folder, and the `.zip` "
+        "archive itself if you still have it -- once extracted and installed, a leftover copy of any "
+        "of these just invites confusion later about which version is current. "
+        "What matters now lives in your harness's own skill directory"
         + (" and `WORKSPACE.md`" if has_workspace_initializer else "")
         + ". `MANIFEST.md`/`dependency-tree.md`/`skills.lock` are safe to keep or discard -- they're a "
         "record of what was in this bundle and why, not something any skill reads at runtime. This "
