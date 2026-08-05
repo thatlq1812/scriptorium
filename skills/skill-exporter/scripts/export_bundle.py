@@ -211,7 +211,24 @@ def build_manifest(purpose: str | None, included: list[str], non_skill_deps: lis
         "actually scans, then don't leave a second copy under this bundle's own `skills/` path lying "
         "around where your harness might also pick it up -- two registrations of the same skill_id "
         "is a conflict, not redundancy. If you're not sure which directory your harness uses, check "
-        "its own docs.",
+        "its own docs. Install exactly once at your **workspace root** -- if you manage multiple "
+        "projects under one workspace (e.g. via `project-workspace-initializer`'s "
+        "`init_workspace.py`/`WORKSPACE.md`), do not re-copy or re-link this bundle into each "
+        "individual project directory; one shared install at the workspace root is enough.",
+    ]
+    if "python-env-bootstrap" in included or non_skill_deps:
+        lines += [
+            "",
+            "## Python environment",
+            "",
+            "If any skill above needs non-stdlib Python packages, bootstrap ONE shared virtual "
+            "environment at your workspace root (not one per project, not one per skill) the first "
+            "time it's actually needed -- `python-env-bootstrap`'s own `SKILL.md` documents the exact "
+            "command. Always invoke scripts through that venv's own interpreter afterward, not a bare "
+            "`python`/`python3` -- silently falling back to system Python without the right packages "
+            "installed is the most common real failure mode with these skills.",
+        ]
+    lines += [
         "",
         "## How to use",
         "",

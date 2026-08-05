@@ -80,6 +80,24 @@ def _render_workspace_md(template: dict, template_copy_path: Path) -> str:
         "directory under `projects/` using this workspace's own copy of the "
         "template -- no need to reference the skill's own repo path again.",
         "",
+        "## Shared resources (once per workspace, never per project)",
+        "",
+        "Two things belong exactly once at this workspace's root, not duplicated "
+        "inside any `projects/project_YYYYMMDD_NN/` subdirectory:",
+        "",
+        "- **Skills**: if this workspace was set up from a `skill-exporter` bundle, "
+        "install the skills once here (see the bundle's `MANIFEST.md` \"Where to "
+        "install\" section for your harness's convention, e.g. `.claude/skills/`, "
+        "`.agents/skills/`) -- do not re-copy or re-link skills into each new "
+        "project directory.",
+        "- **Python environment**: if any skill you use here needs non-stdlib "
+        "Python packages, bootstrap ONE shared virtual environment at this "
+        "workspace's root (not one per project) the first time it's actually "
+        "needed, and always invoke scripts through that venv's own interpreter, "
+        "not a bare `python`/`python3` -- silently falling back to system Python "
+        "without the right packages installed is the most common real failure "
+        "mode with these skills.",
+        "",
         "## Prompts",
         "",
     ]
