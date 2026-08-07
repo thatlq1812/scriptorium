@@ -1,0 +1,42 @@
+{
+  "template_id": "researcher-writer",
+  "label": "Research/writing project workspace",
+  "workspace_subdirs": ["projects", "projects/_templates"],
+  "workspace_md_prompts": [
+    {
+      "heading": "Bắt đầu dự án nghiên cứu/viết mới",
+      "text": "Mỗi câu hỏi nghiên cứu/bài viết là một project riêng dưới `projects/`. Không tự tạo thư mục project bằng tay -- luôn dùng `scaffold_workspace.py` (xem hướng dẫn phía trên) để đảm bảo đánh số thứ tự đúng và không ghi đè project đã có."
+    },
+    {
+      "heading": "Quy ước đặt tên",
+      "text": "Tên project theo dạng `project_YYYYMMDD_NN` (ngày tạo + số thứ tự trong ngày). Ghi chủ đề/câu hỏi nghiên cứu trong `PROJECT.md` của từng project, không phải trong tên thư mục."
+    },
+    {
+      "heading": "Khi cập nhật template",
+      "text": "Bản template dùng cho workspace này được sao chép vào `projects/_templates/researcher-writer/` tại thời điểm khởi tạo -- sửa file đó nếu muốn đổi quy trình cho các project mới, không ảnh hưởng các project đã tạo trước đó."
+    }
+  ],
+  "subdirs": ["source", "research", "analysis", "draft", "deliverables"],
+  "project_md_prompts": [
+    {
+      "heading": "Nạp câu hỏi nghiên cứu & tài liệu nguồn",
+      "text": "Đặt câu hỏi/đề bài nghiên cứu, tài liệu gốc đã có sẵn vào `source/`. Không sửa file trong `source/` sau khi đã nạp -- đây là bản gốc tham chiếu."
+    },
+    {
+      "heading": "Tìm & tổng hợp tài liệu",
+      "text": "Dùng `deep-research` để chạy protocol nghiên cứu sâu, `literature-review` để tổng hợp tài liệu, `citation-management` để quản lý trích dẫn. Lưu kết quả vào `research/`."
+    },
+    {
+      "heading": "Phân tích dữ liệu / khám phá giả thuyết (nếu có)",
+      "text": "Nếu dự án có dữ liệu cần phân tích, dùng `exploratory-data-analysis`; nếu cần sinh và sàng lọc giả thuyết, dùng `hypothesis-generation`. Bỏ qua bước này nếu dự án thuần tổng hợp tài liệu. Lưu vào `analysis/`."
+    },
+    {
+      "heading": "Soạn bản thảo",
+      "text": "Dùng `office-doc-creator` để soạn bản thảo (docx/pdf) từ nội dung đã tổng hợp/phân tích, lưu vào `draft/`."
+    },
+    {
+      "heading": "Rà soát & xuất bản",
+      "text": "Dùng `peer-review` để rà soát bản thảo trước khi hoàn thiện. Khi đã duyệt xong, xuất bản chính thức vào `deliverables/`."
+    }
+  ]
+}

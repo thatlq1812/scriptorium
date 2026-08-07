@@ -1616,7 +1616,7 @@
     },
     {
       "skill_id": "project-workspace-initializer",
-      "version": "0.2.1",
+      "version": "0.3.1",
       "source": {
         "type": "self-authored"
       },
@@ -1645,16 +1645,16 @@
       },
       "security_audit": {
         "status": "passed",
-        "date": "2026-08-05",
-        "note": "Re-audited at 0.2.0 (2026-08-05): 2 scripts (scaffold_workspace.py, init_workspace.py), all stdlib-only (json/argparse/re/shutil/pathlib/datetime), zero network calls, no dynamic execution. Corrects a stale 2026-08-04 note that referenced a nonexistent 'init_root_workspace.py' -- confirmed via `git log --all` that file never existed in this repo; init_workspace.py is the real script now built to close that gap."
+        "date": "2026-08-07",
+        "note": "Re-audited at 0.3.1 (2026-08-07): doc-only change (repointed 2 bundled templates' poster-generator/svg-poster-builder references to html-poster-composer). No script touched."
       },
       "dependencies": [],
       "license_debt": null,
-      "elicited_from": "Grounded in a real non-tech-user pilot (a legal-practitioner workspace deployment, recorded in docs/ROADMAP.md's 2026-07-29 entry — the pilot deployment directory is no longer directly accessible on this machine, so the already-recorded workflow description is treated as the elicitation record). Only one real profession template built (legal-practitioner) — no template invented for a profession without a real pilot behind it, same discipline as legal-form-filler's refusal to guess a form-selection procedure. init_workspace.py's workspace_subdirs/workspace_md_prompts (2026-08-05) are grounded in the same ROADMAP.md record's own description of the pilot's `d:/my-workspace` deployment (`projects/` root + `projects/_templates/` template location), not a new elicitation source."
+      "elicited_from": "Grounded in a real non-tech-user pilot (a legal-practitioner workspace deployment, recorded in docs/ROADMAP.md's 2026-07-29 entry — the pilot deployment directory is no longer directly accessible on this machine, so the already-recorded workflow description is treated as the elicitation record). init_workspace.py's workspace_subdirs/workspace_md_prompts (2026-08-05) are grounded in the same ROADMAP.md record's own description of the pilot's `d:/my-workspace` deployment (`projects/` root + `projects/_templates/` template location), not a new elicitation source. v0.3.0 (2026-08-07): 4 new templates (media-content-creator, educator, brand-design-project, researcher-writer) grounded in this registry's own already-built/verified skill clusters rather than an outside pilot — owner explicitly authorized this different, lower grounding bar for template.json content specifically (docs/DECISIONS_PENDING.md item 11), distinct from the niche-specializer bar that still applies to skill logic and to legal-practitioner."
     },
     {
       "skill_id": "svg-poster-builder",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "source": {
         "type": "self-authored"
       },
@@ -1684,16 +1684,23 @@
       },
       "security_audit": {
         "status": "passed",
-        "date": "2026-08-01",
-        "note": "Re-audited at 0.2.0 (2026-08-01): added max-text-coverage (40%) hard check on typography_frame zones. Still stdlib only (json/argparse/pathlib), zero network, no dynamic execution. Output remains a plain SVG file to a caller-supplied path."
+        "date": "2026-08-07",
+        "note": "Re-audited at 0.3.0 (2026-08-07): render_layout.py output changed (font-size clamp, legend band) -- still stdlib only (json/argparse/pathlib), zero network, no dynamic execution, no new file-write target beyond the caller-supplied -o path. _validate_layout() untouched."
       },
       "dependencies": [],
       "license_debt": null,
-      "elicited_from": "Zone taxonomy and full-bleed/no-overflow placement discipline grounded in a real production A1-poster rendering pipeline's own documented component-type schema (D:/Document/May052026/scripts/component_types.md, per UPGRADE_PLAN_20260729.md Item 4). Canvas presets are the real public ISO 216 standard (A1/A4). v0.2.0 (2026-08-01): max-text-coverage rule ported from D:/elix/archive/platform_archive/modules/presentation/scoring/design_rules.py."
+      "elicited_from": "Zone taxonomy and full-bleed/no-overflow placement discipline grounded in a real production A1-poster rendering pipeline's own documented component-type schema (D:/Document/May052026/scripts/component_types.md, per UPGRADE_PLAN_20260729.md Item 4). Canvas presets are the real public ISO 216 standard (A1/A4). v0.2.0 (2026-08-01): max-text-coverage rule ported from D:/elix/archive/platform_archive/modules/presentation/scoring/design_rules.py.",
+      "operational_status": {
+        "state": "superseded",
+        "superseded_by": "html-poster-composer",
+        "reason": "SVG-string+Pillow render backend had no way to verify a text zone's actual rendered size against its declared height, silently overflowing rather than refusing -- see docs/ROADMAP.md's 2026-08-07 entry for the real bug and the A/B test that motivated the HTML/CSS+headless-browser replacement.",
+        "date": "2026-08-07",
+        "decided_by": "owner"
+      }
     },
     {
       "skill_id": "brand-identity-linter",
-      "version": "0.2.0",
+      "version": "0.2.2",
       "source": {
         "type": "self-authored"
       },
@@ -1723,8 +1730,8 @@
       },
       "security_audit": {
         "status": "passed",
-        "date": "2026-08-01",
-        "note": "Re-audited at 0.2.0 (2026-08-01): added color-role fallback-chain resolution, max-3-accent-colors check, background-not-pure-white check. Still stdlib only (json/re/pathlib), zero network, no dynamic execution."
+        "date": "2026-08-07",
+        "note": "Re-audited at 0.2.2 (2026-08-07): doc-only change (repointed 'Chains into' section from poster-generator to html-poster-composer). No script touched."
       },
       "dependencies": [],
       "license_debt": null,
@@ -1770,7 +1777,7 @@
     },
     {
       "skill_id": "light-logo-arranger",
-      "version": "0.2.0",
+      "version": "0.2.2",
       "source": {
         "type": "self-authored"
       },
@@ -1800,8 +1807,8 @@
       },
       "security_audit": {
         "status": "passed",
-        "date": "2026-08-01",
-        "note": "Re-audited at 0.2.0 (2026-08-01): added check_asset_completeness.py and resolve_font_fallback.py (2 new scripts + 2 bundled read-only JSON reference files). Still stdlib only (json/pathlib), zero network, no dynamic execution, zero file writes across all 3 scripts."
+        "date": "2026-08-07",
+        "note": "Re-audited at 0.2.2 (2026-08-07): doc-only change (repointed 'Chains into' section from poster-generator to html-poster-composer). No script touched."
       },
       "dependencies": [],
       "license_debt": null,
@@ -2559,7 +2566,7 @@
     },
     {
       "skill_id": "media-anchor-profile",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "source": {
         "type": "self-authored"
       },
@@ -2589,8 +2596,8 @@
       },
       "security_audit": {
         "status": "passed",
-        "date": "2026-08-05",
-        "note": "validate_profile.py/load_profile.py: stdlib-only (json/pathlib/argparse), zero network calls, reads only caller-declared local reference-image paths (resolved relative to the profile file's own directory, must exist on disk -- no arbitrary path traversal beyond normal filesystem access). No finding."
+        "date": "2026-08-07",
+        "note": "Re-audited at 0.1.2 (2026-08-07): doc-only change (repointed poster-generator references to html-poster-composer). No script touched."
       },
       "dependencies": [],
       "license_debt": null,
@@ -2753,7 +2760,7 @@
     },
     {
       "skill_id": "poster-generator",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "source": {
         "type": "self-authored"
       },
@@ -2798,8 +2805,8 @@
       },
       "security_audit": {
         "status": "passed",
-        "date": "2026-08-05",
-        "note": "render_poster.py/validate_content.py: deterministic, no AI call, reads only local caller-supplied assets and system font paths. suggest_layout.py: GEMINI_API_KEY from env only; the model's proposed layout is never trusted blindly -- verified in code (not just SKILL.md claim) that element ids/types are diffed against the caller's own request and the geometry is re-validated through svg-poster-builder's real structural validator before use, with a bounded (3-attempt) retry on rejection. No finding."
+        "date": "2026-08-07",
+        "note": "Re-audited at 0.1.1 (2026-08-07): doc-only change (added 'Chains into (Light Design cluster)' section to SKILL.md). No script touched -- same render_poster.py/suggest_layout.py/validate_content.py as 0.1.0's audited version."
       },
       "dependencies": [
         "google-genai==2.14.0",
@@ -2807,7 +2814,14 @@
         "svg-poster-builder"
       ],
       "license_debt": null,
-      "elicited_from": "Grounded in a GitHub architecture survey of 4 poster/graphic-design-AI repos (PosterCraft -- FLUX.1 non-commercial, idea-only; CreatiPoster -- no license, idea-only; PosterLLaVA -- CC BY-NC 4.0, idea-only; auto-poster-generator -- Apache-2.0, pattern reused directly), recorded in data/references/poster-design-ai/NOTES.md (GenVid project 2026-08-05; licenses verified via license-compliance-check 2026-08-05). auto-poster-generator's config-driven template+PIL-overlay pattern is the direct basis for render_poster.py; PosterLLaVA's 'LLM proposes layout JSON, a separate step renders it' split motivated suggest_layout.py, deliberately mapped onto this project's already-existing svg-poster-builder zone schema instead of inventing a new layout format (reused via cross-skill import, not duplicated, per this project's dedup-over-parallel-implementation discipline -- confirmed intentional, non-redundant overlap by dedup-novelty-check 2026-08-05)."
+      "elicited_from": "Grounded in a GitHub architecture survey of 4 poster/graphic-design-AI repos (PosterCraft -- FLUX.1 non-commercial, idea-only; CreatiPoster -- no license, idea-only; PosterLLaVA -- CC BY-NC 4.0, idea-only; auto-poster-generator -- Apache-2.0, pattern reused directly), recorded in data/references/poster-design-ai/NOTES.md (GenVid project 2026-08-05; licenses verified via license-compliance-check 2026-08-05). auto-poster-generator's config-driven template+PIL-overlay pattern is the direct basis for render_poster.py; PosterLLaVA's 'LLM proposes layout JSON, a separate step renders it' split motivated suggest_layout.py, deliberately mapped onto this project's already-existing svg-poster-builder zone schema instead of inventing a new layout format (reused via cross-skill import, not duplicated, per this project's dedup-over-parallel-implementation discipline -- confirmed intentional, non-redundant overlap by dedup-novelty-check 2026-08-05).",
+      "operational_status": {
+        "state": "superseded",
+        "superseded_by": "html-poster-composer",
+        "reason": "Depended on svg-poster-builder (also superseded same date, same reason). html-poster-composer accepts the same layout.json/content.json contract.",
+        "date": "2026-08-07",
+        "decided_by": "owner"
+      }
     },
     {
       "skill_id": "media-pipeline-orchestrator",
@@ -2867,6 +2881,134 @@
       ],
       "license_debt": null,
       "elicited_from": "Grounded in a GitHub architecture survey of 5 end-to-end AI video pipeline repos (youtube-shorts-pipeline -- MIT; Text-To-Video-AI -- MIT; openshorts -- MIT core; OpenMontage -- AGPL-3.0, idea-only; Viral-Faceless-Shorts-Generator -- no license, idea-only), recorded in data/references/e2e-pipeline/NOTES.md (GenVid project 2026-08-05; licenses verified via license-compliance-check 2026-08-05). youtube-shorts-pipeline's state-embedded-in-data + retry-decorator patterns reimplemented independently (own code, not copied); Viral-Faceless-Shorts-Generator's human-in-the-loop script-approval step motivated the --approve-script checkpoint; openshorts' category-vs-number prompting finding is the same principle this project's own generate_script.py learned for duration_seconds. Real end-to-end run (2 scenes): script checkpoint pause, a real Veo duration_seconds failure and clean resume-by-artifact after the fix, final assembled 11.92s video produced."
+    },
+    {
+      "skill_id": "personal-style-library",
+      "version": "0.1.1",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "coordination"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "color-palette",
+          "style-profile",
+          "motif-set",
+          "font-pairing"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (deterministic local catalog + validator reusing 2 already-audited skills own logic, structured caller-supplied entries only, no uncontrolled external input; extract_palette.py reads a caller-supplied image via deterministic pixel quantization only, no external/network content)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-07",
+        "note": "Re-audited at 0.1.1 (2026-08-07): doc-only change (repointed poster-generator references to html-poster-composer). No script touched."
+      },
+      "dependencies": [
+        "Pillow==12.3.0",
+        "brand-identity-linter",
+        "media-anchor-profile"
+      ],
+      "license_debt": null,
+      "elicited_from": "Owner direction 2026-08-07 (PROJECT.md item 4): a personal store for color palettes and style samples, later reusable as 'generate a poster with this content, this style, that color'. Category taxonomy beyond the owner's original 2 (palettes, styles) was delegated to this session's own research -- grounded in the W3C Design Tokens Community Group (DTCG) JSON format (real public standard for named color/typography tokens) plus this registry's own already-elicited schemas, extended rather than re-invented: palettes/ reuses brand-identity-linter's color-role schema verbatim, styles/ reuses media-anchor-profile's style-anchor-block schema verbatim, motifs/ generalizes brand-identity-linter's per-brand motifs field into a reusable catalog, fonts/ is a lighter non-safety-checked companion to light-logo-arranger's font_fallback_map.json. extract_palette.py's dominant-color-via-pixel-quantization is a standard public CS technique (web-surveyed), implemented via Pillow's own built-in adaptive quantization, not adapted from any specific external repo."
+    },
+    {
+      "skill_id": "html-poster-composer",
+      "version": "0.3.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "media"
+        ],
+        "task_type": [
+          "drafting"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "poster",
+          "banner",
+          "flyer",
+          "seal",
+          "badge"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (deterministic layout renderer, structured caller-supplied layout/content only, no uncontrolled external input; renders local HTML only, zero network calls)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-07",
+        "note": "Re-audited at 0.3.0 (2026-08-07): added compose_batch.py (reuses compose.py zone-building/auto-fit, no new dependency, no network, no subprocess/eval/exec -- grep: 0 hits across all 6 scripts). Fixed a real overflow-wrap bug shared by both single-page and batch render paths (silent sideways content-clipping on an unbroken long token) -- now refuses loudly instead. Verified real with extreme adversarial text on both paths."
+      },
+      "dependencies": [
+        "playwright",
+        "fonttools"
+      ],
+      "license_debt": null,
+      "elicited_from": "Supersedes svg-poster-builder + poster-generator (2026-08-07) -- same zone-taxonomy/canvas-preset/40%-text-coverage grounding those 2 skills already had, reused verbatim (layout_schema.py/validate_content.py), not re-elicited. The render-technology swap (SVG-string+Pillow -> HTML/CSS+headless-browser) is grounded in real research + a real owner-directed experiment this session (docs/ROADMAP.md's 2026-08-07 entry): academic prior art (BannerAgency arXiv 2503.11060, SheetDesigner arXiv 2509.07473, COLE/OpenCOLE) and a direct empirical A/B test proving HTML/CSS flexbox avoided the exact zone-overflow bug the old Pillow renderer hit, with zero manual height math. Canva's own real rendering approach (custom WebGL/Canvas engine, neither DOM nor SVG) was investigated first per owner's explicit request and ruled out of scope as a full rendering-engine build, narrowing the real decision to SVG-generation vs. HTML/CSS+headless-browser. The auto-fit text-measurement loop (render, measure via the browser's own layout engine, shrink, re-measure, refuse if nothing fits) is this skill's own new mechanism, not ported from any external source."
+    },
+    {
+      "skill_id": "scriptorium-updater",
+      "version": "0.1.1",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "meta"
+        ],
+        "task_type": [
+          "coordination"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": []
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (deterministic git wrapper, no uncontrolled external input beyond the repo itself, which this project owns)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-08",
+        "note": "Re-audited at 0.1.1 (2026-08-08): fixed a real cold-agent-found bug (git pull hanging indefinitely under piped/non-interactive invocation due to inherited stdin letting a credential helper block on a prompt with zero error). Extracted shared git_utils.run_git() with stdin=subprocess.DEVNULL set unconditionally across all 3 scripts, closing both the hang and the prior _run_git duplication between check_updates.py/sync_skills.py. No new dependency, no new network surface (still git clone/fetch/pull against github.com only). Re-verified: real regression of all 3 scripts plus the specific piped invocation that previously hung, now completes in <1s."
+      },
+      "dependencies": [
+        "git"
+      ],
+      "license_debt": null,
+      "elicited_from": "Owner direction (2026-08-07): Scriptorium's repo is deliberately public during the current pre-commercial dev/test phase (confirmed via gh repo view, not a misconfiguration -- owner: 'hiện tại vẫn đang trong giai đoạn phát triển, nên chưa cần set private, và tôi muốn hệ thống có thể cập nhật cho tester mà không cần phải tải đi tải lại skill'). Design follows this registry's own established 2-step bootstrap discipline (detect safely by default, apply only as an explicit separate step) rather than a fully-automatic silent updater, which the owner explicitly ruled out: 'không phải chạy cơ học không đâu, mà do agent làm theo ghi chú' -- this skill reports, the calling agent decides what an anomaly (e.g. a destination-only skill) means. Add/update-only (never delete) was an explicit owner choice between 2 offered options."
     }
   ]
 }

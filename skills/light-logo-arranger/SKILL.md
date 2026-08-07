@@ -9,7 +9,9 @@ metadata:
   risk_tier: N1
   source: self-authored
   elicited_from: "Anchor-then-exclude placement concept lightly grounded in a real production layout pipeline's own component-chaining idea (fixed anchor point -> dependent placement, D:/Document/May052026/scripts/component_types.md's master_anchor/group_anchor chain hierarchy, per UPGRADE_PLAN_20260729.md Item 4), simplified here to single-point named-anchor placement against canvas corners/edges/center rather than a full multi-component chain -- that fuller chaining behavior is out of scope for this deterministic utility. Asset-completeness checklist (assets/asset_checklist.json) elicited from a real production brand-asset generation system's own deliverable manifest: D:/elix/archive/platform_archive/scripts/gen/gen_brand_identity.py and gen_brand_icon.py -- only the checklist of what a full brand-identity deliverable set consists of (8 core assets + 7 derived favicon/adaptive-icon/splash-icon variants) was ported; the source scripts' AI-image-generation mechanism (Gemini 3 Pro Image Preview) was deliberately NOT ported -- out of scope per this project's no-AI-backend principle. Font-fallback table (assets/font_fallback_map.json) ported verbatim (actual name -> substitute data, not just the concept) from a real production presentation-rendering pipeline's empirically-derived geometric-similarity map: D:/elix/archive/platform_archive/modules/presentation/pptx/font_fallback_map.py."
-  version: 0.2.0
+  version: 0.2.2
+  changelog_0_2_2: "Doc-only (2026-08-07): repointed 'Chains into' section from poster-generator to html-poster-composer -- poster-generator/svg-poster-builder superseded same date (registry operational_status), layout.json contract unchanged so this skill's own chain still holds. No script change."
+  changelog_0_2_1: "Doc-only (2026-08-07): added a 'Chains into poster-generator' section, owner-directed after noting the design and media clusters looked disconnected -- verified real: compute_anchor.py's collision-checked mm placement converted to zone percentages and rendered correctly in a real poster-generator PNG. No script change."
   grounding: not_applicable
   object_type: ["logo", "diagram"]
 ---
@@ -70,6 +72,10 @@ Input: `{"font": "Montserrat"}`. Checked against the bundled `assets/font_fallba
 - Does not generate, download, or fetch any image, icon, or font file — `check_asset_completeness.py` and `resolve_font_fallback.py` are gap-reports and lookups against fixed local data only. No AI image generation (the source system's Gemini-based generation mechanism was explicitly not ported), no font downloading, no network calls of any kind.
 - Does not track asset production over time or persist any state between runs — each run's `declared_assets` list is exactly what the caller passes that run; nothing is remembered or written to disk.
 - Does not attempt fuzzy/approximate font-name matching — `resolve_font_fallback.py` does an exact match (case-insensitive) against its fixed table only; a near-miss spelling is treated as unknown, not auto-corrected.
+
+## Chains into `html-poster-composer` (media cluster, verified 2026-08-07)
+
+`compute_anchor.py`'s output (`x`, `y` in the same unit as the caller's canvas, collision-checked against declared exclusion zones) converts directly to a `decorative_element` zone in a poster `layout.json`: `x_pct = x / canvas_w * 100`, `y_pct = y / canvas_h * 100` (same for `w_pct`/`h_pct` from `logo_w`/`logo_h`). Verified real: computed a `top-left` placement (`x=6.00, y=6.00`) on a 210x297 canvas with an exclusion zone matching a real poster's `title_frame` box -- confirmed the refusal is real by re-running with a colliding exclusion zone first (correctly refused, exit 1, naming the overlap) -- then converted the passing placement to percentages, declared it as a zone, and rendered a real PNG with the ornament landing at exactly that computed position. That original render verification ran against `poster-generator` (superseded 2026-08-07 by `html-poster-composer`, same `layout.json` contract, unchanged by the migration) -- see `html-poster-composer`'s own `SKILL.md` for the current renderer.
 
 ## Verified
 

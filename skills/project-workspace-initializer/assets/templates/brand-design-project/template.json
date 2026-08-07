@@ -1,0 +1,42 @@
+{
+  "template_id": "brand-design-project",
+  "label": "Brand/design (signboard, poster, banner) project workspace",
+  "workspace_subdirs": ["projects", "projects/_templates"],
+  "workspace_md_prompts": [
+    {
+      "heading": "Bắt đầu dự án thiết kế mới",
+      "text": "Mỗi dự án nhận diện thương hiệu/poster/banner là một project riêng dưới `projects/`. Không tự tạo thư mục project bằng tay -- luôn dùng `scaffold_workspace.py` (xem hướng dẫn phía trên) để đảm bảo đánh số thứ tự đúng và không ghi đè project đã có."
+    },
+    {
+      "heading": "Quy ước đặt tên",
+      "text": "Tên project theo dạng `project_YYYYMMDD_NN` (ngày tạo + số thứ tự trong ngày). Ghi tên khách hàng/chiến dịch trong `PROJECT.md` của từng project, không phải trong tên thư mục."
+    },
+    {
+      "heading": "Khi cập nhật template",
+      "text": "Bản template dùng cho workspace này được sao chép vào `projects/_templates/brand-design-project/` tại thời điểm khởi tạo -- sửa file đó nếu muốn đổi quy trình cho các project mới, không ảnh hưởng các project đã tạo trước đó."
+    }
+  ],
+  "subdirs": ["source", "brand-spec", "layout", "assets", "deliverables"],
+  "project_md_prompts": [
+    {
+      "heading": "Nạp brief & tài liệu nguồn",
+      "text": "Đặt brief khách hàng, logo/ảnh sẵn có, phản hồi khách hàng vào `source/`. Không sửa file trong `source/` sau khi đã nạp -- đây là bản gốc tham chiếu."
+    },
+    {
+      "heading": "Khai báo bộ nhận diện (màu/font)",
+      "text": "Dùng `brand-identity-linter` để khai báo và kiểm tra color role (primary/secondary/accent/background) và motif; dùng `light-logo-arranger`'s `resolve_font_fallback.py` để xác nhận font wordmark an toàn hoặc cần thay thế. Lưu kết quả vào `brand-spec/`."
+    },
+    {
+      "heading": "Dựng bố cục",
+      "text": "Dùng `html-poster-composer --preview` để preview bố cục các zone (không sinh nội dung thật ở bước này), lưu layout.json + preview vào `layout/`."
+    },
+    {
+      "heading": "Đặt logo & kiểm tra bộ asset",
+      "text": "Dùng `light-logo-arranger`'s `compute_anchor.py` để tính vị trí logo (tránh chồng exclusion zone) và `check_asset_completeness.py` để rà soát bộ deliverable còn thiếu gì, lưu vào `assets/`."
+    },
+    {
+      "heading": "Render bản chính thức",
+      "text": "Nếu là poster/banner, dùng `html-poster-composer` để render PNG/PDF cuối cùng từ layout + nội dung thật (ảnh từ `image-generator-gemini` nếu cần); nếu là bảng hiệu/thiết kế khác không qua pipeline này, xuất thủ công. Lưu bản chính thức vào `deliverables/`."
+    }
+  ]
+}

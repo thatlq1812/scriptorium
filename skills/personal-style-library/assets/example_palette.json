@@ -1,0 +1,9 @@
+{
+  "palette_id": "forest-trail-brand",
+  "source": "declared",
+  "colors": {
+    "primary": {"hex": "#2F6F4F"},
+    "secondary": {"hex": "#E8A33D"}
+  },
+  "notes": "Đã dùng cho poster Demo Trail Co. -- primary/secondary khai báo tay, accent resolve fallback-to-secondary qua brand-identity-linter."
+}

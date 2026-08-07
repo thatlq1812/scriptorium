@@ -60,6 +60,8 @@ def is_exportable(skill: dict) -> tuple[bool, str]:
     op_status = skill.get("operational_status")
     if isinstance(op_status, dict) and op_status.get("state") == "paused":
         return False, f"operational_status is paused -- {op_status.get('reason', 'no reason recorded')}"
+    if isinstance(op_status, dict) and op_status.get("state") == "superseded":
+        return False, f"operational_status is superseded by '{op_status.get('superseded_by', '?')}' -- {op_status.get('reason', 'no reason recorded')}"
     return True, ""
 
 

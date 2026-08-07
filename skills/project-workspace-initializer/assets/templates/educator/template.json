@@ -1,0 +1,42 @@
+{
+  "template_id": "educator",
+  "label": "Educator/teacher course-cycle workspace",
+  "workspace_subdirs": ["projects", "projects/_templates"],
+  "workspace_md_prompts": [
+    {
+      "heading": "Bắt đầu chu kỳ giảng dạy mới",
+      "text": "Mỗi lớp học/học kỳ/đơn vị bài học là một project riêng dưới `projects/`. Không tự tạo thư mục project bằng tay -- luôn dùng `scaffold_workspace.py` (xem hướng dẫn phía trên) để đảm bảo đánh số thứ tự đúng và không ghi đè project đã có."
+    },
+    {
+      "heading": "Quy ước đặt tên",
+      "text": "Tên project theo dạng `project_YYYYMMDD_NN` (ngày tạo + số thứ tự trong ngày), không phải tên lớp/học sinh -- tránh lộ thông tin học sinh qua tên thư mục. Ghi tên lớp/môn học trong `PROJECT.md` của từng project."
+    },
+    {
+      "heading": "Khi cập nhật template",
+      "text": "Bản template dùng cho workspace này được sao chép vào `projects/_templates/educator/` tại thời điểm khởi tạo -- sửa file đó nếu muốn đổi quy trình cho các project mới, không ảnh hưởng các project đã tạo trước đó."
+    }
+  ],
+  "subdirs": ["source", "lesson-plans", "assessments", "grading", "communication"],
+  "project_md_prompts": [
+    {
+      "heading": "Nạp tài liệu nguồn",
+      "text": "Đặt chương trình học, SGK/tài liệu tham khảo, yêu cầu môn học vào `source/`. Không sửa file trong `source/` sau khi đã nạp -- đây là bản gốc tham chiếu."
+    },
+    {
+      "heading": "Soạn giáo án",
+      "text": "Dùng skill `lesson-plan-builder` để soạn giáo án cho đơn vị bài học, lưu vào `lesson-plans/`."
+    },
+    {
+      "heading": "Xây dựng đề kiểm tra & rubric",
+      "text": "Dùng `assessment-builder` để soạn đề kiểm tra và `competency-rubric-builder` để dựng rubric chấm điểm, lưu vào `assessments/`."
+    },
+    {
+      "heading": "Chấm bài & cập nhật sổ điểm",
+      "text": "Dùng `grading-and-feedback` để chấm bài và viết phản hồi, `grade-book-builder` để cập nhật sổ điểm, lưu vào `grading/`."
+    },
+    {
+      "heading": "Liên lạc phụ huynh",
+      "text": "Khi cần thông báo/trao đổi với phụ huynh về tiến độ học sinh, dùng `parent-communication`, lưu bản nháp/đã gửi vào `communication/`."
+    }
+  ]
+}

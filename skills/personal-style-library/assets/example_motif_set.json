@@ -1,0 +1,5 @@
+{
+  "motif_set_id": "mountain-adventure",
+  "motifs": ["mountain peak", "sunrise", "compass", "trail marker"],
+  "notes": "Dùng cho các dự án outdoor/adventure -- mỗi icon element trong brand-identity-linter phải reference đúng 1 trong các motif này."
+}

@@ -9,7 +9,9 @@ metadata:
   risk_tier: N1
   source: self-authored
   elicited_from: "Grounded in a real signboard/menu revision session this project has direct access to (D:/elix/temp_project_20260728/brand-data.json + its PROJECT.md client-feedback log, per UPGRADE_PLAN_20260729.md Item 4): the real project's own primary/secondary/accent color-priority system (primary = large blocks, secondary = accent/support, accent = CTA/price), a real client note asking for CTA/contact text to be enlarged relative to body text, and a real client complaint about '4 icon mo coi' (orphan icons with no thematic anchor) that were replaced with themed motifs. Fixture data in assets/ is a generic anonymized restaurant example structurally matching the real project's schema, not the real client's actual business data. v0.2.0 additionally ports concrete numeric thresholds and a color-role fallback-chain algorithm from the owner's own prior production system (real, statistically-grounded, no license issue -- rewritten clean, not blind-copied): D:/elix/archive/platform_archive/modules/presentation/scoring/design_rules.py (COLOR_RULES['max_accent_colors']=3 and the 'background is never pure white' rule + its 8 catalogued real off-white examples, sourced from 10 Canva templates, 149 Slidesgo templates / 7,854 slides / 3,526 font samples, and 8 real presentations) and D:/elix/archive/platform_archive/modules/presentation/template_intel/palette_binding.py (PaletteBinding.role()'s deterministic per-role fallback chain: secondary falls back to first accent then primary; accent falls back to secondary then primary; primary itself has no fallback and roots the whole chain)."
-  version: 0.2.0
+  version: 0.2.2
+  changelog_0_2_2: "Doc-only (2026-08-07): repointed 'Chains into' section from poster-generator to html-poster-composer -- poster-generator/svg-poster-builder superseded same date (registry operational_status), content.json contract unchanged so this skill's own chain still holds. No script change."
+  changelog_0_2_1: "Doc-only (2026-08-07): added a 'Chains into poster-generator' section, owner-directed after noting the design and media clusters looked disconnected -- verified real: resolved color-role hex values fed directly into a poster-generator content.json render, no conversion needed. No script change."
   grounding: not_applicable
   object_type: ["signboard", "menu"]
 ---
@@ -62,6 +64,10 @@ Start from `assets/brand_template.json`. Exit 0 = valid, 1 = violations (all pri
 - Does not detect every possible "orphan" visual element -- only icon-type elements missing/mismatching a `motif_ref` are caught; a poorly-matched-but-technically-declared motif reference isn't flagged (that's a judgment call, not a mechanical check).
 - Does not render anything -- pair with `svg-poster-builder` or a real design tool for the actual visual output.
 - Does not restrict `colors.background` to the 8 catalogued off-white examples -- those are real observed samples cited for guidance, not an exhaustive whitelist; only literal pure white is rejected.
+
+## Chains into `html-poster-composer` (media cluster, verified 2026-08-07)
+
+This skill's resolved color-role report (`primary`/`secondary`/`accent`/`background`, each a plain `#RRGGBB` hex whether declared or resolved via fallback) feeds directly into a poster-render `content.json`'s `fill`/`text.color` fields -- no conversion needed, same hex string both places. Verified real: a brand declaring only `primary`+`secondary` resolved `accent` via `fallback-to-secondary`; both resolved hex values were used as-is for 3 zone fills in a real render, producing a correctly color-consistent poster. That original verification ran against `poster-generator` (superseded 2026-08-07 by `html-poster-composer`, same `content.json` contract, unchanged by the migration) -- see `html-poster-composer`'s own `SKILL.md` for the current renderer.
 
 ## Verified
 

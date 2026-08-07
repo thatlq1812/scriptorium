@@ -1,0 +1,6 @@
+{
+  "font_pairing_id": "editorial-warm",
+  "heading_font": "Libre Baskerville",
+  "body_font": "Montserrat",
+  "notes": "Trước khi dùng thật, chạy light-logo-arranger's resolve_font_fallback.py trên cả 2 font -- entry này chỉ nhớ cặp font mình thích, không tự xác nhận an toàn hệ thống."
+}
