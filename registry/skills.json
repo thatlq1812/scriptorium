@@ -584,7 +584,7 @@
     },
     {
       "skill_id": "office-doc-creator",
-      "version": "0.2.0",
+      "version": "0.3.1",
       "source": {
         "type": "self-authored"
       },
@@ -615,8 +615,8 @@
       },
       "security_audit": {
         "status": "passed",
-        "date": "2026-08-01",
-        "note": "Re-audited at 0.2.0 (2026-08-01): added docx_numbering.py (new module) + font/list-block handling in create_docx.py. Still stdlib+python-docx/python-pptx/openpyxl only, zero network, no dynamic execution. Grep for subprocess/os.system/eval/exec/urllib/requests/socket/shell=True: clean (one false-positive substring \"font requests\" in a docstring, confirmed by inspection). Writes only to caller-supplied output path."
+        "date": "2026-08-08",
+        "note": "Re-audited at 0.3.1 (2026-08-08, same day as 0.3.0): added explicit heading-color logic to create_docx.py (style/run color-setting only, no new dependency or I/O surface). Still stdlib+python-docx/python-pptx/openpyxl only, zero network, no dynamic execution."
       },
       "dependencies": [
         "python-docx==1.2.0",
@@ -625,7 +625,7 @@
         "python-env-bootstrap"
       ],
       "license_debt": null,
-      "elicited_from": "Owner (2026-07-26): extend scouting beyond Anthropic for office skills; scout-harvester found python-docx/python-pptx/openpyxl (MIT, verified directly), implementation written from scratch v0.2.0 (2026-08-01): Vietnamese-diacritics rFonts fix + real OOXML list numbering ported from the owner's own prior production system (D:/elix/archive/platform_archive/modules/document/v6/renderers/docx/styles.py + numbering.py)."
+      "elicited_from": "Owner (2026-07-26): extend scouting beyond Anthropic for office skills; scout-harvester found python-docx/python-pptx/openpyxl (MIT, verified directly), implementation written from scratch v0.2.0 (2026-08-01): Vietnamese-diacritics rFonts fix + real OOXML list numbering ported from the owner's own prior production system (D:/elix/archive/platform_archive/modules/document/v6/renderers/docx/styles.py + numbering.py). v0.3.0 (2026-08-08): cover_page block added after owner directly compared this skill's docx output against a competing agentic IDE (Google Antigravity) on the same real task and found it visually plainer -- grounded in standard Vietnamese academic/business trang bia convention, general-capability tier, no expert elicitation required."
     },
     {
       "skill_id": "dedup-novelty-check",
