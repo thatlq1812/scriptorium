@@ -123,7 +123,7 @@
       },
       "dependencies": [
         "docling==2.115.0",
-        "python-env-bootstrap"
+        "toolchain-bootstrap"
       ],
       "license_debt": null,
       "elicited_from": "Owner (2026-07-26): idea of turning any document type into an AI-optimized structure (folder + JSON index) using Python; grounded in research on Docling/MinerU/unstructured.io/the llms.txt convention + chunking best practice. Owner (2026-07-27): legal-article structuring mode, agent-reviewed boundaries instead of hardcoded chunk logic, built for the Legal-cluster's 2 flagged real gaps in docs/STATUS.md; same session, directed a multi-document catalog next so legal-citation-checker could verify Điều existence against a real corpus."
@@ -234,7 +234,14 @@
       },
       "dependencies": [],
       "license_debt": null,
-      "elicited_from": "Owner (2026-07-27), reviewing another agent's request.md proposal: accepted as a real gap -- latex-project-bootstrap assumes XeLaTeX/biber already installed, doesn't install them itself, same relationship python-env-bootstrap has to Python. Detect/install split follows python-env-bootstrap's own established pattern of never silently taking a heavy system action."
+      "elicited_from": "Owner (2026-07-27), reviewing another agent's request.md proposal: accepted as a real gap -- latex-project-bootstrap assumes XeLaTeX/biber already installed, doesn't install them itself, same relationship python-env-bootstrap has to Python. Detect/install split follows python-env-bootstrap's own established pattern of never silently taking a heavy system action.",
+      "operational_status": {
+        "state": "superseded",
+        "superseded_by": "toolchain-bootstrap",
+        "reason": "Merged with python-env-bootstrap/ffmpeg-bootstrap/pandoc-bootstrap/typst-bootstrap into one toolchain-bootstrap skill (owner-directed consolidation, 2026-08-13) -- all 5 shared the identical detect-first/install-only-when-explicit architecture. Content left in place, not deleted.",
+        "date": "2026-08-13",
+        "decided_by": "owner"
+      }
     },
     {
       "skill_id": "typst-bootstrap",
@@ -270,7 +277,14 @@
       },
       "dependencies": [],
       "license_debt": null,
-      "elicited_from": "Owner (2026-07-27): after comparing D:/elix/praxis_csc's real document-export pipeline, directed switching latex-project-bootstrap's vnnd30 mode from XeLaTeX to Typst for portability (a ~50MB static binary vs a ~5GB TeX distribution) -- this is the 'get Typst onto this machine' layer, same relationship python-env-bootstrap has to Python skills and xelatex-bootstrap has to the book-scaffold mode."
+      "elicited_from": "Owner (2026-07-27): after comparing D:/elix/praxis_csc's real document-export pipeline, directed switching latex-project-bootstrap's vnnd30 mode from XeLaTeX to Typst for portability (a ~50MB static binary vs a ~5GB TeX distribution) -- this is the 'get Typst onto this machine' layer, same relationship python-env-bootstrap has to Python skills and xelatex-bootstrap has to the book-scaffold mode.",
+      "operational_status": {
+        "state": "superseded",
+        "superseded_by": "toolchain-bootstrap",
+        "reason": "Merged with python-env-bootstrap/ffmpeg-bootstrap/pandoc-bootstrap/xelatex-bootstrap into one toolchain-bootstrap skill (owner-directed consolidation, 2026-08-13) -- all 5 shared the identical detect-first/install-only-when-explicit architecture. Content left in place, not deleted.",
+        "date": "2026-08-13",
+        "decided_by": "owner"
+      }
     },
     {
       "skill_id": "pandoc-bootstrap",
@@ -306,7 +320,14 @@
       },
       "dependencies": [],
       "license_debt": null,
-      "elicited_from": "Owner (2026-07-27), reviewing another agent's request.md proposal: accepted as a real gap -- document-format conversion (.tex/.docx/.pdf/.html) has no bootstrap skill yet, distinct from office-doc-creator (python-docx/pptx/openpyxl, not pandoc). Same detect/install-only-when-explicit pattern as xelatex-bootstrap/python-env-bootstrap."
+      "elicited_from": "Owner (2026-07-27), reviewing another agent's request.md proposal: accepted as a real gap -- document-format conversion (.tex/.docx/.pdf/.html) has no bootstrap skill yet, distinct from office-doc-creator (python-docx/pptx/openpyxl, not pandoc). Same detect/install-only-when-explicit pattern as xelatex-bootstrap/python-env-bootstrap.",
+      "operational_status": {
+        "state": "superseded",
+        "superseded_by": "toolchain-bootstrap",
+        "reason": "Merged with python-env-bootstrap/ffmpeg-bootstrap/typst-bootstrap/xelatex-bootstrap into one toolchain-bootstrap skill (owner-directed consolidation, 2026-08-13) -- all 5 shared the identical detect-first/install-only-when-explicit architecture. Content left in place, not deleted.",
+        "date": "2026-08-13",
+        "decided_by": "owner"
+      }
     },
     {
       "skill_id": "legal-web-search",
@@ -380,7 +401,7 @@
         "note": "playwright itself scouted via scout-harvester before building (Apache-2.0, microsoft/playwright-python, 14.8k stars, actively maintained). This skill's 3 scripts add no eval/exec/subprocess/os.system beyond what playwright's own API does internally. Read-only navigation + extraction only -- no form submission, no JS execution, no auth, no WAF-evasion logic."
       },
       "dependencies": [
-        "python-env-bootstrap"
+        "toolchain-bootstrap"
       ],
       "license_debt": null,
       "elicited_from": "Proposed by another agent via request.md (2026-07-27) to close legal-web-search's dichvucong.gov.vn JS-rendering gap. Owner approved a 2-step plan (static code, then explicit approval for real install+test) after Dev Agent flagged this as heavier/riskier than prior bootstrap skills. Both steps approved and executed same session. Real testing found the flagged risk correct and worse than assumed: dichvucong.gov.vn WAF-blocks a real headless browser too, confirming this is bot-detection, not JS-rendering -- browser-web-renderer deliberately does not attempt evasion."
@@ -421,7 +442,56 @@
         "uv"
       ],
       "license_debt": null,
-      "elicited_from": "Owner (docs/archive/pre-spec-2026-07-26/note.md point 3): a skill 'containing a full python version inside it' so ordinary users can run complex Python skills without installing anything first; grounded in uv (Astral) as the bootstrap tool"
+      "elicited_from": "Owner (docs/archive/pre-spec-2026-07-26/note.md point 3): a skill 'containing a full python version inside it' so ordinary users can run complex Python skills without installing anything first; grounded in uv (Astral) as the bootstrap tool",
+      "operational_status": {
+        "state": "superseded",
+        "superseded_by": "toolchain-bootstrap",
+        "reason": "Merged with ffmpeg-bootstrap/pandoc-bootstrap/typst-bootstrap/xelatex-bootstrap into one toolchain-bootstrap skill (owner-directed consolidation, 2026-08-13) -- all 5 shared the identical detect-first/install-only-when-explicit architecture, each one's own elicited_from already cited the others as its precedent. Content left in place, not deleted.",
+        "date": "2026-08-13",
+        "decided_by": "owner"
+      }
+    },
+    {
+      "skill_id": "toolchain-bootstrap",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "coordination"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": []
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability -- exempt (no expert elicitation, no uncontrolled external input)"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-13",
+        "note": "Merge of 5 already-security-audited skills (python-env-bootstrap, ffmpeg-bootstrap, pandoc-bootstrap, typst-bootstrap, xelatex-bootstrap) -- detect/install logic carried forward unchanged, only paths/filenames updated. Re-verified for real post-merge: check_ffmpeg.py/check_pandoc.py/check_typst.py/check_xelatex.py all re-run from the new location, correctly detect the real already-installed toolchains with correct new paths in their own printed hints; bootstrap.ps1 re-run for real against toolchain-bootstrap's own requirements.txt, correctly resolved repo root and shared venv path unchanged. No new subprocess/eval/network patterns introduced."
+      },
+      "dependencies": [
+        "uv",
+        "imageio-ffmpeg==0.6.0"
+      ],
+      "license_debt": null,
+      "elicited_from": "Owner (2026-08-13): merge of 5 previously-separate bootstrap skills into one skill_id, per owner's review of a Gemini-authored restructuring proposal (STRATEGY_01.md) -- approved specifically because all 5 already shared the identical detect-first/install-only-when-explicit shape and each one's own elicited_from already cited the others as its architectural precedent. latex-project-bootstrap and browser-web-renderer deliberately NOT folded in (different risk class -- see this skill's own SKILL.md metadata.elicited_from for the full reasoning).",
+      "operational_status": {
+        "state": "active"
+      }
     },
     {
       "skill_id": "license-compliance-check",
@@ -622,7 +692,7 @@
         "python-docx==1.2.0",
         "python-pptx==1.0.2",
         "openpyxl==3.1.5",
-        "python-env-bootstrap"
+        "toolchain-bootstrap"
       ],
       "license_debt": null,
       "elicited_from": "Owner (2026-07-26): extend scouting beyond Anthropic for office skills; scout-harvester found python-docx/python-pptx/openpyxl (MIT, verified directly), implementation written from scratch v0.2.0 (2026-08-01): Vietnamese-diacritics rFonts fix + real OOXML list numbering ported from the owner's own prior production system (D:/elix/archive/platform_archive/modules/document/v6/renderers/docx/styles.py + numbering.py). v0.3.0 (2026-08-08): cover_page block added after owner directly compared this skill's docx output against a competing agentic IDE (Google Antigravity) on the same real task and found it visually plainer -- grounded in standard Vietnamese academic/business trang bia convention, general-capability tier, no expert elicitation required."
@@ -777,7 +847,7 @@
       "dependencies": [
         "xelatex",
         "biber",
-        "typst-bootstrap",
+        "toolchain-bootstrap",
         "pandoc"
       ],
       "license_debt": null,
@@ -836,7 +906,7 @@
       "dependencies": [
         "google-genai==2.14.0",
         "pypdfium2==5.12.1",
-        "python-env-bootstrap",
+        "toolchain-bootstrap",
         "media-anchor-profile"
       ],
       "license_debt": null,
@@ -1108,7 +1178,7 @@
     },
     {
       "skill_id": "lesson-plan-builder",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "source": {
         "type": "self-authored"
       },
@@ -1138,11 +1208,11 @@
       "security_audit": {
         "status": "passed",
         "date": "2026-07-26",
-        "note": "validate_lesson_plan.py: local-only, stdlib only (json/re/argparse), zero network calls, no dynamic execution, no secret handling. No finding."
+        "note": "Re-audited at v0.2.0 (script changed). validate_lesson_plan.py: still local-only, stdlib only (json/re/argparse), zero network calls, no dynamic execution, no secret handling. The v0.2.0 change adds a new is_placeholder() regex check (exact-wrap-anchored, no new dependency, no new I/O) that closes a real gap: the validator previously accepted the bundled template's own unedited '<...>' placeholder text as valid content and would render it straight into the KHBD. No finding."
       },
       "dependencies": [],
       "license_debt": null,
-      "elicited_from": "First skill for the Teacher audience tier (docs/specs/STRATEGY_SPEC.md §5.1), grounded in prior system's real previously-deployed lesson_plan skill (prior deployed system skills/lesson_plan/SKILL.md) for CV5512/TT32-2018/TT27-2020/TT22-2021 domain knowledge (4-activity fixed structure, fixed pham-chat/nang-luc vocabulary, level-adaptive assessment rule). Used loosely per owner's explicit caveat (2026-07-26, 'dựa thôi chứ không tham khảo hẳn') -- prior system's orchestration machinery not ported, only the domain knowledge, rebuilt as a single deterministic validator. Owner also directed this tier to skip prior system's bureaucratic-paperwork skills (Nghị định 30/2020 admin templates: reports/decisions/correspondence/meeting-minutes) entirely, keeping scope to skills that serve actual teaching."
+      "elicited_from": "First skill for the Teacher audience tier (docs/specs/STRATEGY_SPEC.md §5.1), grounded in prior system's real previously-deployed lesson_plan skill (prior deployed system skills/lesson_plan/SKILL.md) for CV5512/TT32-2018/TT27-2020/TT22-2021 domain knowledge (4-activity fixed structure, fixed pham-chat/nang-luc vocabulary, level-adaptive assessment rule). Used loosely per owner's explicit caveat (2026-07-26, 'dựa thôi chứ không tham khảo hẳn') -- prior system's orchestration machinery not ported, only the domain knowledge, rebuilt as a single deterministic validator. Owner also directed this tier to skip prior system's bureaucratic-paperwork skills (Nghị định 30/2020 admin templates: reports/decisions/correspondence/meeting-minutes) entirely, keeping scope to skills that serve actual teaching. v0.2.0 (2026-08-13) additionally references outside_research/references/anthropic-k12-teacher-skills's k12-lesson-planning skill (github.com/anthropics/k12-teacher-skills, Apache-2.0, real production skill in 'Claude for Teachers', co-developed Anthropic + Learning Commons -- a real deployed system for elicitation purposes) for 3 adapted patterns: clarify-priority-order guidance, an explicit copyright/originality guardrail (never paste SGK/textbook text verbatim), and a scaled-down 'presenting results to the teacher' UX note. The reference's multi-document 'shared' JSON block was deliberately NOT adopted (this skill renders exactly one document, so there is no drift problem to solve). Adapting it surfaced a real independent bug, fixed the same round: the validator silently accepted the template's own unedited placeholder text as valid content."
     },
     {
       "skill_id": "assessment-builder",
@@ -1301,6 +1371,49 @@
       "dependencies": [],
       "license_debt": null,
       "elicited_from": "Grounded in 3 of prior system's real previously-deployed skills for K12 teachers (prior deployed system skills/classroom_worksheet, homework_sheet, learning_game) for the domain distinctions this validator encodes: classroom_worksheet's items are organized by lesson activity and need a described response space; homework_sheet's items are organized by difficulty/type and its answer key must cover every item with no gaps; learning_game requires complete rules/steps tied to the lesson's actual topic. prior system's own orchestration machinery for these 3 skills was NOT ported. Per owner direction (2026-07-26), consolidated 3 separate prior system skill folders into one; deliberately kept modest in scope since these 3 prior system skills are lighter on hard regulatory structure and heavier on open-ended content generation than lesson-plan-builder/assessment-builder -- this validator checks only the real, mechanically-checkable structural invariants, not invented rigor."
+    },
+    {
+      "skill_id": "lesson-differentiation-builder",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored",
+        "adapted_from": {
+          "repo_url": "https://github.com/anthropics/k12-teacher-skills",
+          "path": "plugin/skills/k12-lesson-differentiation",
+          "license": "Apache-2.0",
+          "cleared_by": "Apache-2.0 is fully permissive/compatible -- no license-compliance-check gate needed for a pattern-level adaptation (registry/SCHEMA.md's adapted_from note); owner-directed round explicitly skipped the formal scout-harvester tooling but the source's LICENSE + per-file SPDX headers were verified directly (2026-08-13)."
+        }
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "education"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [],
+        "grounding": "not_applicable",
+        "object_type": [
+          "differentiation-plan",
+          "worksheet"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "general-capability — Tomlinson differentiation is publicly documented pedagogy (not a niche-specializer tacit process) grounded in a real deployed system (github.com/anthropics/k12-teacher-skills, Apache-2.0, Anthropic + Learning Commons, live in Claude for Teachers); no uncontrolled external input -- the skill validates a teacher/agent-authored JSON record, not arbitrary documents/web content/third-party output. Exempt by design, same classification as every sibling Teacher-tier skill in this registry."
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-13",
+        "note": "validate_differentiation.py: local-only, stdlib only (json/argparse/pathlib/__future__), zero network calls, no dynamic execution (no subprocess/eval/exec/socket/urllib/requests/os.system/__import__ -- grepped and confirmed clean), no secret handling. Re-verified for real this session against a valid fixture (with --render-plan/--render-worksheets), a deliberately broken fixture (9 distinct errors + 1 warning caught), a warnings-only fixture (2 more warning paths exercised), malformed JSON, a non-object top-level JSON array, an empty object, and the bundled template itself. No finding."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "github.com/anthropics/k12-teacher-skills, k12-lesson-differentiation skill, Apache-2.0, Anthropic + Learning Commons, real deployed system in Claude for Teachers. SKILL.md read in full, plus references/math.md and references/output.md, for the actual domain knowledge: the Tomlinson-framework below/at/above tier structure with fixed Group A/B/C labeling; the single-shared-content discipline (essential question, core task set, vocabulary, reflection prompt, anchor activity written once so tiers cannot drift onto different material); the Below-tier scaffold-density-cap rule; the Above-tier genuine-extension (not just more of the same) requirement; and the shared closing reflection prompt on every tier. Deliberately NOT ported: the source's Learning Commons Knowledge Graph standards-grounding connector (Scriptorium has no such connector and never adds an AI backend, CLAUDE.md principle 8), its bash/Playwright DOCX render pipeline (delegate to office-doc-creator instead, matching this registry's own convention), its state/jurisdiction standards-detection logic, its curriculum-name copyright guardrail (IM/OpenSciEd-specific), and its own harness-specific conversational-flow scripting (draft-offer wording, task-list announcements, chat-message closing script) -- none of that is domain knowledge portable to a standalone JSON validator. Confirms a real capability gap in the Teacher tier (lesson-plan-builder/classroom-materials-builder/assessment-builder/competency-rubric-builder/grading-and-feedback/grade-book-builder/parent-communication had no differentiation skill)."
     },
     {
       "skill_id": "grade-book-builder",
@@ -2519,7 +2632,7 @@
         "python-pptx==1.0.2",
         "lxml==6.1.1",
         "Pillow==12.3.0",
-        "python-env-bootstrap",
+        "toolchain-bootstrap",
         "pypdfium2==5.12.1",
         "numpy==2.5.1"
       ],
@@ -2562,7 +2675,14 @@
         "imageio-ffmpeg==0.6.0"
       ],
       "license_debt": null,
-      "elicited_from": "Reuses the bootstrap-skill architecture already proven by python-env-bootstrap (shared venv, uv-based, portable rather than relying on system state). Owner-directed correction (2026-08-05, GenVid project): an initial draft defaulted to system-PATH-first detection with OS-package-manager install as primary -- owner flagged this as wrong for this class of tool (portable means the resource lives local in the workspace, not depending on the host system). Verified for real: imageio-ffmpeg's installed wheel already contains the actual ffmpeg binary (~88MB on Windows) immediately after uv pip install, no lazy/runtime download. Redesigned around this finding: local-first resolution, system PATH demoted to last-resort fallback."
+      "elicited_from": "Reuses the bootstrap-skill architecture already proven by python-env-bootstrap (shared venv, uv-based, portable rather than relying on system state). Owner-directed correction (2026-08-05, GenVid project): an initial draft defaulted to system-PATH-first detection with OS-package-manager install as primary -- owner flagged this as wrong for this class of tool (portable means the resource lives local in the workspace, not depending on the host system). Verified for real: imageio-ffmpeg's installed wheel already contains the actual ffmpeg binary (~88MB on Windows) immediately after uv pip install, no lazy/runtime download. Redesigned around this finding: local-first resolution, system PATH demoted to last-resort fallback.",
+      "operational_status": {
+        "state": "superseded",
+        "superseded_by": "toolchain-bootstrap",
+        "reason": "Merged with python-env-bootstrap/pandoc-bootstrap/typst-bootstrap/xelatex-bootstrap into one toolchain-bootstrap skill (owner-directed consolidation, 2026-08-13) -- all 5 shared the identical detect-first/install-only-when-explicit architecture. Content left in place, not deleted.",
+        "date": "2026-08-13",
+        "decided_by": "owner"
+      }
     },
     {
       "skill_id": "media-anchor-profile",
@@ -2655,7 +2775,7 @@
       },
       "dependencies": [
         "google-genai==2.14.0",
-        "ffmpeg-bootstrap"
+        "toolchain-bootstrap"
       ],
       "license_debt": null,
       "elicited_from": "Grounded in a GitHub architecture survey of 5 image-to-video repos (Stability-AI/generative-models (SVD) -- MIT; DynamiCrafter, CogVideo, AnimateDiff -- Apache-2.0; HunyuanVideo-I2V -- Tencent Community License, technique read-only, no code/weights used), recorded in data/references/image-to-video/NOTES.md (GenVid project 2026-08-05; licenses verified via license-compliance-check 2026-08-05). Image-as-fixed-frame-0 (CogVideoX framing) motivated treating --image as an anchor the model animates from; dual-channel visual-anchor/motion-directive split (DynamiCrafter, SVD) motivated the --motion-intensity phrasing wrapper. Exact API surface and real model names (veo-3.1-generate-preview et al.) verified directly against a real client.models.list() call against the owner's own API key, not guessed from documentation."
@@ -2753,7 +2873,7 @@
       "dependencies": [
         "ffmpeg-python==0.2.0",
         "imageio-ffmpeg==0.6.0",
-        "ffmpeg-bootstrap"
+        "toolchain-bootstrap"
       ],
       "license_debt": null,
       "elicited_from": "Grounded in a GitHub architecture survey of 5 auto-video-editing repos (auto-editor -- Unlicense; auto-subtitle, faster-auto-subtitle, automatic_video_editing -- MIT; OpenTimelineIO -- Apache-2.0), recorded in data/references/auto-video-editing/NOTES.md (GenVid project 2026-08-05; licenses verified via license-compliance-check 2026-08-05). OpenTimelineIO's Timeline/Track/Clip data model directly motivated the plan/render split (timeline JSON validated before any ffmpeg call); auto-subtitle's ffmpeg subtitles-filter pattern motivated burning captions natively instead of a per-frame overlay. A real bug found and fixed during testing: sidechaincompress truncates to its shorter input -- fixed by padding both voice and music streams to the timeline's total duration before ducking, re-verified with a real 9.00s render."
@@ -2877,7 +2997,7 @@
         "video-generator-gemini",
         "audio-generator-gemini",
         "video-assembly-composer",
-        "ffmpeg-bootstrap"
+        "toolchain-bootstrap"
       ],
       "license_debt": null,
       "elicited_from": "Grounded in a GitHub architecture survey of 5 end-to-end AI video pipeline repos (youtube-shorts-pipeline -- MIT; Text-To-Video-AI -- MIT; openshorts -- MIT core; OpenMontage -- AGPL-3.0, idea-only; Viral-Faceless-Shorts-Generator -- no license, idea-only), recorded in data/references/e2e-pipeline/NOTES.md (GenVid project 2026-08-05; licenses verified via license-compliance-check 2026-08-05). youtube-shorts-pipeline's state-embedded-in-data + retry-decorator patterns reimplemented independently (own code, not copied); Viral-Faceless-Shorts-Generator's human-in-the-loop script-approval step motivated the --approve-script checkpoint; openshorts' category-vs-number prompting finding is the same principle this project's own generate_script.py learned for duration_seconds. Real end-to-end run (2 scenes): script checkpoint pause, a real Veo duration_seconds failure and clean resume-by-artifact after the fix, final assembled 11.92s video produced."

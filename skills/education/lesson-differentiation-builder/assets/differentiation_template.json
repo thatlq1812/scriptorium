@@ -1,0 +1,60 @@
+{
+  "subject": "<subject, e.g. Mathematics>",
+  "grade": "<grade level, e.g. Grade 6>",
+  "topic": "<lesson/topic title being differentiated>",
+  "standard": "<optional: standard/objective code or text this lesson targets>",
+  "source_lesson_summary": "<brief description of the EXISTING lesson this plan differentiates -- this skill adapts a lesson that already exists, it does not create a new one from scratch>",
+  "learner_needs": "<optional free text: ELL/WIDA levels, IEP goal areas, 504 accommodations, or other specific student needs to factor into the Below tier -- not validated, pass-through only>",
+  "shared": {
+    "essential_question": "<the single core learning goal/essential question -- identical for every tier by construction, since it lives here once instead of being retyped per tier>",
+    "core_tasks": [
+      {
+        "key": "t1",
+        "task": "<core task/problem text -- the same task context every tier's worksheet references, so tiers cannot drift apart on WHAT students are working on, only HOW>"
+      }
+    ],
+    "vocabulary": [
+      {
+        "term": "<key term>",
+        "meaning": "<term meaning, in plain classroom language>"
+      }
+    ],
+    "reflect_prompt": "<one open-ended reflective prompt required on every tier's worksheet, e.g. 'Explain your thinking' or 'What strategy did you use and why?'>",
+    "anchor_activity": "<optional: a standard-aligned early-finisher task, printed on every tier's worksheet -- not busywork>"
+  },
+  "tiers": {
+    "below": {
+      "group_label": "Group A",
+      "entry_point": "<where Below-tier students start relative to the core task -- e.g. one step back from the grade-level entry point>",
+      "scaffolds": [
+        "<scaffold 1, e.g. a sentence starter, a worked first step, a visual/manipulative support>"
+      ],
+      "worksheet_items": [
+        {
+          "ref": "from_shared:t1",
+          "modification": "<how this core task is presented differently for Below -- e.g. broken into smaller steps, with a sentence frame>"
+        }
+      ]
+    },
+    "at": {
+      "group_label": "Group B",
+      "worksheet_items": [
+        {
+          "ref": "from_shared:t1",
+          "modification": ""
+        }
+      ]
+    },
+    "above": {
+      "group_label": "Group C",
+      "entry_point": "<where Above-tier students start relative to the core task -- e.g. skipping the scaffolded entry, straight into open-ended application>",
+      "extension": "<the genuine extension task for Above -- a qualitatively different challenge (more variables, open-ended justification, real-world transfer), never just 'more of the same' problems>",
+      "worksheet_items": [
+        {
+          "ref": "from_shared:t1",
+          "modification": "<how this core task is extended for Above -- e.g. an added constraint or a 'justify your answer' requirement>"
+        }
+      ]
+    }
+  }
+}

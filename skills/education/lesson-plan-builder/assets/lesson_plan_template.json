@@ -1,0 +1,54 @@
+{
+  "mon_hoc": "<subject, e.g. Toan>",
+  "khoi_lop": 6,
+  "ten_bai": "<lesson/topic title>",
+  "so_tiet": 1,
+  "thoi_luong_phut": 45,
+  "muc_tieu": {
+    "kien_thuc": "<what content knowledge this lesson must deliver -- describe scope in your own words, never paste textbook/SGK text verbatim>",
+    "nang_luc_chung": ["Tự chủ và tự học"],
+    "nang_luc_dac_thu": ["<subject-specific competency, e.g. Tính toán>"],
+    "pham_chat": ["Chăm chỉ"]
+  },
+  "thiet_bi": ["<equipment/materials item 1>"],
+  "hoat_dong": [
+    {
+      "ten": "Khởi động",
+      "muc_tieu": "<name the quality/competency this activity develops, by exact name from muc_tieu above>",
+      "noi_dung": "<learning task students do -- describe the task, never paste source/textbook text verbatim>",
+      "san_pham": "<concrete, observable learning product>",
+      "to_chuc_thuc_hien": {
+        "chuyen_giao": "<teacher assigns the task>",
+        "thuc_hien": "<students carry it out>",
+        "bao_cao": "<students report/discuss>",
+        "ket_luan": "<teacher concludes/confirms>"
+      },
+      "thoi_luong_phut": 5
+    },
+    {
+      "ten": "Hình thành kiến thức mới",
+      "muc_tieu": "",
+      "noi_dung": "",
+      "san_pham": "",
+      "to_chuc_thuc_hien": {"chuyen_giao": "", "thuc_hien": "", "bao_cao": "", "ket_luan": ""},
+      "thoi_luong_phut": 20
+    },
+    {
+      "ten": "Luyện tập",
+      "muc_tieu": "",
+      "noi_dung": "",
+      "san_pham": "",
+      "to_chuc_thuc_hien": {"chuyen_giao": "", "thuc_hien": "", "bao_cao": "", "ket_luan": ""},
+      "thoi_luong_phut": 12
+    },
+    {
+      "ten": "Vận dụng",
+      "muc_tieu": "",
+      "noi_dung": "",
+      "san_pham": "",
+      "to_chuc_thuc_hien": {"chuyen_giao": "", "thuc_hien": "", "bao_cao": "", "ket_luan": ""},
+      "thoi_luong_phut": 8
+    }
+  ],
+  "danh_gia": "<assessment approach -- must match the level: TH (grade 1-5) uses remarks only, no scores (TT27); THCS/THPT (grade 6-12) may use scores (TT22)>"
+}
