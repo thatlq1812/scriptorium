@@ -697,7 +697,7 @@
     },
     {
       "skill_id": "docx",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "source": {
         "type": "self-authored"
       },
@@ -712,7 +712,8 @@
         ],
         "risk_tier": "N2",
         "harness_compatibility": [
-          "antigravity-cli"
+          "antigravity-cli",
+          "claude-code"
         ],
         "grounding": "optional",
         "object_type": [
@@ -729,7 +730,7 @@
       "security_audit": {
         "status": "passed",
         "date": "2026-08-13",
-        "note": "Audited at 1.0.0 (2026-08-13): initial release. Provides low-level OOXML surgery for comment insertion, merging adjacent text runs, and accepting tracked changes. Security-checked for shell injection."
+        "note": "Re-audited at 1.0.1 (2026-08-13): fixed a real encoding bug in validators/base.py's XSD validation path (open(..., \"r\") read as Windows cp1252 instead of UTF-8, breaking on any non-cp1252/Vietnamese content — changed to binary-mode open so lxml reads the XML declaration's own encoding). No new dependency or I/O surface; still no shell/network access. 1.0.0 initial audit note (2026-08-13) unchanged below: low-level OOXML surgery for comment insertion, merging adjacent text runs, and accepting tracked changes, security-checked for shell injection."
       },
       "dependencies": [
         "python-docx==1.1.2",
@@ -738,7 +739,7 @@
         "toolchain-bootstrap"
       ],
       "license_debt": null,
-      "elicited_from": "Owner (2026-07-26): Ported low-level DOCX XML editing capability (commenting, run merging, tracked changes acceptance) to support advanced redlining workflows in Scriptorium."
+      "elicited_from": "Owner (2026-07-26): Ported low-level DOCX XML editing capability (commenting, run merging, tracked changes acceptance) to support advanced redlining workflows in Scriptorium. v1.0.1 (2026-08-13): owner directed chaining this skill with office-doc-creator (VN-tailored creation feeds into this skill's editing/validation) — verified end to end with a real Vietnamese-diacritics test document, surfacing and fixing the encoding bug noted in security_audit above."
     },
     {
       "skill_id": "essay-structure-scaffold",
@@ -2003,7 +2004,7 @@
     },
     {
       "skill_id": "office-doc-creator",
-      "version": "0.3.1",
+      "version": "0.4.0",
       "source": {
         "type": "self-authored"
       },
@@ -2034,17 +2035,18 @@
       },
       "security_audit": {
         "status": "passed",
-        "date": "2026-08-08",
-        "note": "Re-audited at 0.3.1 (2026-08-08, same day as 0.3.0): added explicit heading-color logic to create_docx.py (style/run color-setting only, no new dependency or I/O surface). Still stdlib+python-docx/python-pptx/openpyxl only, zero network, no dynamic execution."
+        "date": "2026-08-13",
+        "note": "Re-audited at 0.4.0 (2026-08-13): fixed a real OOXML schema-order bug in docx_numbering.py (w:lvlRestart written before w:numFmt inside w:lvl, violating CT_Lvl's real element sequence — reordered). No new dependency, no new I/O surface; still stdlib+python-docx/python-pptx/openpyxl only, zero network, no dynamic execution. 0.3.1 note (2026-08-08) unchanged below."
       },
       "dependencies": [
         "python-docx==1.2.0",
         "python-pptx==1.0.2",
         "openpyxl==3.1.5",
-        "toolchain-bootstrap"
+        "toolchain-bootstrap",
+        "docx"
       ],
       "license_debt": null,
-      "elicited_from": "Owner (2026-07-26): extend scouting beyond Anthropic for office skills; scout-harvester found python-docx/python-pptx/openpyxl (MIT, verified directly), implementation written from scratch v0.2.0 (2026-08-01): Vietnamese-diacritics rFonts fix + real OOXML list numbering ported from the owner's own prior production system (D:/elix/archive/platform_archive/modules/document/v6/renderers/docx/styles.py + numbering.py). v0.3.0 (2026-08-08): cover_page block added after owner directly compared this skill's docx output against a competing agentic IDE (Google Antigravity) on the same real task and found it visually plainer -- grounded in standard Vietnamese academic/business trang bia convention, general-capability tier, no expert elicitation required."
+      "elicited_from": "Owner (2026-07-26): extend scouting beyond Anthropic for office skills; scout-harvester found python-docx/python-pptx/openpyxl (MIT, verified directly), implementation written from scratch v0.2.0 (2026-08-01): Vietnamese-diacritics rFonts fix + real OOXML list numbering ported from the owner's own prior production system (D:/elix/archive/platform_archive/modules/document/v6/renderers/docx/styles.py + numbering.py). v0.3.0 (2026-08-08): cover_page block added after owner directly compared this skill's docx output against a competing agentic IDE (Google Antigravity) on the same real task and found it visually plainer -- grounded in standard Vietnamese academic/business trang bia convention, general-capability tier, no expert elicitation required. v0.4.0 (2026-08-13): owner directed chaining this skill into docx (this skill creates, docx edits/redlines/validates) — real end-to-end test through the chain (a Vietnamese cover_page document fed into docx's XSD validator) surfaced and fixed the docx_numbering.py schema-order bug noted in security_audit above, plus a separate encoding bug in docx itself (see docx's own registry entry)."
     },
     {
       "skill_id": "pandoc-bootstrap",

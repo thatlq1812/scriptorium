@@ -121,13 +121,16 @@ def register_numbering(
     start_el = etree.SubElement(lvl, qn("w:start"))
     start_el.set(qn("w:val"), "1")
 
-    # Every list gets its own numId, so Word's running counter for that
-    # numId always starts fresh at 1 — no cross-list restart flag needed.
-    restart_el = etree.SubElement(lvl, qn("w:lvlRestart"))
-    restart_el.set(qn("w:val"), "0")
-
     fmt_el = etree.SubElement(lvl, qn("w:numFmt"))
     fmt_el.set(qn("w:val"), word_fmt)
+
+    # Every list gets its own numId, so Word's running counter for that
+    # numId always starts fresh at 1 — no cross-list restart flag needed.
+    # CT_Lvl schema order is start, numFmt, lvlRestart, ..., lvlText — this
+    # must come after numFmt, not before (schema-order violation confirmed
+    # via skills/office/docx's XSD validator, 2026-08-13).
+    restart_el = etree.SubElement(lvl, qn("w:lvlRestart"))
+    restart_el.set(qn("w:val"), "0")
 
     lvl_text = etree.SubElement(lvl, qn("w:lvlText"))
     lvl_text.set(qn("w:val"), _BULLET_CHAR if is_bullet else "%1.")

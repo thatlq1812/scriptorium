@@ -89,3 +89,11 @@ The script writes `comments.xml`, `commentsExtended.xml`, `commentsIds.xml`, `co
 ## Dependencies
 
 `docx` (npm, preinstalled — install only if `require('docx')` fails) · `pandoc` · LibreOffice (`soffice`) · `pdftoppm` (Poppler)
+
+## Chains from `office-doc-creator`
+
+For Vietnamese-context document *creation* (diacritics-safe fonts, a VN "trang bìa" cover page, real Word-native lists, dark-by-default heading colors) — `office-doc-creator` handles that; this skill picks up wherever a document already exists: editing, image insertion, tracked-changes/redlining, comments, and XSD schema validation. See `office-doc-creator`'s own "Chains into `docx`" section for the real, verified handoff.
+
+## Changelog
+
+**1.0.1 (2026-08-13):** Real bug found and fixed while verifying the chain from `office-doc-creator` for the first time: `scripts/office/validators/base.py`'s `_validate_single_file_xsd` opened each XML part with `open(xml_file, "r")` — no `encoding=`, which on Windows reads as the OS codepage (cp1252) rather than UTF-8. Any Vietnamese or other non-cp1252 content in the document (i.e. the exact content this skill is meant to validate for a Vietnamese-context caller) raised `'charmap' codec can't decode byte...` before the real XSD check ever ran. Fixed: open in binary mode (`"rb"`) so `lxml.etree.parse` reads the encoding from the XML declaration itself. Directly verified: re-ran validation against a real Vietnamese test document (diacritics á/ề/ộ/ư/ơ/đ) — the encoding error is gone, only genuine schema-conformance errors remain.

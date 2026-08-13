@@ -35,7 +35,7 @@ EduStation (`D:/elix/edustation`) — an agentic app, "Claude Code for Vietnames
 
 ## 2. Scope & non-goals
 
-**In scope**: a system for creating, quality-testing, security-auditing, and cataloging (registry) portable Agent Skills, following the agentskills.io open spec, not locked to one harness — format-compatible with the open agentskills.io spec (so a skill runs on any of its ~44 adopter harnesses technically), but the registry content is proprietary: not published to the public agentskills.io showcase, distributed only commercially. (Owner decision, 2026-08-02 — earlier doc revisions had drifted toward "open ecosystem contribution" framing that doesn't match actual intent.)
+**In scope**: a system for creating, quality-testing, security-auditing, and cataloging (registry) portable Agent Skills, following the agentskills.io open spec, not locked to one harness — format-compatible with the open agentskills.io spec (so a skill runs on any of its ~44 adopter harnesses technically), but the registry content is a specialized system: not published to the public agentskills.io showcase, and not run for profit. Scriptorium is a purpose-built skill system tailored to Vietnamese context and workflows. (Owner decision, 2026-08-13, superseding the 2026-08-02 "distributed only commercially" framing — see `docs/DECISIONS_PENDING.md`'s Resolved section for the full record.)
 
 **Out of scope** (at least for now):
 - No dedicated app/CLI/agent harness — skills run on the existing ~44-platform ecosystem.

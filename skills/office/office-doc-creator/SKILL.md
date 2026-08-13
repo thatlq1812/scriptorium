@@ -9,7 +9,7 @@ metadata:
   risk_tier: N1
   source: self-authored
   elicited_from: "Owner (2026-07-26): extend scouting beyond other proprietary tools, build 'office skills' from another source since proprietary docx/pdf/pptx/xlsx are license-locked. Scouting found python-docx/python-pptx/openpyxl (MIT, verified directly via pip show + the PyPI JSON API), implementation written from scratch. v0.2.0 (2026-08-01): the Vietnamese-diacritics rFonts fix and the real Word-native numbering pattern (`docx_numbering.py`) are adapted from the owner's own prior production system, `D:/elix/archive/platform_archive/modules/document/v6/renderers/docx/styles.py` and `.../numbering.py` — ported and rewritten for this skill's flat JSON content spec, not blind-copied. v0.3.0 (2026-08-08): owner directly compared a docx built by this skill against one built by the Antigravity agentic IDE for the same real essay task and found this skill's output 'không thiết kế được Docx đẹp cho lắm, chỉ đơn giản thôi' (not well-designed, too plain) -- investigation traced it to a real, named gap in this skill's own 'Known limitations' section ('no company-specific template', i.e. no cover-page capability at all), not a general styling problem; grounded in the standard Vietnamese academic/business trang bìa convention the comparison document demonstrated (institution header block, colored document-type label, colored title, label/value metadata table, closing location/date line), public-source convention, general-capability tier, no additional expert elicitation needed per principle 4. v0.3.1 (2026-08-08, same day): owner separately flagged the actual body heading colors as 'nhạt lại còn hướng nhạt dần' (already pale AND trending paler) versus the dark navy/near-black text color expected, and explicitly directed 'có thể tự do, miễn giữ cấu trúc là được' (free to deviate on specifics as long as structure holds) rather than a rigid fixed palette -- confirmed by reading the generated style XML directly: python-docx's default template's Heading 1/2/3 theme colors run #365F91 -> #4F81BD -> #4F81BD, i.e. levels 2-3 are BOTH lighter than level 1, not darker, a real bug in the template default this skill was silently inheriting, not a style preference."
-  version: 0.3.1
+  version: 0.4.0
 ---
 
 # office-doc-creator
@@ -19,6 +19,25 @@ Creates real Office files (not a simulation) from content the agent has already 
 ## Why write it from scratch instead of using proprietary docx/pptx/xlsx skills
 
 Already scouted (`scout-harvester`) and license-checked (`license-compliance-check`) — those proprietary skills have a contractual clause absolutely banning extract/copy/derive/distribute, fully BLOCKED. `python-docx`/`python-pptx`/`openpyxl` are independent MIT libraries, unrelated to proprietary systems, license verified directly (`pip show`, the PyPI JSON API) on 2026-07-26 — safe to write our own implementation.
+
+> **Note (2026-08-13)**: `skills/office/{docx,pptx,xlsx,pdf}` were later added directly (outside this project's own scout/license-check pipeline) and turned out to be exactly the BLOCKED content this section describes avoiding. Flagged to the owner; decision was to accept and keep both, not remove — see `docs/DECISIONS_PENDING.md` item 13. This skill's own from-scratch approach is unaffected either way. Owner then directed actively chaining the two (this skill for VN-tailored creation, `docx` for editing/redlining/validation) — see "Chains into `docx`" below.
+
+## Chains into `docx`
+
+This skill only **creates** new files — no editing an existing document, no image insertion, no tracked-changes/comments, no XSD schema validation of the output, no branded/logo template. `skills/office/docx` (see `docs/DECISIONS_PENDING.md` item 13 for its license-provenance caveat) covers exactly that gap. Real handoff, owner-directed (2026-08-13):
+
+1. Build the initial `.docx` with `create_docx.py` (cover page, VN-diacritics-safe fonts, real Word-native lists, dark heading colors).
+2. Hand the output path to `docx`'s scripts for anything this skill doesn't do:
+   - `scripts/office/validate.py <file.docx>` — real XSD schema validation (ISO-IEC29500-4/ECMA/Microsoft extension schemas).
+   - `scripts/comment.py <file.docx> "<text>" -o <out.docx>` — add a review comment.
+   - `scripts/accept_changes.py` / tracked-changes workflow — see `docx`'s own SKILL.md for the `<w:ins>`/`<w:del>` redlining rules.
+   - `scripts/office/soffice.py --headless --convert-to pdf` + `pdftoppm` — render and visually verify (not re-verified this round: `soffice`/LibreOffice isn't on PATH in this environment; the script itself is unchanged and was previously verified working, see `docx`'s own changelog).
+
+Verified real, not assumed (2026-08-13): built a real `.docx` via `create_docx.py` with a Vietnamese `cover_page` (diacritics: á, ề, ộ, ư, ơ, đ) + an ordered list, fed it straight into `docx`'s `validate.py` and `comment.py` with no conversion step — both worked directly on the file. This surfaced and fixed **2 real bugs**, one in each skill:
+- **`docx`'s own validator** (`scripts/office/validators/base.py`): `open(xml_file, "r")` with no `encoding=` reads as the OS default codepage on Windows (cp1252), not UTF-8 — any Vietnamese/non-cp1252 content in the XML raised `'charmap' codec can't decode byte...` before the real XSD check ever ran. Fixed: open in binary mode (`"rb"`) so `lxml.etree.parse` reads the encoding from the XML declaration itself, the standard-correct pattern. This is not a hypothetical edge case — it broke on the very first real Vietnamese document tested through the chain.
+- **This skill's own `docx_numbering.py`**: `w:lvlRestart` was emitted before `w:numFmt` inside `w:lvl`; the real OOXML `CT_Lvl` schema sequence is `start, numFmt, lvlRestart, ..., lvlText, ..., lvlJc, pPr, rPr` — the swap put `numFmt` out of schema order, invisible in Word (which parses leniently) but caught immediately by `docx`'s XSD validator once the chain was actually run end to end. Fixed by reordering the two `SubElement` calls.
+
+**Known caveat, not fixed (out of scope for this skill)**: `validate.py` still reports `word/settings.xml`'s `<w:zoom w:val="bestFit"/>` missing a `w:percent` attribute — confirmed this comes from `python-docx`'s own bundled default template, untouched by any script in this skill (`create_docx.py`/`docx_numbering.py` never write `settings.xml`). Not patched here; flag if it ever needs resolving (either loosen the validator's schema strictness or post-process `settings.xml`).
 
 ## Environment bootstrap
 
@@ -94,6 +113,8 @@ Font values go through a Vietnamese/CJK-diacritics-safe path: `python-docx`'s hi
 `content.json`: `{ "slides": [{ "title": "...", "bullets": ["...", "..."] }] }` — uses PowerPoint's default "Title and Content" layout, no custom theme.
 
 ## Changelog
+
+**v0.4.0 (2026-08-13):** Owner directed chaining this skill into `docx` for editing/redlining/validation/verification it doesn't do itself (see "Chains into `docx`" above). Running a real end-to-end test through the chain (a Vietnamese `cover_page` document fed into `docx`'s XSD validator) caught a real schema-order bug in `docx_numbering.py`: `w:lvlRestart` was written before `w:numFmt` inside `w:lvl`, violating `CT_Lvl`'s real element sequence — invisible in Word's lenient parser, caught immediately once real XSD validation ran against this skill's own output for the first time. Fixed by reordering the two element-creation calls to `start, numFmt, lvlRestart, ...`. No content-spec or dependency change — this round is a bug fix plus new cross-skill documentation, not a new capability.
 
 **v0.3.1 (2026-08-08, same day as v0.3.0):** All `Title`/`Heading N` styles now get an explicit, always-dark text color (`DEFAULT_HEADING_COLORS`) instead of inheriting whatever `python-docx`'s default template theme defines. Root cause (confirmed by reading the generated `word/styles.xml` directly, not assumed): the default template's Heading 1/2/3 theme colors are `#365F91` -> `#4F81BD` -> `#4F81BD` -- Heading 2 and 3 are *lighter* than Heading 1, not darker, so a document with several nesting levels visibly faded the deeper it went, backwards from how a heading hierarchy should read. New optional `heading_colors` (top-level) and `color` (per `heading` block) let a caller override the specific hex per level or per heading; per owner direction, neither is restricted to a fixed palette/allowlist the way `font` is -- validated for hex *shape* only, real freedom on the value as long as the structural contract (each level maps to a real Word heading style) still holds.
 
