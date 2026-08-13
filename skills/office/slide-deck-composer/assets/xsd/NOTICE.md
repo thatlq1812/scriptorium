@@ -13,7 +13,7 @@ license** as the rest of the project. A different mirror found during
 scouting (`t-yuki/ooxml-xsd`) has no declared license at all and was
 deliberately NOT used, per this project's discipline of never
 assuming a license, only using what's directly verifiable
-(`CLAUDE.md` principle 3/5).
+(project guidelines principle 3/5).
 
 **License**: MIT (inherited from `python-pptx`, `python-pptx/LICENSE`
 at the same commit). Redistribution permitted with the copyright/

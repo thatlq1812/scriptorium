@@ -2,7 +2,7 @@
 name: mermaid-diagram-designer
 description: Designs diagram-as-code using Mermaid syntax (flowchart, sequence, class, state, ER, gantt, pie, journey, mindmap, timeline) from a description of a system/process/data relationship. Use when a process, interaction between multiple components, data model, or project timeline needs visualizing as text embeddable in markdown/HTML. Do NOT use for complex multi-series/multi-axis quantitative data charts (that's matplotlib/Recharts/D3's job) — Mermaid is strong at structure/relationships, not data visualization.
 license: MIT
-compatibility: 'Produces plain text (no rendering needed to hand off to the user — most modern harnesses/markdown viewers auto-render ```mermaid``` code fences). The bundled lint script is pure Python 3 stdlib, no venv needed. Verified running clean: Claude Code, Windows (2026-07-26, lint script tested on both a valid case and an error case).'
+compatibility: 'Produces plain text (no rendering needed to hand off to the user — most modern harnesses/markdown viewers auto-render ```mermaid``` code fences). The bundled lint script is pure Python 3 stdlib, no venv needed. Verified running clean: Antigravity CLI, Windows (2026-07-26, lint script tested on both a valid case and an error case).'
 metadata:
   domain: general
   task_type: drafting
