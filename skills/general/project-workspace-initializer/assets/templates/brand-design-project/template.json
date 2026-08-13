@@ -36,7 +36,7 @@
     },
     {
       "heading": "Render bản chính thức",
-      "text": "Nếu là poster/banner, dùng `html-poster-composer` để render PNG/PDF cuối cùng từ layout + nội dung thật (ảnh từ `image-generator-gemini` nếu cần); nếu là bảng hiệu/thiết kế khác không qua pipeline này, xuất thủ công. Lưu bản chính thức vào `deliverables/`."
+      "text": "Nếu là poster/banner, dùng `html-poster-composer` để render PNG/PDF cuối cùng từ layout + nội dung thật (ảnh từ `gemini-generator` nếu cần); nếu là bảng hiệu/thiết kế khác không qua pipeline này, xuất thủ công. Lưu bản chính thức vào `deliverables/`."
     }
   ]
 }

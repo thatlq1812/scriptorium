@@ -4,7 +4,7 @@ Local, network-free placeholder-image generation (Pillow).
 Standalone utility, NOT wired into compile_deck.py's v1 pipeline (v1
 never replaces the template's own picture -- see SKILL.md "Known
 limitations"). Provided so a future round (or a caller chaining this
-skill with image-generator-gemini) has a deterministic, zero-network
+skill with gemini-generator) has a deterministic, zero-network
 fallback when no real image is available yet for an image-layout slide.
 
 Re-implemented (not a verbatim line-for-line port -- the source

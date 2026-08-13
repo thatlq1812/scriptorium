@@ -94,7 +94,7 @@ Exit 0 = valid (conformance only — not a judgment on question quality/correctn
 
 ### 4. DOCX rendering — not bundled here
 
-This skill produces JSON (the plan) and validates JSON (the exam) — it does not render a `.docx` matrix table, exam paper, or answer key. Once `exam.json` passes `validate_exam.py`, hand the validated JSON/its Markdown rendering to `office-doc-creator` (`D:/elix/scriptorium/skills/general/office-doc-creator/`) for the actual document, matching the delegation pattern `literature-review` uses for its own optional PDF/DOCX step.
+This skill produces JSON (the plan) and validates JSON (the exam) — it does not render a `.docx` matrix table, exam paper, or answer key. Once `exam.json` passes `validate_exam.py`, hand the validated JSON/its Markdown rendering to `office-doc-creator` (`D:/elix/scriptorium/skills/office/office-doc-creator/`) for the actual document, matching the delegation pattern `literature-review` uses for its own optional PDF/DOCX step.
 
 ## What this skill does NOT do
 

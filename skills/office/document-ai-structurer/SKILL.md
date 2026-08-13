@@ -32,8 +32,8 @@ Don't use when: the document is already clean, short markdown/text (no conversio
 
 ```bash
 # From the repo root:
-bash skills/general/toolchain-bootstrap/scripts/bootstrap.sh skills/general/document-ai-structurer/requirements.txt 3.12
-# Windows: .\skills\general\toolchain-bootstrap\scripts\bootstrap.ps1 -Requirements skills\general\document-ai-structurer\requirements.txt -PyVersion 3.12
+bash skills/general/toolchain-bootstrap/scripts/bootstrap.sh skills/office/document-ai-structurer/requirements.txt 3.12
+# Windows: .\skills\general\toolchain-bootstrap\scripts\bootstrap.ps1 -Requirements skills\office\document-ai-structurer\requirements.txt -PyVersion 3.12
 ```
 
 On first run, Docling downloads its layout-detection + OCR (RapidOCR) models from HuggingFace/ModelScope to `~/.cache` or local site-packages — needs network, a few dozen MB, only downloaded once.
@@ -42,8 +42,8 @@ On first run, Docling downloads its layout-detection + OCR (RapidOCR) models fro
 
 ```bash
 # From the repo root, shared venv:
-.venv/bin/python skills/general/document-ai-structurer/scripts/structure_doc.py <input_file> <output_dir>
-# Windows: .venv\Scripts\python.exe skills\general\document-ai-structurer\scripts\structure_doc.py <input_file> <output_dir>
+.venv/bin/python skills/office/document-ai-structurer/scripts/structure_doc.py <input_file> <output_dir>
+# Windows: .venv\Scripts\python.exe skills\office\document-ai-structurer\scripts\structure_doc.py <input_file> <output_dir>
 ```
 
 ## Output
@@ -69,12 +69,12 @@ For a Vietnamese legal-article document, the default heading-split (`##`) is the
 2. **Read `full.md` yourself before trusting it.** Docling's OCR/layout extraction on a scanned Vietnamese legal PDF is not verified by this skill — spot-check a few Điều against the source for garbled diacritics, dropped lines, or merged paragraphs before proceeding.
 3. Run the candidate scanner (regex heuristics only, explicitly unverified):
    ```bash
-   .venv/bin/python skills/general/document-ai-structurer/scripts/suggest_legal_boundaries.py <output_dir>/full.md -o structure.json
+   .venv/bin/python skills/office/document-ai-structurer/scripts/suggest_legal_boundaries.py <output_dir>/full.md -o structure.json
    ```
 4. **Review `structure.json` yourself.** `khoan`/`diem` entries are regex guesses (any numbered/lettered list matches) — false positives are expected and must be removed or corrected; `_dieu` boundaries are more reliable but still check each one against `full.md` (open it with line numbers visible — `start_line` is 1-indexed, matching how the Read tool numbers lines). Edit `structure.json` directly to fix anything wrong.
 5. Once `structure.json` reflects what you actually verified, mechanically build the output:
    ```bash
-   .venv/bin/python skills/general/document-ai-structurer/scripts/apply_legal_structure.py <output_dir>/full.md structure.json <output_dir> [--overwrite]
+   .venv/bin/python skills/office/document-ai-structurer/scripts/apply_legal_structure.py <output_dir>/full.md structure.json <output_dir> [--overwrite]
    ```
 
 Output differs from the default mode: `index.json` gets `"structure_mode": "legal"`, each section is one Điều (the citable unit — "Điều 5 Khoản 2" still needs Điều 5's full text for context), and `khoan`/`diem` are recorded as line-anchored metadata inside each section entry, not split into their own files.
@@ -88,7 +88,7 @@ See `assets/legal_text_sample.md` for a synthetic (not real) test fixture used t
 Once several documents have gone through legal-article structuring mode, aggregate them into one catalog an agent (or `legal-citation-checker`) can query without knowing which folder holds which document:
 
 ```bash
-.venv/bin/python skills/general/document-ai-structurer/scripts/build_catalog.py <corpus_root_dir> -o catalog.json
+.venv/bin/python skills/office/document-ai-structurer/scripts/build_catalog.py <corpus_root_dir> -o catalog.json
 ```
 
 `<corpus_root_dir>` is a directory containing one subfolder per structured document (each with its own `index.json` from `apply_legal_structure.py`). To let a document be matched by `van_ban_so_hieu` (the exact field name `legal-citation-checker` uses), add a `doc_meta.json` next to that document's `index.json`:

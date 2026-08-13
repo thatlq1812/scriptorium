@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Deterministic validator for an anchor-profile JSON record (identity/style
-reference definition shared by image-generator-gemini, video-generator-gemini,
+reference definition shared by gemini-generator (image/video),
 poster-generator). No AI call, stdlib only.
 
 CLI:

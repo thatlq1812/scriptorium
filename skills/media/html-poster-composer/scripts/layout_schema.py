@@ -17,6 +17,12 @@ from __future__ import annotations
 CANVAS_PRESETS_MM = {
     "A1": (594, 841),
     "A4": (210, 297),
+    # 1920x1080 landscape at the fixed 96 CSS-px/inch conversion this module
+    # already uses everywhere else -- round-trips exactly back to 1920x1080
+    # via _mm_to_px(), not an approximation. General-purpose (any video-frame
+    # card/overlay need, e.g. video-assembly-composer's intro/outro cards and
+    # watermark_image), not tied to one caller.
+    "VIDEO_HD": (508.0, 285.75),
 }
 
 ZONE_TYPES = {

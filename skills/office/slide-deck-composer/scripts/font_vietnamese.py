@@ -17,13 +17,13 @@ D:/elix/archive/platform_archive/modules/presentation/layout_registry/font_confi
 D:/elix/archive/platform_archive/modules/presentation/template_factory/font_pairing.py's
 ``VIETNAMESE_SAFE_FONTS`` list (both agree on every font they share).
 Also cross-checked against this project's own
-skills/general/office-doc-creator/scripts/create_docx.py ``ALLOWED_FONTS``
+skills/office/office-doc-creator/scripts/create_docx.py ``ALLOWED_FONTS``
 allowlist (Times New Roman, Arial, Calibri, Cambria, Courier New,
 Georgia, Segoe UI, Tahoma, Verdana) -- every one of those is present
 here with ``supports_vietnamese: True``, confirming the cross-check.
 
 Pattern followed: same refuse-rather-than-guess discipline as
-skills/general/light-logo-arranger/scripts/resolve_font_fallback.py (loaded and
+skills/design/light-logo-arranger/scripts/resolve_font_fallback.py (loaded and
 reviewed as part of this build) -- an unmapped font is refused, never
 silently assumed vietnamese-safe or silently substituted.
 """

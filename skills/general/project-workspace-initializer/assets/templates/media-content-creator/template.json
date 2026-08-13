@@ -28,7 +28,7 @@
     },
     {
       "heading": "Sinh nội dung media",
-      "text": "Dùng `image-generator-gemini`/`video-generator-gemini`/`audio-generator-gemini` để sinh ảnh/video/âm thanh (tham chiếu anchor profile ở `anchors/` nếu có), lưu raw output vào `generated/`. Nếu pipeline cần xử lý video/audio cục bộ, bootstrap `toolchain-bootstrap` trước."
+      "text": "Dùng `gemini-generator` (ảnh/video/âm thanh) để sinh ảnh/video/âm thanh (tham chiếu anchor profile ở `anchors/` nếu có), lưu raw output vào `generated/`. Nếu pipeline cần xử lý video/audio cục bộ, bootstrap `toolchain-bootstrap` trước."
     },
     {
       "heading": "Lắp ráp / render bản cuối",

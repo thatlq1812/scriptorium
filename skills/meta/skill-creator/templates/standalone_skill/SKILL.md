@@ -5,7 +5,7 @@
   A standalone skill is invoked directly by a user or agent to produce a
   deliverable (a converted file, a generated asset, a draft document). This
   is the template for skills like document-ai-structurer, office-doc-creator,
-  image-generator-gemini.
+  gemini-generator.
 
   This is a REFERENCE SKELETON. skill-creator copies this folder to
   skills/<name>/, fills the <...> slots, then deletes every <!-- --> block

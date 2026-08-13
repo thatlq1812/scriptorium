@@ -161,14 +161,21 @@ def _build_zone_html(zone: dict, entry: dict) -> str:
     )
 
 
-def _build_render_html(layout: dict, content: dict, w_mm: float, h_mm: float, base_dir: Path) -> str:
+def _build_render_html(layout: dict, content: dict, w_mm: float, h_mm: float, base_dir: Path, transparent: bool = False) -> str:
     content_zones = content["zones"]
     font_face_css = build_font_face_css(content["fonts"], base_dir) if content.get("fonts") else ""
+    canvas_bg = "transparent" if transparent else "#fff"
+    # html/body default to a browser-painted white page background regardless
+    # of .canvas's own background -- Playwright's omit_background screenshot
+    # flag only drops THAT default page paint, so it must actually be
+    # transparent (not just unset) for the flag to have anything to omit.
+    page_bg_css = "html,body{background:transparent;}" if transparent else ""
     parts = [
         "<!doctype html><html><head><meta charset='utf-8'><style>",
         font_face_css,
         ZONE_BASE_CSS,
-        f".canvas{{width:{w_mm}mm;height:{h_mm}mm;background:#fff;position:relative;overflow:hidden;}}",
+        page_bg_css,
+        f".canvas{{width:{w_mm}mm;height:{h_mm}mm;background:{canvas_bg};position:relative;overflow:hidden;}}",
         "</style></head><body><div class='canvas'>",
     ]
     for zone in layout["zones"]:
@@ -243,7 +250,8 @@ def render_preview(layout: dict, out_png: Path) -> None:
 
 def render_final(layout: dict, content: dict, out_png: Path, out_pdf: Path | None, base_dir: Path) -> list[str]:
     w_mm, h_mm = CANVAS_PRESETS_MM[layout["canvas"]["preset"]]
-    html_str = _build_render_html(layout, content, w_mm, h_mm, base_dir)
+    transparent = bool(content.get("transparent_background"))
+    html_str = _build_render_html(layout, content, w_mm, h_mm, base_dir, transparent=transparent)
     tmp_html = out_png.with_suffix(".render.html")
     tmp_html.write_text(html_str, encoding="utf-8")
     unfit: list[str] = []
@@ -255,7 +263,7 @@ def render_final(layout: dict, content: dict, out_png: Path, out_pdf: Path | Non
         page.goto(tmp_html.resolve().as_uri())
         unfit = _autofit_elements(page)
         if not unfit:
-            page.screenshot(path=str(out_png), full_page=False)
+            page.screenshot(path=str(out_png), full_page=False, omit_background=transparent)
             if out_pdf is not None:
                 # Playwright's page.pdf() defaults to US Letter and drops CSS background colors
                 # unless told otherwise -- both would silently produce a wrong-size, background-less

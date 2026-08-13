@@ -44,7 +44,7 @@ Frontmatter has exactly 6 keys: `name`, `description`, `license`, `compatibility
 
 Copy from a template in `templates/` instead of authoring from scratch each time — reduces variance/errors and speeds up creation. Decide which:
 
-- **Standalone** (`templates/standalone_skill/`) — a user/agent invokes it directly for a deliverable. Mirrors `document-ai-structurer`, `office-doc-creator`, `image-generator-gemini`.
+- **Standalone** (`templates/standalone_skill/`) — a user/agent invokes it directly for a deliverable. Mirrors `document-ai-structurer`, `office-doc-creator`, `gemini-generator`.
 - **Dependency** (`templates/dependency_skill/`) — infrastructure another skill leans on, not invoked directly for a deliverable. Mirrors `toolchain-bootstrap`, `license-compliance-check`, `dedup-novelty-check`.
 
 ```bash

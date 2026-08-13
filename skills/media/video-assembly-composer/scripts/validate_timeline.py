@@ -67,6 +67,36 @@ def _validate_video_track(video_track, base_dir: Path) -> list[str]:
             errors.append(f"{prefix}.ken_burns must be a boolean, got {item['ken_burns']!r}")
         if item_type == "video" and item.get("ken_burns"):
             errors.append(f"{prefix}.ken_burns is only meaningful for type 'image', not 'video'")
+
+        stretch_from = item.get("stretch_from")
+        if stretch_from is not None:
+            if item_type != "video":
+                errors.append(f"{prefix}.stretch_from is only meaningful for type 'video', got type {item_type!r}")
+            elif not isinstance(stretch_from, (int, float)) or stretch_from <= 0:
+                errors.append(f"{prefix}.stretch_from must be > 0 if set, got {stretch_from!r}")
+            elif not isinstance(duration, (int, float)) or duration <= 0:
+                errors.append(f"{prefix}.stretch_from requires {prefix}.duration to also be set (the stretch target)")
+
+        if "include_own_audio" in item and not isinstance(item["include_own_audio"], bool):
+            errors.append(f"{prefix}.include_own_audio must be a boolean, got {item['include_own_audio']!r}")
+        if item.get("include_own_audio") and item_type != "video":
+            errors.append(f"{prefix}.include_own_audio is only meaningful for type 'video', got type {item_type!r}")
+
+        own_audio_volume_db = item.get("own_audio_volume_db")
+        if own_audio_volume_db is not None and not isinstance(own_audio_volume_db, (int, float)):
+            errors.append(f"{prefix}.own_audio_volume_db must be a number if set, got {own_audio_volume_db!r}")
+        if "own_audio_volume_db" in item and not item.get("include_own_audio"):
+            errors.append(f"{prefix}.own_audio_volume_db is set but include_own_audio is not true -- it would have no effect")
+
+        if "watermark" in item and not isinstance(item["watermark"], bool):
+            errors.append(f"{prefix}.watermark must be a boolean, got {item['watermark']!r}")
+
+    if any(isinstance(it, dict) and (it.get("include_own_audio") or it.get("watermark")) for it in video_track):
+        if not all(isinstance(it, dict) and isinstance(it.get("duration"), (int, float)) and it["duration"] > 0 for it in video_track):
+            errors.append(
+                "if any video_track item sets include_own_audio or watermark, EVERY item must have a numeric duration > 0 "
+                "-- needed to time-align the concatenated own-audio track / watermark overlay timing with the video track's scene boundaries"
+            )
     return errors
 
 
@@ -155,7 +185,21 @@ def validate_timeline(timeline: dict, base_dir: Path) -> list[str]:
     errors.extend(_validate_captions(timeline.get("captions"), total_duration))
     errors.extend(_validate_audio(timeline.get("audio"), base_dir))
 
-    unknown_top = set(timeline.keys()) - {"output", "video_track", "captions", "audio"}
+    watermark_image = timeline.get("watermark_image")
+    has_watermark_item = isinstance(timeline.get("video_track"), list) and any(
+        isinstance(it, dict) and it.get("watermark") for it in timeline["video_track"]
+    )
+    if watermark_image is not None:
+        if not isinstance(watermark_image, str) or not watermark_image.strip():
+            errors.append("'watermark_image' must be a non-empty string if present")
+        elif not _resolve(base_dir, watermark_image).is_file():
+            errors.append(f"'watermark_image' does not exist on disk: {_resolve(base_dir, watermark_image)}")
+    if has_watermark_item and watermark_image is None:
+        errors.append("a video_track item sets watermark=true but no top-level 'watermark_image' is declared")
+    if watermark_image is not None and not has_watermark_item:
+        errors.append("'watermark_image' is declared but no video_track item sets watermark=true -- it would have no effect")
+
+    unknown_top = set(timeline.keys()) - {"output", "video_track", "captions", "audio", "watermark_image"}
     if unknown_top:
         errors.append(f"Timeline has unknown top-level key(s): {sorted(unknown_top)}")
 

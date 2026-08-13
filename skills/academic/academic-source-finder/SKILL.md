@@ -31,7 +31,7 @@ Scriptorium has no AI backend and no web-search capability of its own — every 
 5. **Note recency deliberately** — if the assignment/field requires current sources, check publication year against a stated threshold; an older source isn't automatically wrong (a foundational or historical source may be exactly what's needed), but the age should be a conscious choice, not an oversight.
 6. **Validate before trusting the source list**:
    ```bash
-   python skills/education/academic-source-finder/scripts/validate_source_list.py source_list.json \
+   python skills/academic/academic-source-finder/scripts/validate_source_list.py source_list.json \
        [--max-age-years N --current-year Y] [--render sources.md]
    ```
    Exit 0 = every source has a recognized `source_type`, an internally-consistent `peer_reviewed` declaration, a non-empty `doi_or_url`, and a recorded `accessed_date` (warnings may still print for a recency flag or a `peer_reviewed`/`source_type` mismatch worth double-checking). Exit 1 = errors (each naming the exact source id/field and reason). Exit 2 = malformed input, or `--max-age-years`/`--current-year` supplied without the other.

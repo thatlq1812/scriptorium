@@ -48,7 +48,7 @@ Result: `<repo_root>/.venv` is ready (created if missing, extended if it already
 
 ### Why a shared venv, not one per skill
 
-Avoids duplicating heavy dependencies (e.g. `torch`) across skills that need the same ML stack. Verified for real: `document-ai-structurer` + `office-doc-creator` + `image-generator-gemini` all installed into the same venv, no cross-import conflicts.
+Avoids duplicating heavy dependencies (e.g. `torch`) across skills that need the same ML stack. Verified for real: `document-ai-structurer` + `office-doc-creator` + `gemini-generator` all installed into the same venv, no cross-import conflicts.
 
 ### Why not Python's standard `venv`
 
@@ -174,6 +174,6 @@ Post-merge re-verification (2026-08-13): `check_ffmpeg.py`, `check_pandoc.py`, `
 
 ## Skills depending on this skill
 
-- Python venv: `document-ai-structurer`, `office-doc-creator`, `image-generator-gemini`, `slide-deck-composer`, `browser-web-renderer` (see `registry/skills.json` `dependencies` field).
-- ffmpeg: `video-generator-gemini`, `video-assembly-composer`, `media-pipeline-orchestrator`.
+- Python venv: `document-ai-structurer`, `office-doc-creator`, `gemini-generator`, `slide-deck-composer`, `browser-web-renderer` (see `registry/skills.json` `dependencies` field).
+- ffmpeg: `gemini-generator`, `video-assembly-composer`, `media-pipeline-orchestrator`.
 - Typst: `latex-project-bootstrap` (vnnd30 mode only — the book/report scaffold mode uses the XeLaTeX toolchain instead, from this same skill).

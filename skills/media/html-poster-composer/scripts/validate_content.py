@@ -31,6 +31,9 @@ def validate_content(layout: dict, content: dict, base_dir: Path) -> list[str]:
     if not isinstance(content, dict) or "zones" not in content:
         return ["content.json must be an object with a 'zones' key"]
 
+    if "transparent_background" in content and not isinstance(content["transparent_background"], bool):
+        errors.append(f"'transparent_background' must be a boolean if present, got {content['transparent_background']!r}")
+
     if "fonts" in content:
         errors.extend(validate_fonts(content["fonts"], base_dir))
         declared_families = set(content["fonts"]) if isinstance(content["fonts"], dict) else set()

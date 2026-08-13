@@ -81,7 +81,7 @@ For when a single project is the whole unit of work -- no `projects/` root, no `
 | `template_id` | Maps to (registry cluster) | `subdirs` |
 |---|---|---|
 | `legal-practitioner` | Legal specializer cluster (`contract-consistency-linter`, `contract-risk-log`, `office-doc-creator`) | `source`, `work`, `draft`, `deliverables`, `archives` |
-| `media-content-creator` | GenVid media cluster (`media-anchor-profile`, `image/video/audio-generator-gemini`, `video-assembly-composer`, `html-poster-composer`, `media-pipeline-orchestrator`) | `source`, `anchors`, `generated`, `assembly`, `deliverables` |
+| `media-content-creator` | GenVid media cluster (`media-anchor-profile`, `gemini-generator`, `video-assembly-composer`, `html-poster-composer`, `media-pipeline-orchestrator`) | `source`, `anchors`, `generated`, `assembly`, `deliverables` |
 | `educator` | Teacher tier (`lesson-plan-builder`, `assessment-builder`, `competency-rubric-builder`, `grading-and-feedback`, `grade-book-builder`, `parent-communication`) | `source`, `lesson-plans`, `assessments`, `grading`, `communication` |
 | `brand-design-project` | Light Design cluster (`brand-identity-linter`, `light-logo-arranger`, `html-poster-composer`) | `source`, `brand-spec`, `layout`, `assets`, `deliverables` |
 | `researcher-writer` | General-capability research cluster (`deep-research`, `literature-review`, `citation-management`, `exploratory-data-analysis`, `hypothesis-generation`, `office-doc-creator`, `peer-review`) | `source`, `research`, `analysis`, `draft`, `deliverables` |

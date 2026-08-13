@@ -27,19 +27,19 @@ except ImportError:
 
 DEFAULT_MODEL = "gemini-2.5-flash"
 
-# Imported, not redefined -- video-generator-gemini is already a mandatory
+# Imported, not redefined -- gemini-generator is already a mandatory
 # sibling dependency of this skill (see media-pipeline-orchestrator's
 # SKILL.md compatibility section), and duration_seconds's real constraint
 # (verified for real, 2026-08-05: Veo rejects 7, accepts 6, despite the
 # API's own error text implying a continuous 4-8 range) lives there as the
 # single source of truth. Every scene this generates is fed straight into
-# video-generator-gemini downstream, so an invalid duration here means a
-# wasted round-trip there -- keeping one constant instead of two in sync
-# manually.
-_video_generator_gemini = next(Path(__file__).resolve().parents[3].glob("*/video-generator-gemini"), None)
-if _video_generator_gemini is None:
-    sys.exit("generate_script.py requires the 'video-generator-gemini' skill installed as a sibling skill folder.")
-sys.path.insert(0, str(_video_generator_gemini / "scripts"))
+# gemini-generator's video generation downstream, so an invalid duration
+# here means a wasted round-trip there -- keeping one constant instead of
+# two in sync manually.
+_gemini_generator = next(Path(__file__).resolve().parents[3].glob("*/gemini-generator"), None)
+if _gemini_generator is None:
+    sys.exit("generate_script.py requires the 'gemini-generator' skill installed as a sibling skill folder.")
+sys.path.insert(0, str(_gemini_generator / "scripts"))
 from generate_video import VALID_DURATIONS_SECONDS as VALID_SCENE_SECONDS  # noqa: E402
 
 PROMPT_TEMPLATE = """Write a short video script about: {topic}

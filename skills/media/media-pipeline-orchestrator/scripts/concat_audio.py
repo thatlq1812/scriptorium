@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Concatenates per-scene voice WAV files (from audio-generator-gemini) back
+"""Concatenates per-scene voice WAV files (from gemini-generator's TTS) back
 to back into ONE combined voice track, via ffmpeg's concat demuxer (stream
 copy, no re-encode -- safe here since every input is the same format:
 16-bit PCM, 24kHz, mono, all produced by the same TTS skill)."""

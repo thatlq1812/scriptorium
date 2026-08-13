@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Ties image-generator-gemini, video-generator-gemini, audio-generator-gemini,
-and video-assembly-composer together into one script -> images -> videos ->
+"""Ties gemini-generator (image/video/audio) and video-assembly-composer
+together into one script -> images -> videos ->
 audio -> assembled-video pipeline, driven by a topic.
 
 Stages (state/resume via pipeline_state.PipelineState, embedded in
@@ -10,12 +10,12 @@ Stages (state/resume via pipeline_state.PipelineState, embedded in
                checkpoint BEFORE any image/video/audio quota is spent -- the
                Viral-Faceless-Shorts-Generator lesson, data/references/
                e2e-pipeline/NOTES.md #5).
-  images    -- one image-generator-gemini call per scene. The FIRST scene's
+  images    -- one gemini-generator image call per scene. The FIRST scene's
                image becomes the style anchor for every scene after it
                (auto-anchor, unless --anchor-profile is given instead).
-  videos    -- one video-generator-gemini call per scene, anchored on that
+  videos    -- one gemini-generator video call per scene, anchored on that
                scene's image.
-  audio     -- one audio-generator-gemini TTS call per scene, then
+  audio     -- one gemini-generator TTS call per scene, then
                concatenated into one combined voice track.
   assembly  -- builds a video-assembly-composer timeline.json (video clips +
                captions from narration + the combined voice track) and
@@ -39,10 +39,35 @@ from pathlib import Path
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
+import wave
+
 try:
     from google import genai
 except ImportError:
     sys.exit("google-genai not installed. Run: pip install -r requirements.txt")
+
+
+def map_to_veo_duration(audio_duration_seconds: float) -> int:
+    """Rounds a real measured audio duration to Veo's discrete duration set
+    (4, 6, 8) -- Veo has no continuous duration parameter (see
+    gemini-generator's own SKILL.md 'A real constraint found by testing').
+    Real technique from a real completed project the owner pointed at
+    (D:/elix/projects/20260805_GenVid/scripts/pipeline/build_v5_fullmerge.py's
+    map_to_veo_duration(), same threshold rule, ported 2026-08-13)."""
+    if audio_duration_seconds <= 5.0:
+        return 4
+    elif audio_duration_seconds <= 7.0:
+        return 6
+    else:
+        return 8
+
+
+def measure_wav_duration_seconds(wav_path: Path) -> float:
+    """Stdlib-only real duration measurement (no ffprobe needed) -- same
+    technique as gemini-generator's own generate_speech.py output and the
+    real GenVid project's batch_gen_tts_multiprocess.py."""
+    with wave.open(str(wav_path), "rb") as wf:
+        return round(wf.getnframes() / float(wf.getframerate()), 2)
 
 _HERE = Path(__file__).resolve()
 _SKILLS_DIR = _HERE.parents[3]
@@ -64,13 +89,9 @@ from retry import with_retry  # noqa: E402
 from generate_script import generate_script  # noqa: E402
 from concat_audio import concat_wavs  # noqa: E402
 
-sys.path.insert(0, str(_sibling_skill_scripts("image-generator-gemini")))
+sys.path.insert(0, str(_sibling_skill_scripts("gemini-generator")))
 from generate_image import generate as image_generate, DEFAULT_MODEL as IMAGE_MODEL, _load_anchor_profile_kwargs  # noqa: E402
-
-sys.path.insert(0, str(_sibling_skill_scripts("video-generator-gemini")))
 from generate_video import generate as video_generate, DEFAULT_MODEL as VIDEO_MODEL  # noqa: E402
-
-sys.path.insert(0, str(_sibling_skill_scripts("audio-generator-gemini")))
 from generate_speech import generate as audio_generate, write_wav, DEFAULT_MODEL as AUDIO_MODEL  # noqa: E402
 
 sys.path.insert(0, str(_sibling_skill_scripts("video-assembly-composer")))
@@ -82,12 +103,28 @@ from resolve_ffmpeg import resolve_ffmpeg_path  # noqa: E402
 
 
 def _build_timeline(scenes: list[dict], videos_dir: Path, combined_voice_path: Path, width: int, height: int, fps: int) -> dict:
+    """Each scene's timeline slot is exactly `actual_audio_duration` long (the
+    REAL measured narration length, not the script's own guessed
+    duration_seconds) -- the video clip, generated at Veo's nearest discrete
+    duration (`veo_duration`, see map_to_veo_duration), is stretched
+    (video-assembly-composer's stretch_from) to fit exactly, and its own
+    ambient audio (if Veo generated any) is mixed in rather than discarded.
+    Real technique, not invented here -- see run_pipeline.py's own module
+    docstring / map_to_veo_duration for the real elicitation source."""
     video_track = []
     captions = []
     cursor = 0.0
     for scene in scenes:
-        duration = float(scene["duration_seconds"])
-        video_track.append({"type": "video", "path": str((videos_dir / f"{scene['id']}.mp4").resolve()), "duration": duration})
+        duration = float(scene["actual_audio_duration"])
+        veo_duration = float(scene["veo_duration"])
+        video_track.append({
+            "type": "video",
+            "path": str((videos_dir / f"{scene['id']}.mp4").resolve()),
+            "duration": duration,
+            "stretch_from": veo_duration,
+            "include_own_audio": True,
+            "own_audio_volume_db": -12,
+        })
         captions.append({"text": scene["narration"], "start": cursor, "end": cursor + duration})
         cursor += duration
     return {
@@ -148,6 +185,56 @@ def run(project_dir: Path, args: argparse.Namespace) -> int:
                 chain_style_bytes = data
         state.mark_done("images", artifacts=[str(images_dir / f"{s['id']}.png") for s in scenes])
 
+    # --- Stage: audio (BEFORE videos, deliberately -- see below) ---
+    # Ordering: audio now generates before video, reversing this pipeline's
+    # original order. Real reason (2026-08-13, see map_to_veo_duration's own
+    # docstring for the elicitation source): Veo only accepts a small
+    # discrete set of clip durations, which almost never matches the real
+    # length of the separately-generated narration meant to play over it.
+    # Generating audio FIRST lets each scene's real measured duration drive
+    # which Veo duration to request (nearest-fit, not a script-guessed one)
+    # and, at assembly time, drives the exact stretch target -- rather than
+    # generating video first and hoping the two line up.
+    audio_dir = project_dir / "audio"
+    audio_dir.mkdir(exist_ok=True)
+    combined_voice_path = audio_dir / "combined_voice.wav"
+    if not state.is_done("audio"):
+        print("[audio] generating...")
+        for scene in scenes:
+            out_path = audio_dir / f"{scene['id']}.wav"
+            if not out_path.exists():
+                print(f"  {scene['id']} ...", end="", flush=True)
+                pcm = with_retry()(audio_generate)(client, scene["narration"], AUDIO_MODEL, voice=args.voice)
+                write_wav(pcm, out_path)
+                print(" OK")
+            # Real measured duration drives the video stage's own Veo
+            # duration choice and the final assembly stretch target -- always
+            # (re-)measured here, even on a skip-if-exists resume, so a
+            # manually-replaced audio file is picked up correctly too.
+            scene["actual_audio_duration"] = measure_wav_duration_seconds(out_path)
+            scene["veo_duration"] = map_to_veo_duration(scene["actual_audio_duration"])
+        concat_wavs([audio_dir / f"{s['id']}.wav" for s in scenes], combined_voice_path)
+        # Persisted back into scenes.json (the same file the human already
+        # reviewed at the script checkpoint) -- appends actual_audio_duration/
+        # veo_duration per scene, never touches narration/visual_prompt/the
+        # script's own duration_seconds guess. Needed for a clean resume: if
+        # the process restarts after this stage, the videos/assembly stages
+        # below still need these real values without re-measuring every wav.
+        script["scenes"] = scenes
+        scenes_path.write_text(json.dumps(script, ensure_ascii=False, indent=2), encoding="utf-8")
+        state.mark_done("audio", artifacts=[str(combined_voice_path)])
+    elif "actual_audio_duration" not in scenes[0]:
+        # Resuming from an OLDER project.json (audio stage already marked
+        # done before this ordering/measurement change existed) -- the
+        # in-memory `scenes` loaded above won't have the new fields yet even
+        # though the real wav files are already on disk. Measure them now,
+        # without re-generating anything or re-marking the stage done.
+        for scene in scenes:
+            scene["actual_audio_duration"] = measure_wav_duration_seconds(audio_dir / f"{scene['id']}.wav")
+            scene["veo_duration"] = map_to_veo_duration(scene["actual_audio_duration"])
+        script["scenes"] = scenes
+        scenes_path.write_text(json.dumps(script, ensure_ascii=False, indent=2), encoding="utf-8")
+
     # --- Stage: videos ---
     videos_dir = project_dir / "videos"
     videos_dir.mkdir(exist_ok=True)
@@ -162,28 +249,12 @@ def run(project_dir: Path, args: argparse.Namespace) -> int:
             data = with_retry(max_retries=2)(video_generate)(
                 client, scene["visual_prompt"], VIDEO_MODEL,
                 image_bytes=image_bytes, motion_intensity=args.motion_intensity,
-                duration_seconds=int(scene["duration_seconds"]),
+                duration_seconds=scene["veo_duration"],
+                generate_audio=True,  # ambient track for video-assembly-composer's include_own_audio to mix in
             )
             out_path.write_bytes(data)
             print(" OK")
         state.mark_done("videos", artifacts=[str(videos_dir / f"{s['id']}.mp4") for s in scenes])
-
-    # --- Stage: audio ---
-    audio_dir = project_dir / "audio"
-    audio_dir.mkdir(exist_ok=True)
-    combined_voice_path = audio_dir / "combined_voice.wav"
-    if not state.is_done("audio"):
-        print("[audio] generating...")
-        for scene in scenes:
-            out_path = audio_dir / f"{scene['id']}.wav"
-            if out_path.exists():
-                continue
-            print(f"  {scene['id']} ...", end="", flush=True)
-            pcm = with_retry()(audio_generate)(client, scene["narration"], AUDIO_MODEL, voice=args.voice)
-            write_wav(pcm, out_path)
-            print(" OK")
-        concat_wavs([audio_dir / f"{s['id']}.wav" for s in scenes], combined_voice_path)
-        state.mark_done("audio", artifacts=[str(combined_voice_path)])
 
     # --- Stage: assembly ---
     final_path = project_dir / "final.mp4"

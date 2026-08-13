@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Loads and validates an anchor-profile JSON file, resolving its reference
-images to bytes, ready for a generator skill (image-generator-gemini,
-video-generator-gemini, poster-generator) to consume. Validates first --
+images to bytes, ready for a generator skill (gemini-generator,
+poster-generator) to consume. Validates first --
 raises ValueError with the full error list rather than partially loading a
 broken profile.
 

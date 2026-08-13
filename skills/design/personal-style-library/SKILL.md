@@ -94,7 +94,7 @@ Real, deterministic pixel quantization (Pillow's adaptive method) -- ranks the i
 python scripts/export_anchor_profile.py <styles/id.json> <profile_id> -o anchor_profile.json
 ```
 
-Composes a library `styles/` entry into a `media-anchor-profile`-shaped anchor profile (`{"profile_id": ..., "style": {...}}`), then validates the RESULT against that skill's own `validate_anchor_profile()` before writing -- never assumed valid just because the source entry passed `validate_library.py` (a moved/deleted `reference_images` path since the entry was last validated is caught here). Feed the output directly to `image-generator-gemini --anchor-profile` (see that skill's `SKILL.md`).
+Composes a library `styles/` entry into a `media-anchor-profile`-shaped anchor profile (`{"profile_id": ..., "style": {...}}`), then validates the RESULT against that skill's own `validate_anchor_profile()` before writing -- never assumed valid just because the source entry passed `validate_library.py` (a moved/deleted `reference_images` path since the entry was last validated is caught here). Feed the output directly to `gemini-generator`'s `generate_image.py --anchor-profile` (see that skill's `SKILL.md`).
 
 ## Chains into (verified 2026-08-07)
 
@@ -102,7 +102,7 @@ Composes a library `styles/` entry into a `media-anchor-profile`-shaped anchor p
 extract_palette.py (optional) ──> hand-written palettes/<id>.json ──┐
                                                                       ├──> brand-identity-linter (validate/resolve) ──> html-poster-composer content.json fills
                                    hand-written styles/<id>.json ────┤
-                                                                      └──> export_anchor_profile.py ──> image-generator-gemini --anchor-profile ──> html-poster-composer image zones
+                                                                      └──> export_anchor_profile.py ──> gemini-generator --anchor-profile ──> html-poster-composer image zones
                                    hand-written motifs/<id>.json ──────> brand-identity-linter's per-brand 'motifs' declaration
                                    hand-written fonts/<id>.json ───────> light-logo-arranger's resolve_font_fallback.py (safety check, separate step)
 ```

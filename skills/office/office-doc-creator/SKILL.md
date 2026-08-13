@@ -26,14 +26,14 @@ A SHARED venv at the repo root (not specific to this skill — see `skills/gener
 
 ```bash
 # Recommended: via toolchain-bootstrap (PowerShell on Windows, NOT Git Bash):
-.\skills\general\toolchain-bootstrap\scripts\bootstrap.ps1 -Requirements skills\general\office-doc-creator\requirements.txt -PyVersion 3.12
+.\skills\general\toolchain-bootstrap\scripts\bootstrap.ps1 -Requirements skills\office\office-doc-creator\requirements.txt -PyVersion 3.12
 ```
 
 ## Create a Word file (.docx)
 
 ```bash
 # From the repo root, shared venv:
-.venv\Scripts\python.exe skills\general\office-doc-creator\scripts\create_docx.py <content.json> <output.docx>
+.venv\Scripts\python.exe skills\office\office-doc-creator\scripts\create_docx.py <content.json> <output.docx>
 ```
 
 `content.json`:
@@ -80,7 +80,7 @@ Font values go through a Vietnamese/CJK-diacritics-safe path: `python-docx`'s hi
 ## Create an Excel file (.xlsx)
 
 ```bash
-.venv\Scripts\python.exe skills\general\office-doc-creator\scripts\create_xlsx.py <content.json> <output.xlsx>
+.venv\Scripts\python.exe skills\office\office-doc-creator\scripts\create_xlsx.py <content.json> <output.xlsx>
 ```
 
 `content.json`: `{ "sheets": [{ "name": "Sheet1", "headers": [...], "rows": [[...], ...] }] }`
@@ -88,7 +88,7 @@ Font values go through a Vietnamese/CJK-diacritics-safe path: `python-docx`'s hi
 ## Create a PowerPoint file (.pptx)
 
 ```bash
-.venv\Scripts\python.exe skills\general\office-doc-creator\scripts\create_pptx.py <content.json> <output.pptx>
+.venv\Scripts\python.exe skills\office\office-doc-creator\scripts\create_pptx.py <content.json> <output.pptx>
 ```
 
 `content.json`: `{ "slides": [{ "title": "...", "bullets": ["...", "..."] }] }` — uses PowerPoint's default "Title and Content" layout, no custom theme.

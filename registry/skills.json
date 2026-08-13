@@ -92,7 +92,7 @@
       "license": "MIT",
       "tags": {
         "domain": [
-          "general"
+          "office"
         ],
         "task_type": [
           "document-conversion"
@@ -661,7 +661,7 @@
       "license": "MIT",
       "tags": {
         "domain": [
-          "general"
+          "office"
         ],
         "task_type": [
           "drafting"
@@ -744,7 +744,7 @@
       "license": "MIT",
       "tags": {
         "domain": [
-          "general"
+          "office"
         ],
         "task_type": [
           "drafting"
@@ -818,7 +818,7 @@
       "license": "MIT",
       "tags": {
         "domain": [
-          "general"
+          "office"
         ],
         "task_type": [
           "drafting"
@@ -910,7 +910,14 @@
         "media-anchor-profile"
       ],
       "license_debt": null,
-      "elicited_from": "Grounded in D:/elix/platform/scripts/gen/gen_illustrations.py + D:/UNI/S9_SP26/MLN131/project/scripts/gen-images-v2.mjs + gen-slide-images.mjs (owner's own projects): batch + skip-if-exists + style-ref anchoring + double-base64-decode fallback. Verified for real via actual API calls (model gemini-3.1-flash-lite-image). v0.4.0/0.4.1 upgrade (2026-08-05, GenVid project) additionally grounded in a GitHub architecture survey of 5 diffusion-adapter repos (IP-Adapter, InstantID, PhotoMaker, PuLID -- all verified Apache-2.0 via their own LICENSE files, license-compliance-check 2026-08-05; ComfyUI_IPAdapter_plus -- GPL-3.0, idea-only, no code copied), recorded in data/references/style-anchored-image/NOTES.md: decoupled identity/style channels (IP-Adapter/InstantID), multi-image stacking (PhotoMaker), 'preserve identity, don't suppress pose/scene changes' (PuLID). Added --anchor-profile consuming the new media-anchor-profile skill's shared schema. Real API tests: identity-ref (strict) + style-ref (moderate) combined correctly held character/palette across a pose+style change; --anchor-profile produced the same result as equivalent raw flags."
+      "elicited_from": "Grounded in D:/elix/platform/scripts/gen/gen_illustrations.py + D:/UNI/S9_SP26/MLN131/project/scripts/gen-images-v2.mjs + gen-slide-images.mjs (owner's own projects): batch + skip-if-exists + style-ref anchoring + double-base64-decode fallback. Verified for real via actual API calls (model gemini-3.1-flash-lite-image). v0.4.0/0.4.1 upgrade (2026-08-05, GenVid project) additionally grounded in a GitHub architecture survey of 5 diffusion-adapter repos (IP-Adapter, InstantID, PhotoMaker, PuLID -- all verified Apache-2.0 via their own LICENSE files, license-compliance-check 2026-08-05; ComfyUI_IPAdapter_plus -- GPL-3.0, idea-only, no code copied), recorded in data/references/style-anchored-image/NOTES.md: decoupled identity/style channels (IP-Adapter/InstantID), multi-image stacking (PhotoMaker), 'preserve identity, don't suppress pose/scene changes' (PuLID). Added --anchor-profile consuming the new media-anchor-profile skill's shared schema. Real API tests: identity-ref (strict) + style-ref (moderate) combined correctly held character/palette across a pose+style change; --anchor-profile produced the same result as equivalent raw flags.",
+      "operational_status": {
+        "state": "superseded",
+        "superseded_by": "gemini-generator",
+        "reason": "Merged with video-generator-gemini/audio-generator-gemini into one gemini-generator skill (owner-directed, 2026-08-13, 'mỗi provider nên gộp vào 1 generator') -- all 3 shared the identical BYOK-Gemini architecture. Content left in place, not deleted.",
+        "date": "2026-08-13",
+        "decided_by": "owner"
+      }
     },
     {
       "skill_id": "citation-management",
@@ -1820,7 +1827,7 @@
       "license": "MIT",
       "tags": {
         "domain": [
-          "general"
+          "design"
         ],
         "task_type": [
           "review-qa"
@@ -1859,7 +1866,7 @@
       "license": "MIT",
       "tags": {
         "domain": [
-          "general"
+          "design"
         ],
         "task_type": [
           "review-qa"
@@ -1897,7 +1904,7 @@
       "license": "MIT",
       "tags": {
         "domain": [
-          "general"
+          "design"
         ],
         "task_type": [
           "drafting"
@@ -1936,7 +1943,7 @@
       "license": "MIT",
       "tags": {
         "domain": [
-          "education"
+          "academic"
         ],
         "task_type": [
           "review-qa"
@@ -1975,7 +1982,7 @@
       "license": "MIT",
       "tags": {
         "domain": [
-          "education"
+          "academic"
         ],
         "task_type": [
           "research"
@@ -2053,7 +2060,7 @@
       "license": "MIT",
       "tags": {
         "domain": [
-          "education"
+          "academic"
         ],
         "task_type": [
           "review-qa"
@@ -2091,7 +2098,7 @@
       "license": "MIT",
       "tags": {
         "domain": [
-          "education"
+          "academic"
         ],
         "task_type": [
           "review-qa"
@@ -2284,7 +2291,7 @@
       "license": "MIT",
       "tags": {
         "domain": [
-          "education"
+          "academic"
         ],
         "task_type": [
           "review-qa"
@@ -2322,7 +2329,7 @@
       "license": "MIT",
       "tags": {
         "domain": [
-          "education"
+          "academic"
         ],
         "task_type": [
           "review-qa"
@@ -2522,7 +2529,7 @@
       "license": "MIT",
       "tags": {
         "domain": [
-          "education"
+          "academic"
         ],
         "task_type": [
           "review-qa"
@@ -2602,7 +2609,7 @@
       "license": "MIT",
       "tags": {
         "domain": [
-          "general"
+          "office"
         ],
         "task_type": [
           "document-conversion"
@@ -2778,7 +2785,14 @@
         "toolchain-bootstrap"
       ],
       "license_debt": null,
-      "elicited_from": "Grounded in a GitHub architecture survey of 5 image-to-video repos (Stability-AI/generative-models (SVD) -- MIT; DynamiCrafter, CogVideo, AnimateDiff -- Apache-2.0; HunyuanVideo-I2V -- Tencent Community License, technique read-only, no code/weights used), recorded in data/references/image-to-video/NOTES.md (GenVid project 2026-08-05; licenses verified via license-compliance-check 2026-08-05). Image-as-fixed-frame-0 (CogVideoX framing) motivated treating --image as an anchor the model animates from; dual-channel visual-anchor/motion-directive split (DynamiCrafter, SVD) motivated the --motion-intensity phrasing wrapper. Exact API surface and real model names (veo-3.1-generate-preview et al.) verified directly against a real client.models.list() call against the owner's own API key, not guessed from documentation."
+      "elicited_from": "Grounded in a GitHub architecture survey of 5 image-to-video repos (Stability-AI/generative-models (SVD) -- MIT; DynamiCrafter, CogVideo, AnimateDiff -- Apache-2.0; HunyuanVideo-I2V -- Tencent Community License, technique read-only, no code/weights used), recorded in data/references/image-to-video/NOTES.md (GenVid project 2026-08-05; licenses verified via license-compliance-check 2026-08-05). Image-as-fixed-frame-0 (CogVideoX framing) motivated treating --image as an anchor the model animates from; dual-channel visual-anchor/motion-directive split (DynamiCrafter, SVD) motivated the --motion-intensity phrasing wrapper. Exact API surface and real model names (veo-3.1-generate-preview et al.) verified directly against a real client.models.list() call against the owner's own API key, not guessed from documentation.",
+      "operational_status": {
+        "state": "superseded",
+        "superseded_by": "gemini-generator",
+        "reason": "Merged with image-generator-gemini/audio-generator-gemini into one gemini-generator skill (owner-directed, 2026-08-13, 'mỗi provider nên gộp vào 1 generator') -- all 3 shared the identical BYOK-Gemini architecture. Content left in place, not deleted.",
+        "date": "2026-08-13",
+        "decided_by": "owner"
+      }
     },
     {
       "skill_id": "audio-generator-gemini",
@@ -2834,11 +2848,63 @@
         "google-genai==2.14.0"
       ],
       "license_debt": null,
-      "elicited_from": "Grounded in a GitHub architecture survey of 5 TTS/audio repos (chatterbox, kokoro, F5-TTS, audiocraft -- MIT/Apache-2.0 code, non-commercial weight licenses flagged and not used; coqui-ai-TTS fork -- MPL-2.0), recorded in data/references/audio-voice-gen/NOTES.md (GenVid project 2026-08-05; licenses verified via license-compliance-check 2026-08-05). chatterbox's built-in AI-audio watermarking motivated treating Gemini's own consent_audio requirement for voice cloning as a hard, non-optional gate. Exact API surface (response_modalities, SpeechConfig/VoiceConfig/ReplicatedVoiceConfig, real audio/l16 rate=24000 output format) verified against the installed SDK and real API calls, including real TTS model names from a live client.models.list() call."
+      "elicited_from": "Grounded in a GitHub architecture survey of 5 TTS/audio repos (chatterbox, kokoro, F5-TTS, audiocraft -- MIT/Apache-2.0 code, non-commercial weight licenses flagged and not used; coqui-ai-TTS fork -- MPL-2.0), recorded in data/references/audio-voice-gen/NOTES.md (GenVid project 2026-08-05; licenses verified via license-compliance-check 2026-08-05). chatterbox's built-in AI-audio watermarking motivated treating Gemini's own consent_audio requirement for voice cloning as a hard, non-optional gate. Exact API surface (response_modalities, SpeechConfig/VoiceConfig/ReplicatedVoiceConfig, real audio/l16 rate=24000 output format) verified against the installed SDK and real API calls, including real TTS model names from a live client.models.list() call.",
+      "operational_status": {
+        "state": "superseded",
+        "superseded_by": "gemini-generator",
+        "reason": "Merged with image-generator-gemini/video-generator-gemini into one gemini-generator skill (owner-directed, 2026-08-13, 'mỗi provider nên gộp vào 1 generator') -- all 3 shared the identical BYOK-Gemini architecture. Content left in place, not deleted.",
+        "date": "2026-08-13",
+        "decided_by": "owner"
+      }
+    },
+    {
+      "skill_id": "gemini-generator",
+      "version": "0.1.1",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "media"
+        ],
+        "task_type": [
+          "drafting"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "optional",
+        "object_type": [
+          "image",
+          "video",
+          "audio"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": true,
+        "stage4_reason": "ingests uncontrolled external content (arbitrary user images/prompts/text via the external Gemini API), same class as the 3 skills this merges"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-13",
+        "note": "Merge of 3 already-security-audited skills (image-generator-gemini, video-generator-gemini, audio-generator-gemini) -- generation/analysis logic carried forward unchanged, only cross-references between the 3 (now-internal) modalities updated. Re-verified for real post-merge: all 6 scripts (generate_image.py, analyze_style.py, extract_pdf_page.py, generate_video.py, extract_last_frame.py, generate_speech.py) re-run via --help from the new skills/media/gemini-generator/scripts/ location, full argument surface and cross-skill glob lookups (toolchain-bootstrap, media-anchor-profile) confirmed correct. No real Gemini API calls re-run this round (no GEMINI_API_KEY available in this environment) -- pre-merge real-API verification (see metadata.elicited_from) still applies to the underlying generation logic, unchanged by the merge. No new subprocess/eval/network pattern introduced."
+      },
+      "dependencies": [
+        "google-genai==2.14.0",
+        "pypdfium2==5.12.1",
+        "toolchain-bootstrap",
+        "media-anchor-profile"
+      ],
+      "license_debt": null,
+      "elicited_from": "Owner (2026-08-13): merge of 3 previously-separate BYOK-Gemini skills into one skill_id, part of a broader owner-directed generator restructuring by provider (gemini-generator now; gpt-generator/claude-generator/normal-generator scaffolded, not yet built -- see their own SKILL.md). See skills/media/gemini-generator/SKILL.md's own metadata.elicited_from for each modality's full original grounding (owner's own prior projects for image; GitHub architecture surveys of diffusion-adapter/image-to-video/TTS repos for all 3, recorded in the GenVid project's data/references/; real API surface verified directly against the installed google-genai SDK and real client.models.list() calls against the owner's own key, 2026-08-05)."
     },
     {
       "skill_id": "video-assembly-composer",
-      "version": "0.1.0",
+      "version": "0.3.0",
       "source": {
         "type": "self-authored"
       },
@@ -2867,8 +2933,8 @@
       },
       "security_audit": {
         "status": "passed",
-        "date": "2026-08-05",
-        "note": "render_timeline.py/validate_timeline.py: ffmpeg invoked via ffmpeg-python's filter-graph API (no shell string interpolation, no shell=True); requires ffmpeg-bootstrap as a declared sibling dependency. Confirmed zero network calls, zero genai import anywhere in this skill's scripts, matching its own SKILL.md claim. No finding."
+        "date": "2026-08-13",
+        "note": "Re-audited at 0.3.0 (watermark overlay): no new subprocess call sites (the overlay filter is built entirely through ffmpeg-python's filter graph, compiled and run through the same existing ffmpeg.compile()+subprocess.run(cwd=...) call render() already used at 0.2.0); watermark_image is a local caller-declared timeline.json path, validated to exist on disk before rendering (validate_timeline.py), not network input. Confirmed zero network calls, zero genai import, matching prior audit's own claim, still true at 0.3.0. No finding."
       },
       "dependencies": [
         "ffmpeg-python==0.2.0",
@@ -2876,7 +2942,7 @@
         "toolchain-bootstrap"
       ],
       "license_debt": null,
-      "elicited_from": "Grounded in a GitHub architecture survey of 5 auto-video-editing repos (auto-editor -- Unlicense; auto-subtitle, faster-auto-subtitle, automatic_video_editing -- MIT; OpenTimelineIO -- Apache-2.0), recorded in data/references/auto-video-editing/NOTES.md (GenVid project 2026-08-05; licenses verified via license-compliance-check 2026-08-05). OpenTimelineIO's Timeline/Track/Clip data model directly motivated the plan/render split (timeline JSON validated before any ffmpeg call); auto-subtitle's ffmpeg subtitles-filter pattern motivated burning captions natively instead of a per-frame overlay. A real bug found and fixed during testing: sidechaincompress truncates to its shorter input -- fixed by padding both voice and music streams to the timeline's total duration before ducking, re-verified with a real 9.00s render."
+      "elicited_from": "Grounded in a GitHub architecture survey of 5 auto-video-editing repos (auto-editor -- Unlicense; auto-subtitle, faster-auto-subtitle, automatic_video_editing -- MIT; OpenTimelineIO -- Apache-2.0), recorded in data/references/auto-video-editing/NOTES.md (GenVid project 2026-08-05; licenses verified via license-compliance-check 2026-08-05). OpenTimelineIO's Timeline/Track/Clip data model directly motivated the plan/render split (timeline JSON validated before any ffmpeg call); auto-subtitle's ffmpeg subtitles-filter pattern motivated burning captions natively instead of a per-frame overlay. A real bug found and fixed during testing: sidechaincompress truncates to its shorter input -- fixed by padding both voice and music streams to the timeline's total duration before ducking, re-verified with a real 9.00s render. v0.2.0 (2026-08-13): owner directly pointed at a separate real, completed project (D:/elix/projects/20260805_GenVid, 3 real AI-generated history-education videos actually delivered) as reference material; ported stretch_from/setpts/atempo from scripts/pipeline/build_v5_fullmerge.py's map_to_veo_duration()+stretch-not-trim technique, and include_own_audio/own_audio_volume_db+edge-fade from build_ambient_dub_mix.py's per-scene atempo+volume+afade-before-concat technique -- see SKILL.md's own metadata.elicited_from for full detail. Also found and fixed, incidentally, while testing this addition: the subtitles filter's own path parser breaks on an absolute Windows drive-letter path, fixed by referencing the SRT by bare relative filename with the ffmpeg subprocess's cwd set to match, not by escaping (multiple manual escaping attempts empirically failed against real ffmpeg before this fix was found). v0.3.0 (2026-08-13): the same GenVid project's build_watermark_overlay.py+build_final_video.py motivated a persistent watermark_image/watermark timeline field pair (full-frame overlay, gated to the flagged items' own time spans) -- intro/outro cards needed no new field (video_track's existing type:'image'+ken_burns:false already covers it). A real bug found and fixed while building this: an unbounded looped watermark image input (loop=1, no t=) made the overlay filter's underlying ffmpeg process run for 3+ hours (280,000+ frames) on a 10-second test timeline instead of finishing in seconds -- fixed by always bounding the watermark input with t=total_duration, re-verified with a real 3-segment render (intro/watermarked-body/outro) confirmed via extracted frames to show the watermark ONLY during the flagged body span."
     },
     {
       "skill_id": "poster-generator",
@@ -2945,7 +3011,7 @@
     },
     {
       "skill_id": "media-pipeline-orchestrator",
-      "version": "0.1.1",
+      "version": "0.2.0",
       "source": {
         "type": "self-authored"
       },
@@ -2988,19 +3054,17 @@
       },
       "security_audit": {
         "status": "passed",
-        "date": "2026-08-05",
-        "note": "run_pipeline.py/generate_script.py: reads GEMINI_API_KEY from env only. Cross-skill sibling imports use fixed Path(__file__).resolve().parents[N] constants (not attacker-influenced input) -- a portability concern when a sibling skill folder is missing (fails loudly with a clear error, not silently), tracked separately from security, not a finding. v0.1.1: generate_script.py's VALID_SCENE_SECONDS now imports video-generator-gemini's VALID_DURATIONS_SECONDS directly instead of redefining it (single source of truth, re-verified both modules import cleanly). No finding."
+        "date": "2026-08-13",
+        "note": "Re-audited at 0.2.0 (audio-first reorder + duration-matching): map_to_veo_duration()/measure_wav_duration_seconds() are pure stdlib (wave module only), zero network/subprocess/dynamic execution. scenes.json is re-written with 2 new caller-invisible fields (actual_audio_duration, veo_duration) appended per scene -- confirmed narration/visual_prompt/id/the script's own duration_seconds are never altered, only appended to, so this doesn't create a path for the pipeline to silently rewrite the human-reviewed script content itself. No new external input surface. No finding. (Prior note retained: run_pipeline.py/generate_script.py read GEMINI_API_KEY from env only; cross-skill sibling imports use glob-based lookups, fail loudly if a sibling skill folder is missing.)"
       },
       "dependencies": [
         "google-genai==2.14.0",
-        "image-generator-gemini",
-        "video-generator-gemini",
-        "audio-generator-gemini",
+        "gemini-generator",
         "video-assembly-composer",
         "toolchain-bootstrap"
       ],
       "license_debt": null,
-      "elicited_from": "Grounded in a GitHub architecture survey of 5 end-to-end AI video pipeline repos (youtube-shorts-pipeline -- MIT; Text-To-Video-AI -- MIT; openshorts -- MIT core; OpenMontage -- AGPL-3.0, idea-only; Viral-Faceless-Shorts-Generator -- no license, idea-only), recorded in data/references/e2e-pipeline/NOTES.md (GenVid project 2026-08-05; licenses verified via license-compliance-check 2026-08-05). youtube-shorts-pipeline's state-embedded-in-data + retry-decorator patterns reimplemented independently (own code, not copied); Viral-Faceless-Shorts-Generator's human-in-the-loop script-approval step motivated the --approve-script checkpoint; openshorts' category-vs-number prompting finding is the same principle this project's own generate_script.py learned for duration_seconds. Real end-to-end run (2 scenes): script checkpoint pause, a real Veo duration_seconds failure and clean resume-by-artifact after the fix, final assembled 11.92s video produced."
+      "elicited_from": "Grounded in a GitHub architecture survey of 5 end-to-end AI video pipeline repos (youtube-shorts-pipeline -- MIT; Text-To-Video-AI -- MIT; openshorts -- MIT core; OpenMontage -- AGPL-3.0, idea-only; Viral-Faceless-Shorts-Generator -- no license, idea-only), recorded in data/references/e2e-pipeline/NOTES.md (GenVid project 2026-08-05; licenses verified via license-compliance-check 2026-08-05). youtube-shorts-pipeline's state-embedded-in-data + retry-decorator patterns reimplemented independently (own code, not copied); Viral-Faceless-Shorts-Generator's human-in-the-loop script-approval step motivated the --approve-script checkpoint; openshorts' category-vs-number prompting finding is the same principle this project's own generate_script.py learned for duration_seconds. Real end-to-end run (2 scenes): script checkpoint pause, a real Veo duration_seconds failure and clean resume-by-artifact after the fix, final assembled 11.92s video produced. v0.2.0 (2026-08-13): owner directly pointed at a separate real, completed project (D:/elix/projects/20260805_GenVid, 3 real AI-generated history-education videos actually delivered) as reference; audio/video stage order swapped and map_to_veo_duration()/measure_wav_duration_seconds() added, porting build_v5_fullmerge.py's identical threshold rule and batch_gen_tts_multiprocess.py's measure-then-persist-to-scenes.json pattern -- see SKILL.md's own metadata.elicited_from for full detail. Verified real: duration mapping against GenVid's own exact boundaries, wav measurement against a real test file, and the generated timeline schema independently re-validated clean by video-assembly-composer's own validator -- not yet chained through one live Gemini-API-backed run end-to-end (no API key in this environment)."
     },
     {
       "skill_id": "personal-style-library",
@@ -3011,7 +3075,7 @@
       "license": "MIT",
       "tags": {
         "domain": [
-          "general"
+          "design"
         ],
         "task_type": [
           "coordination"
@@ -3049,7 +3113,7 @@
     },
     {
       "skill_id": "html-poster-composer",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "source": {
         "type": "self-authored"
       },
@@ -3082,53 +3146,135 @@
       },
       "security_audit": {
         "status": "passed",
-        "date": "2026-08-07",
-        "note": "Re-audited at 0.3.0 (2026-08-07): added compose_batch.py (reuses compose.py zone-building/auto-fit, no new dependency, no network, no subprocess/eval/exec -- grep: 0 hits across all 6 scripts). Fixed a real overflow-wrap bug shared by both single-page and batch render paths (silent sideways content-clipping on an unbroken long token) -- now refuses loudly instead. Verified real with extreme adversarial text on both paths."
+        "date": "2026-08-13",
+        "note": "Re-audited at 0.4.0 (2026-08-13): added the VIDEO_HD canvas preset (a data-only entry in CANVAS_PRESETS_MM, no new code path) and transparent_background (a CSS-string/screenshot-flag branch, no new dependency, no network, no subprocess/eval/exec -- grep: 0 hits across all 6 scripts, unchanged from the 0.3.0 audit). No new attack surface. No finding."
       },
       "dependencies": [
         "playwright",
         "fonttools"
       ],
       "license_debt": null,
-      "elicited_from": "Supersedes svg-poster-builder + poster-generator (2026-08-07) -- same zone-taxonomy/canvas-preset/40%-text-coverage grounding those 2 skills already had, reused verbatim (layout_schema.py/validate_content.py), not re-elicited. The render-technology swap (SVG-string+Pillow -> HTML/CSS+headless-browser) is grounded in real research + a real owner-directed experiment this session (docs/ROADMAP.md's 2026-08-07 entry): academic prior art (BannerAgency arXiv 2503.11060, SheetDesigner arXiv 2509.07473, COLE/OpenCOLE) and a direct empirical A/B test proving HTML/CSS flexbox avoided the exact zone-overflow bug the old Pillow renderer hit, with zero manual height math. Canva's own real rendering approach (custom WebGL/Canvas engine, neither DOM nor SVG) was investigated first per owner's explicit request and ruled out of scope as a full rendering-engine build, narrowing the real decision to SVG-generation vs. HTML/CSS+headless-browser. The auto-fit text-measurement loop (render, measure via the browser's own layout engine, shrink, re-measure, refuse if nothing fits) is this skill's own new mechanism, not ported from any external source."
+      "elicited_from": "Supersedes svg-poster-builder + poster-generator (2026-08-07) -- same zone-taxonomy/canvas-preset/40%-text-coverage grounding those 2 skills already had, reused verbatim (layout_schema.py/validate_content.py), not re-elicited. The render-technology swap (SVG-string+Pillow -> HTML/CSS+headless-browser) is grounded in real research + a real owner-directed experiment this session (docs/ROADMAP.md's 2026-08-07 entry): academic prior art (BannerAgency arXiv 2503.11060, SheetDesigner arXiv 2509.07473, COLE/OpenCOLE) and a direct empirical A/B test proving HTML/CSS flexbox avoided the exact zone-overflow bug the old Pillow renderer hit, with zero manual height math. Canva's own real rendering approach (custom WebGL/Canvas engine, neither DOM nor SVG) was investigated first per owner's explicit request and ruled out of scope as a full rendering-engine build, narrowing the real decision to SVG-generation vs. HTML/CSS+headless-browser. The auto-fit text-measurement loop (render, measure via the browser's own layout engine, shrink, re-measure, refuse if nothing fits) is this skill's own new mechanism, not ported from any external source. v0.4.0 (2026-08-13): owner directly pointed at a separate real, completed project (D:/elix/projects/20260805_GenVid) as reference material; build_watermark_overlay.py's real technique (a full-frame transparent PNG, Playwright omit_background=True, HTML/CSS-positioned content) motivated the new VIDEO_HD preset (1920x1080, exact px round-trip via the existing 96 CSS-px/inch conversion) + transparent_background content.json field, consumed directly by video-assembly-composer v0.3.0's new watermark overlay -- see that skill's own elicited_from for the consuming side and its SKILL.md's Verified section for the real cross-skill end-to-end render."
     },
     {
-      "skill_id": "scriptorium-updater",
-      "version": "0.1.1",
+      "skill_id": "gpt-generator",
+      "version": "0.0.0",
       "source": {
         "type": "self-authored"
       },
       "license": "MIT",
       "tags": {
         "domain": [
-          "meta"
+          "media"
         ],
         "task_type": [
-          "coordination"
+          "drafting"
         ],
         "risk_tier": "N2",
-        "harness_compatibility": [
-          "claude-code"
-        ],
+        "harness_compatibility": [],
         "grounding": "not_applicable",
         "object_type": []
       },
       "quality_score": {
         "stage4_formal": null,
-        "content_grounding": "auto-verified",
+        "content_grounding": "pending",
         "stage4_required": false,
-        "stage4_reason": "foundation/general-capability — exempt (deterministic git wrapper, no uncontrolled external input beyond the repo itself, which this project owns)"
+        "stage4_reason": "scaffold only, no working script -- stage-4 applicability not yet assessable"
       },
       "security_audit": {
-        "status": "passed",
-        "date": "2026-08-08",
-        "note": "Re-audited at 0.1.1 (2026-08-08): fixed a real cold-agent-found bug (git pull hanging indefinitely under piped/non-interactive invocation due to inherited stdin letting a credential helper block on a prompt with zero error). Extracted shared git_utils.run_git() with stdin=subprocess.DEVNULL set unconditionally across all 3 scripts, closing both the hang and the prior _run_git duplication between check_updates.py/sync_skills.py. No new dependency, no new network surface (still git clone/fetch/pull against github.com only). Re-verified: real regression of all 3 scripts plus the specific piped invocation that previously hung, now completes in <1s."
+        "status": "pending",
+        "date": null,
+        "note": "No script exists yet -- nothing to audit. Blocks skill-exporter inclusion by construction."
       },
-      "dependencies": [
-        "git"
-      ],
+      "dependencies": [],
       "license_debt": null,
-      "elicited_from": "Owner direction (2026-08-07): Scriptorium's repo is deliberately public during the current pre-commercial dev/test phase (confirmed via gh repo view, not a misconfiguration -- owner: 'hiện tại vẫn đang trong giai đoạn phát triển, nên chưa cần set private, và tôi muốn hệ thống có thể cập nhật cho tester mà không cần phải tải đi tải lại skill'). Design follows this registry's own established 2-step bootstrap discipline (detect safely by default, apply only as an explicit separate step) rather than a fully-automatic silent updater, which the owner explicitly ruled out: 'không phải chạy cơ học không đâu, mà do agent làm theo ghi chú' -- this skill reports, the calling agent decides what an anomaly (e.g. a destination-only skill) means. Add/update-only (never delete) was an explicit owner choice between 2 offered options."
+      "elicited_from": "See skills/media/gpt-generator/SKILL.md metadata.elicited_from for the full record -- scaffolded per owner-directed provider restructuring, no real OpenAI API research done yet.",
+      "operational_status": {
+        "state": "planned",
+        "reason": "Scaffolded 2026-08-13 as part of a provider-based restructuring of this registry's media generators (see gemini-generator, the one fully-built sibling). Real build deferred pending research + an available API key for testing, per explicit owner direction this round.",
+        "date": "2026-08-13",
+        "decided_by": "owner"
+      }
+    },
+    {
+      "skill_id": "claude-generator",
+      "version": "0.0.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "media"
+        ],
+        "task_type": [
+          "drafting"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [],
+        "grounding": "not_applicable",
+        "object_type": []
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "pending",
+        "stage4_required": false,
+        "stage4_reason": "scaffold only, no working script -- stage-4 applicability not yet assessable"
+      },
+      "security_audit": {
+        "status": "pending",
+        "date": null,
+        "note": "No script exists yet -- nothing to audit. Blocks skill-exporter inclusion by construction."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "See skills/media/claude-generator/SKILL.md metadata.elicited_from for the full record -- owner confirmed real scope directly ('Sinh code/SVG/tài liệu qua Claude'), scaffolded, no script built yet.",
+      "operational_status": {
+        "state": "planned",
+        "reason": "Scaffolded 2026-08-13 as part of a provider-based restructuring of this registry's media generators (see gemini-generator, the one fully-built sibling). Real build deferred pending research + an available API key for testing, per explicit owner direction this round.",
+        "date": "2026-08-13",
+        "decided_by": "owner"
+      }
+    },
+    {
+      "skill_id": "normal-generator",
+      "version": "0.0.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "media"
+        ],
+        "task_type": [
+          "drafting"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [],
+        "grounding": "not_applicable",
+        "object_type": []
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "pending",
+        "stage4_required": false,
+        "stage4_reason": "scaffold only, no working script -- stage-4 applicability not yet assessable"
+      },
+      "security_audit": {
+        "status": "pending",
+        "date": null,
+        "note": "No script exists yet -- nothing to audit. Blocks skill-exporter inclusion by construction."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "See skills/media/normal-generator/SKILL.md metadata.elicited_from for the full record -- owner's own description of intent plus a real finding from investigating D:/elix/platform's own multi-provider router (Elixverse has no generic any-provider adapter mechanism either; every real adapter there is still hand-written per-provider), leaving this skill's actual mechanism as an open design question, not yet resolved.",
+      "operational_status": {
+        "state": "planned",
+        "reason": "Scaffolded 2026-08-13 as part of a provider-based restructuring of this registry's media generators (see gemini-generator, the one fully-built sibling). Real build deferred pending research + an available API key for testing, per explicit owner direction this round.",
+        "date": "2026-08-13",
+        "decided_by": "owner"
+      }
     }
   ]
 }

@@ -4,7 +4,7 @@ Two complete skeletons `skill-creator` copies from when authoring a new skill, i
 
 | Template | Use it for |
 | --- | --- |
-| [`standalone_skill/`](standalone_skill/) | A skill a user/agent invokes directly to produce a deliverable (a converted file, a generated asset, a draft). Mirrors `document-ai-structurer`, `office-doc-creator`, `image-generator-gemini`. |
+| [`standalone_skill/`](standalone_skill/) | A skill a user/agent invokes directly to produce a deliverable (a converted file, a generated asset, a draft). Mirrors `document-ai-structurer`, `office-doc-creator`, `gemini-generator`. |
 | [`dependency_skill/`](dependency_skill/) | Infrastructure other skills lean on — not invoked directly for a deliverable. Mirrors `toolchain-bootstrap`, `license-compliance-check`, `dedup-novelty-check`. |
 
 Adapted from the gold-template pattern in `prior project templates` (the owner's prior project) — kept the principle (copy-a-skeleton-with-marked-slots instead of writing from scratch, ★ REQUIRED / ◆ CHOOSE comment legend), dropped the harness-specific machinery (prior system's `use_skill`/`script_exec`/tier-based CI enforcement are tied to their own orchestrator, not portable to the agentskills.io spec Scriptorium targets).

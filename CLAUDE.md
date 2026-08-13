@@ -35,8 +35,13 @@ scriptorium/
 ├── outside_research/           # living input (owner surveys, external AI research) — ideation only, not elicited input on its own
 ├── outside_agy/                # external LegalTech reference material — comparison only, never copied
 ├── skills/<domain>/<skill_id>/SKILL.md  # each skill is its own subfolder under a domain folder
-│                              # (general/education/meta/media/legal, matches registry tags.domain;
-│                              # domain-per-folder reorg 2026-08-13), 6-field agentskills.io spec
+│                              # (general/office/design/education/academic/meta/media/legal, matches
+│                              # registry tags.domain; domain-per-folder reorg 2026-08-13, split
+│                              # further into office/design/academic same day), 6-field agentskills.io spec
+│   └── archive/<skill_id>/    # operational_status: superseded skills live here (flat, no domain
+│                              # subfolder) — moved out of the active domain folders 2026-08-13 so
+│                              # manual browsing isn't cluttered with dead skills; content unchanged,
+│                              # never deleted, same reversibility discipline as `paused`
 ├── registry/
 │   ├── SCHEMA.md                # multi-axis registry schema
 │   └── skills.json              # registry data — the single source of truth for skill status

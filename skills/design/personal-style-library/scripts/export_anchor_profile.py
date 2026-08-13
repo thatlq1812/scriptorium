@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Compose a styles/<name>.json library entry into a valid
-media-anchor-profile anchor-profile JSON, ready for image-generator-gemini
+media-anchor-profile anchor-profile JSON, ready for gemini-generator
 (or any other media-anchor-profile consumer) to use for one generation call.
 
 The output is validated via media-anchor-profile's OWN validate_anchor_profile()

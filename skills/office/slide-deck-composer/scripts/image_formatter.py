@@ -3,7 +3,7 @@ Visual effects for already-inserted picture shapes (rounded corners,
 border, shadow). Standalone utility, not wired into compile_deck.py's
 v1 pipeline (v1 does not insert/replace images -- see SKILL.md "Known
 limitations"). Kept for a future round or for a caller that inserts its
-own picture (e.g. via image-generator-gemini) and wants template-grade
+own picture (e.g. via gemini-generator) and wants template-grade
 finishing touches applied afterward.
 
 Ported near-verbatim (pure XML mutation, no I/O) from:
