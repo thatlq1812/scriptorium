@@ -1,17 +1,26 @@
 #!/usr/bin/env python3
-"""Scaffold a date-indexed project workspace from a profession template.
+"""Scaffold a named, versioned project workspace from a profession template.
 
-Creates <projects_root>/project_YYYYMMDD_NN/ with the template's declared
+Creates <projects_root>/<YYYYMMDD>-v<N>-<name>/ with the template's declared
 subdirectories plus a generated PROJECT.md control-panel file (the
 pre-formulated prompts a non-tech user drives the agent with, so they don't
 have to navigate the directory tree manually).
 
-Sequence numbering (NN) is derived by scanning <projects_root> for existing
-project_<date>_NN directories and taking max+1 -- never guessed, never
+Naming convention (v0.4.0, owner-directed 2026-08-14, PROJECT.md change
+request item 3a -- a real non-tech-user pilot workspace was found naming
+project folders as a bare descriptive slug with no date/version at all,
+losing exactly the "which attempt is this" information this convention
+exists to carry): <YYYYMMDD>-v<N>-<name> -- YYYYMMDD is the date THIS
+scaffold ran, <name> is a caller-supplied slug identifying the project
+regardless of date, and v<N> is derived by scanning <projects_root> for
+existing directories ending in -v<M>-<name> (matching on name, any date) and
+taking max+1 -- so re-scaffolding the same named project later produces a
+new dated version directory (v2, v3, ...) instead of colliding, and a
+completely different project name always starts at v1. Never guessed, never
 silently reused, refuses rather than overwriting an existing directory.
 
 Usage:
-    python scaffold_workspace.py <template.json> <projects_root> [--date YYYY-MM-DD]
+    python scaffold_workspace.py <template.json> <projects_root> --name <slug> [--date YYYY-MM-DD]
 
 Exit 0 = scaffolded, 1 = target already exists (should be unreachable given
 auto-increment, kept as a defensive refusal), 2 = malformed template/args.
@@ -29,7 +38,7 @@ for _stream in (sys.stdout, sys.stderr):
     if hasattr(_stream, "reconfigure"):
         _stream.reconfigure(encoding="utf-8")
 
-PROJECT_DIR_RE = re.compile(r"^project_(\d{8})_(\d{2})$")
+NAME_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 REQUIRED_TEMPLATE_KEYS = {"template_id", "label", "subdirs", "project_md_prompts"}
 
 
@@ -55,16 +64,17 @@ def _load_template(path: Path) -> dict:
     return data
 
 
-def _next_sequence(projects_root: Path, date_str: str) -> str:
-    max_seq = 0
+def _next_version(projects_root: Path, name: str) -> int:
+    max_version = 0
+    name_re = re.compile(r"^\d{8}-v(\d+)-" + re.escape(name) + r"$")
     if projects_root.exists():
         for entry in projects_root.iterdir():
             if not entry.is_dir():
                 continue
-            m = PROJECT_DIR_RE.match(entry.name)
-            if m and m.group(1) == date_str:
-                max_seq = max(max_seq, int(m.group(2)))
-    return f"{max_seq + 1:02d}"
+            m = name_re.match(entry.name)
+            if m:
+                max_version = max(max_version, int(m.group(1)))
+    return max_version + 1
 
 
 def _render_project_md(template: dict, project_dir_name: str) -> str:
@@ -90,11 +100,16 @@ def _render_project_md(template: dict, project_dir_name: str) -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("template_path")
     parser.add_argument("projects_root")
+    parser.add_argument("--name", required=True, help="Project slug, lowercase kebab-case (e.g. 'hop-dong-internet'). Not auto-generated -- the caller (the agent, from the real task) picks it.")
     parser.add_argument("--date", help="Override the date used in the folder name (YYYY-MM-DD). Defaults to today.")
     args = parser.parse_args()
+
+    if not NAME_RE.match(args.name):
+        print(f"ERROR: --name must be lowercase kebab-case (^[a-z0-9]+(-[a-z0-9]+)*$), got {args.name!r}", file=sys.stderr)
+        return 2
 
     template_path = Path(args.template_path)
     if not template_path.exists():
@@ -111,12 +126,12 @@ def main() -> int:
         date_str = date.today().strftime("%Y%m%d")
 
     projects_root = Path(args.projects_root)
-    seq = _next_sequence(projects_root, date_str)
-    project_dir_name = f"project_{date_str}_{seq}"
+    version = _next_version(projects_root, args.name)
+    project_dir_name = f"{date_str}-v{version}-{args.name}"
     project_dir = projects_root / project_dir_name
 
     if project_dir.exists():
-        print(f"ERROR: {project_dir} already exists (sequence collision) -- refusing to overwrite.", file=sys.stderr)
+        print(f"ERROR: {project_dir} already exists (version collision) -- refusing to overwrite.", file=sys.stderr)
         return 1
 
     for sub in template["subdirs"]:

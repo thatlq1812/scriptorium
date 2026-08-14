@@ -51,9 +51,25 @@ from docx import Document
 from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
-from docx.shared import Cm, Pt, RGBColor
+from docx.shared import Cm, Mm, Pt, RGBColor
 
 from docx_numbering import SUPPORTED_LIST_FORMATS, apply_list_item, register_numbering
+
+# Nghị định 30/2020/NĐ-CP defaults (Phụ lục I, Mục I/V -- grounding kept at
+# skills/office/latex-project-bootstrap/references/nd30-2020-formatting.md,
+# read directly from the government-published PDF). Every document this
+# skill creates defaults to Vietnamese official-document formatting -- A4,
+# Times New Roman, 13pt body text, NĐ30's own permitted-range margins --
+# UNLESS the caller's content spec explicitly says otherwise via `font`,
+# `font_size`, or `page`. This is the "no explicit request" default, not a
+# hardcoded rule: any of the 3 remain fully overridable per document.
+ND30_DEFAULT_FONT = "Times New Roman"
+ND30_DEFAULT_FONT_SIZE_PT = 13
+# Mục I: trên/dưới 20-25mm, trái 30-35mm, phải 15-20mm -- lower bound of each
+# range, matching latex-project-bootstrap's own vnnd30.sty default choice.
+ND30_DEFAULT_MARGINS_MM: dict[str, float] = {"top": 20, "bottom": 20, "left": 30, "right": 15}
+ND30_PAGE_WIDTH_MM = 210
+ND30_PAGE_HEIGHT_MM = 297
 
 # Fonts verified present on both Windows and common Word-compatible
 # renderers (LibreOffice, Google Docs' Word-import). A font name outside
@@ -169,6 +185,50 @@ def _validate_font(font_name: str) -> str:
             f"in the target rendering environment."
         )
     return font_name
+
+
+def _validate_font_size(size) -> float:
+    try:
+        size = float(size)
+    except (TypeError, ValueError):
+        raise ValueError(f"font_size must be a number (points), got {size!r}")
+    if not (1 <= size <= 96):
+        raise ValueError(f"font_size must be between 1 and 96 pt, got {size!r}")
+    return size
+
+
+def _apply_global_font_size(doc: Document, size_pt: float) -> None:
+    """Apply ``size_pt`` to the Normal style -- NĐ30 Mục V's "Nội dung" row (13-14pt) as the
+    default body-text size unless the caller overrides top-level ``font_size``. Headings keep
+    this skill's own existing size defaults (see DEFAULT_HEADING_COLORS/the `heading` block) --
+    NĐ30's per-cell size table only prescribes body content here, not the heading hierarchy this
+    skill's own JSON spec invents.
+    """
+    doc.styles["Normal"].font.size = Pt(size_pt)
+
+
+def _apply_page_setup(doc: Document, page_spec: dict) -> None:
+    """Apply page size + margins -- defaults to A4 with NĐ30's permitted-range margins unless
+    ``page`` in the content spec overrides ``width_mm``/``height_mm``/``margins_mm``.
+    """
+    margins = {**ND30_DEFAULT_MARGINS_MM, **(page_spec.get("margins_mm") or {})}
+    for key, val in margins.items():
+        if not isinstance(val, (int, float)) or val <= 0:
+            raise ValueError(f"page.margins_mm.{key!r} must be a positive number, got {val!r}")
+    width_mm = page_spec.get("width_mm", ND30_PAGE_WIDTH_MM)
+    height_mm = page_spec.get("height_mm", ND30_PAGE_HEIGHT_MM)
+    if not (isinstance(width_mm, (int, float)) and width_mm > 0):
+        raise ValueError(f"page.width_mm must be a positive number, got {width_mm!r}")
+    if not (isinstance(height_mm, (int, float)) and height_mm > 0):
+        raise ValueError(f"page.height_mm must be a positive number, got {height_mm!r}")
+
+    section = doc.sections[0]
+    section.page_width = Mm(width_mm)
+    section.page_height = Mm(height_mm)
+    section.top_margin = Mm(margins["top"])
+    section.bottom_margin = Mm(margins["bottom"])
+    section.left_margin = Mm(margins["left"])
+    section.right_margin = Mm(margins["right"])
 
 
 def _apply_global_font(doc: Document, font_name: str, heading_levels: set[int]) -> None:
@@ -389,9 +449,15 @@ def _add_cover_page_block(doc: Document, block: dict, global_font: str | None) -
 def build(content: dict, output_path: Path) -> None:
     doc = Document()
 
+    _apply_page_setup(doc, content.get("page") or {})
+
     global_font = content.get("font")
     if global_font is not None:
         _validate_font(global_font)
+    else:
+        global_font = ND30_DEFAULT_FONT
+
+    font_size = _validate_font_size(content.get("font_size", ND30_DEFAULT_FONT_SIZE_PT))
 
     blocks = content.get("blocks", [])
     # A cover_page block renders its own title (possibly styled differently, e.g. colored) as
@@ -402,8 +468,8 @@ def build(content: dict, output_path: Path) -> None:
     for block in blocks:
         if block.get("type") == "heading":
             heading_levels.add(block.get("level", 1))
-    if global_font is not None:
-        _apply_global_font(doc, global_font, heading_levels)
+    _apply_global_font(doc, global_font, heading_levels)
+    _apply_global_font_size(doc, font_size)
 
     # Heading colors are always set explicitly, not just when a caller opts in -- Word's own
     # default theme is the actual bug being fixed here (DEFAULT_HEADING_COLORS' docstring), so

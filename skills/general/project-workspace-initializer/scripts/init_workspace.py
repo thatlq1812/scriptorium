@@ -6,22 +6,34 @@ Creates <workspace_root>/ (if missing) with the template's declared
 workspace-level subdirectories, copies the template itself into
 <workspace_root>/projects/_templates/<template_id>/ so later
 scaffold_workspace.py runs can reference a local copy instead of this
-repo's path, and writes a WORKSPACE.md control-panel file (the workspace-level
-counterpart of PROJECT.md) with the template's workspace_md_prompts.
+repo's path, and writes 2 control-panel files: WORKSPACE.md (the
+workspace-level counterpart of PROJECT.md, rendering the template's
+workspace_md_prompts) and AGENTS.md (v0.4.0 -- the root file most harnesses
+read at every session start, carrying the fixed, profession-agnostic
+operating rules every workspace built by this skill needs regardless of
+which template it used).
 
 Grounded in the real non-tech-user pilot recorded in docs/ROADMAP.md's
 2026-07-29 entry ("Project Workspace Scaffolder Skill"): the pilot's own
 `d:/my-workspace` deployment used a `projects/` root with a
 `projects/_templates/` template location -- this script builds that
 top-level structure; scaffold_workspace.py builds each dated project inside
-it.
+it. AGENTS.md's content (v0.4.0, owner-directed 2026-08-14, PROJECT.md
+change request item 3b) is grounded in a second real pilot workspace review
+(`D:\\AppData\\my_workspace`) that surfaced this exact gap: the workspace's
+own hand-written AGENTS.md was 3 short paragraphs with no naming convention,
+no rule against replying with a deliverable inline instead of scaffolding a
+real project, and no instruction to keep `personals/` up to date -- real
+symptoms the owner traced back to this skill never having generated
+AGENTS.md at all (the file predates this version, written ad hoc by
+whichever agent set that workspace up).
 
 Usage:
     python init_workspace.py <template.json> <workspace_root> [--force]
 
-Exit 0 = initialized, 1 = workspace already initialized (WORKSPACE.md or the
-template copy destination already exists) without --force, 2 = malformed
-template/args.
+Exit 0 = initialized, 1 = workspace already initialized (WORKSPACE.md,
+AGENTS.md, or the template copy destination already exists) without
+--force, 2 = malformed template/args.
 """
 from __future__ import annotations
 
@@ -75,15 +87,17 @@ def _render_workspace_md(template: dict, template_copy_path: Path) -> str:
         "",
         "## Starting a new project",
         "",
-        f"Run `scaffold_workspace.py {template_copy_path.as_posix()} projects/` "
-        "(from `project-workspace-initializer`) to create a new dated project "
-        "directory under `projects/` using this workspace's own copy of the "
-        "template -- no need to reference the skill's own repo path again.",
+        f"Run `scaffold_workspace.py {template_copy_path.as_posix()} projects/ --name <slug>` "
+        "(from `project-workspace-initializer`) to create a new project directory "
+        "under `projects/` using this workspace's own copy of the template -- no "
+        "need to reference the skill's own repo path again. Produces "
+        "`projects/<YYYYMMDD>-v<N>-<slug>/` (see `AGENTS.md`'s \"Project structure\" "
+        "section for the full naming convention).",
         "",
         "## Shared resources (once per workspace, never per project)",
         "",
         "Two things belong exactly once at this workspace's root, not duplicated "
-        "inside any `projects/project_YYYYMMDD_NN/` subdirectory:",
+        "inside any `projects/<YYYYMMDD>-v<N>-<name>/` subdirectory:",
         "",
         "- **Skills**: if this workspace was set up from a `skill-exporter` bundle, "
         "install the skills once here (see the bundle's `MANIFEST.md` \"Where to "
@@ -109,6 +123,94 @@ def _render_workspace_md(template: dict, template_copy_path: Path) -> str:
     return "\n".join(lines)
 
 
+def _render_agents_md(template: dict, template_copy_path: Path) -> str:
+    lines = [
+        "# AGENTS.md",
+        "",
+        f"This workspace ({template['label']}) is managed by Scriptorium Workspace "
+        "(`project-workspace-initializer`). Read this file in full before doing any "
+        "non-trivial work here -- it is not optional context, it is the operating "
+        "contract for this workspace.",
+        "",
+        "## Skill registry",
+        "",
+        "A local skill registry lives at `skills/<skill-name>/SKILL.md` (index: "
+        "`registry/skills.json`, or the flat `skills/` directory this bundle installed "
+        "into -- see this workspace's own skill-install location). Before doing a "
+        "non-trivial task, check whether a skill already covers it (grep `name`/"
+        "`description` fields) and read that skill's `SKILL.md` in full before using "
+        "it -- required inputs, invocation, and known limitations are documented there, "
+        "not guessed.",
+        "",
+        "## Project structure -- mandatory, not a suggestion",
+        "",
+        "**Every piece of real work (a document, a dataset, a design, a deliverable of "
+        "any kind) lives inside its own directory under `projects/`, never loose at "
+        "this workspace's root.** Use `scaffold_workspace.py` (from "
+        "`project-workspace-initializer`, see below) to create it -- never `mkdir` a "
+        "project directory by hand, since the naming convention and `PROJECT.md` "
+        "control panel both come from that script.",
+        "",
+        "**Naming convention**: `projects/<YYYYMMDD>-v<N>-<name>/` --",
+        "- `<YYYYMMDD>`: the date this specific project directory was scaffolded.",
+        "- `v<N>`: version/attempt number for this project NAME -- starts at `v1`; "
+        "re-scaffolding the same `<name>` later (a redo, a new round of the same "
+        "matter) auto-increments to `v2`, `v3`, ... regardless of date. A different "
+        "`<name>` always starts fresh at `v1`.",
+        "- `<name>`: a lowercase kebab-case slug identifying the project (e.g. "
+        "`hop-dong-internet`, `bao-cao-tong-ket-nam-hoc`) -- picked by whoever scaffolds "
+        "it, not auto-generated; Vietnamese names should be transliterated to plain "
+        "ASCII kebab-case (no diacritics, no spaces) same as the examples above.",
+        "",
+        "```bash\n"
+        f"python {template_copy_path.as_posix()} projects/ --name <slug> [--date YYYY-MM-DD]\n"
+        "```",
+        "",
+        "## When a request implies a deliverable, create it as a real file -- do not just reply with it",
+        "",
+        "If a request asks for something that is normally a real artifact -- a contract, "
+        "a report, a lesson plan, a slide deck, a poster, any document a human would "
+        "expect to receive as a file -- and the user has NOT explicitly said something "
+        "like \"just show me here\"/\"no need to save a file\", the correct response is: "
+        "(1) scaffold or reuse a project directory for it (see above), (2) build the "
+        "real output file inside that project using the appropriate skill (e.g. "
+        "`office-doc-creator` for a real .docx/.pptx/.xlsx), and (3) report back what "
+        "was created and where. Replying with the content typed directly into the chat "
+        "instead of creating the file is the wrong default -- it throws away the whole "
+        "point of this workspace's project structure and leaves nothing for the user to "
+        "actually open, edit, or hand to someone else.",
+        "",
+        "## Personal/organization profile -- keep it up to date proactively",
+        "",
+        "`personals/` holds this workspace owner's reusable identity/organization/contact "
+        "details (`personal-profile-manager`'s `profile.json`, optionally an "
+        "`org_profile` section for letterhead/issuing-organization identity). Don't "
+        "treat this as a passive lookup used only when a form explicitly asks for a "
+        "field: whenever a task surfaces a durable identity/org/contact/style-preference "
+        "fact the profile doesn't already have (a new signatory, a corrected address, a "
+        "writing-style correction worth remembering), proactively propose updating "
+        "`personals/profile.json` (via `personal-profile-manager`'s scripts) rather than "
+        "letting the same detail get re-typed or re-asked next time. A skill producing "
+        "reusable personal/org data as a side effect of its normal output should note "
+        "that back into `personals/` too, not only whichever project it was working in.",
+        "",
+        "## Shared resources (once per workspace, never per project)",
+        "",
+        "- **Skills**: installed once at this workspace's own skill directory (see your "
+        "harness's convention, e.g. `.claude/skills/`, `.agents/skills/`) -- never "
+        "re-copied or re-linked per project.",
+        "- **Python environment**: ONE shared virtual environment at this workspace's "
+        "root (not one per project), bootstrapped the first time a skill actually needs "
+        "non-stdlib packages -- always invoke scripts through that venv's own "
+        "interpreter, never a bare `python`/`python3`.",
+        "",
+        "See `WORKSPACE.md` for this workspace's specific subdirectories and "
+        f"`{template['label']}`-template prompts.",
+        "",
+    ]
+    return "\n".join(lines)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("template_path")
@@ -124,11 +226,15 @@ def main() -> int:
 
     workspace_root = Path(args.workspace_root)
     workspace_md_path = workspace_root / "WORKSPACE.md"
+    agents_md_path = workspace_root / "AGENTS.md"
     template_copy_dir = workspace_root / "projects" / "_templates" / template["template_id"]
 
     if not args.force:
         if workspace_md_path.exists():
             print(f"ERROR: {workspace_md_path} already exists -- workspace already initialized. Use --force to re-initialize.", file=sys.stderr)
+            return 1
+        if agents_md_path.exists():
+            print(f"ERROR: {agents_md_path} already exists -- workspace already initialized. Use --force to re-initialize.", file=sys.stderr)
             return 1
         if template_copy_dir.exists():
             print(f"ERROR: {template_copy_dir} already exists -- workspace already initialized. Use --force to re-initialize.", file=sys.stderr)
@@ -143,10 +249,14 @@ def main() -> int:
     workspace_md_text = _render_workspace_md(template, template_copy_path)
     workspace_md_path.write_text(workspace_md_text, encoding="utf-8", newline="\n")
 
+    agents_md_text = _render_agents_md(template, template_copy_path)
+    agents_md_path.write_text(agents_md_text, encoding="utf-8", newline="\n")
+
     print(f"Initialized workspace {workspace_root}")
     print(f"  subdirs: {', '.join(template['workspace_subdirs'])}")
     print(f"  template copy: {template_copy_dir}")
     print(f"  WORKSPACE.md: {workspace_md_path}")
+    print(f"  AGENTS.md: {agents_md_path}")
     return 0
 
 

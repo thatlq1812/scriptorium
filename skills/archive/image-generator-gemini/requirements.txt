@@ -1,2 +1,0 @@
-google-genai==2.14.0
-pypdfium2==5.12.1
