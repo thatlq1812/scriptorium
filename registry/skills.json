@@ -2004,7 +2004,7 @@
     },
     {
       "skill_id": "office-doc-creator",
-      "version": "0.4.0",
+      "version": "0.5.0",
       "source": {
         "type": "self-authored"
       },
@@ -2035,8 +2035,8 @@
       },
       "security_audit": {
         "status": "passed",
-        "date": "2026-08-13",
-        "note": "Re-audited at 0.4.0 (2026-08-13): fixed a real OOXML schema-order bug in docx_numbering.py (w:lvlRestart written before w:numFmt inside w:lvl, violating CT_Lvl's real element sequence — reordered). No new dependency, no new I/O surface; still stdlib+python-docx/python-pptx/openpyxl only, zero network, no dynamic execution. 0.3.1 note (2026-08-08) unchanged below."
+        "date": "2026-08-14",
+        "note": "Re-audited at 0.5.0 (2026-08-14): added inline-Markdown-emphasis parsing (regex tokenizer + run construction) to create_docx.py — pure text-processing over caller-supplied strings already trusted at the same level as the rest of the content spec, no new dependency, no new I/O surface, no dynamic execution (no eval/exec, no regex catastrophic-backtracking risk — bounded alternation over [^*]+ groups). Verified against a real spec exercising all 3 emphasis forms plus an unpaired literal '*' in paragraph/table/list contexts; correct output confirmed by reading run.bold/run.italic back from the generated .docx. 0.4.0 note (2026-08-13) unchanged below."
       },
       "dependencies": [
         "python-docx==1.2.0",
@@ -2046,7 +2046,7 @@
         "docx"
       ],
       "license_debt": null,
-      "elicited_from": "Owner (2026-07-26): extend scouting beyond Anthropic for office skills; scout-harvester found python-docx/python-pptx/openpyxl (MIT, verified directly), implementation written from scratch v0.2.0 (2026-08-01): Vietnamese-diacritics rFonts fix + real OOXML list numbering ported from the owner's own prior production system (D:/elix/archive/platform_archive/modules/document/v6/renderers/docx/styles.py + numbering.py). v0.3.0 (2026-08-08): cover_page block added after owner directly compared this skill's docx output against a competing agentic IDE (Google Antigravity) on the same real task and found it visually plainer -- grounded in standard Vietnamese academic/business trang bia convention, general-capability tier, no expert elicitation required. v0.4.0 (2026-08-13): owner directed chaining this skill into docx (this skill creates, docx edits/redlines/validates) — real end-to-end test through the chain (a Vietnamese cover_page document fed into docx's XSD validator) surfaced and fixed the docx_numbering.py schema-order bug noted in security_audit above, plus a separate encoding bug in docx itself (see docx's own registry entry)."
+      "elicited_from": "Owner (2026-07-26): extend scouting beyond Anthropic for office skills; scout-harvester found python-docx/python-pptx/openpyxl (MIT, verified directly), implementation written from scratch v0.2.0 (2026-08-01): Vietnamese-diacritics rFonts fix + real OOXML list numbering ported from the owner's own prior production system (D:/elix/archive/platform_archive/modules/document/v6/renderers/docx/styles.py + numbering.py). v0.3.0 (2026-08-08): cover_page block added after owner directly compared this skill's docx output against a competing agentic IDE (Google Antigravity) on the same real task and found it visually plainer -- grounded in standard Vietnamese academic/business trang bia convention, general-capability tier, no expert elicitation required. v0.4.0 (2026-08-13): owner directed chaining this skill into docx (this skill creates, docx edits/redlines/validates) — real end-to-end test through the chain (a Vietnamese cover_page document fed into docx's XSD validator) surfaced and fixed the docx_numbering.py schema-order bug noted in security_audit above, plus a separate encoding bug in docx itself (see docx's own registry entry). v0.5.0 (2026-08-14): a real incident report from a separate downstream project (AssignmentAssistant, generating academic-essay .docx/.pdf via a create_docx.py-class script) documented raw Markdown asterisks (*text*, **text**) leaking unrendered into Word/PDF output because add_paragraph()/cell.text= write caller text verbatim with no emphasis parsing — root cause matched exactly in this skill's own create_docx.py. Fixed by adding a Markdown-emphasis tokenizer/run-builder applied to paragraph, table-cell, and list-item text (not headings or cover_page, which have their own fixed emphasis rules)."
     },
     {
       "skill_id": "pandoc-bootstrap",

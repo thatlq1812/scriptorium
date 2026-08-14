@@ -186,6 +186,61 @@ def _apply_global_font(doc: Document, font_name: str, heading_levels: set[int]) 
             _set_style_font(doc.styles[style_name], font_name)
 
 
+_MD_TOKEN_RE = re.compile(
+    r"\*\*\*(?P<bolditalic>[^*]+)\*\*\*"
+    r"|\*\*(?P<bold>[^*]+)\*\*"
+    r"|\*(?P<italic>[^*]+)\*"
+    r"|(?P<plain>[^*]+)"
+    r"|(?P<literal>\*+)"
+)
+
+
+def _iter_markdown_tokens(text: str):
+    """Tokenize ``***bold italic***``/``**bold**``/``*italic*`` spans out of plain text.
+
+    A caller (typically an LLM) writing body text often reaches for Markdown emphasis
+    syntax even though the target is a real .docx run, not Markdown source -- passed
+    straight to ``add_run()``/``cell.text =`` the literal asterisks show up unrendered
+    in the output (see office-doc-creator's real-world incident report, 2026-08-14).
+    Any ``*`` that can't be paired as emphasis (e.g. a bare multiplication sign) falls
+    through the ``literal`` branch and is kept as plain text rather than dropped.
+    """
+    for m in _MD_TOKEN_RE.finditer(text):
+        if m.group("bolditalic") is not None:
+            yield m.group("bolditalic"), True, True
+        elif m.group("bold") is not None:
+            yield m.group("bold"), True, False
+        elif m.group("italic") is not None:
+            yield m.group("italic"), False, True
+        elif m.group("plain") is not None:
+            yield m.group("plain"), False, False
+        else:
+            yield m.group("literal"), False, False
+
+
+def _add_markdown_runs(paragraph, text: str, *, font_name: str | None = None) -> None:
+    """Add ``text`` to ``paragraph`` as one or more runs, honoring inline Markdown emphasis."""
+    for chunk, bold, italic in _iter_markdown_tokens(text):
+        run = paragraph.add_run(chunk)
+        run.bold = bold
+        run.italic = italic
+        if font_name is not None:
+            _set_run_font(run, font_name)
+
+
+def _set_cell_markdown_text(cell, text: str) -> None:
+    """Replace a table cell's text with Markdown-emphasis-aware runs.
+
+    ``cell.text = ...`` (python-docx's own shortcut) writes the string verbatim into a
+    single run with no emphasis parsing -- same bug class as plain ``add_paragraph``,
+    see ``_iter_markdown_tokens``.
+    """
+    paragraph = cell.paragraphs[0]
+    for run in list(paragraph.runs):
+        run._element.getparent().remove(run._element)
+    _add_markdown_runs(paragraph, text)
+
+
 def _add_list_block(doc: Document, block: dict) -> None:
     ordering = block.get("ordering")
     if ordering not in ("ordered", "unordered"):
@@ -206,7 +261,8 @@ def _add_list_block(doc: Document, block: dict) -> None:
 
     num_id = register_numbering(doc, kind=ordering, list_format=list_format)
     for item_text in items:
-        paragraph = doc.add_paragraph(str(item_text))
+        paragraph = doc.add_paragraph()
+        _add_markdown_runs(paragraph, str(item_text))
         apply_list_item(paragraph, num_id, level=0)
 
 
@@ -379,24 +435,23 @@ def build(content: dict, output_path: Path) -> None:
                     run.font.color.rgb = color
         elif btype == "paragraph":
             block_font = block.get("font")
+            paragraph = doc.add_paragraph()
             if block_font is not None:
                 _validate_font(block_font)
-                paragraph = doc.add_paragraph()
-                run = paragraph.add_run(block["text"])
-                _set_run_font(run, block_font)
+                _add_markdown_runs(paragraph, block["text"], font_name=block_font)
             else:
-                doc.add_paragraph(block["text"])
+                _add_markdown_runs(paragraph, block["text"])
         elif btype == "table":
             headers = block.get("headers", [])
             rows = block.get("rows", [])
             table = doc.add_table(rows=1, cols=len(headers))
             table.style = "Light Grid Accent 1"
             for cell, header in zip(table.rows[0].cells, headers):
-                cell.text = str(header)
+                _set_cell_markdown_text(cell, str(header))
             for row_data in rows:
                 cells = table.add_row().cells
                 for cell, value in zip(cells, row_data):
-                    cell.text = str(value)
+                    _set_cell_markdown_text(cell, str(value))
         elif btype == "list":
             _add_list_block(doc, block)
         elif btype == "cover_page":
