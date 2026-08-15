@@ -4,7 +4,6 @@ request.md
 .tools/
 __pycache__/
 *.pyc
-/outside_agy
 /personal
 /data
 /test

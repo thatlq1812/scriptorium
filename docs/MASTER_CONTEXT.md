@@ -63,8 +63,6 @@ scriptorium/
 ├── references/                 # thatlq1812-authored active research (surveys, external AI analysis)
 │                                # on verticals/audiences — living input, kept verbatim (like
 │                                # docs/archive/), distilled into docs/specs/ + docs/ROADMAP.md
-├── outside_agy/                 # External LegalTech reference material (playbooks/skill models
-│                                # from other products), comparison only, not copied
 ├── data/                        # Gitignored local fixtures (e.g. real Slidesgo .pptx templates for
 │                                # slide-deck-composer's own dev/test use) — never bundled into a
 │                                # skill's shipped assets, never a source of truth

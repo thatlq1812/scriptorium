@@ -36,11 +36,11 @@ scriptorium/
 ├── outside_agy/                # external LegalTech reference material — comparison only, never copied
 ├── skills/<domain>/<skill_id>/SKILL.md  # each skill is its own subfolder under a domain folder
 │                              # (general/office/design/education/academic/meta/media/legal/business/
-│                              # marketing/events/diplomacy/psychology, matches registry tags.domain;
-│                              # domain-per-folder reorg 2026-08-13, split further into office/design/
-│                              # academic same day; business/marketing added 2026-08-15;
-│                              # events/diplomacy/psychology added 2026-08-15 same session), 6-field
-│                              # agentskills.io spec
+│                              # marketing/events/diplomacy/psychology/webpage, matches registry
+│                              # tags.domain; domain-per-folder reorg 2026-08-13, split further into
+│                              # office/design/academic same day; business/marketing added 2026-08-15;
+│                              # events/diplomacy/psychology added 2026-08-15 same session; webpage
+│                              # added 2026-08-15 same session), 6-field agentskills.io spec
 │   └── archive/<skill_id>/    # operational_status: superseded skills live here (flat, no domain
 │                              # subfolder) — moved out of the active domain folders 2026-08-13 so
 │                              # manual browsing isn't cluttered with dead skills; content unchanged,

@@ -1,0 +1,72 @@
+{
+  "design_system": {
+    "color_tokens": {
+      "primary": "#2563EB",
+      "on_primary": "#FFFFFF",
+      "secondary": "#3B82F6",
+      "on_secondary": "#000000",
+      "accent": "#EA580C",
+      "on_accent": "#000000",
+      "background": "#F8FAFC",
+      "foreground": "#1E293B",
+      "card": "#FFFFFF",
+      "card_foreground": "#1E293B",
+      "muted": "#E9EFF8",
+      "muted_foreground": "#475569",
+      "border": "#E2E8F0",
+      "destructive": "#DC2626",
+      "on_destructive": "#FFFFFF",
+      "ring": "#2563EB"
+    },
+    "font_pairing": {
+      "heading_font": "Poppins",
+      "body_font": "Open Sans",
+      "google_fonts_url": "https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+    }
+  },
+  "sections": [
+    {
+      "type": "hero",
+      "headline": "Ship your SaaS landing page in minutes, not weeks",
+      "subheadline": "Draft a real, editable HTML page from the content you already have.",
+      "cta_text": "Get Started",
+      "cta_href": "#pricing"
+    },
+    {
+      "type": "features",
+      "title": "Why teams choose us",
+      "items": [
+        {"title": "Fast drafting", "description": "Go from raw notes to a real webpage draft in one pass."},
+        {"title": "Real design system", "description": "Colors and fonts come from a curated, professionally-reviewed dataset."},
+        {"title": "No lock-in", "description": "Plain HTML/CSS output -- edit it anywhere, no proprietary format."}
+      ]
+    },
+    {
+      "type": "testimonial",
+      "quote": "We went from a Google Doc to a real landing page draft before our next meeting.",
+      "author": "Nguyen Van A",
+      "role": "Founder, Example Co."
+    },
+    {
+      "type": "pricing",
+      "tiers": [
+        {"name": "Starter", "price": "Free", "features": ["1 page draft", "Basic sections"]},
+        {"name": "Pro", "price": "$19/mo", "features": ["Unlimited drafts", "All section types", "Priority support"]}
+      ]
+    },
+    {
+      "type": "cta",
+      "headline": "Ready to draft your page?",
+      "button_text": "Start Now",
+      "button_href": "#"
+    },
+    {
+      "type": "footer",
+      "text": "(c) 2026 Example Co.",
+      "links": [
+        {"label": "Privacy", "href": "#"},
+        {"label": "Terms", "href": "#"}
+      ]
+    }
+  ]
+}

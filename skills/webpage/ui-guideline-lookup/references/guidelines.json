@@ -1,0 +1,1512 @@
+[
+  {
+    "category": "Navigation",
+    "issue": "Smooth Scroll",
+    "platform": "Web",
+    "description": "Anchor links should scroll smoothly to target section",
+    "do": "Use scroll-behavior: smooth on html element",
+    "dont": "Jump directly without transition",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Navigation",
+    "issue": "Sticky Navigation",
+    "platform": "Web",
+    "description": "Fixed nav should not obscure content",
+    "do": "Add padding-top to body equal to nav height",
+    "dont": "Let nav overlap first section content",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Navigation",
+    "issue": "Active State",
+    "platform": "All",
+    "description": "Current page/section should be visually indicated",
+    "do": "Highlight active nav item with color/underline",
+    "dont": "No visual feedback on current location",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Navigation",
+    "issue": "Back Button",
+    "platform": "Mobile",
+    "description": "Users expect back to work predictably",
+    "do": "Preserve navigation history properly",
+    "dont": "Break browser/app back button behavior",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Navigation",
+    "issue": "Deep Linking",
+    "platform": "All",
+    "description": "URLs should reflect current state for sharing",
+    "do": "Update URL on state/view changes",
+    "dont": "Static URLs for dynamic content",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Navigation",
+    "issue": "Breadcrumbs",
+    "platform": "Web",
+    "description": "Show user location in site hierarchy",
+    "do": "Use for sites with 3+ levels of depth",
+    "dont": "Use for flat single-level sites",
+    "severity": "Low",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Animation",
+    "issue": "Excessive Motion",
+    "platform": "All",
+    "description": "Too many animations cause distraction and motion sickness",
+    "do": "Animate 1-2 key elements per view maximum",
+    "dont": "Animate everything that moves",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Animation",
+    "issue": "Duration Timing",
+    "platform": "All",
+    "description": "Motion duration depends on distance complexity platform and user context",
+    "do": "Use shared motion tokens and test that feedback stays responsive",
+    "dont": "Present 150-300ms or any cutoff as a universal requirement",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Animation",
+    "issue": "Reduced Motion",
+    "platform": "All",
+    "description": "Respect user's motion preferences",
+    "do": "Check prefers-reduced-motion media query",
+    "dont": "Ignore accessibility motion settings",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Animation",
+    "issue": "Loading States",
+    "platform": "All",
+    "description": "Show feedback during async operations",
+    "do": "Use skeleton screens or spinners",
+    "dont": "Leave UI frozen with no feedback",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Animation",
+    "issue": "Hover vs Tap",
+    "platform": "All",
+    "description": "Hover effects don't work on touch devices",
+    "do": "Use click/tap for primary interactions",
+    "dont": "Rely only on hover for important actions",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Animation",
+    "issue": "Continuous Animation",
+    "platform": "All",
+    "description": "Infinite animations are distracting",
+    "do": "Use for loading indicators only",
+    "dont": "Use for decorative elements",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Animation",
+    "issue": "Transform Performance",
+    "platform": "Web",
+    "description": "Some CSS properties trigger expensive repaints",
+    "do": "Use transform and opacity for animations",
+    "dont": "Animate width/height/top/left properties",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Animation",
+    "issue": "Easing Functions",
+    "platform": "All",
+    "description": "Easing should match how an element changes speed and purpose",
+    "do": "Use deceleration when arriving acceleration when leaving and linear for constant-rate progress",
+    "dont": "Reject linear easing even for steady rotation or progress",
+    "severity": "Low",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Layout",
+    "issue": "Z-Index Management",
+    "platform": "Web",
+    "description": "Stacking context conflicts cause hidden elements",
+    "do": "Define z-index scale system (10 20 30 50)",
+    "dont": "Use arbitrary large z-index values",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Layout",
+    "issue": "Overflow Hidden",
+    "platform": "Web",
+    "description": "Hidden overflow can clip important content",
+    "do": "Test all content fits within containers",
+    "dont": "Blindly apply overflow-hidden",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Layout",
+    "issue": "Fixed Positioning",
+    "platform": "Web",
+    "description": "Fixed elements can overlap or be inaccessible",
+    "do": "Account for safe areas and other fixed elements",
+    "dont": "Stack multiple fixed elements carelessly",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Layout",
+    "issue": "Stacking Context",
+    "platform": "Web",
+    "description": "New stacking contexts reset z-index",
+    "do": "Understand what creates new stacking context",
+    "dont": "Expect z-index to work across contexts",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Layout",
+    "issue": "Content Jumping",
+    "platform": "Web",
+    "description": "Images badges validation text and skeleton replacements can shift nearby content when they update",
+    "do": "Reserve appropriate space or keep async states in a stable content-driven container",
+    "dont": "Insert compact text or media without a layout strategy",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Layout",
+    "issue": "Viewport Units",
+    "platform": "Web",
+    "description": "100vh can be problematic on mobile browsers",
+    "do": "Use dvh or account for mobile browser chrome",
+    "dont": "Use 100vh for full-screen mobile layouts",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Layout",
+    "issue": "Container Width",
+    "platform": "Web",
+    "description": "Content too wide is hard to read",
+    "do": "Limit max-width for text content (65-75ch)",
+    "dont": "Let text span full viewport width",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Touch",
+    "issue": "Touch Target Size",
+    "platform": "Mobile",
+    "description": "Touch target guidance depends on platform and web context",
+    "do": "Use 44pt on iOS and 48dp on Android; for web use the separate WCAG Target Size rule",
+    "dont": "Treat one unit or minimum as universal across platforms",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Touch",
+    "issue": "Touch Spacing",
+    "platform": "Mobile",
+    "description": "Adjacent touch targets need adequate spacing",
+    "do": "Minimum 8px gap between touch targets",
+    "dont": "Tightly packed clickable elements",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Touch",
+    "issue": "Gesture Conflicts",
+    "platform": "Mobile",
+    "description": "Custom gestures can conflict with system",
+    "do": "Avoid horizontal swipe on main content",
+    "dont": "Override system gestures",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Touch",
+    "issue": "Tap Delay",
+    "platform": "Mobile",
+    "description": "300ms tap delay feels laggy",
+    "do": "Use touch-action CSS or fastclick",
+    "dont": "Default mobile tap handling",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Touch",
+    "issue": "Pull to Refresh",
+    "platform": "Mobile",
+    "description": "Accidental refresh is frustrating",
+    "do": "Disable where not needed",
+    "dont": "Enable by default everywhere",
+    "severity": "Low",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Touch",
+    "issue": "Haptic Feedback",
+    "platform": "Mobile",
+    "description": "Tactile feedback improves interaction feel",
+    "do": "Use for confirmations and important actions",
+    "dont": "Overuse vibration feedback",
+    "severity": "Low",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Interaction",
+    "issue": "Focus States",
+    "platform": "All",
+    "description": "Keyboard focus, including controls inside a modal, needs a visible indicator",
+    "do": "Use a visible focus ring on every interactive control, including modal controls",
+    "dont": "Remove focus outline without replacement",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Interaction",
+    "issue": "Hover States",
+    "platform": "Web",
+    "description": "Visual feedback on interactive elements",
+    "do": "Change cursor and add subtle visual change",
+    "dont": "No hover feedback on clickable elements",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Interaction",
+    "issue": "Active States",
+    "platform": "All",
+    "description": "Show immediate feedback on press/click",
+    "do": "Add pressed/active state visual change",
+    "dont": "No feedback during interaction",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Interaction",
+    "issue": "Disabled States",
+    "platform": "All",
+    "description": "Clearly indicate non-interactive elements",
+    "do": "Reduce opacity and change cursor",
+    "dont": "Confuse disabled with normal state",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Interaction",
+    "issue": "Loading Buttons",
+    "platform": "All",
+    "description": "Prevent double submission during async actions",
+    "do": "Disable button and show loading state",
+    "dont": "Allow multiple clicks during processing",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Interaction",
+    "issue": "Error Feedback",
+    "platform": "All",
+    "description": "Users need to know when something fails",
+    "do": "Show clear error messages near problem",
+    "dont": "Silent failures with no feedback",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Interaction",
+    "issue": "Success Feedback",
+    "platform": "All",
+    "description": "Confirm successful actions to users",
+    "do": "Show success message or visual change",
+    "dont": "No confirmation of completed action",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Interaction",
+    "issue": "Confirmation Dialogs",
+    "platform": "All",
+    "description": "Prevent accidental destructive actions",
+    "do": "Confirm before delete/irreversible actions",
+    "dont": "Delete without confirmation",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Accessibility",
+    "issue": "Color Contrast",
+    "platform": "All",
+    "description": "Text must be readable against background",
+    "do": "Minimum 4.5:1 ratio for normal text",
+    "dont": "Low contrast text",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Accessibility",
+    "issue": "Color Only",
+    "platform": "All",
+    "description": "Don't convey information by color alone",
+    "do": "Use icons/text in addition to color",
+    "dont": "Red/green only for error/success",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Accessibility",
+    "issue": "Alt Text",
+    "platform": "All",
+    "description": "Images need text alternatives",
+    "do": "Descriptive alt text for meaningful images",
+    "dont": "Empty or missing alt attributes",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Accessibility",
+    "issue": "Heading Hierarchy",
+    "platform": "Web",
+    "description": "Screen readers use headings for navigation",
+    "do": "Use sequential heading levels h1-h6",
+    "dont": "Skip heading levels or misuse for styling",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Accessibility",
+    "issue": "ARIA Labels",
+    "platform": "All",
+    "description": "Interactive elements need accessible names",
+    "do": "Add aria-label for icon-only buttons",
+    "dont": "Icon buttons without labels",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Accessibility",
+    "issue": "Keyboard Navigation",
+    "platform": "Web",
+    "description": "Web users need complete keyboard navigation with visible focus on every operable control",
+    "do": "Keep tab order aligned with visual order and test every action without a pointer",
+    "dont": "Keyboard traps or illogical tab order",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Accessibility",
+    "issue": "Screen Reader",
+    "platform": "All",
+    "description": "Content should make sense when read aloud",
+    "do": "Use semantic HTML and ARIA properly",
+    "dont": "Div soup with no semantics",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Accessibility",
+    "issue": "Form Labels",
+    "platform": "All",
+    "description": "Inputs must have associated labels",
+    "do": "Use label with for attribute or wrap input",
+    "dont": "Placeholder-only inputs",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Accessibility",
+    "issue": "Error Messages",
+    "platform": "All",
+    "description": "Error messages must be announced",
+    "do": "Use aria-live or role=alert for errors",
+    "dont": "Visual-only error indication",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Accessibility",
+    "issue": "Skip Links",
+    "platform": "Web",
+    "description": "Allow keyboard users to skip navigation",
+    "do": "Provide skip to main content link",
+    "dont": "No skip link on nav-heavy pages",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Performance",
+    "issue": "Image Optimization",
+    "platform": "All",
+    "description": "Large images slow page load",
+    "do": "Use appropriate size and format (WebP)",
+    "dont": "Unoptimized full-size images",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Performance",
+    "issue": "Lazy Loading",
+    "platform": "All",
+    "description": "Load content as needed",
+    "do": "Lazy load below-fold images and content",
+    "dont": "Load everything upfront",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Performance",
+    "issue": "Code Splitting",
+    "platform": "Web",
+    "description": "Large bundles slow initial load",
+    "do": "Split code by route/feature",
+    "dont": "Single large bundle",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Performance",
+    "issue": "Caching",
+    "platform": "Web",
+    "description": "Repeat visits should be fast",
+    "do": "Set appropriate cache headers",
+    "dont": "No caching strategy",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Performance",
+    "issue": "Font Loading",
+    "platform": "Web",
+    "description": "Web fonts can block rendering",
+    "do": "Use font-display swap or optional",
+    "dont": "Invisible text during font load",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Performance",
+    "issue": "Third Party Scripts",
+    "platform": "Web",
+    "description": "External scripts can block rendering",
+    "do": "Load non-critical scripts async/defer",
+    "dont": "Synchronous third-party scripts",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Performance",
+    "issue": "Bundle Size",
+    "platform": "Web",
+    "description": "Large JavaScript slows interaction",
+    "do": "Monitor and minimize bundle size",
+    "dont": "Ignore bundle size growth",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Performance",
+    "issue": "Render Blocking",
+    "platform": "Web",
+    "description": "CSS/JS can block first paint",
+    "do": "Inline critical CSS defer non-critical",
+    "dont": "Large blocking CSS files",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Forms",
+    "issue": "Input Labels",
+    "platform": "All",
+    "description": "Every input needs a visible label",
+    "do": "Always show label above or beside input",
+    "dont": "Placeholder as only label",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Forms",
+    "issue": "Error Placement",
+    "platform": "All",
+    "description": "Each invalid field needs an inline error connected to that field",
+    "do": "Show a specific error below the input and reference it with aria-describedby",
+    "dont": "Show only a top-level error without identifying each invalid field",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Forms",
+    "issue": "Inline Validation",
+    "platform": "All",
+    "description": "Validate as user types or on blur",
+    "do": "Validate on blur for most fields",
+    "dont": "Validate only on submit",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Forms",
+    "issue": "Input Types",
+    "platform": "All",
+    "description": "Use appropriate input types",
+    "do": "Use email tel number url etc",
+    "dont": "Text input for everything",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Forms",
+    "issue": "Autofill Support",
+    "platform": "Web",
+    "description": "Help browsers autofill correctly",
+    "do": "Use autocomplete attribute properly",
+    "dont": "Block or ignore autofill",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Forms",
+    "issue": "Required Indicators",
+    "platform": "All",
+    "description": "Mark required fields clearly",
+    "do": "Use asterisk or (required) text",
+    "dont": "No indication of required fields",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Forms",
+    "issue": "Password Visibility",
+    "platform": "All",
+    "description": "Let users see password while typing",
+    "do": "Toggle to show/hide password",
+    "dont": "No visibility toggle",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Forms",
+    "issue": "Submit Feedback",
+    "platform": "All",
+    "description": "Confirm form submission status",
+    "do": "Show loading then success/error state",
+    "dont": "No feedback after submit",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Forms",
+    "issue": "Input Affordance",
+    "platform": "All",
+    "description": "Inputs should look interactive",
+    "do": "Use distinct input styling",
+    "dont": "Inputs that look like plain text",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Forms",
+    "issue": "Mobile Keyboards",
+    "platform": "Mobile",
+    "description": "Show appropriate keyboard for input type",
+    "do": "Use inputmode attribute",
+    "dont": "Default keyboard for all inputs",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Responsive",
+    "issue": "Mobile First",
+    "platform": "Web",
+    "description": "Design for mobile then enhance for larger",
+    "do": "Start with mobile styles then add breakpoints",
+    "dont": "Desktop-first causing mobile issues",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Responsive",
+    "issue": "Breakpoint Testing",
+    "platform": "Web",
+    "description": "Test at all common screen sizes",
+    "do": "Test at 320 375 414 768 1024 1440",
+    "dont": "Only test on your device",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Responsive",
+    "issue": "Touch Friendly",
+    "platform": "Web",
+    "description": "Mobile layouts need touch-sized targets",
+    "do": "Increase touch targets on mobile",
+    "dont": "Same tiny buttons on mobile",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Responsive",
+    "issue": "Readable Font Size",
+    "platform": "All",
+    "description": "Text must be readable on all devices",
+    "do": "Minimum 16px body text on mobile",
+    "dont": "Tiny text on mobile",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Responsive",
+    "issue": "Viewport Meta",
+    "platform": "Web",
+    "description": "Set viewport for mobile devices",
+    "do": "Use width=device-width initial-scale=1",
+    "dont": "Missing or incorrect viewport",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Responsive",
+    "issue": "Horizontal Scroll",
+    "platform": "Web",
+    "description": "Avoid horizontal scrolling",
+    "do": "Ensure content fits viewport width",
+    "dont": "Content wider than viewport",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Responsive",
+    "issue": "Image Scaling",
+    "platform": "Web",
+    "description": "Images should scale with container",
+    "do": "Use max-width: 100% on images",
+    "dont": "Fixed width images overflow",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Responsive",
+    "issue": "Table Handling",
+    "platform": "Web",
+    "description": "Tables can overflow on mobile",
+    "do": "Use horizontal scroll or card layout",
+    "dont": "Wide tables breaking layout",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Typography",
+    "issue": "Line Height",
+    "platform": "All",
+    "description": "Adequate line height improves readability",
+    "do": "Use 1.5-1.75 for body text",
+    "dont": "Cramped or excessive line height",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Typography",
+    "issue": "Line Length",
+    "platform": "Web",
+    "description": "Long lines are hard to read",
+    "do": "Limit to 65-75 characters per line",
+    "dont": "Full-width text on large screens",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Typography",
+    "issue": "Font Size Scale",
+    "platform": "All",
+    "description": "Consistent type hierarchy aids scanning",
+    "do": "Use consistent modular scale",
+    "dont": "Random font sizes",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Typography",
+    "issue": "Font Loading",
+    "platform": "Web",
+    "description": "Fonts should load without layout shift",
+    "do": "Reserve space with fallback font",
+    "dont": "Layout shift when fonts load",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Typography",
+    "issue": "Contrast Readability",
+    "platform": "All",
+    "description": "Body text needs good contrast",
+    "do": "Use darker text on light backgrounds",
+    "dont": "Gray text on gray background",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Typography",
+    "issue": "Heading Clarity",
+    "platform": "All",
+    "description": "Headings should stand out from body",
+    "do": "Clear size/weight difference",
+    "dont": "Headings similar to body text",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Feedback",
+    "issue": "Loading Indicators",
+    "platform": "All",
+    "description": "Loading feedback should match the expected wait and avoid flashing for near-instant work",
+    "do": "Follow platform and component guidance; preserve layout focus and accessible busy status",
+    "dont": "Apply one timing threshold to every operation or leave long waits unexplained",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Feedback",
+    "issue": "Empty States",
+    "platform": "All",
+    "description": "Guide users when no content exists",
+    "do": "Show helpful message and action",
+    "dont": "Blank empty screens",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Feedback",
+    "issue": "Error Recovery",
+    "platform": "All",
+    "description": "Help users recover from errors",
+    "do": "Provide clear next steps",
+    "dont": "Error without recovery path",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Feedback",
+    "issue": "Progress Indicators",
+    "platform": "All",
+    "description": "Show progress for multi-step processes",
+    "do": "Step indicators or progress bar",
+    "dont": "No indication of progress",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Feedback",
+    "issue": "Toast Notifications",
+    "platform": "All",
+    "description": "Transient messages for non-critical info",
+    "do": "Auto-dismiss after 3-5 seconds",
+    "dont": "Toasts that never disappear",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Feedback",
+    "issue": "Confirmation Messages",
+    "platform": "All",
+    "description": "Confirm successful actions",
+    "do": "Brief success message",
+    "dont": "Silent success",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Content",
+    "issue": "Truncation",
+    "platform": "All",
+    "description": "Handle long content gracefully",
+    "do": "Truncate with ellipsis and expand option",
+    "dont": "Overflow or broken layout",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Content",
+    "issue": "Date Formatting",
+    "platform": "All",
+    "description": "Use locale-appropriate date formats",
+    "do": "Use relative or locale-aware dates",
+    "dont": "Ambiguous date formats",
+    "severity": "Low",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Content",
+    "issue": "Number Formatting",
+    "platform": "All",
+    "description": "Format large numbers for readability",
+    "do": "Use thousand separators or abbreviations",
+    "dont": "Long unformatted numbers",
+    "severity": "Low",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Content",
+    "issue": "Placeholder Content",
+    "platform": "All",
+    "description": "Show realistic placeholders during dev",
+    "do": "Use realistic sample data",
+    "dont": "Lorem ipsum everywhere",
+    "severity": "Low",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Onboarding",
+    "issue": "User Freedom",
+    "platform": "All",
+    "description": "Users should be able to skip tutorials",
+    "do": "Provide Skip and Back buttons",
+    "dont": "Force linear unskippable tour",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Search",
+    "issue": "Autocomplete",
+    "platform": "Web",
+    "description": "Help users find results faster",
+    "do": "Show predictions as user types",
+    "dont": "Require full type and enter",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Search",
+    "issue": "No Results",
+    "platform": "Web",
+    "description": "Dead ends frustrate users",
+    "do": "Show 'No results' with suggestions",
+    "dont": "Blank screen or '0 results'",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Data Entry",
+    "issue": "Bulk Actions",
+    "platform": "Web",
+    "description": "Editing one by one is tedious",
+    "do": "Allow multi-select and bulk edit",
+    "dont": "Single row actions only",
+    "severity": "Low",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "AI Interaction",
+    "issue": "Disclaimer",
+    "platform": "All",
+    "description": "Users need to know they talk to AI",
+    "do": "Clearly label AI generated content",
+    "dont": "Present AI as human",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "AI Interaction",
+    "issue": "Streaming",
+    "platform": "All",
+    "description": "Waiting for full text is slow",
+    "do": "Stream text response token by token",
+    "dont": "Show loading spinner for 10s+",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Spatial UI",
+    "issue": "Gaze Hover",
+    "platform": "VisionOS",
+    "description": "Elements should respond to eye tracking before pinch",
+    "do": "Scale/highlight element on look",
+    "dont": "Static element until pinch",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Spatial UI",
+    "issue": "Depth Layering",
+    "platform": "VisionOS",
+    "description": "UI needs Z-depth to separate content from environment",
+    "do": "Use glass material and z-offset",
+    "dont": "Flat opaque panels blocking view",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Sustainability",
+    "issue": "Auto-Play Video",
+    "platform": "Web",
+    "description": "Autoplaying media consumes data and creates motion barriers",
+    "do": "Prefer click-to-play; provide pause and captions; stop off-screen and honor reduced motion",
+    "dont": "Auto-play high-resolution loops without pause or captions",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Sustainability",
+    "issue": "Asset Weight",
+    "platform": "Web",
+    "description": "Heavy 3D/Image assets increase carbon footprint",
+    "do": "Compress and lazy load 3D models",
+    "dont": "Load 50MB textures",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "AI Interaction",
+    "issue": "Feedback Loop",
+    "platform": "All",
+    "description": "AI needs user feedback to improve",
+    "do": "Thumps up/down or 'Regenerate'",
+    "dont": "Static output only",
+    "severity": "Low",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Accessibility",
+    "issue": "Motion Sensitivity",
+    "platform": "All",
+    "description": "Parallax/Scroll-jacking causes nausea",
+    "do": "Honor prefers-reduced-motion and present the final readable state without parallax or scroll-jacking",
+    "dont": "Force scroll effects",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Accessibility",
+    "issue": "Focus Not Obscured (Minimum)",
+    "platform": "Web",
+    "description": "WCAG 2.2 AA requires keyboard focus to remain at least partially visible",
+    "do": "Offset sticky UI with scroll-padding and dismiss or move persistent overlays",
+    "dont": "Let headers footers banners or chat widgets fully cover focus",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Accessibility",
+    "issue": "Focus Not Obscured (Enhanced)",
+    "platform": "Web",
+    "description": "WCAG 2.2 AAA requires keyboard focus to remain fully visible",
+    "do": "Keep the entire focused component unobscured by author-created content",
+    "dont": "Present this enhanced AAA criterion as an AA requirement or allow persistent UI to hide any part of focus",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Accessibility",
+    "issue": "Focus Appearance",
+    "platform": "Web",
+    "description": "WCAG 2.2 AAA defines minimum area and contrast for focus indicators",
+    "do": "Use an indicator at least as large as a 2 CSS px perimeter with 3:1 state contrast",
+    "dont": "Present this enhanced AAA criterion as an AA requirement or use a thin low-contrast outline",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Accessibility",
+    "issue": "Dragging Movements",
+    "platform": "All",
+    "description": "WCAG 2.2 AA requires a single-pointer alternative for author-controlled drag operations",
+    "do": "Add buttons menus or tap-to-move controls and retain keyboard operation",
+    "dont": "Make dragging the only way to reorder resize or select",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Accessibility",
+    "issue": "Target Size (Minimum)",
+    "platform": "Web",
+    "description": "WCAG 2.2 AA requires 24 CSS px pointer targets or an applicable exception",
+    "do": "Use at least 24 by 24 CSS px or verify spacing equivalent inline user-agent or essential exceptions",
+    "dont": "Assume native 44pt or 48dp guidance defines web conformance",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Accessibility",
+    "issue": "Consistent Help",
+    "platform": "All",
+    "description": "WCAG 2.2 A requires repeated help mechanisms to stay in the same relative order",
+    "do": "Keep contact self-help and automated help in consistent locations",
+    "dont": "Move help controls to different locations on each page",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Forms",
+    "issue": "Redundant Entry",
+    "platform": "All",
+    "description": "WCAG 2.2 A avoids requiring the same information twice in one process",
+    "do": "Auto-populate prior values or let users select previously entered information",
+    "dont": "Ask users to retype the same address or account data without necessity",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Security / Accessibility",
+    "issue": "Accessible Authentication (Minimum)",
+    "platform": "All",
+    "description": "WCAG 2.2 AA says authentication must not depend only on a cognitive function test unless an exception applies",
+    "do": "Allow password managers and paste; offer passkeys OAuth or another non-cognitive method",
+    "dont": "Block paste or require manual OTP transcription with no alternative",
+    "severity": "Critical",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Animation",
+    "issue": "Auto-Rotating Content Controls",
+    "platform": "All",
+    "description": "Auto-rotating content needs user control",
+    "do": "Provide previous next and play/pause; stop on focus or hover and when reduced motion is requested",
+    "dont": "Auto-advance slides without a stop control",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Forms / Accessibility",
+    "issue": "Focusable Error Summary",
+    "platform": "Web",
+    "description": "An error summary for failed validation complements inline field errors and must be easy to find by keyboard and screen reader users",
+    "do": "Place it at the top of the form; move focus to its heading or container after failed submit; link each item to its invalid field; retain inline errors",
+    "dont": "Replace inline errors with a visual-only summary or move focus on every blur",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Typography",
+    "issue": "Heading Line Balance",
+    "platform": "Web",
+    "description": "Short multi-line headings may use balanced wrapping as a progressive visual heuristic",
+    "do": "Bound the measure and test natural-wrap fallback across widths fonts and locales",
+    "dont": "Promise an exact final line or insert blanket nonbreaking spaces or hardcoded br tags",
+    "severity": "Medium",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Layout",
+    "issue": "Long Token Wrapping",
+    "platform": "Web",
+    "description": "URLs identifiers and user content must not force horizontal overflow",
+    "do": "Use overflow-wrap anywhere and let flex or grid text children shrink",
+    "dont": "Apply word-break break-all to all prose",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Accessibility",
+    "issue": "Text Reflow and Spacing",
+    "platform": "Web",
+    "description": "Text must remain available at narrow widths zoom and user spacing overrides",
+    "do": "Use fluid sizes content-driven height and unitless line height",
+    "dont": "Clip text in fixed-width or fixed-height boxes",
+    "severity": "Critical",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Content",
+    "issue": "Essential Text Truncation",
+    "platform": "All",
+    "description": "Headings actions errors safety text and distinguishing names need complete access",
+    "do": "Wrap stack resize or provide a visible full-detail path",
+    "dont": "Clamp essential meaning only to make cards uniform",
+    "severity": "Critical",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Content",
+    "issue": "Compact Label Semantics",
+    "platform": "All",
+    "description": "Badges communicate state while chips or tags represent values or actions",
+    "do": "Choose static or interactive markup from the label's meaning and ownership",
+    "dont": "Make every pill clickable or encode status with color alone",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Layout",
+    "issue": "Chip Collection Reflow",
+    "platform": "All",
+    "description": "Filter chips and editable value collections must preserve labels when space or text size changes",
+    "do": "Wrap the collection or use an operable +n disclosure for hidden overflow values",
+    "dont": "Force all chips into one clipped row or hide overflow values",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Content",
+    "issue": "Compact Label Overflow",
+    "platform": "All",
+    "description": "A badge chip or pill label should stay whole on one line when practical and disclose unavoidable truncation",
+    "do": "Bound only unpredictable values; use nowrap with a shrinkable label; expose full text to keyboard pointer and touch users",
+    "dont": "Let one compact label wrap to a second line or use a hover-only tooltip",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Accessibility",
+    "issue": "Compact Control Semantics",
+    "platform": "Web",
+    "description": "Interactive chips need a native role accessible name state keyboard operation and visible focus",
+    "do": "Prefer a button and expose pressed or selected state that matches the visible label",
+    "dont": "Use a clickable div or reveal the only action on hover",
+    "severity": "Critical",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Accessibility",
+    "issue": "Contextual Live Badge Updates",
+    "platform": "Web",
+    "description": "Async badge and count changes should announce a meaningful contextual status without moving focus",
+    "do": "Use one appropriate atomic status message such as 3 items in cart",
+    "dont": "Announce a bare number or make every badge a competing live region",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Animation",
+    "issue": "Cancellable State Transitions",
+    "platform": "Web",
+    "description": "Rapid compact-control changes can interrupt an in-flight transition",
+    "do": "Cancel or replace prior motion; set the final semantic state directly and handle cancellation cleanup",
+    "dont": "Depend on animationend or transitionend for required state correctness",
+    "severity": "High",
+    "source_dataset": "ux-guidelines (web)"
+  },
+  {
+    "category": "Accessibility",
+    "issue": "Icon Button Labels",
+    "platform": "iOS/Android/React Native",
+    "description": "Icon-only buttons must expose an accessible label",
+    "do": "Set accessibilityLabel or label prop on icon buttons",
+    "dont": "Icon buttons without accessible names",
+    "severity": "Critical",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Accessibility",
+    "issue": "Form Control Labels",
+    "platform": "iOS/Android/React Native",
+    "description": "All inputs must have a visible label and an accessibility label",
+    "do": "Pair Text label with input and set accessibilityLabel",
+    "dont": "Inputs with placeholder only",
+    "severity": "Critical",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Accessibility",
+    "issue": "Role & Traits",
+    "platform": "iOS/Android/React Native",
+    "description": "Interactive elements must expose correct roles/traits",
+    "do": "Use accessibilityRole/button/link/checkbox etc.",
+    "dont": "Rely on generic views with no roles",
+    "severity": "High",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Accessibility",
+    "issue": "Dynamic Updates",
+    "platform": "iOS/Android/React Native",
+    "description": "Async status updates should be announced to screen readers",
+    "do": "Use accessibilityLiveRegion or announceForAccessibility",
+    "dont": "Update text silently with no announcement",
+    "severity": "Medium",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Accessibility",
+    "issue": "Decorative Icons",
+    "platform": "iOS/Android/React Native",
+    "description": "Decorative icons should be hidden from screen readers",
+    "do": "Mark decorative icons as not accessible",
+    "dont": "Have screen reader read every icon",
+    "severity": "Medium",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Touch",
+    "issue": "Touch Target Size",
+    "platform": "iOS/Android/React Native",
+    "description": "Native targets use 44pt on iOS and 48dp on Android; web WCAG 2.2 has a separate 24 by 24 CSS px minimum with exceptions",
+    "do": "Select 44pt for iOS and 48dp for Android at runtime; evaluate web targets separately against WCAG 2.5.8 and its exceptions",
+    "dont": "Collapse iOS 44pt, Android 48dp, and web 24 CSS px into one cross-platform number",
+    "severity": "Critical",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Touch",
+    "issue": "Touch Spacing",
+    "platform": "iOS/Android/React Native",
+    "description": "Adjacent touch targets need enough spacing",
+    "do": "Keep at least 8dp spacing between touchables",
+    "dont": "Cluster many buttons with no gap",
+    "severity": "Medium",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Touch",
+    "issue": "Gesture Conflicts",
+    "platform": "iOS/Android/React Native",
+    "description": "Custom gestures must not break system scroll/back",
+    "do": "Reserve horizontal swipes for carousels",
+    "dont": "Full-screen custom swipe conflicting with back",
+    "severity": "High",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Navigation",
+    "issue": "Back Behavior",
+    "platform": "iOS/Android/React Native",
+    "description": "Back navigation should be predictable and preserve state",
+    "do": "Use navigation.goBack and keep screen state",
+    "dont": "Reset stack or exit app unexpectedly",
+    "severity": "Critical",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Navigation",
+    "issue": "Bottom Tabs",
+    "platform": "iOS/Android/React Native",
+    "description": "Bottom tab bar should have at most 5 primary items",
+    "do": "Use 3–5 tabs and move extras to More/Settings",
+    "dont": "Overloaded tab bar with many icons",
+    "severity": "Medium",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Navigation",
+    "issue": "Modal Escape",
+    "platform": "iOS/Android/React Native",
+    "description": "Modals/sheets must have clear close actions",
+    "do": "Provide close button and swipe-down where platform expects",
+    "dont": "Trapping users in modal with no obvious exit",
+    "severity": "High",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "State",
+    "issue": "Preserve Screen State",
+    "platform": "iOS/Android/React Native",
+    "description": "Returning to a screen should restore its scroll and form state",
+    "do": "Keep components mounted or persist state",
+    "dont": "Reset list scroll and form inputs on every visit",
+    "severity": "Medium",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Feedback",
+    "issue": "Loading Indicators",
+    "platform": "iOS/Android/React Native",
+    "description": "Show visible feedback during network operations",
+    "do": "Use ActivityIndicator or skeleton for >300ms operations",
+    "dont": "Leave button and screen frozen",
+    "severity": "High",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Feedback",
+    "issue": "Success Feedback",
+    "platform": "iOS/Android/React Native",
+    "description": "Confirm successful actions with brief feedback",
+    "do": "Show toast/checkmark or banner",
+    "dont": "Complete actions silently with no confirmation",
+    "severity": "Medium",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Feedback",
+    "issue": "Error Feedback",
+    "platform": "iOS/Android/React Native",
+    "description": "Show clear error messages near the problem",
+    "do": "input-level error + summary banner",
+    "dont": "Only change border color with no explanation",
+    "severity": "High",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Forms",
+    "issue": "Inline Validation",
+    "platform": "iOS/Android/React Native",
+    "description": "Validate inputs on blur or submit with clear messaging",
+    "do": "Validate onBlur and onSubmit",
+    "dont": "Validate on every keystroke causing jank",
+    "severity": "Medium",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Forms",
+    "issue": "Keyboard Type",
+    "platform": "iOS/Android/React Native",
+    "description": "Use appropriate keyboardType and returnKeyType",
+    "do": "Match email/tel/number/search types",
+    "dont": "Use default keyboard for all inputs",
+    "severity": "Medium",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Forms",
+    "issue": "Auto Focus & Next",
+    "platform": "iOS/Android/React Native",
+    "description": "Guide users through form fields with Next/Done flows",
+    "do": "Use onSubmitEditing to focus next input",
+    "dont": "Force users to tap each field manually",
+    "severity": "Low",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Forms",
+    "issue": "Password Visibility",
+    "platform": "iOS/Android/React Native",
+    "description": "Allow toggling password visibility securely",
+    "do": "Provide Show/Hide icon toggling secureTextEntry",
+    "dont": "Force users to type blind with no option",
+    "severity": "Medium",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Performance",
+    "issue": "Virtualize Long Lists",
+    "platform": "iOS/Android/React Native",
+    "description": "Use FlatList/SectionList for lists over ~50 items",
+    "do": "Use keyExtractor and initialNumToRender appropriately",
+    "dont": "Render hundreds of items with ScrollView",
+    "severity": "High",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Performance",
+    "issue": "Image Size & Cache",
+    "platform": "iOS/Android/React Native",
+    "description": "Use correctly sized and cached images",
+    "do": "Use Image component with proper resizeMode and caching",
+    "dont": "Load full-resolution images everywhere",
+    "severity": "Medium",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Performance",
+    "issue": "Debounce High-Freq Events",
+    "platform": "iOS/Android/React Native",
+    "description": "Debounce scroll/search callbacks to avoid jank",
+    "do": "Wrap handlers with debounce/throttle",
+    "dont": "Run heavy logic on every event",
+    "severity": "Medium",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Animation",
+    "issue": "Duration & Easing",
+    "platform": "iOS/Android/React Native",
+    "description": "Micro-interactions should be 150–300ms with native-like easing",
+    "do": "Use ease-out for enter/ease-in for exit",
+    "dont": "Use long or linear animations for core UI",
+    "severity": "Medium",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Animation",
+    "issue": "Respect Reduced Motion",
+    "platform": "iOS/Android/React Native",
+    "description": "Respect OS reduced-motion accessibility setting",
+    "do": "Check reduceMotionEnabled and simplify animations",
+    "dont": "Ignore user motion preferences",
+    "severity": "Critical",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Animation",
+    "issue": "Limited Continuous Motion",
+    "platform": "iOS/Android/React Native",
+    "description": "Reserve infinite animations for loaders and live data",
+    "do": "Use looping only where necessary",
+    "dont": "Keep decorative elements looping forever",
+    "severity": "Medium",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Typography",
+    "issue": "Base Font Size",
+    "platform": "iOS/Android/React Native",
+    "description": "Body text must be readable and support Dynamic Type",
+    "do": "Use platform fontScale and at least 14–16pt base",
+    "dont": "Render critical text below 12pt",
+    "severity": "High",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Typography",
+    "issue": "Dynamic Type Support",
+    "platform": "iOS/Android/React Native",
+    "description": "Support system text scaling without breaking layout",
+    "do": "Set allowFontScaling and test large text",
+    "dont": "Disable scaling on all text globally",
+    "severity": "High",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Safe Areas",
+    "issue": "Safe Area Insets",
+    "platform": "iOS/Android/React Native",
+    "description": "Content must not overlap notches/gesture bars",
+    "do": "Wrap screens in SafeAreaView or apply insets",
+    "dont": "Place tappable content under system bars",
+    "severity": "High",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Theming",
+    "issue": "Light/Dark Contrast",
+    "platform": "iOS/Android/React Native",
+    "description": "Ensure sufficient contrast in both light and dark themes",
+    "do": "Use semantic tokens and test both themes",
+    "dont": "Reuse light-theme grays directly in dark mode",
+    "severity": "High",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Anti-Pattern",
+    "issue": "No Gesture-Only Actions",
+    "platform": "iOS/Android/React Native",
+    "description": "Don't rely solely on hidden gestures for core actions",
+    "do": "Provide visible buttons in addition to gestures",
+    "dont": "Rely on swipe/shake only with no UI affordance",
+    "severity": "Critical",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Accessibility",
+    "issue": "Dragging Alternatives",
+    "platform": "iOS/Android/React Native",
+    "description": "React Native drag and reorder operations need a non-drag path selected for the active native runtime",
+    "do": "Provide named Move up/down buttons or a position menu beside drag handles; route iOS and Android behavior through the runtime platform adapter",
+    "dont": "Make drag, swipe, or a web-only pointer handler the only way to reorder native content",
+    "severity": "High",
+    "source_dataset": "app-interface (mobile/app)"
+  },
+  {
+    "category": "Forms",
+    "issue": "Authentication Reuse",
+    "platform": "iOS/Android/React Native",
+    "description": "Authentication and multi-step flows should reuse prior values",
+    "do": "Support password managers passkeys paste and prefilled confirmed values",
+    "dont": "Force users to retype credentials or the same data in one flow",
+    "severity": "Critical",
+    "source_dataset": "app-interface (mobile/app)"
+  }
+]

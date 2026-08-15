@@ -23,6 +23,14 @@ CANVAS_PRESETS_MM = {
     # card/overlay need, e.g. video-assembly-composer's intro/outro cards and
     # watermark_image), not tied to one caller.
     "VIDEO_HD": (508.0, 285.75),
+    # 1080x1080px at the same fixed 96 CSS-px/inch conversion -- the real
+    # standard square social-post size (Facebook/Instagram feed posts).
+    # Round-trips exactly back to 1080x1080 via _mm_to_px(), same derivation
+    # as VIDEO_HD. A real, previously-missing gap: a caller drafting a social
+    # announcement poster had only A1/A4 (print) or a 16:9 video frame to
+    # choose from, neither of which matches how these posts actually get
+    # published. General-purpose, not tied to one caller.
+    "SQUARE": (285.75, 285.75),
 }
 
 ZONE_TYPES = {

@@ -1,0 +1,13 @@
+{
+  "content_type": "contest_result",
+  "canvas": "square",
+  "fields": {
+    "ten_cuoc_thi": "Cuộc thi Ảnh đẹp Công ty 2026",
+    "ngay_cong_bo": "15/08/2026",
+    "top_results": [
+      {"hang": "Giải Nhất", "ten": "Nguyễn Văn A", "giai_thuong": "5.000.000đ"},
+      {"hang": "Giải Nhì", "ten": "Trần Thị B", "giai_thuong": "3.000.000đ"},
+      {"hang": "Giải Ba", "ten": "Lê Văn C", "giai_thuong": "1.000.000đ"}
+    ]
+  }
+}

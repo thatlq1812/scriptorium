@@ -1,0 +1,2153 @@
+[
+  {
+    "category": "Navigation",
+    "icon_name": "list",
+    "keywords": [
+      "hamburger",
+      "menu",
+      "navigation",
+      "toggle",
+      "bars"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { List } from '@phosphor-icons/react'",
+    "best_for": "Mobile navigation drawer toggle sidebar",
+    "style": "Outline",
+    "semantic_role": "interactive",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Navigation",
+    "icon_name": "arrow-left",
+    "keywords": [
+      "back",
+      "previous",
+      "return",
+      "navigate"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { ArrowLeft } from '@phosphor-icons/react'",
+    "best_for": "Back button breadcrumb navigation",
+    "style": "Outline",
+    "semantic_role": "interactive",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Navigation",
+    "icon_name": "arrow-right",
+    "keywords": [
+      "next",
+      "forward",
+      "continue",
+      "navigate"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { ArrowRight } from '@phosphor-icons/react'",
+    "best_for": "Forward button next step CTA",
+    "style": "Outline",
+    "semantic_role": "interactive",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Navigation",
+    "icon_name": "caret-down",
+    "keywords": [
+      "dropdown",
+      "expand",
+      "accordion",
+      "select"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { CaretDown } from '@phosphor-icons/react'",
+    "best_for": "Dropdown toggle accordion header",
+    "style": "Outline",
+    "semantic_role": "interactive",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Navigation",
+    "icon_name": "caret-up",
+    "keywords": [
+      "collapse",
+      "close",
+      "accordion",
+      "minimize"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { CaretUp } from '@phosphor-icons/react'",
+    "best_for": "Accordion collapse minimize",
+    "style": "Outline",
+    "semantic_role": "interactive",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Navigation",
+    "icon_name": "house",
+    "keywords": [
+      "homepage",
+      "main",
+      "dashboard",
+      "start"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { House } from '@phosphor-icons/react'",
+    "best_for": "Home navigation main page",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Navigation",
+    "icon_name": "x",
+    "keywords": [
+      "close",
+      "cancel",
+      "dismiss",
+      "remove",
+      "exit"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { X } from '@phosphor-icons/react'",
+    "best_for": "Modal close dismiss button",
+    "style": "Outline",
+    "semantic_role": "interactive",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Navigation",
+    "icon_name": "arrow-square-out",
+    "keywords": [
+      "open",
+      "new",
+      "tab",
+      "external",
+      "link"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { ArrowSquareOut } from '@phosphor-icons/react'",
+    "best_for": "External link indicator",
+    "style": "Outline",
+    "semantic_role": "interactive",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Action",
+    "icon_name": "plus",
+    "keywords": [
+      "add",
+      "create",
+      "new",
+      "insert"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Plus } from '@phosphor-icons/react'",
+    "best_for": "Add button create new item",
+    "style": "Outline",
+    "semantic_role": "interactive",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Action",
+    "icon_name": "minus",
+    "keywords": [
+      "remove",
+      "subtract",
+      "decrease",
+      "delete"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Minus } from '@phosphor-icons/react'",
+    "best_for": "Remove item quantity decrease",
+    "style": "Outline",
+    "semantic_role": "interactive",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Action",
+    "icon_name": "trash",
+    "keywords": [
+      "delete",
+      "remove",
+      "discard",
+      "bin"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Trash } from '@phosphor-icons/react'",
+    "best_for": "Delete action destructive",
+    "style": "Outline",
+    "semantic_role": "interactive",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Action",
+    "icon_name": "pencil-simple",
+    "keywords": [
+      "pencil",
+      "modify",
+      "change",
+      "update"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { PencilSimple } from '@phosphor-icons/react'",
+    "best_for": "Edit button modify content",
+    "style": "Outline",
+    "semantic_role": "interactive",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Action",
+    "icon_name": "floppy-disk",
+    "keywords": [
+      "disk",
+      "store",
+      "persist",
+      "save"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { FloppyDisk } from '@phosphor-icons/react'",
+    "best_for": "Save button persist changes",
+    "style": "Outline",
+    "semantic_role": "interactive",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Action",
+    "icon_name": "download-simple",
+    "keywords": [
+      "export",
+      "save",
+      "file",
+      "download"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { DownloadSimple } from '@phosphor-icons/react'",
+    "best_for": "Download file export",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Action",
+    "icon_name": "upload-simple",
+    "keywords": [
+      "import",
+      "file",
+      "attach",
+      "upload"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { UploadSimple } from '@phosphor-icons/react'",
+    "best_for": "Upload file import",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Action",
+    "icon_name": "copy",
+    "keywords": [
+      "duplicate",
+      "clipboard",
+      "paste"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Copy } from '@phosphor-icons/react'",
+    "best_for": "Copy to clipboard",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Action",
+    "icon_name": "share",
+    "keywords": [
+      "social",
+      "distribute",
+      "send"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Share } from '@phosphor-icons/react'",
+    "best_for": "Share button social",
+    "style": "Outline",
+    "semantic_role": "interactive",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Action",
+    "icon_name": "magnifying-glass",
+    "keywords": [
+      "find",
+      "lookup",
+      "filter",
+      "query"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { MagnifyingGlass } from '@phosphor-icons/react'",
+    "best_for": "Search input bar",
+    "style": "Outline",
+    "semantic_role": "interactive",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Action",
+    "icon_name": "funnel",
+    "keywords": [
+      "sort",
+      "refine",
+      "narrow",
+      "options"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Funnel } from '@phosphor-icons/react'",
+    "best_for": "Filter dropdown sort",
+    "style": "Outline",
+    "semantic_role": "interactive",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Action",
+    "icon_name": "gear",
+    "keywords": [
+      "gear",
+      "cog",
+      "preferences",
+      "config"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Gear } from '@phosphor-icons/react'",
+    "best_for": "Settings page configuration",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Status",
+    "icon_name": "check",
+    "keywords": [
+      "success",
+      "done",
+      "complete",
+      "verified"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Check } from '@phosphor-icons/react'",
+    "best_for": "Success state checkmark",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Status",
+    "icon_name": "check-circle",
+    "keywords": [
+      "success",
+      "verified",
+      "approved",
+      "complete"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { CheckCircle } from '@phosphor-icons/react'",
+    "best_for": "Success badge verified",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Status",
+    "icon_name": "x-circle",
+    "keywords": [
+      "error",
+      "failed",
+      "cancel",
+      "rejected"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { XCircle } from '@phosphor-icons/react'",
+    "best_for": "Error state failed",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Status",
+    "icon_name": "warning",
+    "keywords": [
+      "warning",
+      "caution",
+      "attention",
+      "danger"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Warning } from '@phosphor-icons/react'",
+    "best_for": "Warning message caution",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Status",
+    "icon_name": "warning-circle",
+    "keywords": [
+      "info",
+      "notice",
+      "information",
+      "help"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { WarningCircle } from '@phosphor-icons/react'",
+    "best_for": "Info notice alert",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Status",
+    "icon_name": "info",
+    "keywords": [
+      "information",
+      "help",
+      "tooltip",
+      "details"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Info } from '@phosphor-icons/react'",
+    "best_for": "Information tooltip help",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Status",
+    "icon_name": "circle-notch",
+    "keywords": [
+      "loading",
+      "spinner",
+      "processing",
+      "wait"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { CircleNotch } from '@phosphor-icons/react'",
+    "best_for": "Loading state spinner",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Status",
+    "icon_name": "clock",
+    "keywords": [
+      "time",
+      "schedule",
+      "pending",
+      "wait"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Clock } from '@phosphor-icons/react'",
+    "best_for": "Pending time schedule",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Communication",
+    "icon_name": "envelope",
+    "keywords": [
+      "email",
+      "message",
+      "inbox",
+      "letter"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Envelope } from '@phosphor-icons/react'",
+    "best_for": "Email contact inbox",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Communication",
+    "icon_name": "chat-circle",
+    "keywords": [
+      "chat",
+      "comment",
+      "bubble",
+      "conversation"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { ChatCircle } from '@phosphor-icons/react'",
+    "best_for": "Chat comment message",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Communication",
+    "icon_name": "phone",
+    "keywords": [
+      "call",
+      "mobile",
+      "telephone",
+      "contact"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Phone } from '@phosphor-icons/react'",
+    "best_for": "Phone contact call",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Communication",
+    "icon_name": "paper-plane-tilt",
+    "keywords": [
+      "submit",
+      "dispatch",
+      "message",
+      "airplane"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { PaperPlaneTilt } from '@phosphor-icons/react'",
+    "best_for": "Send message submit",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Communication",
+    "icon_name": "bell",
+    "keywords": [
+      "notification",
+      "alert",
+      "ring",
+      "reminder"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Bell } from '@phosphor-icons/react'",
+    "best_for": "Notification bell alert",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "User",
+    "icon_name": "user",
+    "keywords": [
+      "profile",
+      "account",
+      "person",
+      "avatar"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { User } from '@phosphor-icons/react'",
+    "best_for": "User profile account",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "User",
+    "icon_name": "users",
+    "keywords": [
+      "team",
+      "group",
+      "people",
+      "members"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Users } from '@phosphor-icons/react'",
+    "best_for": "Team group members",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "User",
+    "icon_name": "user-plus",
+    "keywords": [
+      "add",
+      "invite",
+      "new",
+      "member"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { UserPlus } from '@phosphor-icons/react'",
+    "best_for": "Add user invite",
+    "style": "Outline",
+    "semantic_role": "interactive",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "User",
+    "icon_name": "sign-in",
+    "keywords": [
+      "signin",
+      "authenticate",
+      "enter"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { SignIn } from '@phosphor-icons/react'",
+    "best_for": "Login signin",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "User",
+    "icon_name": "sign-out",
+    "keywords": [
+      "signout",
+      "exit",
+      "leave",
+      "logout"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { SignOut } from '@phosphor-icons/react'",
+    "best_for": "Logout signout",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Media",
+    "icon_name": "image",
+    "keywords": [
+      "photo",
+      "picture",
+      "gallery",
+      "thumbnail"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Image } from '@phosphor-icons/react'",
+    "best_for": "Image photo gallery",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Media",
+    "icon_name": "video",
+    "keywords": [
+      "movie",
+      "film",
+      "play",
+      "record"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Video } from '@phosphor-icons/react'",
+    "best_for": "Video player media",
+    "style": "Outline",
+    "semantic_role": "interactive",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Media",
+    "icon_name": "play",
+    "keywords": [
+      "start",
+      "video",
+      "audio",
+      "media"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Play } from '@phosphor-icons/react'",
+    "best_for": "Play button video audio",
+    "style": "Outline",
+    "semantic_role": "interactive",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Media",
+    "icon_name": "pause",
+    "keywords": [
+      "stop",
+      "halt",
+      "video",
+      "audio"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Pause } from '@phosphor-icons/react'",
+    "best_for": "Pause button media",
+    "style": "Outline",
+    "semantic_role": "interactive",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Media",
+    "icon_name": "speaker-high",
+    "keywords": [
+      "sound",
+      "audio",
+      "speaker",
+      "music"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { SpeakerHigh } from '@phosphor-icons/react'",
+    "best_for": "Volume audio sound",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Media",
+    "icon_name": "microphone",
+    "keywords": [
+      "microphone",
+      "record",
+      "voice",
+      "audio"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Microphone } from '@phosphor-icons/react'",
+    "best_for": "Microphone voice record",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Media",
+    "icon_name": "camera",
+    "keywords": [
+      "photo",
+      "capture",
+      "snapshot",
+      "picture"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Camera } from '@phosphor-icons/react'",
+    "best_for": "Camera photo capture",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Commerce",
+    "icon_name": "shopping-cart",
+    "keywords": [
+      "cart",
+      "checkout",
+      "basket",
+      "buy"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { ShoppingCart } from '@phosphor-icons/react'",
+    "best_for": "Shopping cart e-commerce",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Commerce",
+    "icon_name": "shopping-bag",
+    "keywords": [
+      "purchase",
+      "buy",
+      "store",
+      "bag"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { ShoppingBag } from '@phosphor-icons/react'",
+    "best_for": "Shopping bag purchase",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Commerce",
+    "icon_name": "credit-card",
+    "keywords": [
+      "payment",
+      "card",
+      "checkout",
+      "stripe"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { CreditCard } from '@phosphor-icons/react'",
+    "best_for": "Payment credit card",
+    "style": "Outline",
+    "semantic_role": "interactive",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Commerce",
+    "icon_name": "currency-dollar",
+    "keywords": [
+      "money",
+      "price",
+      "currency",
+      "cost"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { CurrencyDollar } from '@phosphor-icons/react'",
+    "best_for": "Price money currency",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Commerce",
+    "icon_name": "tag",
+    "keywords": [
+      "label",
+      "price",
+      "discount",
+      "sale"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Tag } from '@phosphor-icons/react'",
+    "best_for": "Price tag label",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Commerce",
+    "icon_name": "gift",
+    "keywords": [
+      "present",
+      "reward",
+      "bonus",
+      "offer"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Gift } from '@phosphor-icons/react'",
+    "best_for": "Gift reward offer",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Commerce",
+    "icon_name": "percent",
+    "keywords": [
+      "discount",
+      "sale",
+      "offer",
+      "promo"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Percent } from '@phosphor-icons/react'",
+    "best_for": "Discount percentage sale",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Data",
+    "icon_name": "chart-bar",
+    "keywords": [
+      "analytics",
+      "statistics",
+      "graph",
+      "metrics"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { ChartBar } from '@phosphor-icons/react'",
+    "best_for": "Bar chart analytics",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Data",
+    "icon_name": "chart-pie",
+    "keywords": [
+      "statistics",
+      "distribution",
+      "breakdown"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { ChartPie } from '@phosphor-icons/react'",
+    "best_for": "Pie chart distribution",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Data",
+    "icon_name": "trend-up",
+    "keywords": [
+      "growth",
+      "increase",
+      "positive",
+      "trend"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { TrendUp } from '@phosphor-icons/react'",
+    "best_for": "Growth trend positive",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Data",
+    "icon_name": "trend-down",
+    "keywords": [
+      "decline",
+      "decrease",
+      "negative",
+      "trend"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { TrendDown } from '@phosphor-icons/react'",
+    "best_for": "Decline trend negative",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Data",
+    "icon_name": "pulse",
+    "keywords": [
+      "activity",
+      "heartbeat",
+      "monitor",
+      "live"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Pulse } from '@phosphor-icons/react'",
+    "best_for": "Activity monitor pulse",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Data",
+    "icon_name": "database",
+    "keywords": [
+      "storage",
+      "server",
+      "data",
+      "backend"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Database } from '@phosphor-icons/react'",
+    "best_for": "Database storage",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Files",
+    "icon_name": "file",
+    "keywords": [
+      "document",
+      "page",
+      "paper",
+      "doc"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { File } from '@phosphor-icons/react'",
+    "best_for": "File document",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Files",
+    "icon_name": "file-text",
+    "keywords": [
+      "document",
+      "text",
+      "page",
+      "article"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { FileText } from '@phosphor-icons/react'",
+    "best_for": "Text document article",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Files",
+    "icon_name": "folder",
+    "keywords": [
+      "directory",
+      "organize",
+      "group",
+      "files"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Folder } from '@phosphor-icons/react'",
+    "best_for": "Folder directory",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Files",
+    "icon_name": "folder-open",
+    "keywords": [
+      "expanded",
+      "browse",
+      "files",
+      "view"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { FolderOpen } from '@phosphor-icons/react'",
+    "best_for": "Open folder browse",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Files",
+    "icon_name": "paperclip",
+    "keywords": [
+      "attachment",
+      "attach",
+      "file",
+      "link"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Paperclip } from '@phosphor-icons/react'",
+    "best_for": "Attachment paperclip",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Files",
+    "icon_name": "link",
+    "keywords": [
+      "url",
+      "hyperlink",
+      "chain",
+      "connect"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Link } from '@phosphor-icons/react'",
+    "best_for": "Link URL hyperlink",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Files",
+    "icon_name": "clipboard",
+    "keywords": [
+      "paste",
+      "copy",
+      "buffer",
+      "notes"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Clipboard } from '@phosphor-icons/react'",
+    "best_for": "Clipboard paste",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Layout",
+    "icon_name": "grid-four",
+    "keywords": [
+      "tiles",
+      "gallery",
+      "layout",
+      "dashboard"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { GridFour } from '@phosphor-icons/react'",
+    "best_for": "Grid layout gallery",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Layout",
+    "icon_name": "list-bullets",
+    "keywords": [
+      "rows",
+      "table",
+      "lines",
+      "items"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { ListBullets } from '@phosphor-icons/react'",
+    "best_for": "List view rows",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Layout",
+    "icon_name": "columns",
+    "keywords": [
+      "layout",
+      "split",
+      "dual",
+      "sidebar"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Columns } from '@phosphor-icons/react'",
+    "best_for": "Column layout split",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Layout",
+    "icon_name": "arrows-out",
+    "keywords": [
+      "fullscreen",
+      "expand",
+      "enlarge",
+      "zoom"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { ArrowsOut } from '@phosphor-icons/react'",
+    "best_for": "Fullscreen maximize",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Layout",
+    "icon_name": "arrows-in",
+    "keywords": [
+      "reduce",
+      "shrink",
+      "collapse",
+      "exit"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { ArrowsIn } from '@phosphor-icons/react'",
+    "best_for": "Minimize reduce",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Layout",
+    "icon_name": "sidebar",
+    "keywords": [
+      "panel",
+      "drawer",
+      "navigation",
+      "menu"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Sidebar } from '@phosphor-icons/react'",
+    "best_for": "Sidebar panel",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Social",
+    "icon_name": "heart",
+    "keywords": [
+      "like",
+      "love",
+      "favorite",
+      "wishlist"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Heart } from '@phosphor-icons/react'",
+    "best_for": "Like favorite love",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Social",
+    "icon_name": "star",
+    "keywords": [
+      "rating",
+      "review",
+      "favorite",
+      "bookmark"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Star } from '@phosphor-icons/react'",
+    "best_for": "Star rating favorite",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Social",
+    "icon_name": "thumbs-up",
+    "keywords": [
+      "like",
+      "approve",
+      "agree",
+      "positive"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { ThumbsUp } from '@phosphor-icons/react'",
+    "best_for": "Like approve thumb",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Social",
+    "icon_name": "thumbs-down",
+    "keywords": [
+      "dislike",
+      "disapprove",
+      "disagree",
+      "negative"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { ThumbsDown } from '@phosphor-icons/react'",
+    "best_for": "Dislike disapprove",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Social",
+    "icon_name": "bookmark",
+    "keywords": [
+      "save",
+      "later",
+      "favorite",
+      "mark"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Bookmark } from '@phosphor-icons/react'",
+    "best_for": "Bookmark save",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Social",
+    "icon_name": "flag",
+    "keywords": [
+      "report",
+      "mark",
+      "important",
+      "highlight"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Flag } from '@phosphor-icons/react'",
+    "best_for": "Flag report",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Device",
+    "icon_name": "device-mobile",
+    "keywords": [
+      "mobile",
+      "phone",
+      "device",
+      "touch"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { DeviceMobile } from '@phosphor-icons/react'",
+    "best_for": "Mobile smartphone",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Device",
+    "icon_name": "device-tablet",
+    "keywords": [
+      "ipad",
+      "device",
+      "touch",
+      "screen"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { DeviceTablet } from '@phosphor-icons/react'",
+    "best_for": "Tablet device",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Device",
+    "icon_name": "monitor",
+    "keywords": [
+      "desktop",
+      "screen",
+      "computer",
+      "display"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Monitor } from '@phosphor-icons/react'",
+    "best_for": "Desktop monitor",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Device",
+    "icon_name": "laptop",
+    "keywords": [
+      "notebook",
+      "computer",
+      "portable",
+      "device"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Laptop } from '@phosphor-icons/react'",
+    "best_for": "Laptop computer",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Device",
+    "icon_name": "printer",
+    "keywords": [
+      "print",
+      "document",
+      "output",
+      "paper"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Printer } from '@phosphor-icons/react'",
+    "best_for": "Printer print",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Security",
+    "icon_name": "lock",
+    "keywords": [
+      "secure",
+      "password",
+      "protected",
+      "private"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Lock } from '@phosphor-icons/react'",
+    "best_for": "Lock secure",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Security",
+    "icon_name": "lock-open",
+    "keywords": [
+      "open",
+      "access",
+      "unsecure",
+      "public"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { LockOpen } from '@phosphor-icons/react'",
+    "best_for": "Unlock open",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Security",
+    "icon_name": "shield",
+    "keywords": [
+      "protection",
+      "security",
+      "safe",
+      "guard"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Shield } from '@phosphor-icons/react'",
+    "best_for": "Shield protection",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Security",
+    "icon_name": "key",
+    "keywords": [
+      "password",
+      "access",
+      "unlock",
+      "login"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Key } from '@phosphor-icons/react'",
+    "best_for": "Key password",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Security",
+    "icon_name": "eye",
+    "keywords": [
+      "view",
+      "show",
+      "visible",
+      "password"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Eye } from '@phosphor-icons/react'",
+    "best_for": "Show password view",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Security",
+    "icon_name": "eye-slash",
+    "keywords": [
+      "hide",
+      "invisible",
+      "password",
+      "hidden"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { EyeSlash } from '@phosphor-icons/react'",
+    "best_for": "Hide password",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Location",
+    "icon_name": "map-pin",
+    "keywords": [
+      "location",
+      "marker",
+      "place",
+      "address"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { MapPin } from '@phosphor-icons/react'",
+    "best_for": "Location pin marker",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Location",
+    "icon_name": "map-trifold",
+    "keywords": [
+      "map",
+      "directions",
+      "navigate",
+      "geography",
+      "location"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { MapTrifold } from '@phosphor-icons/react'",
+    "best_for": "Map directions",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Location",
+    "icon_name": "compass",
+    "keywords": [
+      "compass",
+      "direction",
+      "pointer",
+      "arrow"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Compass } from '@phosphor-icons/react'",
+    "best_for": "Navigation compass",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Location",
+    "icon_name": "globe",
+    "keywords": [
+      "world",
+      "international",
+      "global",
+      "web"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Globe } from '@phosphor-icons/react'",
+    "best_for": "Globe world",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Time",
+    "icon_name": "calendar",
+    "keywords": [
+      "date",
+      "schedule",
+      "event",
+      "appointment"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Calendar } from '@phosphor-icons/react'",
+    "best_for": "Calendar date",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Time",
+    "icon_name": "arrows-clockwise",
+    "keywords": [
+      "reload",
+      "sync",
+      "update",
+      "refresh"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { ArrowsClockwise } from '@phosphor-icons/react'",
+    "best_for": "Refresh reload",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Time",
+    "icon_name": "arrow-counter-clockwise",
+    "keywords": [
+      "undo",
+      "back",
+      "revert",
+      "history"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { ArrowCounterClockwise } from '@phosphor-icons/react'",
+    "best_for": "Undo revert",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Time",
+    "icon_name": "arrow-clockwise",
+    "keywords": [
+      "redo",
+      "forward",
+      "repeat",
+      "history"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { ArrowClockwise } from '@phosphor-icons/react'",
+    "best_for": "Redo forward",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Development",
+    "icon_name": "code",
+    "keywords": [
+      "develop",
+      "programming",
+      "syntax",
+      "html"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Code } from '@phosphor-icons/react'",
+    "best_for": "Code development",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Development",
+    "icon_name": "terminal",
+    "keywords": [
+      "console",
+      "cli",
+      "command",
+      "shell"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { Terminal } from '@phosphor-icons/react'",
+    "best_for": "Terminal console",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Development",
+    "icon_name": "git-branch",
+    "keywords": [
+      "version",
+      "control",
+      "branch",
+      "merge"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { GitBranch } from '@phosphor-icons/react'",
+    "best_for": "Git branch",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Development",
+    "icon_name": "github-logo",
+    "keywords": [
+      "repository",
+      "code",
+      "open",
+      "source"
+    ],
+    "library": "Phosphor",
+    "import_code": "import { GithubLogo } from '@phosphor-icons/react'",
+    "best_for": "GitHub repository",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Style Config",
+    "icon_name": "bold-typography-icon-system",
+    "keywords": [
+      "bold",
+      "typography,",
+      "editorial,",
+      "mono",
+      "label,",
+      "phosphor,",
+      "weight",
+      "regular,",
+      "minimal,",
+      "icon+label",
+      "required,",
+      "size",
+      "20–32"
+    ],
+    "library": "Phosphor (react-native)",
+    "import_code": "import { ArrowRight } from 'phosphor-react-native'",
+    "best_for": "Bold Typography Mobile style: weight=\"regular\". Size 20px for UI controls, 32px for feature anchors. Icons MUST be paired with a Mono-stack text label (JetBrains Mono). Standalone icons only allowed for standard navigation (e.g., Back arrow). Accent color #FF3D00 only.",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Style Config",
+    "icon_name": "cyberpunk-icon-system",
+    "keywords": [
+      "cyberpunk,",
+      "neon,",
+      "glow,",
+      "hud,",
+      "phosphor,",
+      "weight",
+      "regular,",
+      "accent",
+      "glow,",
+      "dark,",
+      "angular,",
+      "react",
+      "native"
+    ],
+    "library": "Phosphor (react-native)",
+    "import_code": "import { Lightning } from 'phosphor-react-native'",
+    "best_for": "Cyberpunk Mobile HUD style: weight=\"regular\", color={colors.accent} (#00FF88 Matrix Green). Wrap every icon in a View with shadowColor: colors.accent / shadowOpacity: 0.6 / shadowRadius: 8 to simulate neon glow. Use borderRadius: 0 on wrapper. Avoid rounded icon containers. Always pair icon with data label in JetBrains Mono.",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Style Config",
+    "icon_name": "academia-icon-system",
+    "keywords": [
+      "academia,",
+      "library,",
+      "brass,",
+      "ornate,",
+      "phosphor,",
+      "weight",
+      "thin,",
+      "muted",
+      "warm,",
+      "scholarly,",
+      "mobile"
+    ],
+    "library": "Phosphor (react-native)",
+    "import_code": "import { BookOpen } from 'phosphor-react-native'",
+    "best_for": "Academia (Scholarly Mobile) style: weight=\"thin\" (thin engraved feel), color={colors.brass} (#C9A962). No sharp geometric or tech-inspired icons. Prefer book, scroll, key, quill-type icon metaphors. Wrap in circular View with 1px brass border. Avoid neon or saturated colored icons. All icon-only navigation must have an accessibilityLabel.",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Style Config",
+    "icon_name": "web3-bitcoin-icon-system",
+    "keywords": [
+      "web3,",
+      "bitcoin,",
+      "defi,",
+      "crypto,",
+      "neon",
+      "orange,",
+      "holographic,",
+      "blurview,",
+      "phosphor,",
+      "glow,",
+      "fintech",
+      "mobile"
+    ],
+    "library": "Phosphor (react-native)",
+    "import_code": "import { TrendUp } from 'phosphor-react-native'",
+    "best_for": "Bitcoin DeFi Mobile style: weight=\"regular\", color={colors.bitcoinOrange} (#F7931A). Wrap icons in circular BlurView (intensity: 20) with 1px borderColor: '#F7931A' border (Holographic Node effect). shadowColor: '#F7931A' / shadowOpacity: 0.4 / shadowRadius: 8. Prefer finance/data icons (TrendUp, Wallet, Shield, Layers). All data icons use JetBrains Mono label.",
+    "style": "Outline",
+    "semantic_role": "meaningful",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  },
+  {
+    "category": "Guideline",
+    "icon_name": "icon-context-accessibility",
+    "keywords": [
+      "decorative",
+      "icon",
+      "aria",
+      "hidden,",
+      "meaningful",
+      "icon",
+      "text",
+      "alternative,",
+      "icon",
+      "button",
+      "accessible",
+      "label,",
+      "accessible",
+      "name,",
+      "aria",
+      "pressed,",
+      "aria",
+      "expanded,",
+      "semantic",
+      "context,",
+      "phosphor,",
+      "heroicons"
+    ],
+    "library": "Phosphor (primary) + Heroicons (fallback)",
+    "import_code": "import { Question } from '@phosphor-icons/react'; import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline';",
+    "best_for": "Contextual icon semantics, icon accessibility, and library fallback rules",
+    "style": "Outline",
+    "semantic_role": "guideline",
+    "allowed_contexts": [
+      "decorative",
+      "meaningful",
+      "interactive"
+    ]
+  }
+]

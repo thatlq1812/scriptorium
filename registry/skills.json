@@ -80,6 +80,47 @@
       "elicited_from": "General-capability tier per CLAUDE.md principle 4 — public-source grounding, no expert interview needed. The citable-academic-source checklist (peer-reviewed status, source-type distinctions between a journal article/preprint/government report/thesis vs. a non-academic blog, recency relevance, and full bibliographic/access-date documentation) is standard, widely-taught university-library and writing-center guidance (e.g. how academic-library 'evaluating sources' / CRAAP-test guidance and citation-manual conventions like APA/MLA source-type categories describe a citable source), not a niche or tacit practice. Architecturally grounded directly in this repo's own deep-research and legal-web-search precedent (both read in full before building this skill): Scriptorium holds no AI backend and no web-search capability of its own (docs/specs/STRATEGY_SPEC.md, CLAUDE.md non-negotiable principle 8), so 'academic source finder' cannot mean a live search tool — it means the same protocol-plus-validator shape those two skills already established, generalized to the university-student academic-source-evaluation use case instead of general open-ended research or Vietnamese legal search."
     },
     {
+      "skill_id": "announcement-poster-builder",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "media"
+        ],
+        "task_type": [
+          "drafting"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "poster",
+          "announcement"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "general-capability tier — 3 fixed, self-authored templates over structured caller-supplied content fields, no expert elicitation and no uncontrolled external input; grounding requirement is inherited layout-mechanics (40%-text-coverage) discipline, not a claims-verification skill"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-15",
+        "note": "Self-audit. 1 script, stdlib only (json/argparse/sys), zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed via grep. Broken-input tested for real: empty required fields (ten_cuoc_thi, top_results[0].ten) correctly flagged; invalid content_type and invalid canvas value both correctly flagged; a 1-item top_results list correctly padded ranks 2-3 with 'Chưa công bố'; a 4-item top_results list correctly refused (max 3, exit 1); malformed JSON correctly refused (exit 2). All 3 bundled templates rendered end-to-end through html-poster-composer's real compose.py (shared venv Playwright/Chromium) and visually inspected — correct Vietnamese diacritics, correct square/A4 aspect ratios, no overlap/clipping. Caught and fixed a real bug in the process: the decree_summary/announcement templates' first hand-calculated zone-area budget forgot to include the kicker zone's own area, exceeding html-poster-composer's real 40%-max-text-coverage limit (44.0%/43.2% vs. 40.0%) — caught by compose.py's own downstream refusal when actually run, fixed to 35.2%/36.8%, and a permanent runtime self-check added to build() to prevent silent recurrence. No finding."
+      },
+      "dependencies": [
+        "html-poster-composer"
+      ],
+      "license_debt": null,
+      "elicited_from": "thatlq1812 (2026-08-15): a direct, concrete persona/scenario probe after this session's design/webpage cluster work -- 'một người, ví dụ như giáo viên phụ trách fanpage facebook, thực tập sinh, HR nào đó... cần thiết kế poster dạng Vuông, hoặc A4, bao gồm nội dung được chỉ định, ví dụ như tóm tắt một nghị định, một thông báo, hoặc kết quả một cuộc thi... Tôi nghĩ là chưa có, và nếu có thì chưa ổn.' Investigated html-poster-composer directly and confirmed the assessment: it existed but had 2 real gaps for this exact persona -- no square canvas preset (fixed the same round, see html-poster-composer v0.5.0), and no way to produce a poster without hand-authoring a zone-taxonomy layout.json, not something a non-technical fanpage manager can do. This skill is the direct answer to the 2nd gap: 3 fixed, pre-designed templates (decree_summary/announcement/contest_result) for the exact 3 content shapes thatlq1812 named, taking only content fields as input."
+    },
+    {
       "skill_id": "assessment-builder",
       "version": "0.1.0",
       "source": {
@@ -1043,7 +1084,7 @@
     },
     {
       "skill_id": "html-poster-composer",
-      "version": "0.4.0",
+      "version": "0.5.0",
       "source": {
         "type": "self-authored"
       },
@@ -1076,15 +1117,15 @@
       },
       "security_audit": {
         "status": "passed",
-        "date": "2026-08-13",
-        "note": "Re-audited at 0.4.0 (2026-08-13): added the VIDEO_HD canvas preset (a data-only entry in CANVAS_PRESETS_MM, no new code path) and transparent_background (a CSS-string/screenshot-flag branch, no new dependency, no network, no subprocess/eval/exec -- grep: 0 hits across all 6 scripts, unchanged from the 0.3.0 audit). No new attack surface. No finding."
+        "date": "2026-08-15",
+        "note": "Re-audited at 0.5.0 (2026-08-15): added the SQUARE canvas preset (a data-only entry in CANVAS_PRESETS_MM, verified 285.75mm -> exactly 1080px at the fixed 96 CSS-px/inch conversion via a real Playwright render). No new code path, no new dependency, no network, no subprocess/eval/exec -- grep: 0 hits across all 6 scripts, unchanged from the 0.4.0 audit. No new attack surface. No finding. Prior note (0.4.0, 2026-08-13): added the VIDEO_HD canvas preset and transparent_background (a CSS-string/screenshot-flag branch), same result."
       },
       "dependencies": [
         "playwright",
         "fonttools"
       ],
       "license_debt": null,
-      "elicited_from": "Supersedes svg-poster-builder + poster-generator (2026-08-07) -- same zone-taxonomy/canvas-preset/40%-text-coverage grounding those 2 skills already had, reused verbatim (layout_schema.py/validate_content.py), not re-elicited. The render-technology swap (SVG-string+Pillow -> HTML/CSS+headless-browser) is grounded in real research + a real thatlq1812-directed experiment this session (docs/ROADMAP.md's 2026-08-07 entry): academic prior art (BannerAgency arXiv 2503.11060, SheetDesigner arXiv 2509.07473, COLE/OpenCOLE) and a direct empirical A/B test proving HTML/CSS flexbox avoided the exact zone-overflow bug the old Pillow renderer hit, with zero manual height math. Canva's own real rendering approach (custom WebGL/Canvas engine, neither DOM nor SVG) was investigated first per thatlq1812's explicit request and ruled out of scope as a full rendering-engine build, narrowing the real decision to SVG-generation vs. HTML/CSS+headless-browser. The auto-fit text-measurement loop (render, measure via the browser's own layout engine, shrink, re-measure, refuse if nothing fits) is this skill's own new mechanism, not ported from any external source. v0.4.0 (2026-08-13): thatlq1812 directly pointed at a separate real, completed project (D:/elix/projects/20260805_GenVid) as reference material; build_watermark_overlay.py's real technique (a full-frame transparent PNG, Playwright omit_background=True, HTML/CSS-positioned content) motivated the new VIDEO_HD preset (1920x1080, exact px round-trip via the existing 96 CSS-px/inch conversion) + transparent_background content.json field, consumed directly by video-assembly-composer v0.3.0's new watermark overlay -- see that skill's own elicited_from for the consuming side and its SKILL.md's Verified section for the real cross-skill end-to-end render."
+      "elicited_from": "Supersedes svg-poster-builder + poster-generator (2026-08-07) -- same zone-taxonomy/canvas-preset/40%-text-coverage grounding those 2 skills already had, reused verbatim (layout_schema.py/validate_content.py), not re-elicited. The render-technology swap (SVG-string+Pillow -> HTML/CSS+headless-browser) is grounded in real research + a real thatlq1812-directed experiment this session (docs/ROADMAP.md's 2026-08-07 entry): academic prior art (BannerAgency arXiv 2503.11060, SheetDesigner arXiv 2509.07473, COLE/OpenCOLE) and a direct empirical A/B test proving HTML/CSS flexbox avoided the exact zone-overflow bug the old Pillow renderer hit, with zero manual height math. Canva's own real rendering approach (custom WebGL/Canvas engine, neither DOM nor SVG) was investigated first per thatlq1812's explicit request and ruled out of scope as a full rendering-engine build, narrowing the real decision to SVG-generation vs. HTML/CSS+headless-browser. The auto-fit text-measurement loop (render, measure via the browser's own layout engine, shrink, re-measure, refuse if nothing fits) is this skill's own new mechanism, not ported from any external source. v0.4.0 (2026-08-13): thatlq1812 directly pointed at a separate real, completed project (D:/elix/projects/20260805_GenVid) as reference material; build_watermark_overlay.py's real technique (a full-frame transparent PNG, Playwright omit_background=True, HTML/CSS-positioned content) motivated the new VIDEO_HD preset (1920x1080, exact px round-trip via the existing 96 CSS-px/inch conversion) + transparent_background content.json field, consumed directly by video-assembly-composer v0.3.0's new watermark overlay -- see that skill's own elicited_from for the consuming side and its SKILL.md's Verified section for the real cross-skill end-to-end render. v0.5.0 (2026-08-15): thatlq1812's direct persona probe (teacher/intern/HR needing a square or A4 announcement poster) surfaced a real gap -- only A1/A4/VIDEO_HD existed, no square preset, despite square being the actual standard Facebook/Instagram feed-post size. Added SQUARE (1080x1080 at the existing 96 CSS-px/inch conversion), verified via a real render. The other half of the same probe (no-code content-template authoring) was deliberately NOT solved here -- see the new sibling skill announcement-poster-builder, which generates a valid layout.json/content.json and chains into this skill unchanged."
     },
     {
       "skill_id": "hypothesis-generation",
@@ -3326,6 +3367,212 @@
       "dependencies": [],
       "license_debt": null,
       "elicited_from": "Elicited from a deep-research pass (references/research_16_clinical_note_structure/research_brief.json, validated against skills/general/deep-research's schema/citation checker, 2026-08-15) -- the highest-risk grounding of any skill in this registry, recorded honestly: SOAP structure reverse-engineered from a real, widely-deployed clinical-documentation product's own public docs (SimplePractice); informed-consent/confidentiality requirements from the APA's own official Ethics Code (apa.org); NOT from a real licensed practitioner's direct input, per thatlq1812's explicit direction this session that public-source/product reverse-engineering substitutes for real elicitation when no live source is available, applied here at its most conservative -- scoped to structural completeness only, never clinical content, matching an independently-built real precedent (chengzhi43/ClarityGuide-skill) which draws the identical 'does not diagnose, does not replace a therapist' boundary for itself. Should not be used in production without real practitioner review first -- stated as a hard precondition in the skill's own SKILL.md, not softened."
+    },
+    {
+      "skill_id": "design-system-recommender",
+      "version": "0.1.0",
+      "source": {
+        "type": "harvested",
+        "repo_url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+        "commit": "a38d04c3d5c298c851dbe5e6ee1965ee3de42cb5"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "design"
+        ],
+        "task_type": [
+          "research"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "color-palette",
+          "font-pairing",
+          "design-system"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "general-capability tier per CLAUDE.md principle 4 -- harvested reference data (real, curated, publicly-available MIT-licensed dataset), not private practitioner elicitation, and the skill itself is a pure deterministic lookup with no uncontrolled external input at runtime. Exempt from the formal stage4 gate by design."
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-15",
+        "note": "Self-audit. 1 script, stdlib only (json, argparse), zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed by direct code review. Bundled reference data verified during harvest/conversion: 192/192 products.csv <-> colors.csv cross-reference match (no orphans), 3,072/3,072 individual color-token values pass format validation. Real-tested: exact --product-type match returns full structure; --keywords fuzzy match correctly discloses matched product_type + overlap score; nonexistent product_type and zero-overlap keywords both correctly refuse (exit 1); missing all args correctly refuses (exit 2); --list-product-types correctly prints all 192 entries."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Harvested from a real, actively-maintained repository (nextlevelbuilder/ui-ux-pro-max-skill, verified 116,839 stars via `gh api`, MIT license read directly at the root and confirmed with no nested override at the harvested folder level). Full provenance, exact source commit, and what was/wasn't adapted documented in skills/design/design-system-recommender/references/PROVENANCE.md. thatlq1812 directed this harvest directly after asking to read the repo and confirming it was worth adapting from ('làm luôn nhỉ'), following this project's scout-harvester -> license-compliance-check -> skill-creator pipeline. Upgrades the `design` cluster (previously validator-only: brand-identity-linter/light-logo-arranger/personal-style-library/slogan-copy-linter) with real curated lookup capability."
+    },
+    {
+      "skill_id": "landing-page-composer",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "webpage"
+        ],
+        "task_type": [
+          "drafting"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "landing-page",
+          "webpage-draft"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "general-capability tier per CLAUDE.md principle 4 -- rendering engine reuses html-poster-composer's already-audited HTML/CSS-via-headless-Chromium pattern; section-type vocabulary grounded in design-system-recommender's harvested, publicly-sourced landing-pattern data; caller-declared structured JSON input only, no uncontrolled external input. Exempt from the formal stage4 gate by design."
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-15",
+        "note": "Self-audit. 2 scripts, stdlib only for validation (json, re) plus playwright (already audited via html-poster-composer/browser-web-renderer) for the optional PNG preview, zero unexpected network calls (Google Fonts CSS fetch is the one real, declared, intentional network call, same as any real webpage), no dynamic execution (eval/exec/subprocess/os.system) confirmed by direct code review. Real-tested end-to-end: bundled 6-section template rendered to both .html and .png via the shared venv's real Playwright/Chromium; direct visual inspection of the rendered PNG caught a real bug (declared Google Font not actually loaded without a <link> tag) which was fixed and re-verified (heading font visibly changed in the corrected render). A 21-issue deliberately broken record (invalid/missing color tokens, empty font name, features-before-hero ordering violation, an unrecognized section type, a hero missing required fields) caught all 21 in one validate_content.py run, and compose.py correctly refused to touch Playwright at all when validation failed (confirmed no output file was written). Missing required keys and malformed JSON both correctly refused/flagged."
+      },
+      "dependencies": [
+        "playwright"
+      ],
+      "license_debt": null,
+      "elicited_from": "thatlq1812 (2026-08-15): direct instruction after reviewing a real, verified 116,839-star repo (nextlevelbuilder/ui-ux-pro-max-skill) -- most non-technical users want to quickly draft a webpage from content they already have in a short time, and won't attempt deep backend work themselves ('nếu nghĩ tới backend sâu thì họ sẽ không tự làm'); this is the explicit design brief this skill's scope follows. First skill in the new `webpage` domain. Rendering engine directly reuses html-poster-composer's real, already-audited HTML/CSS-via-headless-Chromium pattern (2026-08-07 migration decision, docs/ROADMAP.md), simplified since a webpage naturally flows/wraps unlike a fixed-canvas print poster. Section-type vocabulary and the hero-must-be-first rule are grounded in design-system-recommender's harvested landing_patterns.json (34/34 real patterns start with a hero section)."
+    },
+    {
+      "skill_id": "ui-style-guide-lookup",
+      "version": "0.1.0",
+      "source": {
+        "type": "harvested",
+        "repo_url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+        "commit": "a38d04c3d5c298c851dbe5e6ee1965ee3de42cb5"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "design"
+        ],
+        "task_type": [
+          "research"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "ui-style",
+          "css-implementation"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "general-capability tier per CLAUDE.md principle 4 -- harvested reference data (real, curated, publicly-available MIT-licensed dataset), pure deterministic lookup with no uncontrolled external input at runtime. Exempt from the formal stage4 gate by design."
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-15",
+        "note": "Self-audit. 1 script, stdlib only (json, argparse), zero network calls, no dynamic execution confirmed by direct code review. Data integrity verified: all 88 styles have a non-empty style_id. Real-tested: exact --style-id lookup returns full structure; --keywords fuzzy match discloses matched style + score; nonexistent style_id and missing-args cases correctly refuse (exit 1 / exit 2); --list-styles prints all 88 entries."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Harvested from the same source as design-system-recommender (nextlevelbuilder/ui-ux-pro-max-skill, verified 116,839 stars via gh api, MIT, full provenance in that skill's references/PROVENANCE.md) -- adapts styles.csv (88 rows), deliberately left unharvested when design-system-recommender/landing-page-composer first shipped. thatlq1812 pushed back on scoping the harvest to just 2 skills ('cả cái repo đó bạn trích ra được mỗi 2 skill... cần rộng hơn'), directing a broader harvest of the remaining real data this session already had cloned."
+    },
+    {
+      "skill_id": "ui-icon-recommender",
+      "version": "0.1.0",
+      "source": {
+        "type": "harvested",
+        "repo_url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+        "commit": "a38d04c3d5c298c851dbe5e6ee1965ee3de42cb5"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "design"
+        ],
+        "task_type": [
+          "research"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "icon",
+          "accessibility-role"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "general-capability tier per CLAUDE.md principle 4 -- harvested reference data, pure deterministic lookup with no uncontrolled external input at runtime. Exempt from the formal stage4 gate by design."
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-15",
+        "note": "Self-audit. 1 script, stdlib only (json, argparse), zero network calls, no dynamic execution confirmed by direct code review. Data integrity verified: all 105 icons have non-empty icon_name and import_code. Real-tested: exact --icon-name lookup, --keywords ranked fuzzy match, --category browse (8 results for Navigation), --list-categories (18 real categories) all correct; nonexistent icon name and missing-args cases correctly refuse (exit 1 / exit 2)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Harvested from the same source as design-system-recommender/ui-style-guide-lookup (nextlevelbuilder/ui-ux-pro-max-skill, verified 116,839 stars via gh api, MIT, full provenance in design-system-recommender's references/PROVENANCE.md) -- adapts icons.csv (105 rows, itself curated from the real MIT-licensed Phosphor Icons library). Part of the broader harvest thatlq1812 directed after pushing back on an initially narrow extraction."
+    },
+    {
+      "skill_id": "ui-guideline-lookup",
+      "version": "0.1.0",
+      "source": {
+        "type": "harvested",
+        "repo_url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+        "commit": "a38d04c3d5c298c851dbe5e6ee1965ee3de42cb5"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "webpage"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N1",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "ui-guideline",
+          "accessibility-rule"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "general-capability tier per CLAUDE.md principle 4 -- harvested reference data, pure deterministic filter/lookup with no uncontrolled external input at runtime. Exempt from the formal stage4 gate by design."
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-15",
+        "note": "Self-audit. 1 script, stdlib only (json, argparse), zero network calls, no dynamic execution confirmed by direct code review. Data integrity verified: 151 entries loaded cleanly (119 web + 32 app), 5 real platform values, 4 real severity values, 24 real categories. Real-tested: category+platform combined filter (10 matches for Accessibility+Web), severity+platform filter (7 Critical for iOS/Android/React Native), keyword filter, --list-categories/--list-platforms all correct; no-match filter and no-filter-given cases correctly refuse (exit 1 / exit 2)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Harvested from the same source as design-system-recommender/ui-style-guide-lookup/ui-icon-recommender (nextlevelbuilder/ui-ux-pro-max-skill, verified 116,839 stars via gh api, MIT, full provenance in design-system-recommender's references/PROVENANCE.md) -- merges ux-guidelines.csv (119 rows, Web) with app-interface.csv (32 rows, iOS/Android/React Native) into one filterable reference. thatlq1812 directly pushed back on the initial harvest ('cả cái repo đó bạn trích ra được mỗi 2 skill, và chỉ 1 cái cho webpage nhỉ... cần rộng hơn, không chỉ landing page ấy') -- this is the direct answer: the webpage domain's 2nd skill, deliberately not another page-assembly tool but a UI-review reference spanning both web and mobile/app."
     }
   ]
 }
