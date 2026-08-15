@@ -1,0 +1,21 @@
+{
+  "ad": {
+    "ad_type": "video",
+    "close_single_interaction": true,
+    "close_icon_fake_or_ambiguous": false,
+    "wait_time_seconds": 5,
+    "report_mechanism_present": true,
+    "product_category": "general"
+  },
+  "ad_service_business": {
+    "contact_info_notified": true,
+    "last_ad_display_date": "2026-08-01",
+    "retention_until": "2029-08-01",
+    "annual_report_filed_date": "2026-11-20"
+  },
+  "takedown_request": {
+    "request_received_at": "2026-08-14T10:00:00",
+    "removed_at": "2026-08-14T20:00:00",
+    "involves_national_security": false
+  }
+}

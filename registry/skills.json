@@ -2936,6 +2936,396 @@
       ],
       "license_debt": null,
       "elicited_from": "thatlq1812 (2026-07-26): General Excel recalculation tool to prevent None values inside newly-written formulas when read by Python parser."
+    },
+    {
+      "skill_id": "meeting-action-tracker",
+      "version": "0.1.1",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "business"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "meeting-minutes",
+          "action-item"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "general-capability tier per CLAUDE.md principle 4 -- grounded in 2 publicly documented authoritative conventions (Robert's Rules of Order, RAID-log/action-log convention), no expert elicitation, no uncontrolled external input (caller-declared structured JSON only). Exempt from the formal stage4 gate by design."
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-15",
+        "note": "Self-audit. 1 script, stdlib only (json, argparse, re, datetime), zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed by direct code review. Real-tested: bundled template passes clean; a deliberately broken record (10 distinct violations across meeting/motion/action-item fields) caught all 10 in one run; a record omitting the motions/action_items keys entirely was flagged (not silently treated as empty); malformed JSON and a non-object root both correctly refused (exit 2)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Elicited from a real, primary-source-grounded deep-research pass (references/research_09_business_admin_standards/research_brief.json, validated against skills/general/deep-research's schema/citation checker, 2026-08-15): Robert's Rules of Order (the most widely cited meeting-procedure standard) for minutes content -- meeting type, prior-minutes approval status, and every motion recorded as exact wording plus mover/seconder/vote result -- and the RAID-log/action-log convention (corroborated across a university PMO methodology page and a standard action-log template) for action-item tracking -- id, description, owner, due date, status. Follows this project's own scope-boundary precedent (Teacher tier's exclusion of Nghị định 30/2020 administrative-paperwork templating, already covered by latex-project-bootstrap/office-doc-creator): a prior research pass (references/research_07_business_administrator/research_brief.json) found Vietnamese administrative-document *formatting* already covered, so this skill deliberately targets the non-duplicated real gap -- admin-*operations* structural completeness, not document layout."
+    },
+    {
+      "skill_id": "vn-ad-compliance-checker",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "marketing"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N3",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "advertisement",
+          "campaign"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "general-capability tier per CLAUDE.md principle 4 -- grounded directly in the primary signed text of a public Vietnamese government decree (Nghị định 342/2025/NĐ-CP), not private practitioner elicitation, and caller-declared structured JSON only (no uncontrolled external input). Exempt from the formal stage4 gate by the letter of the rule; real regulatory-consequence risk (N3) is mitigated instead via explicit route-don't-verify scoping (Điều 4-12 special-category content not checked) and an explicit not-legal-advice disclaimer in the skill's own docs, documented honestly rather than silently taking a shortcut -- flag for reconsideration if this classification looks wrong to a later reviewing session."
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-15",
+        "note": "Self-audit. 1 script, stdlib only (json, argparse, datetime), zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed by direct code review. Real-tested: bundled template passes clean; a deliberately broken record (8 distinct Điều 17/18/19 violations plus a Điều 3 special-category routing case) caught all 8 issues and the routing note in one run; a static-image ad with a nonzero wait time flagged alone; a leap-year retention edge case (last_ad_display_date 2028-02-29) correctly computed a Feb-28 fallback floor and passed; a takedown_request mixing a timezone-aware and a naive ISO datetime was flagged cleanly (not an unhandled crash); a record missing the required 'ad' key and malformed JSON both correctly refused (exit 2)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Elicited from a real, primary-source-verified deep-research pass (references/research_10_digital_marketing_regulations/research_brief.json, validated against skills/general/deep-research's schema/citation checker, 2026-08-15) -- Nghị định 342/2025/NĐ-CP's actual signed text was read directly, page by page, from the government portal's own signed PDF (https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/01/342-ndcp.signed.pdf), not just secondary summaries. This caught and resolved a real discrepancy: an earlier-stage news report cited a 1.5-second ad-close wait time that the final effective decree text (Điều 17 khoản 3) does not carry -- the correct, in-force figure is 5 seconds for video ads, 0 for static images. A prior scouting round (docs/ROADMAP.md's Digital Marketing cluster section, license-compliance-check run 2026-08-15) confirmed neither of the 2 scouted MIT marketing-skill-pack repos (coreyhaines31/marketingskills at a verified 44,335 stars, kostja94/marketing-skills at 172 skills) carries any Vietnam-specific regulatory content -- this skill is genuinely novel, not a duplicate of scouted prior art."
+    },
+    {
+      "skill_id": "sop-structure-validator",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "business"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "sop",
+          "process-document"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "general-capability tier per CLAUDE.md principle 4 -- grounded in a 6-part SOP structure corroborated across 3 English + 1 Vietnamese documentation source, no expert elicitation, no uncontrolled external input (caller-declared structured JSON only). Exempt from the formal stage4 gate by design."
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-15",
+        "note": "Self-audit. 1 script, stdlib only (json, argparse, datetime), zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed by direct code review. Real-tested: bundled template passes clean; a 7-violation deliberately broken record (empty document_id, unparseable date, empty purpose, empty role, step-numbering gap, empty step text, revision-history/version mismatch) caught all 7 in one run; a header-only record missing roles/steps/revision_history entirely was flagged (3 issues); malformed JSON and a non-object root both correctly refused (exit 2)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Elicited from a deep-research pass (references/research_11_business_admin_sop_budget/research_brief.json, validated against skills/general/deep-research's schema/citation checker, 2026-08-15) -- a 6-part SOP structure (header/purpose/scope/roles/numbered-steps/revision-history-with-approval) corroborated across 3 independent English-language process-documentation sources, then confirmed structurally identical in Vietnamese-language SOP material (fastdo.vn) searched separately per thatlq1812's direction to search Vietnamese sources too. Deepens research_09's earlier, more generic ISO 9001 Clause 7.5 finding into the specific, mechanically-checkable field set used here. Companion to meeting-action-tracker (same domain, same structural-validator-not-drafter shape)."
+    },
+    {
+      "skill_id": "budget-expense-tracker",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "business"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "expense-claim",
+          "budget-line"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "general-capability tier per CLAUDE.md principle 4 -- grounded in international expense-report/budget-variance conventions plus real Vietnamese business-document practice (amount-in-words, travel-authorization prerequisite, invoice tax-code), all public-source, no expert elicitation, no uncontrolled external input. Exempt from the formal stage4 gate by design; the Vietnam-specific checks rest on secondary sources not yet upgraded to a primary-legal-text read, flagged honestly in the skill's own known-limitations rather than hidden."
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-15",
+        "note": "Self-audit. 1 script, stdlib only (json, argparse, datetime), zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed by direct code review. Real-tested: bundled template (2 expense claims incl. 1 travel, 2 budget lines) passes clean; a 10-violation deliberately broken record caught all 10 in one run; a zero-budgeted-amount edge case correctly omitted the variance_pct requirement; an empty expense_claims list correctly passed (distinct from sop-structure-validator's required-non-empty lists); a record with neither expense_claims nor budget_lines and malformed JSON both correctly refused (exit 2)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Elicited from a deep-research pass (references/research_11_business_admin_sop_budget/research_brief.json, validated against skills/general/deep-research's schema/citation checker, 2026-08-15) covering both international and Vietnamese-language sources, per thatlq1812's explicit direction to search Vietnamese sources too, not just English. International expense-report shape corroborated across 2 sources (SAP Concur, Ramp); budget-vs-actual variance shape corroborated across 2 sources (Tipalti, AccountingDepartment.com). The differentiating finding came from the Vietnamese-language search specifically: real Vietnamese business practice (HoaTieu.vn, ThuVienPhapLuat.vn, AZTAX) requires a 'Giấy đề nghị thanh toán' to state the amount in words as well as numerals, and a công tác phí claim requires a prerequisite travel-authorization document plus an invoice bearing the company's own tax code -- none of which the international sources mention, making this skill genuinely Vietnam-differentiated. Companion to sop-structure-validator and meeting-action-tracker."
+    },
+    {
+      "skill_id": "utm-campaign-governance-linter",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "marketing"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "campaign-link",
+          "utm-parameter"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "general-capability tier per CLAUDE.md principle 4 -- grounded directly in Google's own official GA4 documentation (support.google.com), no expert elicitation, no uncontrolled external input (caller-declared structured JSON only, zero network calls). Exempt from the formal stage4 gate by design."
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-15",
+        "note": "Self-audit. 1 script, stdlib only (json, argparse, re, urllib.parse), zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed by direct code review. Real-tested: bundled template (1 tagged external link, 1 untagged internal link) passes clean; a 9-violation deliberately broken record (mixed-case + spaced UTM value, values outside the declared playbook, a missing required parameter, an internal link carrying UTM params, a non-boolean is_internal) caught all 9 in one run; an empty links list and a missing links key were correctly flagged/refused; omitting utm_playbook correctly skipped only the approved-value check while still catching a lowercase violation; malformed JSON correctly refused (exit 2)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Elicited directly from Google's own official GA4 documentation (references/research_10_digital_marketing_regulations/research_brief.json findings S4/S5, support.google.com's 'Default channel group' and 'URL builders' pages) -- not a 3rd-party blog, upgrading research_08's original UTM-governance finding (secondary-sourced) to primary-source grounding, the same discipline vn-ad-compliance-checker applied to Nghị định 342/2025. Flagged in research_10's own synthesis as a companion capability to build once the cluster's stronger initial flagship (vn-ad-compliance-checker) shipped -- this is that companion."
+    },
+    {
+      "skill_id": "campaign-funnel-brief-validator",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "marketing"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "campaign-brief",
+          "funnel-stage"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "general-capability tier per CLAUDE.md principle 4 -- grounded in a 9-element campaign-brief convention corroborated across 2 sources plus a funnel-stage-KPI-differentiation finding corroborated across 2 English + 2 Vietnamese sources, no expert elicitation, no uncontrolled external input. Exempt from the formal stage4 gate by design."
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-15",
+        "note": "Self-audit. 1 script, stdlib only (json, argparse, datetime), zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed by direct code review. Real-tested: bundled template (full 9-element brief + 3-stage funnel) passes clean; a 15-violation deliberately broken brief (empty required fields, an unparseable deadline, an invalid calendar date, a budget.split sum mismatching budget.total, a null KPI target, a non-list mandatories, a duplicate funnel stage, an unrecognized stage name) caught all 15 in one run; a brief missing every key but campaign_name was flagged (9 issues); malformed JSON and a non-object root both correctly refused (exit 2)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Elicited from a deep-research pass (references/research_12_marketing_funnel_campaign/research_brief.json, validated against skills/general/deep-research's schema/citation checker, 2026-08-15) covering both English and Vietnamese-language sources. The 9-element campaign-brief structure is corroborated across 2 independent English sources (Firstpier, Pedowitz Group). The funnel-stage-needs-its-own-metric finding is corroborated across 2 English sources (Genroe, Metricdesk) using a 3-stage TOFU/MOFU/BOFU model, cross-checked against Vietnamese-language material (PhucTdigital, MarketingTrips) which independently uses a 4-stage model (+loyalty) -- reconciled by supporting both stage counts rather than hardcoding one, matching this project's own earlier research_08 finding. Neither scouted MIT marketing-skill-pack repo's own topic listing named a dedicated brief-completeness checker, so this is genuinely novel."
+    },
+    {
+      "skill_id": "event-compliance-checker",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "events"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N3",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "event",
+          "performance-permit"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "general-capability tier per CLAUDE.md principle 4 -- grounded directly in the primary signed text of a public Vietnamese government decree (Nghị định 144/2020/NĐ-CP, read page-by-page), not private practitioner elicitation, and caller-declared structured JSON only (no uncontrolled external input). Exempt from the formal stage4 gate by the letter of the rule, same reasoning as vn-ad-compliance-checker."
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-15",
+        "note": "Self-audit. 1 script, stdlib only (json, argparse, datetime), zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed by direct code review. Real-tested: bundled template (approval pathway, 3-week lead time) passes clean; an 8-violation deliberately broken record (short lead time, ineligible entity type, both compliance declarations false, a late authority response, an invalid response_type, a missing content-change-notice, an insufficient time/location-change notice) caught all 8 in one run; a notification-pathway short-lead-time case flagged alone; missing 'event' key and malformed JSON both correctly refused (exit 2)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Elicited from a deep-research pass (references/research_13_events_vn_compliance/research_brief.json, validated against skills/general/deep-research's schema/citation checker, 2026-08-15) grounded by directly reading Nghị định 144/2020/NĐ-CP's actual signed PDF page-by-page (Điều 1-10) -- the same primary-source discipline vn-ad-compliance-checker used, catching and correcting a real secondary-source discrepancy (claimed 10-working-day lead time; primary text says 7). First skill in the new `events` domain, part of the International Relations/Event Organization cluster's Events half -- assessed as buildable via reverse-engineered public-source research per thatlq1812's explicit direction this session, unlike the International Relations half proper (too varied/abstract without real client input, still pending)."
+    },
+    {
+      "skill_id": "diplomatic-correspondence-checker",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "diplomacy"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N3",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "diplomatic-correspondence",
+          "precedence-list"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "general-capability tier per CLAUDE.md principle 4 -- grounded in public, stable, authoritative sources (the Vienna Convention on Diplomatic Relations 1961, a real official US State Department protocol-office page), not private practitioner elicitation (explicitly not available for this candidate), and caller-declared structured JSON only. Deliberately scoped to FORMAT/PROTOCOL only, never diplomatic-content judgment, precisely because real elicitation isn't available yet -- exempt from the formal stage4 gate by design."
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-15",
+        "note": "Self-audit. 1 script, stdlib only (json, argparse, re, datetime), zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed by direct code review. Real-tested: bundled template (a well-formed note verbale + correctly-ordered 3-mission precedence list) passes clean; a 7-violation deliberately broken record (empty required fields, an unparseable date, missing opening/closing formula, first-person language, and an out-of-order precedence list) caught all 7 in one run; a record with neither note_verbale nor precedence_list and malformed JSON both correctly refused (exit 2)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Elicited from a deep-research pass (references/research_14_diplomacy_protocol/research_brief.json, validated against skills/general/deep-research's schema/citation checker, 2026-08-15), reverse-engineered from real, authoritative public sources rather than a live practitioner survey, per thatlq1812's explicit direction this session that this substitution is acceptable when no real client elicitation source is available yet. First skill in the new `diplomacy` domain -- the International Relations half of the IR/Event Organization cluster, deliberately scoped to format/protocol only (never diplomatic-content judgment) since public sources cannot and should not substitute for real diplomatic expertise on substance."
+    },
+    {
+      "skill_id": "survey-adaptation-quality-checker",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "academic"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "survey-instrument",
+          "questionnaire"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "general-capability tier per CLAUDE.md principle 4 -- grounded in real, peer-reviewed survey-methodology literature (TRAPD approach, back-translation, a Delphi-consensus checklist), publicly documented academic research practice, not a specific researcher's tacit workflow. Exempt from the formal stage4 gate by design."
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-15",
+        "note": "Self-audit. 1 script, stdlib only (json, argparse), zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed by direct code review. Real-tested: bundled template (2 translators with distinct expertise, completed review/adjudication, performed back-translation and pretest) passes clean; a 6-violation deliberately broken record (1 translator, review not completed, empty adjudication notes, back-translation skipped without reason, invalid pretest sample size, empty pretest findings) caught all 6 in one run; a record missing translators/back_translation/pretest was correctly flagged (5 issues, no duplicates); malformed JSON refused (exit 2)."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Elicited from a deep-research pass (references/research_15_survey_methodology/research_brief.json, validated against skills/general/deep-research's schema/citation checker, 2026-08-15) grounded in real, peer-reviewed literature (TRAPD approach, back-translation methodology, CTAQ checklist). A real, small (3-star) prior-art repo (gtskevin/survey-scale-review) confirmed genuine demand but wasn't large enough to harvest from -- built directly from the peer-reviewed literature instead. Extends Scriptorium's existing academic/research cluster rather than starting a new specializer network, since survey-methodology rigor is general-capability-tier public knowledge, not tacit workflow requiring real elicitation."
+    },
+    {
+      "skill_id": "clinical-note-structure-validator",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "psychology"
+        ],
+        "task_type": [
+          "review-qa"
+        ],
+        "risk_tier": "N4",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "required",
+        "object_type": [
+          "clinical-note",
+          "intake-record"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "partial",
+        "stage4_required": true,
+        "stage4_reason": "Elevated risk (extended criterion), same bucket precedent as socratic-concept-helper (docs/STATUS.md): not expert-elicited in the strict practitioner-survey sense (public-source/reverse-engineered-product grounding only, explicitly not a real licensed clinician's input, per thatlq1812's direction this session that this substitution is acceptable when no real source exists yet) and does not ingest uncontrolled external input either -- so it does not literally meet stage4_required conditions (a) or (b). Marked true anyway given the domain's real stakes (clinical/mental-health content, risk_tier N4, the highest of any skill in this registry) -- this project's own established practice for a candidate that is real-stakes but not strictly expert-elicited or externally-fed. Flagged for real practitioner review before any production use, not just deferred like the exempt majority."
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-15",
+        "note": "Self-audit. 1 script, stdlib only (json, argparse, datetime), zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed by direct code review. Deliberately never reads or parses the CONTENT of any clinical field, only checks non-emptiness -- verified by code review that no field value is used in any conditional beyond a truthiness/type/length check. Real-tested: bundled template (1 complete intake, 1 session note, all fields present as placeholder text) passes clean; a 5-violation deliberately broken record (intake not completed, consent not on file, unparseable session_date, empty subjective, empty assessment) caught all 5 in one run; session notes with no intake_record key were flagged; an empty session_notes list correctly passed without requiring intake; missing session_notes key and malformed JSON both correctly refused/flagged."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "Elicited from a deep-research pass (references/research_16_clinical_note_structure/research_brief.json, validated against skills/general/deep-research's schema/citation checker, 2026-08-15) -- the highest-risk grounding of any skill in this registry, recorded honestly: SOAP structure reverse-engineered from a real, widely-deployed clinical-documentation product's own public docs (SimplePractice); informed-consent/confidentiality requirements from the APA's own official Ethics Code (apa.org); NOT from a real licensed practitioner's direct input, per thatlq1812's explicit direction this session that public-source/product reverse-engineering substitutes for real elicitation when no live source is available, applied here at its most conservative -- scoped to structural completeness only, never clinical content, matching an independently-built real precedent (chengzhi43/ClarityGuide-skill) which draws the identical 'does not diagnose, does not replace a therapist' boundary for itself. Should not be used in production without real practitioner review first -- stated as a hard precondition in the skill's own SKILL.md, not softened."
     }
   ]
 }

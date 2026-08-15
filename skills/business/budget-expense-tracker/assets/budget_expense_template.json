@@ -1,0 +1,51 @@
+{
+  "materiality_threshold_pct": 10,
+  "expense_claims": [
+    {
+      "date": "2026-08-10",
+      "requester_name": "Nguyen Van A",
+      "requesting_department": "Marketing",
+      "vendor": "Vietnam Airlines",
+      "category": "travel",
+      "amount": 2500000,
+      "currency": "VND",
+      "amount_in_words": "Hai trieu nam tram nghin dong",
+      "business_purpose": "Cong tac Ha Noi lam viec voi doi tac quang cao",
+      "supporting_documents_count": 2,
+      "invoice_has_company_tax_code": true,
+      "travel_authorization_ref": "QD-2026-045"
+    },
+    {
+      "date": "2026-08-12",
+      "requester_name": "Tran Thi B",
+      "requesting_department": "Operations",
+      "vendor": "Circle K",
+      "category": "office_supplies",
+      "amount": 350000,
+      "currency": "VND",
+      "amount_in_words": "Ba tram nam muoi nghin dong",
+      "business_purpose": "Van phong pham cho phong ke toan",
+      "supporting_documents_count": 1,
+      "invoice_has_company_tax_code": true
+    }
+  ],
+  "budget_lines": [
+    {
+      "line_item": "Q3 Digital Ads",
+      "budgeted_amount": 50000000,
+      "actual_amount": 52000000,
+      "variance": 2000000,
+      "variance_pct": 4.0,
+      "assumption_note": "Assumed stable CPM based on Q2 average"
+    },
+    {
+      "line_item": "Q3 Office Supplies",
+      "budgeted_amount": 10000000,
+      "actual_amount": 13500000,
+      "variance": 3500000,
+      "variance_pct": 35.0,
+      "assumption_note": "Assumed same headcount as Q2",
+      "variance_explanation": "New hires in July required a one-time equipment purchase not in the original plan"
+    }
+  ]
+}

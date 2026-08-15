@@ -1,0 +1,35 @@
+{
+  "campaign_name": "Q3 Kettle Launch",
+  "objective": {
+    "statement": "Drive 500 pre-orders for the new electric kettle",
+    "deadline": "2026-09-30"
+  },
+  "audience": "Vietnamese urban households, age 25-45, who shop groceries online",
+  "key_message": "The kettle that boils water in 90 seconds, safely.",
+  "channels": [
+    {"name": "Facebook Ads", "role": "Awareness and retargeting"},
+    {"name": "Zalo OA", "role": "Direct conversion push"}
+  ],
+  "deliverables": ["3 short video ads", "Landing page", "Zalo broadcast copy"],
+  "timeline": [
+    {"milestone": "Creative freeze", "date": "2026-09-01"},
+    {"milestone": "Campaign launch", "date": "2026-09-10"}
+  ],
+  "budget": {
+    "total": 50000000,
+    "currency": "VND",
+    "split": [
+      {"channel": "Facebook Ads", "amount": 35000000},
+      {"channel": "Zalo OA", "amount": 15000000}
+    ]
+  },
+  "kpis": [
+    {"metric": "Pre-orders", "target": 500, "window": "2026-09-10 to 2026-09-30"}
+  ],
+  "mandatories": ["Brand logo must appear in every creative"],
+  "funnel_stages": [
+    {"stage": "awareness", "objective": "Reach 200k unique users", "metric": "Reach / CPM"},
+    {"stage": "consideration", "objective": "Drive 5000 landing-page visits", "metric": "CTR"},
+    {"stage": "conversion", "objective": "Convert visits into 500 pre-orders", "metric": "Conversion rate"}
+  ]
+}

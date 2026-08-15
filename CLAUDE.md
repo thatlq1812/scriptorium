@@ -32,12 +32,15 @@ scriptorium/
 │   ├── specs/STRATEGY_SPEC.md  # source of truth for strategy/pipeline/taxonomy
 │   ├── templates/              # e.g. CLUSTER_SURVEY_TEMPLATE.md (elicitation before skill-creator)
 │   └── archive/                # history, not current state (original language kept verbatim); completed execution plans (e.g. UPGRADE_PLAN_*.md) live here once fully checked off
-├── outside_research/           # living input (thatlq1812 surveys, external AI research) — ideation only, not elicited input on its own
+├── references/                 # living input (thatlq1812 surveys, external AI research) — ideation only, not elicited input on its own
 ├── outside_agy/                # external LegalTech reference material — comparison only, never copied
 ├── skills/<domain>/<skill_id>/SKILL.md  # each skill is its own subfolder under a domain folder
-│                              # (general/office/design/education/academic/meta/media/legal, matches
-│                              # registry tags.domain; domain-per-folder reorg 2026-08-13, split
-│                              # further into office/design/academic same day), 6-field agentskills.io spec
+│                              # (general/office/design/education/academic/meta/media/legal/business/
+│                              # marketing/events/diplomacy/psychology, matches registry tags.domain;
+│                              # domain-per-folder reorg 2026-08-13, split further into office/design/
+│                              # academic same day; business/marketing added 2026-08-15;
+│                              # events/diplomacy/psychology added 2026-08-15 same session), 6-field
+│                              # agentskills.io spec
 │   └── archive/<skill_id>/    # operational_status: superseded skills live here (flat, no domain
 │                              # subfolder) — moved out of the active domain folders 2026-08-13 so
 │                              # manual browsing isn't cluttered with dead skills; content unchanged,
@@ -63,7 +66,7 @@ Before starting a new skill, query `registry/skills.json` by domain/task_type/ob
 Standing practice (thatlq1812 directive, first applied 2026-07-29 and generalized here so it survives beyond any one execution plan): *"Search và clone các repo tiêu biểu cho cùng một chủ đề và tham khảo trước khi tạo kiểu skill đó."* Applies to any genuinely new skill type — not a version bump of an existing skill.
 
 1. Search for 2-4 representative real-world repos/projects on the same topic (`WebSearch`, or `scout-harvester`'s `github_scout.py` for GitHub specifically).
-2. Shallow-clone the most relevant 1-3 into `outside_research/references/<topic>/` via `scout-harvester`'s `clone_candidate.py` (never inside `skills/`, never committed as a dependency — reference-only).
+2. Shallow-clone the most relevant 1-3 into a directory OUTSIDE the repo (the scratchpad) via `scout-harvester`'s `clone_candidate.py` — the script itself refuses any destination under the repo root (nesting a second `.git`), so this is never `references/<topic>/` despite that directory being gitignored; `references/` is for research briefs/notes, not cloned repos.
 3. Run `license-compliance-check` on anything whose patterns/code might get adapted (not just wholesale-copied) — per principle 5 below, harvesting/adapting goes through this gate before `skill-creator`.
 4. Record what was found/adapted/rejected in the new skill's own `SKILL.md` (`metadata.elicited_from` or an explicit "Reference material" note) — so a later session can see the grounding without re-deriving it.
 5. Only then run `skill-creator`, following the elicitation tier that applies (principle 4 below: infra/bootstrap → no interview needed; general-capability → public-source grounding sufficient; niche specializer → mandatory real elicitation source).
@@ -76,12 +79,12 @@ Standing practice (thatlq1812 directive, first applied 2026-07-29 and generalize
 4. **Elicitation requirements vary by knowledge tier** — apply the right bar for each, not a single binary rule:
    - **Infrastructure / bootstrap skills** (e.g. `toolchain-bootstrap`, `skill-creator`): grounded from open specs, public toolchain docs, and direct testing. No expert interview needed.
    - **General-capability skills** (e.g. education, research, study-planning, writing): the knowledge is publicly documented in books, curriculum standards, pedagogy literature, and established best practices. Public-source grounding is sufficient — no expert interview needed before `skill-creator` runs.
-   - **Niche specializer skills** (e.g. Vietnamese legal workflows, niche industry procedures, domain-specific tacit processes): the knowledge is NOT publicly findable — it lives in experts' heads, un-written workflows, or locally-specific regulation. A real elicitation source is **mandatory** before `skill-creator` runs: an expert interview, a real prior deployed system, a real practitioner survey, or direct thatlq1812 instruction confirming the tacit process. `outside_research/`'s brainstormed skill lists are ideation, not elicitation, for this tier.
+   - **Niche specializer skills** (e.g. Vietnamese legal workflows, niche industry procedures, domain-specific tacit processes): the knowledge is NOT publicly findable — it lives in experts' heads, un-written workflows, or locally-specific regulation. A real elicitation source is **mandatory** before `skill-creator` runs: an expert interview, a real prior deployed system, a real practitioner survey, or direct thatlq1812 instruction confirming the tacit process. `references/`'s brainstormed skill lists are ideation, not elicitation, for this tier.
 5. Harvesting from an outside source goes through license-compliance-check before skill-creator. Controlled "license debt" is permitted during bootstrap (tag via `registry/SCHEMA.md`'s `license_debt` field, never distribute externally while in debt) — **except** sources with an explicit no-redistribution clause (e.g. Anthropic's docx/pdf/pptx/xlsx skills), which stay hard-BLOCKED, never debt-eligible.
 6. One skill that runs well, audits clean, and gets real use beats ten unused skills in the registry.
 7. Never commit a venv or binary environment into git. A Python skill declares `requirements.txt`; it installs into the ONE shared root `.venv` via `toolchain-bootstrap`, never its own venv.
 8. Scriptorium never integrates an AI backend/API (not even thatlq1812's own Elixverse platform) — skills are pure artifacts run by the consuming agent's own backend. Don't add one, even for something that seems like it needs it (e.g. "deep research" skills are protocols the calling agent executes with its own tools, not Scriptorium holding a provider key).
-9. The whole system must be in English, except `docs/archive/` (historical, original language) and content brought in purely for outside reference (`outside_agy/`, `outside_research/`).
+9. The whole system must be in English, except `docs/archive/` (historical, original language) and content brought in purely for outside reference (`outside_agy/`, `references/`).
 
 ## Registry (`registry/skills.json`, schema in `registry/SCHEMA.md`)
 

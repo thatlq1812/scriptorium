@@ -1,0 +1,18 @@
+{
+  "translators": [
+    {"name": "Nguyen Van A", "expertise": "translator"},
+    {"name": "Dr. Tran Thi B", "expertise": "subject_matter_expert"}
+  ],
+  "review_step_completed": true,
+  "adjudication_notes": "Translators disagreed on item 7's wording ('anxious' vs 'lo lang'); resolved by adopting 'lo lang' after subject-matter-expert review confirmed closer clinical meaning.",
+  "back_translation": {
+    "performed": true,
+    "back_translator_name": "Le Van C",
+    "comparison_notes": "Back-translated version matched the original English instrument on 14 of 15 items; item 7 flagged and reconciled per adjudication_notes above."
+  },
+  "pretest": {
+    "performed": true,
+    "sample_size": 12,
+    "findings": "2 respondents found item 3's phrasing ambiguous; reworded before final deployment."
+  }
+}

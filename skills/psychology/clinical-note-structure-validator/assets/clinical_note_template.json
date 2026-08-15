@@ -1,0 +1,16 @@
+{
+  "intake_record": {
+    "completed": true,
+    "informed_consent_on_file": true,
+    "confidentiality_handling_declared": true
+  },
+  "session_notes": [
+    {
+      "session_date": "2026-08-10",
+      "subjective": "[Placeholder] Client's self-reported experience since the last session goes here.",
+      "objective": "[Placeholder] Observable, measurable facts from this session go here (e.g. session length, interventions used, observed response).",
+      "assessment": "[Placeholder] The clinician's own professional analysis of status/progress goes here -- this skill never reads or judges this field's content.",
+      "plan": "[Placeholder] Next steps / plan for the following session goes here."
+    }
+  ]
+}

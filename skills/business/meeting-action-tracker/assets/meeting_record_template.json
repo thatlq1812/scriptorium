@@ -1,0 +1,31 @@
+{
+  "meeting": {
+    "date": "2026-08-15",
+    "meeting_type": "regular",
+    "previous_minutes_approved": true
+  },
+  "motions": [
+    {
+      "text": "Motion to approve the Q3 2026 marketing budget as presented",
+      "moved_by": "Nguyen Van A",
+      "seconded_by": "Tran Thi B",
+      "vote_result": "approved"
+    }
+  ],
+  "action_items": [
+    {
+      "id": "A1",
+      "description": "Send the approved Q3 budget breakdown to the finance team",
+      "owner": "Nguyen Van A",
+      "due_date": "2026-08-22",
+      "status": "open"
+    },
+    {
+      "id": "A2",
+      "description": "Schedule the vendor kickoff call for the new campaign platform",
+      "owner": "Tran Thi B",
+      "due_date": "2026-08-20",
+      "status": "in_progress"
+    }
+  ]
+}

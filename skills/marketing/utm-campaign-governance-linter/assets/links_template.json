@@ -1,0 +1,16 @@
+{
+  "utm_playbook": {
+    "approved_sources": ["facebook", "google", "zalo", "email", "tiktok"],
+    "approved_mediums": ["cpc", "social", "email", "organic", "referral"]
+  },
+  "links": [
+    {
+      "url": "https://example.com/landing?utm_source=facebook&utm_medium=cpc&utm_campaign=q3_kettle_launch",
+      "is_internal": false
+    },
+    {
+      "url": "https://example.com/pricing",
+      "is_internal": true
+    }
+  ]
+}

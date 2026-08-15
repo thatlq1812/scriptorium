@@ -26,7 +26,7 @@ Spans 8 domain folders (`general`, `office`, `design`, `education`, `academic`, 
 - `docs/` — `MASTER_CONTEXT.md` (architecture + documentation convention), `STATUS.md` (real status), `DECISIONS_PENDING.md`, `specs/` (official specs), `templates/` (reusable operational templates), `guides/` (non-technical end-user documentation), `archive/` (historical discussion/raw research).
 - `skills/` — each skill is a subfolder containing a `SKILL.md` matching the agentskills.io 6-field spec (`name`, `description`, `license`, `compatibility`, `metadata`, `allowed-tools`).
 - `registry/` — the multi-axis identity backbone (domain, task-type, risk-tier, grounding, harness-compatibility). Schema: `registry/SCHEMA.md`. Data: `registry/skills.json`.
-- `outside_research/` — living input gathered before a tier is built (thatlq1812-authored surveys, AI-assisted research briefs), kept verbatim, never a source of truth on its own. See `docs/MASTER_CONTEXT.md` §3-4.
+- `references/` — living input gathered before a tier is built (thatlq1812-authored surveys, AI-assisted research briefs), kept verbatim, never a source of truth on its own. See `docs/MASTER_CONTEXT.md` §3-4.
 - `outside_agy/` — reference material surveyed from external LegalTech skill/playbook models (Harvey AI, CoCounsel, Ironclad-inspired), used for comparison only, not copied.
 
 Completed execution plans (e.g. the 2026-07-29 upgrade round that grew the registry 39→62 skills) move to `docs/archive/` once every checklist item is done — see `CLAUDE.md`'s read order.

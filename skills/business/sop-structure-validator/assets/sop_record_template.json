@@ -1,0 +1,40 @@
+{
+  "document_id": "SOP-ADM-003",
+  "version": "1.0",
+  "effective_date": "2026-08-15",
+  "purpose": "Define the steps for processing an internal expense-reimbursement request so that requests are handled consistently and within the promised turnaround time.",
+  "scope": "Applies to all staff submitting an expense-reimbursement request through the finance department. Does not cover capital-expenditure approval, which follows the separate SOP-FIN-002.",
+  "roles_responsibilities": [
+    {
+      "role": "Requesting employee",
+      "responsibility": "Submits the request with all required receipts attached"
+    },
+    {
+      "role": "Finance lead",
+      "responsibility": "Reviews the request for completeness and approves or rejects within 3 business days"
+    }
+  ],
+  "steps": [
+    {
+      "number": 1,
+      "text": "Employee submits the expense-reimbursement request with itemized receipts."
+    },
+    {
+      "number": 2,
+      "text": "Finance lead checks the request against the expense policy and either approves or returns it with a reason."
+    },
+    {
+      "number": 3,
+      "text": "Approved requests are queued for payment in the next scheduled payment run."
+    }
+  ],
+  "revision_history": [
+    {
+      "version": "1.0",
+      "date": "2026-08-15",
+      "author": "Nguyen Van A",
+      "description": "Initial version",
+      "approved_by": "Tran Thi B"
+    }
+  ]
+}

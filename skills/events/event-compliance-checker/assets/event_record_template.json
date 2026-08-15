@@ -1,0 +1,20 @@
+{
+  "event": {
+    "pathway": "approval",
+    "planned_date": "2026-08-24",
+    "submission_date": "2026-08-03",
+    "organizer_entity_type": "registered_business",
+    "security_order_compliance_declared": true,
+    "fire_safety_compliance_declared": true,
+    "receiving_authority": "provincial"
+  },
+  "approval_response": {
+    "application_complete_at_submission": true,
+    "response_date": "2026-08-07",
+    "response_type": "approved"
+  },
+  "changes": {
+    "content_changed": false,
+    "time_or_location_changed": false
+  }
+}

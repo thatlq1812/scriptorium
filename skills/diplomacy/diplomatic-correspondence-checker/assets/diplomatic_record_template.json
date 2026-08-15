@@ -1,0 +1,29 @@
+{
+  "note_verbale": {
+    "sending_office": "Embassy of Elandia",
+    "recipient_office": "Ministry of Foreign Affairs of Vietnam",
+    "reference_number": "NV-2026-0142",
+    "date": "2026-08-15",
+    "body": "The Embassy of Elandia presents its compliments to the Ministry of Foreign Affairs of Vietnam and has the honor to inform the Ministry of the appointment of a new Second Secretary, effective 1 September 2026. The Embassy avails itself of this opportunity to renew to the Ministry the assurances of its highest consideration."
+  },
+  "precedence_list": [
+    {
+      "mission_name": "Embassy of Arcavia",
+      "precedence_class": 1,
+      "credential_presentation_date": "2018-03-10",
+      "declared_order": 1
+    },
+    {
+      "mission_name": "Embassy of Borland",
+      "precedence_class": 1,
+      "credential_presentation_date": "2020-06-01",
+      "declared_order": 2
+    },
+    {
+      "mission_name": "Embassy of Elandia",
+      "precedence_class": 2,
+      "credential_presentation_date": "2015-01-05",
+      "declared_order": 3
+    }
+  ]
+}
