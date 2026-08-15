@@ -1,23 +1,20 @@
 #!/usr/bin/env python3
-"""Scaffold a named, versioned project workspace from a profession template.
+"""Scaffold a named project workspace from a profession template.
 
-Creates <projects_root>/<YYYYMMDD>-v<N>-<name>/ with the template's declared
+Creates <projects_root>/<YYYYMMDD>-<name>/ with the template's declared
 subdirectories plus a generated PROJECT.md control-panel file (the
 pre-formulated prompts a non-tech user drives the agent with, so they don't
 have to navigate the directory tree manually).
 
-Naming convention (v0.4.0, owner-directed 2026-08-14, PROJECT.md change
-request item 3a -- a real non-tech-user pilot workspace was found naming
-project folders as a bare descriptive slug with no date/version at all,
-losing exactly the "which attempt is this" information this convention
-exists to carry): <YYYYMMDD>-v<N>-<name> -- YYYYMMDD is the date THIS
-scaffold ran, <name> is a caller-supplied slug identifying the project
-regardless of date, and v<N> is derived by scanning <projects_root> for
-existing directories ending in -v<M>-<name> (matching on name, any date) and
-taking max+1 -- so re-scaffolding the same named project later produces a
-new dated version directory (v2, v3, ...) instead of colliding, and a
-completely different project name always starts at v1. Never guessed, never
-silently reused, refuses rather than overwriting an existing directory.
+Naming convention (v0.5.0, thatlq1812-directed 2026-08-15, PROJECT.md change
+request item 3a-revised): <YYYYMMDD>-<name> -- no version suffix by default.
+A version suffix (-v<N>) is appended ONLY when <name> already exists under
+<projects_root> (any date) -- so a first-time project name stays a clean
+<YYYYMMDD>-<name>, and re-scaffolding the same name later (a redo, a new
+round of the same matter) gets -v2, -v3, ... appended, never colliding with
+or silently overwriting an earlier attempt. (v0.4.0, 2026-08-14, always
+appended -v1 on the first run too; thatlq1812 reverted the always-on suffix
+2026-08-15, keeping only the collision-triggered part of that fix.)
 
 Usage:
     python scaffold_workspace.py <template.json> <projects_root> --name <slug> [--date YYYY-MM-DD]
@@ -64,17 +61,24 @@ def _load_template(path: Path) -> dict:
     return data
 
 
-def _next_version(projects_root: Path, name: str) -> int:
+def _next_suffix(projects_root: Path, name: str) -> int | None:
+    """Return None if <name> has never been scaffolded (use the bare, no-suffix
+    form), else the next version number to append as -v<N> (existing bare
+    <date>-<name> counts as v1, existing -v<M>-<name> counts as v<M>)."""
+    bare_re = re.compile(r"^\d{8}-" + re.escape(name) + r"$")
+    versioned_re = re.compile(r"^\d{8}-" + re.escape(name) + r"-v(\d+)$")
     max_version = 0
-    name_re = re.compile(r"^\d{8}-v(\d+)-" + re.escape(name) + r"$")
     if projects_root.exists():
         for entry in projects_root.iterdir():
             if not entry.is_dir():
                 continue
-            m = name_re.match(entry.name)
+            if bare_re.match(entry.name):
+                max_version = max(max_version, 1)
+                continue
+            m = versioned_re.match(entry.name)
             if m:
                 max_version = max(max_version, int(m.group(1)))
-    return max_version + 1
+    return None if max_version == 0 else max_version + 1
 
 
 def _render_project_md(template: dict, project_dir_name: str) -> str:
@@ -126,8 +130,8 @@ def main() -> int:
         date_str = date.today().strftime("%Y%m%d")
 
     projects_root = Path(args.projects_root)
-    version = _next_version(projects_root, args.name)
-    project_dir_name = f"{date_str}-v{version}-{args.name}"
+    suffix = _next_suffix(projects_root, args.name)
+    project_dir_name = f"{date_str}-{args.name}" if suffix is None else f"{date_str}-{args.name}-v{suffix}"
     project_dir = projects_root / project_dir_name
 
     if project_dir.exists():

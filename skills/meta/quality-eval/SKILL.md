@@ -2,7 +2,7 @@
 name: quality-eval
 description: Scores an already-created skill's quality in two passes — first checking that every behavioral guarantee its own SKILL.md states still holds under adversarial input, then comparing with-skill vs baseline (no skill) for real on ≥2 verified harnesses, against concrete pass/fail criteria. Use after skill-creator finishes producing a skill, before the registry is allowed to mark that skill "ready to use." Do NOT evaluate security (that's security-audit, a separate step 5) — don't merge the two into one run.
 license: MIT
-compatibility: A process that runs on the target skill's actual harnesses — at minimum, the 2 harnesses already verified in that skill's `registry/skills.json` entry. Pass A additionally needs Python 3.11+ (stdlib only) to generate the bundled fixtures. Not yet applied for real to any Scriptorium skill (v0.2.0) — design complete, no real evaluation run yet; running stage 4 stays deliberately deferred by owner decision (2026-07-26).
+compatibility: A process that runs on the target skill's actual harnesses — at minimum, the 2 harnesses already verified in that skill's `registry/skills.json` entry. Pass A additionally needs Python 3.11+ (stdlib only) to generate the bundled fixtures. Not yet applied for real to any Scriptorium skill (v0.2.0) — design complete, no real evaluation run yet; running stage 4 stays deliberately deferred by thatlq1812 decision (2026-07-26).
 metadata:
   domain: meta
   task_type: review-qa

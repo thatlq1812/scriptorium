@@ -9,7 +9,7 @@
     },
     {
       "heading": "Quy ước đặt tên",
-      "text": "Tên project theo dạng `project_YYYYMMDD_NN` (ngày tạo + số thứ tự trong ngày). Ghi chủ đề/câu hỏi nghiên cứu trong `PROJECT.md` của từng project, không phải trong tên thư mục."
+      "text": "Tên project theo dạng `<YYYYMMDD>-<name>` (ngày tạo + slug đặt qua `--name` khi chạy `scaffold_workspace.py`). Làm lại cùng một `<name>` sau này sẽ tự thêm hậu tố `-v2`, `-v3`... thay vì ghi đè bản trước. Ghi chủ đề/câu hỏi nghiên cứu trong `PROJECT.md` của từng project, không phải trong tên thư mục."
     },
     {
       "heading": "Khi cập nhật template",

@@ -17,7 +17,7 @@ hiệu-lực tracking as hard and this project has no free official API for it
 -- the honest response is disciplined, disclosed sourcing, not a lookup
 service pretending to have ground truth.
 
-Short-term mitigation for JS-rendered sites (2026-07-27, owner decision after
+Short-term mitigation for JS-rendered sites (2026-07-27, thatlq1812 decision after
 a real attempt against dichvucong.gov.vn found its procedure/form pages
 return only a JS shell to a direct fetch): a result may set
 "js_shell_detected": true and skip a literal as_displayed_status quote, but

@@ -9,7 +9,10 @@ __pycache__/
 /personal
 /data
 /test
+/releases
 
 /*.md
 !/README.md
+!/START_HERE.md
 /references
+/docs/archive

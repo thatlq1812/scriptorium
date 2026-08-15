@@ -9,7 +9,7 @@
     },
     {
       "heading": "Quy ước đặt tên",
-      "text": "Tên project theo dạng `project_YYYYMMDD_NN` (ngày tạo + số thứ tự trong ngày), không phải tên khách hàng -- tránh lộ thông tin khách hàng qua tên thư mục. Ghi tên khách hàng/vụ việc trong `PROJECT.md` của từng project, không phải trong tên thư mục."
+      "text": "Tên project theo dạng `<YYYYMMDD>-<name>` (ngày tạo + slug đặt qua `--name` khi chạy `scaffold_workspace.py`) -- KHÔNG dùng tên khách hàng thật làm `<name>` vì nó xuất hiện thẳng trong tên thư mục, dùng mã/loại vụ việc thay thế (ví dụ `tranh-chap-hd-thue`). Ghi tên khách hàng/vụ việc thật trong `PROJECT.md` của từng project, không phải trong tên thư mục. Làm lại cùng một `<name>` sau này sẽ tự thêm hậu tố `-v2`, `-v3`... thay vì ghi đè bản trước."
     },
     {
       "heading": "Khi cập nhật template",

@@ -4,7 +4,7 @@ into numbered per-page images (PNG/JPG) and/or one combined multi-page PDF
 -- e.g. turning a structured document (any long-form content with a
 repeating unit -- article sections, catalog entries, a slide-style
 explainer) into a visually-consistent set of information pages. General
-media/design capability, not tied to any one content domain (owner
+media/design capability, not tied to any one content domain (thatlq1812
 directive, 2026-08-07): the SAME layout.json a single poster/banner already
 uses works here unchanged, just filled with different content per page.
 

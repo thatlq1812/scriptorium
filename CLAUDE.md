@@ -7,7 +7,7 @@
 
 Scriptorium creates, quality-tests, security-audits, and catalogs portable **Agent Skills** (the open `SKILL.md` standard at agentskills.io, ~44 adopter platforms). It is **not** an app, chatbot, or agent harness — it produces skill *artifacts* that run on whatever harness/model the consuming agent already has. Scriptorium itself never calls an AI API (see "Non-negotiable principles" below).
 
-Skills are built to that open `SKILL.md` format for cross-harness technical compatibility only — the registry itself (`skills/`, `registry/skills.json`) is a specialized system, not published to the public agentskills.io showcase/community. **Scriptorium is not run for profit** — it is a purpose-built skill system tailored to Vietnamese context and workflows, not a product sold retail. `skill-exporter` still packages whole skills or curated packs for distribution, but that distribution isn't commercial. (Owner decision, 2026-08-13, superseding the 2026-08-02 commercial/proprietary framing — see `docs/DECISIONS_PENDING.md`'s Resolved section for the full record.)
+Skills are built to that open `SKILL.md` format for cross-harness technical compatibility only — the registry itself (`skills/`, `registry/skills.json`) is a specialized system, not published to the public agentskills.io showcase/community. **Scriptorium is not run for profit** — it is a purpose-built skill system tailored to Vietnamese context and workflows, not a product sold retail. `skill-exporter` still packages whole skills or curated packs for distribution, but that distribution isn't commercial. (thatlq1812 decision, 2026-08-13, superseding the 2026-08-02 commercial/proprietary framing — see `docs/DECISIONS_PENDING.md`'s Resolved section for the full record.)
 
 **Read in this order before doing any non-trivial work:**
 1. This file (`CLAUDE.md`) — you are here ✓
@@ -16,7 +16,7 @@ Skills are built to that open `SKILL.md` format for cross-harness technical comp
 4. `docs/STATUS.md` — real skill status (verify against `registry/skills.json`)
 5. `docs/specs/STRATEGY_SPEC.md` — source of truth for pipeline, taxonomy, and strategy principles
 6. `docs/ROADMAP.md` — skill-expansion backlog
-7. `docs/DECISIONS_PENDING.md` — decisions awaiting owner confirmation (check before assuming anything is unresolved)
+7. `docs/DECISIONS_PENDING.md` — decisions awaiting thatlq1812 confirmation (check before assuming anything is unresolved)
 
 Completed execution plans move to `docs/archive/<name>-<date>/` once every checklist item is done (e.g. `docs/archive/upgrade-plan-2026-07-29/`) — check there for prior rounds' full reasoning before assuming a past decision wasn't documented.
 
@@ -27,12 +27,12 @@ scriptorium/
 ├── docs/
 │   ├── MASTER_CONTEXT.md      # architecture, scope, documentation convention
 │   ├── STATUS.md               # real status, must be verifiable against registry/skills.json
-│   ├── DECISIONS_PENDING.md    # decisions awaiting owner confirmation
+│   ├── DECISIONS_PENDING.md    # decisions awaiting thatlq1812 confirmation
 │   ├── ROADMAP.md              # skill-expansion backlog
 │   ├── specs/STRATEGY_SPEC.md  # source of truth for strategy/pipeline/taxonomy
 │   ├── templates/              # e.g. CLUSTER_SURVEY_TEMPLATE.md (elicitation before skill-creator)
 │   └── archive/                # history, not current state (original language kept verbatim); completed execution plans (e.g. UPGRADE_PLAN_*.md) live here once fully checked off
-├── outside_research/           # living input (owner surveys, external AI research) — ideation only, not elicited input on its own
+├── outside_research/           # living input (thatlq1812 surveys, external AI research) — ideation only, not elicited input on its own
 ├── outside_agy/                # external LegalTech reference material — comparison only, never copied
 ├── skills/<domain>/<skill_id>/SKILL.md  # each skill is its own subfolder under a domain folder
 │                              # (general/office/design/education/academic/meta/media/legal, matches
@@ -54,13 +54,13 @@ When docs conflict: `skills/` + `registry/` beat every doc. Within docs, `specs/
 
 research → elicit tacit process from a real source → `skill-creator` → quality evaluation (≥2 harnesses) → security audit (separate stage, never merged with quality eval) → scout/harvester (existing prior art) → license-compliance check → dedup/novelty-check → registry entry.
 
-A skill is "officially ready" only after it clears stage 5 (security audit) and, *if applicable*, stage 4 (quality eval). **Stage 4 does not apply to every skill (owner decision, 2026-07-29)** — it's scoped, via each registry entry's `quality_score.stage4_required`, to (a) niche-specializer skills elicited from a real expert source, and (b) skills that ingest uncontrolled external input (arbitrary documents, web content, third-party repos, external API responses). Foundation/infrastructure and general-capability skills grounded in public sources are exempt by design, not just deferred — see `registry/SCHEMA.md`'s `quality_score` field for the exact rule and `docs/STATUS.md` for the current per-skill classification. **For the ~14 skills where `stage4_required: true`, running stage 4 is still deliberately not yet scheduled — do not run it without asking first.** This is a hold on the formal multi-harness scoring gate, not a statement about implementation quality: every skill in this repo has been tested against real and adversarial inputs, with real bugs found and fixed; security audit has passed for all skills. "Not yet through stage 4" means the formal QA scoring run hasn't been scheduled — it does not mean the skill is broken or ungrounded.
+A skill is "officially ready" only after it clears stage 5 (security audit) and, *if applicable*, stage 4 (quality eval). **Stage 4 does not apply to every skill (thatlq1812 decision, 2026-07-29)** — it's scoped, via each registry entry's `quality_score.stage4_required`, to (a) niche-specializer skills elicited from a real expert source, and (b) skills that ingest uncontrolled external input (arbitrary documents, web content, third-party repos, external API responses). Foundation/infrastructure and general-capability skills grounded in public sources are exempt by design, not just deferred — see `registry/SCHEMA.md`'s `quality_score` field for the exact rule and `docs/STATUS.md` for the current per-skill classification. **For the ~14 skills where `stage4_required: true`, running stage 4 is still deliberately not yet scheduled — do not run it without asking first.** This is a hold on the formal multi-harness scoring gate, not a statement about implementation quality: every skill in this repo has been tested against real and adversarial inputs, with real bugs found and fixed; security audit has passed for all skills. "Not yet through stage 4" means the formal QA scoring run hasn't been scheduled — it does not mean the skill is broken or ungrounded.
 
 Before starting a new skill, query `registry/skills.json` by domain/task_type/object_type — if an existing skill already covers ≥80% of scope, extend/version it instead of creating a parallel entry.
 
 ### Scouting a brand-new skill type before `skill-creator` runs
 
-Standing practice (owner directive, first applied 2026-07-29 and generalized here so it survives beyond any one execution plan): *"Search và clone các repo tiêu biểu cho cùng một chủ đề và tham khảo trước khi tạo kiểu skill đó."* Applies to any genuinely new skill type — not a version bump of an existing skill.
+Standing practice (thatlq1812 directive, first applied 2026-07-29 and generalized here so it survives beyond any one execution plan): *"Search và clone các repo tiêu biểu cho cùng một chủ đề và tham khảo trước khi tạo kiểu skill đó."* Applies to any genuinely new skill type — not a version bump of an existing skill.
 
 1. Search for 2-4 representative real-world repos/projects on the same topic (`WebSearch`, or `scout-harvester`'s `github_scout.py` for GitHub specifically).
 2. Shallow-clone the most relevant 1-3 into `outside_research/references/<topic>/` via `scout-harvester`'s `clone_candidate.py` (never inside `skills/`, never committed as a dependency — reference-only).
@@ -76,11 +76,11 @@ Standing practice (owner directive, first applied 2026-07-29 and generalized her
 4. **Elicitation requirements vary by knowledge tier** — apply the right bar for each, not a single binary rule:
    - **Infrastructure / bootstrap skills** (e.g. `toolchain-bootstrap`, `skill-creator`): grounded from open specs, public toolchain docs, and direct testing. No expert interview needed.
    - **General-capability skills** (e.g. education, research, study-planning, writing): the knowledge is publicly documented in books, curriculum standards, pedagogy literature, and established best practices. Public-source grounding is sufficient — no expert interview needed before `skill-creator` runs.
-   - **Niche specializer skills** (e.g. Vietnamese legal workflows, niche industry procedures, domain-specific tacit processes): the knowledge is NOT publicly findable — it lives in experts' heads, un-written workflows, or locally-specific regulation. A real elicitation source is **mandatory** before `skill-creator` runs: an expert interview, a real prior deployed system, a real practitioner survey, or direct owner instruction confirming the tacit process. `outside_research/`'s brainstormed skill lists are ideation, not elicitation, for this tier.
+   - **Niche specializer skills** (e.g. Vietnamese legal workflows, niche industry procedures, domain-specific tacit processes): the knowledge is NOT publicly findable — it lives in experts' heads, un-written workflows, or locally-specific regulation. A real elicitation source is **mandatory** before `skill-creator` runs: an expert interview, a real prior deployed system, a real practitioner survey, or direct thatlq1812 instruction confirming the tacit process. `outside_research/`'s brainstormed skill lists are ideation, not elicitation, for this tier.
 5. Harvesting from an outside source goes through license-compliance-check before skill-creator. Controlled "license debt" is permitted during bootstrap (tag via `registry/SCHEMA.md`'s `license_debt` field, never distribute externally while in debt) — **except** sources with an explicit no-redistribution clause (e.g. Anthropic's docx/pdf/pptx/xlsx skills), which stay hard-BLOCKED, never debt-eligible.
 6. One skill that runs well, audits clean, and gets real use beats ten unused skills in the registry.
 7. Never commit a venv or binary environment into git. A Python skill declares `requirements.txt`; it installs into the ONE shared root `.venv` via `toolchain-bootstrap`, never its own venv.
-8. Scriptorium never integrates an AI backend/API (not even the owner's own Elixverse platform) — skills are pure artifacts run by the consuming agent's own backend. Don't add one, even for something that seems like it needs it (e.g. "deep research" skills are protocols the calling agent executes with its own tools, not Scriptorium holding a provider key).
+8. Scriptorium never integrates an AI backend/API (not even thatlq1812's own Elixverse platform) — skills are pure artifacts run by the consuming agent's own backend. Don't add one, even for something that seems like it needs it (e.g. "deep research" skills are protocols the calling agent executes with its own tools, not Scriptorium holding a provider key).
 9. The whole system must be in English, except `docs/archive/` (historical, original language) and content brought in purely for outside reference (`outside_agy/`, `outside_research/`).
 
 ## Registry (`registry/skills.json`, schema in `registry/SCHEMA.md`)

@@ -8,7 +8,7 @@ metadata:
   task_type: research
   risk_tier: N2
   source: self-authored
-  elicited_from: "Owner (2026-07-27): explicit request for a deep-research capability, clarified during discussion in important.md that it must NOT mean Scriptorium holding its own AI provider key ('base AI backend but with other way') — the intended shape is a skill that gives any calling agent the same rigor an agent doing research live already applies (decompose, triangulate, cite, flag gaps), packaged so it can be run by an agent that doesn't already have this discipline built in. Schema and validator pattern directly reused from this repo's own legal-research-brief (elicited from outside_research/research_01_result_01.md's legal-opinion output schema, itself grounded in Stanford RegLab/HAI's 'Hallucination-Free?' findings on legal-AI citation fabrication, docs/specs/STRATEGY_SPEC.md §5.2), generalized here beyond the legal domain to any research question."
+  elicited_from: "thatlq1812 (2026-07-27): explicit request for a deep-research capability, clarified during discussion in important.md that it must NOT mean Scriptorium holding its own AI provider key ('base AI backend but with other way') — the intended shape is a skill that gives any calling agent the same rigor an agent doing research live already applies (decompose, triangulate, cite, flag gaps), packaged so it can be run by an agent that doesn't already have this discipline built in. Schema and validator pattern directly reused from this repo's own legal-research-brief (elicited from outside_research/research_01_result_01.md's legal-opinion output schema, itself grounded in Stanford RegLab/HAI's 'Hallucination-Free?' findings on legal-AI citation fabrication, docs/specs/STRATEGY_SPEC.md §5.2), generalized here beyond the legal domain to any research question."
   version: 0.1.0
   grounding: required
   object_type: []
@@ -20,7 +20,7 @@ A protocol, not a research API. This skill never searches the web, calls an AI p
 
 ## When to use
 
-Use when a question genuinely needs multiple sources triangulated, contradictions surfaced, and an honest confidence/gaps statement — not a single quick lookup a normal tool call already answers. Especially useful when the calling agent/harness doesn't already have a rigorous research habit built in (the owner's own observation: not every agent does this well by default even when it technically has web access).
+Use when a question genuinely needs multiple sources triangulated, contradictions surfaced, and an honest confidence/gaps statement — not a single quick lookup a normal tool call already answers. Especially useful when the calling agent/harness doesn't already have a rigorous research habit built in (thatlq1812's own observation: not every agent does this well by default even when it technically has web access).
 
 Don't use when: one authoritative source already answers the question (just cite it directly, no need for the full brief structure); or the goal is legal research specifically (use `legal-research-brief` instead — same discipline, Vietnamese-legal-opinion-shaped schema, and a hiệu lực-status caveat this general skill doesn't carry).
 

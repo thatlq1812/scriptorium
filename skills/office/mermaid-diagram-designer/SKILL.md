@@ -8,7 +8,7 @@ metadata:
   task_type: drafting
   risk_tier: N1
   source: self-authored
-  elicited_from: "Owner (2026-07-26, docs/ROADMAP.md): scouted mermaid-js/mermaid (MIT, 89,421 stars, verified directly via gh api) as the syntax source. Cheatsheet + diagram-type decision rules rewritten in our own words (not copied verbatim from the original docs), based on public knowledge of Mermaid syntax."
+  elicited_from: "thatlq1812 (2026-07-26, docs/ROADMAP.md): scouted mermaid-js/mermaid (MIT, 89,421 stars, verified directly via gh api) as the syntax source. Cheatsheet + diagram-type decision rules rewritten in our own words (not copied verbatim from the original docs), based on public knowledge of Mermaid syntax."
   version: 0.1.0
 ---
 

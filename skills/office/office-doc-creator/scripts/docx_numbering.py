@@ -16,7 +16,7 @@ pair with unique IDs, so multiple lists in the same document never collide
 and each one restarts its counter at 1 independently (Word ties the running
 count to the concrete ``numId``, not the abstract definition).
 
-Adapted from the owner's own prior production system:
+Adapted from thatlq1812's own prior production system:
 ``D:/elix/archive/platform_archive/modules/document/v6/renderers/docx/numbering.py``
 (ported and simplified for office-doc-creator's flat, single-level list
 content spec — no nested sub-lists in this skill's JSON shape).

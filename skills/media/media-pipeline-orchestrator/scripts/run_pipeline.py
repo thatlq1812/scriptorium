@@ -51,7 +51,7 @@ def map_to_veo_duration(audio_duration_seconds: float) -> int:
     """Rounds a real measured audio duration to Veo's discrete duration set
     (4, 6, 8) -- Veo has no continuous duration parameter (see
     gemini-generator's own SKILL.md 'A real constraint found by testing').
-    Real technique from a real completed project the owner pointed at
+    Real technique from a real completed project thatlq1812 pointed at
     (D:/elix/projects/20260805_GenVid/scripts/pipeline/build_v5_fullmerge.py's
     map_to_veo_duration(), same threshold rule, ported 2026-08-13)."""
     if audio_duration_seconds <= 5.0:

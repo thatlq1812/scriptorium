@@ -1,7 +1,7 @@
 """
-Content-length-based font-size balancing (new feature 2, owner-requested).
+Content-length-based font-size balancing (new feature 2, thatlq1812-requested).
 
-Owner's exact framing: "content goc 100 chu, ma noi dung moi 200 chu,
+thatlq1812's exact framing: "content goc 100 chu, ma noi dung moi 200 chu,
 thi co the xem xet giam font, nhat la cac title doc lap" (if the
 original template placeholder had ~100 chars and the caller's real
 content is ~200 chars, consider shrinking the font -- especially for
@@ -27,7 +27,7 @@ font.size -- deterministic and testable, matching this project's
 "deterministic-first" discipline for physical fit constraints.
 
 Two step tables, applied per-shape-role (title steps are larger because
-title overflow is the most visually jarring per the owner's specific
+title overflow is the most visually jarring per thatlq1812's specific
 callout; body/bullet steps are smaller and floor higher since dense
 body text already reads fine smaller, but going below ~10pt reads as
 a rendering bug, not a design choice):

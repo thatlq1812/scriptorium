@@ -1,5 +1,5 @@
 """
-Vietnamese font-safety checker (new feature 1, owner-requested).
+Vietnamese font-safety checker (new feature 1, thatlq1812-requested).
 
 Given a font name (the template's own theme font, or a caller-requested
 font-swap target), report:

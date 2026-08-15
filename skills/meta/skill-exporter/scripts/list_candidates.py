@@ -12,7 +12,7 @@ distributed/published outside the internal repo while in debt" -- this is
 the first place in the project that rule has real teeth, since nothing
 exported anything before this skill existed. operational_status (added
 2026-07-29) covers a skill that passed audit but was deliberately paused by
-the owner for a reason distinct from license/security -- see
+thatlq1812 for a reason distinct from license/security -- see
 registry/SCHEMA.md's operational_status field.
 
 Filters are OR-within-axis, AND-across-axis: --domain legal general matches

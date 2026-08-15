@@ -18,13 +18,13 @@ Grounded in the real non-tech-user pilot recorded in docs/ROADMAP.md's
 `d:/my-workspace` deployment used a `projects/` root with a
 `projects/_templates/` template location -- this script builds that
 top-level structure; scaffold_workspace.py builds each dated project inside
-it. AGENTS.md's content (v0.4.0, owner-directed 2026-08-14, PROJECT.md
+it. AGENTS.md's content (v0.4.0, thatlq1812-directed 2026-08-14, PROJECT.md
 change request item 3b) is grounded in a second real pilot workspace review
 (`D:\\AppData\\my_workspace`) that surfaced this exact gap: the workspace's
 own hand-written AGENTS.md was 3 short paragraphs with no naming convention,
 no rule against replying with a deliverable inline instead of scaffolding a
-real project, and no instruction to keep `personals/` up to date -- real
-symptoms the owner traced back to this skill never having generated
+real project, and no instruction to keep `personal/` up to date -- real
+symptoms thatlq1812 traced back to this skill never having generated
 AGENTS.md at all (the file predates this version, written ad hoc by
 whichever agent set that workspace up).
 
@@ -48,6 +48,17 @@ for _stream in (sys.stdout, sys.stderr):
         _stream.reconfigure(encoding="utf-8")
 
 REQUIRED_TEMPLATE_KEYS = {"template_id", "label", "workspace_subdirs", "workspace_md_prompts"}
+
+# Fixed, profession-agnostic workspace-root dirs created regardless of which
+# template is used -- distinct from a template's own `workspace_subdirs`
+# (which only ever declares `projects`/`projects/_templates`). Added v0.5.0
+# (thatlq1812, 2026-08-15, START_HERE_INSTRUCT.md): a real onboarding needs
+# these 3 to exist from the start, not only whatever a specific profession
+# template happens to declare. `personal/` matches personal-profile-manager's
+# own `personal/profile.json` convention exactly (previously documented here
+# as `personals/`, a naming mismatch never actually created by either skill
+# -- fixed same round).
+FIXED_WORKSPACE_SUBDIRS = ["data", "documents", "personal"]
 
 
 def _load_template(path: Path) -> dict:
@@ -81,9 +92,17 @@ def _render_workspace_md(template: dict, template_copy_path: Path) -> str:
         "## Subdirectories",
         "",
     ]
+    for sub in FIXED_WORKSPACE_SUBDIRS:
+        lines.append(f"- `{sub}/`")
     for sub in template["workspace_subdirs"]:
         lines.append(f"- `{sub}/`")
     lines += [
+        "",
+        "`data/` and `documents/` hold reference material shared across projects "
+        "(datasets, source documents that aren't specific to one matter) -- project-"
+        "specific source material still belongs inside that project's own `source/` "
+        "subdirectory, not here. `personal/` is this workspace owner's profile store "
+        "(`personal-profile-manager`).",
         "",
         "## Starting a new project",
         "",
@@ -91,13 +110,13 @@ def _render_workspace_md(template: dict, template_copy_path: Path) -> str:
         "(from `project-workspace-initializer`) to create a new project directory "
         "under `projects/` using this workspace's own copy of the template -- no "
         "need to reference the skill's own repo path again. Produces "
-        "`projects/<YYYYMMDD>-v<N>-<slug>/` (see `AGENTS.md`'s \"Project structure\" "
+        "`projects/<YYYYMMDD>-<slug>/` (see `AGENTS.md`'s \"Project structure\" "
         "section for the full naming convention).",
         "",
         "## Shared resources (once per workspace, never per project)",
         "",
         "Two things belong exactly once at this workspace's root, not duplicated "
-        "inside any `projects/<YYYYMMDD>-v<N>-<name>/` subdirectory:",
+        "inside any `projects/<YYYYMMDD>-<name>/` subdirectory:",
         "",
         "- **Skills**: if this workspace was set up from a `skill-exporter` bundle, "
         "install the skills once here (see the bundle's `MANIFEST.md` \"Where to "
@@ -132,6 +151,11 @@ def _render_agents_md(template: dict, template_copy_path: Path) -> str:
         "non-trivial work here -- it is not optional context, it is the operating "
         "contract for this workspace.",
         "",
+        "**This is a live filesystem workspace, not a chat session.** The user is "
+        "non-technical and expects real files (documents, spreadsheets, decks) to "
+        "exist afterward, not just text in a reply. Every rule below exists because "
+        "a real deployment hit exactly the failure it corrects -- follow them.",
+        "",
         "## Skill registry",
         "",
         "A local skill registry lives at `skills/<skill-name>/SKILL.md` (index: "
@@ -146,21 +170,32 @@ def _render_agents_md(template: dict, template_copy_path: Path) -> str:
         "",
         "**Every piece of real work (a document, a dataset, a design, a deliverable of "
         "any kind) lives inside its own directory under `projects/`, never loose at "
-        "this workspace's root.** Use `scaffold_workspace.py` (from "
-        "`project-workspace-initializer`, see below) to create it -- never `mkdir` a "
-        "project directory by hand, since the naming convention and `PROJECT.md` "
-        "control panel both come from that script.",
+        "`projects/`'s own root and never directly at this workspace's root.** Use "
+        "`scaffold_workspace.py` (from `project-workspace-initializer`, see below) to "
+        "create it -- never `mkdir` a project directory by hand, and never write a "
+        "deliverable file straight into `projects/` without first scaffolding a dated "
+        "subdirectory for it, since the naming convention and `PROJECT.md` control "
+        "panel both come from that script. A loose file sitting directly under "
+        "`projects/` is always a mistake -- move it into a scaffolded project directory "
+        "(scaffolding one first if none fits) rather than leaving it there.",
         "",
-        "**Naming convention**: `projects/<YYYYMMDD>-v<N>-<name>/` --",
+        "**Naming convention**: `projects/<YYYYMMDD>-<name>/`, or "
+        "`projects/<YYYYMMDD>-<name>-v<N>/` if `<name>` was already used before --",
         "- `<YYYYMMDD>`: the date this specific project directory was scaffolded.",
-        "- `v<N>`: version/attempt number for this project NAME -- starts at `v1`; "
-        "re-scaffolding the same `<name>` later (a redo, a new round of the same "
-        "matter) auto-increments to `v2`, `v3`, ... regardless of date. A different "
-        "`<name>` always starts fresh at `v1`.",
         "- `<name>`: a lowercase kebab-case slug identifying the project (e.g. "
         "`hop-dong-internet`, `bao-cao-tong-ket-nam-hoc`) -- picked by whoever scaffolds "
         "it, not auto-generated; Vietnamese names should be transliterated to plain "
         "ASCII kebab-case (no diacritics, no spaces) same as the examples above.",
+        "- `-v<N>`: appended automatically ONLY when `<name>` already exists under "
+        "`projects/` (any date) -- a first-time name gets no suffix; re-scaffolding "
+        "the same `<name>` later (a redo, a new round of the same matter) gets "
+        "`-v2`, `-v3`, ... appended instead of colliding with the earlier attempt.",
+        "",
+        "**Archiving finished projects (convention, not automated)**: once a project "
+        "under `projects/` is fully done and the user won't touch it again, move its "
+        "directory into `projects/_archive/` (create it if it doesn't exist yet) to "
+        "keep `projects/` itself easy to scan. No script does this automatically -- "
+        "move it by hand when the user confirms a project is finished.",
         "",
         "```bash\n"
         f"python {template_copy_path.as_posix()} projects/ --name <slug> [--date YYYY-MM-DD]\n"
@@ -182,17 +217,17 @@ def _render_agents_md(template: dict, template_copy_path: Path) -> str:
         "",
         "## Personal/organization profile -- keep it up to date proactively",
         "",
-        "`personals/` holds this workspace owner's reusable identity/organization/contact "
+        "`personal/` holds this workspace owner's reusable identity/organization/contact "
         "details (`personal-profile-manager`'s `profile.json`, optionally an "
         "`org_profile` section for letterhead/issuing-organization identity). Don't "
         "treat this as a passive lookup used only when a form explicitly asks for a "
         "field: whenever a task surfaces a durable identity/org/contact/style-preference "
         "fact the profile doesn't already have (a new signatory, a corrected address, a "
         "writing-style correction worth remembering), proactively propose updating "
-        "`personals/profile.json` (via `personal-profile-manager`'s scripts) rather than "
+        "`personal/profile.json` (via `personal-profile-manager`'s scripts) rather than "
         "letting the same detail get re-typed or re-asked next time. A skill producing "
         "reusable personal/org data as a side effect of its normal output should note "
-        "that back into `personals/` too, not only whichever project it was working in.",
+        "that back into `personal/` too, not only whichever project it was working in.",
         "",
         "## Shared resources (once per workspace, never per project)",
         "",
@@ -240,7 +275,7 @@ def main() -> int:
             print(f"ERROR: {template_copy_dir} already exists -- workspace already initialized. Use --force to re-initialize.", file=sys.stderr)
             return 1
 
-    for sub in template["workspace_subdirs"]:
+    for sub in FIXED_WORKSPACE_SUBDIRS + template["workspace_subdirs"]:
         (workspace_root / sub).mkdir(parents=True, exist_ok=True)
 
     shutil.copytree(template_path.parent, template_copy_dir, dirs_exist_ok=args.force)
@@ -253,7 +288,7 @@ def main() -> int:
     agents_md_path.write_text(agents_md_text, encoding="utf-8", newline="\n")
 
     print(f"Initialized workspace {workspace_root}")
-    print(f"  subdirs: {', '.join(template['workspace_subdirs'])}")
+    print(f"  subdirs: {', '.join(FIXED_WORKSPACE_SUBDIRS + template['workspace_subdirs'])}")
     print(f"  template copy: {template_copy_dir}")
     print(f"  WORKSPACE.md: {workspace_md_path}")
     print(f"  AGENTS.md: {agents_md_path}")

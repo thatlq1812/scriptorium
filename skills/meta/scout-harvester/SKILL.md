@@ -9,7 +9,7 @@ metadata:
   risk_tier: N1
   pipeline_stage: 6
   source: self-authored
-  elicited_from: "Distilled from 3 real runs in the 2026-07-26 session: researching document-parsing tools before building document-ai-structurer, researching a python bootstrap tool before building python-env-bootstrap, and scouting anthropics/skills at owner's request — all three followed the same pattern that had never been written down as a process before. Owner (2026-07-27): raised a candidate 'git handler' skill idea in important.md, then directed folding it into scout-harvester instead of a separate skill once discussion confirmed the only missing piece was actually cloning a chosen candidate (search/inspection was already covered by github_scout.py)."
+  elicited_from: "Distilled from 3 real runs in the 2026-07-26 session: researching document-parsing tools before building document-ai-structurer, researching a python bootstrap tool before building python-env-bootstrap, and scouting anthropics/skills at thatlq1812's request — all three followed the same pattern that had never been written down as a process before. thatlq1812 (2026-07-27): raised a candidate 'git handler' skill idea in important.md, then directed folding it into scout-harvester instead of a separate skill once discussion confirmed the only missing piece was actually cloning a chosen candidate (search/inspection was already covered by github_scout.py)."
   version: 0.3.0
   changelog_0_3_0: "Added clone_candidate.py: shallow git clone (--depth 1) of a scouted GitHub candidate by owner/repo slug, subprocess with a fixed argument list (no shell=True, same safety shape as github_scout.py's gh wrapper). Refuses to clone into a destination inside the Scriptorium repo tree itself (would nest a second .git and risk accidentally committing third-party code) and refuses an already-non-empty destination."
 ---
@@ -20,7 +20,7 @@ Answers: **has anyone already done this well, and if so, is it worth learning fr
 
 ## When to run
 
-Right after identifying a need for a new skill (from elicitation or an owner request), BEFORE writing `SKILL.md`. Skipping this step = designing from zero, sometimes reasonable (a need too Scriptorium-specific to have an outside precedent, e.g. `license-compliance-check` — nothing external to scout), but it must be a deliberate decision, not the default.
+Right after identifying a need for a new skill (from elicitation or a thatlq1812 request), BEFORE writing `SKILL.md`. Skipping this step = designing from zero, sometimes reasonable (a need too Scriptorium-specific to have an outside precedent, e.g. `license-compliance-check` — nothing external to scout), but it must be a deliberate decision, not the default.
 
 ## Process (distilled from 3 real runs)
 

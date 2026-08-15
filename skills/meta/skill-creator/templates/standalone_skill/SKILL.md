@@ -58,7 +58,7 @@ metadata:
   #   skill. Never empty, never invented — this is what separates a curated
   #   skill from a self-generated one (SkillsBench: self-generated = no
   #   benefit on average).
-  elicited_from: "<real elicited source: an owner project reviewed, a paper, a research session, an expert consulted>"
+  elicited_from: "<real elicited source: a thatlq1812 project reviewed, a paper, a research session, an expert consulted>"
   # ◆ engine/dependencies-related metadata as needed (e.g. `engine: "docling==2.115.0"`)
   version: 0.1.0
 ---

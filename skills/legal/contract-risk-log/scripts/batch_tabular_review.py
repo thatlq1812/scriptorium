@@ -14,7 +14,7 @@ location, never just an extracted claim with nothing to check it against),
 cell is never silently treated as "not present" -- every declared
 document x column pair must have an explicit cell, or this refuses.
 
-This is a GENERIC schema, not one elicited from a real owner-supplied
+This is a GENERIC schema, not one elicited from a real thatlq1812-supplied
 diligence checklist (none was available) -- the caller declares whatever
 columns/documents apply to their own real review. Same non-detection
 posture as validate_risk_log.py: this never decides whether a clause is

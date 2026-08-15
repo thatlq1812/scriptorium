@@ -131,7 +131,7 @@ def _set_run_font(run, font_name: str) -> None:
 # and 3 are BOTH a visibly *lighter*, more washed-out blue than Heading 1, not a deeper one
 # (confirmed by reading the generated style XML directly, not assumed). A heading hierarchy
 # reads backwards when nested sections look paler than their parent. These replacements stay
-# dark at every level (owner's own correction, 2026-08-08: "màu text nên là màu xanh đậm đen" --
+# dark at every level (thatlq1812's own correction, 2026-08-08: "màu text nên là màu xanh đậm đen" --
 # text color should be dark navy/near-black, never trending lighter) while still shading
 # slightly per level so the hierarchy is visually readable.
 DEFAULT_HEADING_COLORS: dict[int, str] = {

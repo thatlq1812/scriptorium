@@ -6,7 +6,7 @@ is visually byte-identical to the source, ready for text injection.
 Ported near-verbatim from the real, pure XML-surgery primitive at
 D:/elix/archive/platform_archive/modules/presentation/pptx/compiler.py
 (``PPTXCompiler._duplicate_slide`` / ``_strip_template_slides``), which
-is the actual mechanism the owner's "clone-and-inject" architecture
+is the actual mechanism thatlq1812's "clone-and-inject" architecture
 decision refers to. Dropped: the ``suppressed_shape_ids`` parameter
 (depends on an upstream AI shape-classifier not part of this skill's
 scope) - always duplicates the full shape set.

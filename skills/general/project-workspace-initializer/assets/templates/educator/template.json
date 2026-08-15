@@ -9,7 +9,7 @@
     },
     {
       "heading": "Quy ước đặt tên",
-      "text": "Tên project theo dạng `project_YYYYMMDD_NN` (ngày tạo + số thứ tự trong ngày), không phải tên lớp/học sinh -- tránh lộ thông tin học sinh qua tên thư mục. Ghi tên lớp/môn học trong `PROJECT.md` của từng project."
+      "text": "Tên project theo dạng `<YYYYMMDD>-<name>` (ngày tạo + slug đặt qua `--name` khi chạy `scaffold_workspace.py`), không dùng tên học sinh cụ thể làm `<name>` -- tránh lộ thông tin học sinh qua tên thư mục, dùng mã lớp/môn học thay thế. Ghi tên lớp/môn học trong `PROJECT.md` của từng project. Làm lại cùng một `<name>` sau này sẽ tự thêm hậu tố `-v2`, `-v3`... thay vì ghi đè bản trước."
     },
     {
       "heading": "Khi cập nhật template",
