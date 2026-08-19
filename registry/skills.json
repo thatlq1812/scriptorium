@@ -843,6 +843,52 @@
       "elicited_from": "Grounded in K-Dense-AI/scientific-agent-skills exploratory-data-analysis (MIT, cleared via license-compliance-check) for the safety posture and EDA-rigor checklist; scoped down to only the 'automated core' tier (CSV/TSV/JSON, stdlib-only), dropping the optional NumPy/h5py/Biopython/Pillow/tifffile inspectors and 6 domain-specific reference docs as specialized-tier, out of scope for this general-tier harvest round"
     },
     {
+      "skill_id": "elixverse-generator",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "media"
+        ],
+        "task_type": [
+          "drafting"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "optional",
+        "object_type": [
+          "image"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": true,
+        "stage4_reason": "ingests uncontrolled external content (arbitrary user images/prompts/text via the external Elixverse API), same class as gemini-generator"
+      },
+      "security_audit": {
+        "status": "passed",
+        "date": "2026-08-19",
+        "note": "Self-audit: 3 scripts (elixverse_client.py, generate_image.py, analyze_reference.py), stdlib only (urllib.request/json/base64/mimetypes/argparse/pathlib) -- no eval/exec/subprocess/os.system. Key resolved only from ELIXVERSE_API_KEY env var or --api-key, never hardcoded, never logged. All network calls go to the fixed https://api.elixverse.com/api/v1 base URL only -- no caller-controlled endpoint (unlike normal-generator's still-unresolved arbitrary-endpoint design question). --anchor-profile's cross-skill import path-resolves only under skills/*/media-anchor-profile, no arbitrary path execution. Real API calls exercised for real against thatlq1812's own key (2026-08-19): basic generation, style-ref anchor chain, --anchor-profile chain, missing-key and invalid-key error paths -- see SKILL.md Verified section."
+      },
+      "dependencies": [
+        "media-anchor-profile"
+      ],
+      "license_debt": null,
+      "operational_status": {
+        "state": "paused",
+        "reason": "thatlq1812 decision (2026-08-19): Elixverse's own infrastructure does not yet support native reference-image input for image generation -- confirmed by reading the real platform source (D:/elix/platform/server/src/api/v1/images.py's ImageGenerationRequest has no image field; gemini_adapter.py.generate_image() calls generate_content(contents=[prompt]) with no image parts even though the underlying gemini-2.5-flash-image model supports it; openai_adapter.py.generate_image() calls images.generate, not images.edit). This is a gap in Elixverse's own adapter wiring, not a model-capability gap -- filed as a real backlog item in D:/elix/platform/docs/TODO.md ('Images API — no reference-image / image-to-image support'). Paused rather than left active because the current anchor implementation (text-description bridge via /chat/completions vision, see SKILL.md 'Anchor design') is a real but weaker substitute for what this skill is meant to eventually do once the platform gap closes -- not a defect in this skill's own code, which is fully built, security-audited, and verified real end-to-end. Resume once D:/elix/platform's images.py/adapters gain real reference-image support; re-verify this skill's anchor design against the new capability before un-pausing (may switch from the text-description bridge to native conditioning like gemini-generator).",
+        "date": "2026-08-19",
+        "decided_by": "thatlq1812"
+      },
+      "elicited_from": "thatlq1812 (2026-08-19, PROJECT.md): real Elixverse API quickstart docs pasted directly from Elixverse's own frontend documentation -- the real, citable source for this skill's REST surface. Cross-verified against Elixverse's actual server-side source at D:/elix/platform/server/src/api/v1/images.py (ImageGenerationRequest: no reference-image field), which is the real constraint driving this skill's text-description-bridge anchor design instead of gemini-generator's native pixel conditioning. See skills/media/elixverse-generator/SKILL.md's own metadata.elicited_from for the full record, including the resolved 'does BYOK Elixverse access contradict CLAUDE.md principle 8' architectural question (thatlq1812 confirmed no conflict: this skill never holds/manages the key itself, same BYOK posture as gemini-generator; the actual key-holding operational context is a separate future 'scriptorium workspace' product, not this repo's core)."
+    },
+    {
       "skill_id": "gemini-generator",
       "version": "0.1.1",
       "source": {

@@ -2,6 +2,7 @@ important.md
 request.md
 .venv/
 .tools/
+.env
 __pycache__/
 *.pyc
 /personal
