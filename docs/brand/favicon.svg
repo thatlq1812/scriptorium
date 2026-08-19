@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#19173d" />
+      <stop offset="100%" stop-color="#0a081a" />
+    </linearGradient>
+    <radialGradient id="halo" cx="46%" cy="54%" r="42%">
+      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.32" />
+      <stop offset="60%" stop-color="#4f46e5" stop-opacity="0.12" />
+      <stop offset="100%" stop-color="#1e1b4b" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="tipGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#a5b4fc" stop-opacity="0.90" />
+      <stop offset="50%" stop-color="#818cf8" stop-opacity="0.40" />
+      <stop offset="100%" stop-color="#818cf8" stop-opacity="0" />
+    </radialGradient>
+    <filter id="starGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="cyanGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+      <linearGradient id="g-mono-scriptorium" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+    <filter id="monoGlow-scriptorium" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="g-border-scriptorium" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d4af37"/>
+      <stop offset="50%" stop-color="#818cf8"/>
+      <stop offset="100%" stop-color="#9f1239"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="512" height="512" rx="88" fill="url(#bg)" />
+
+  <rect x="6" y="6" width="500" height="500" rx="84" fill="none" stroke="url(#g-border-scriptorium)" stroke-width="12" opacity="0.95"/>
+  <g transform="translate(-70.72,-23.92) scale(0.78)">
+  <ellipse cx="236" cy="276" rx="190" ry="210" fill="url(#halo)" />
+  <ellipse cx="236" cy="460" rx="90" ry="20" fill="url(#tipGlow)" opacity="0.45" />
+
+  <!-- SNAPPED CRYSTAL FEATHER FACETS -->
+  <g stroke="#ffffff" stroke-width="0.5" stroke-opacity="0.15" stroke-linejoin="round">
+    <!-- polygon-1 -->
+    <polygon points="124,470  131,433  147,428" fill="#a5f3fc" opacity="0.95" />
+    <!-- polygon-2 -->
+    <polygon points="124,470  147,428  155,445" fill="#818cf8" opacity="0.95" />
+    <!-- polygon-3 -->
+    <polygon points="131,433  180,367  147,428" fill="#818cf8" opacity="0.94" />
+    <!-- polygon-4 -->
+    <polygon points="155,445  147,428  180,367" fill="#5b21b6" opacity="0.94" />
+    <!-- polygon-5 -->
+    <polygon points="186,387  248,363  226,354" fill="#818cf8" opacity="0.90" />
+    <!-- polygon-6 -->
+    <polygon points="186,387  226,354  206,344" fill="#ddd6fe" opacity="0.92" />
+    <!-- polygon-7 -->
+    <polygon points="248,363  226,354  291,322" fill="#6366f1" opacity="0.88" />
+    <!-- polygon-8 -->
+    <polygon points="226,354  206,344  291,322" fill="#4c1d95" opacity="0.88" />
+    <!-- polygon-9 -->
+    <polygon points="160,372  187,331  168,320" fill="#c4b5fd" opacity="0.90" />
+    <!-- polygon-10 -->
+    <polygon points="160,372  168,320  152,302" fill="#a78bfa" opacity="0.88" />
+    <!-- polygon-11 -->
+    <polygon points="187,331  168,320  174,250" fill="#e0e7ff" opacity="0.94" />
+    <!-- polygon-12 -->
+    <polygon points="168,320  152,302  174,250" fill="#c4b5fd" opacity="0.90" />
+    <!-- polygon-13 -->
+    <polygon points="214,334  302,303  306,236" fill="#7c3aed" opacity="0.90" />
+    <!-- polygon-14 -->
+    <polygon points="302,303  327,259  306,236" fill="#6366f1" opacity="0.86" />
+    <!-- polygon-15 -->
+    <polygon points="214,334  306,236  285,207" fill="#4c1d95" opacity="0.92" />
+    <!-- polygon-16 -->
+    <polygon points="306,236  285,207  384,159" fill="#c4b5fd" opacity="0.92" />
+    <!-- polygon-17 -->
+    <polygon points="306,236  358,213  384,159" fill="#818cf8" opacity="0.88" />
+    <!-- polygon-18 -->
+    <polygon points="320,235  348,228  340,250" fill="#6366f1" opacity="0.85" />
+    <!-- polygon-19 -->
+    <polygon points="348,228  353,240  340,250" fill="#a78bfa" opacity="0.85" />
+    <!-- polygon-20 -->
+    <polygon points="285,207  351,171  330,139" fill="#ddd6fe" opacity="0.92" />
+    <!-- polygon-21 -->
+    <polygon points="351,171  330,139  384,159" fill="#a78bfa" opacity="0.88" />
+    <!-- polygon-22 -->
+    <polygon points="330,139  388,64  384,159" fill="#818cf8" opacity="0.90" />
+    <!-- polygon-23 -->
+    <polygon points="330,139  388,64  294,104" fill="#6366f1" opacity="0.88" />
+    <!-- polygon-24 -->
+    <polygon points="272,202  330,139  294,104" fill="#7c3aed" opacity="0.88" />
+    <!-- polygon-25 -->
+    <polygon points="192,320  186,226  230,207" fill="#e0e7ff" opacity="0.94" />
+    <!-- polygon-26 -->
+    <polygon points="192,320  230,207  260,170  272,202" fill="#c4b5fd" opacity="0.92" />
+    <!-- polygon-27 -->
+    <polygon points="186,226  230,207  251,136" fill="#ddd6fe" opacity="0.92" />
+    <!-- polygon-28 -->
+    <polygon points="230,207  260,170  251,136" fill="#a78bfa" opacity="0.88" />
+    <!-- polygon-29 -->
+    <polygon points="272,202  271,124  251,136" fill="#818cf8" opacity="0.88" />
+  </g>
+
+  <!-- CYAN GLOWING NIB TIP DOT -->
+  <g filter="url(#cyanGlow)">
+    <circle cx="125" cy="470" r="6" fill="#a5b4fc" opacity="0.95" />
+  </g>
+
+  <!-- SPARKLE STARS -->
+  <g fill="#e0e7ff" filter="url(#starGlow)">
+    <path d="M166,134 L170,145 L181,148 L170,151 L166,162 L162,151 L151,148 L162,145 Z" opacity="0.95" />
+    <path d="M209,101 L212,108 L219,110 L212,112 L209,119 L206,112 L199,110 L206,108 Z" opacity="0.85" />
+    <path d="M324,354 L328,365 L339,368 L328,371 L324,382 L320,371 L309,368 L320,365 Z" opacity="0.90" />
+    <path d="M397,204 L400,211 L407,213 L400,215 L397,222 L394,215 L387,213 L394,211 Z" opacity="0.85" />
+    <path d="M348,294 L350,299 L355,301 L350,303 L348,308 L346,303 L341,301 L346,299 Z" opacity="0.75" />
+    <path d="M129,361 L131,366 L136,368 L131,370 L129,375 L127,370 L122,368 L127,366 Z" opacity="0.75" />
+    <circle cx="282" cy="116" r="1.8" fill="#ffffff" opacity="0.65" />
+    <circle cx="368" cy="275" r="1.5" fill="#ffffff" opacity="0.55" />
+    <circle cx="148" cy="265" r="1.5" fill="#ffffff" opacity="0.50" />
+  </g>
+</g>
+
+  <!-- TOP-RIGHT "ELIX" WORDMARK (stacked, no frame) -->
+  <g filter="url(#monoGlow-scriptorium)" text-anchor="middle"
+     font-family="'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-weight="800">
+    <text x="384" y="100" font-size="102.0" letter-spacing="1" fill="url(#g-mono-scriptorium)">EL</text>
+    <text x="384" y="214.0" font-size="102.0" letter-spacing="1" fill="url(#g-mono-scriptorium)">IX</text>
+  </g>
+
+  <!-- CORNER ACCENT: bottom-left, balances the icon/monogram diagonal -->
+  <g filter="url(#starGlow)">
+    <path d="M76.0,414.0 L80.0,425.0 L91.0,428.0 L80.0,431.0 L76.0,442.0 L72.0,431.0 L61.0,428.0 L72.0,425.0 Z" fill="#818cf8" opacity="0.85"/>
+    <path d="M156.0,452.0 L159.0,459.5 L167.0,462.0 L159.0,464.5 L156.0,472.0 L153.0,464.5 L145.0,462.0 L153.0,459.5 Z" fill="#e0e7ff" opacity="0.9"/>
+    <path d="M112.0,376.0 L114.0,380.5 L119.0,382.0 L114.0,383.5 L112.0,388.0 L110.0,383.5 L105.0,382.0 L110.0,380.5 Z" fill="#e0e7ff" opacity="0.7"/>
+    <circle cx="44" cy="452" r="1.6" fill="#ffffff" opacity="0.55"/>
+  </g>
+
+  <!-- SUB-BRAND MONOGRAM -->
+  <g filter="url(#monoGlow-scriptorium)">
+    <text x="480" y="440" text-anchor="end"
+      font-family="'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+      font-weight="800" font-size="260" letter-spacing="-2"
+      fill="url(#g-mono-scriptorium)">St</text>
+  </g>
+  <rect x="220.0" y="458" width="260.0" height="9" rx="4.5" fill="#818cf8" opacity="0.9"/>
+</svg>
