@@ -3,6 +3,8 @@ request.md
 .venv/
 .tools/
 .env
+desktop.ini
+Thumbs.db
 __pycache__/
 *.pyc
 /personal
