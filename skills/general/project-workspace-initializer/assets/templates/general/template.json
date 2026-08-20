@@ -1,0 +1,42 @@
+{
+  "template_id": "general",
+  "label": "General-purpose project workspace",
+  "workspace_subdirs": ["projects", "projects/_templates"],
+  "workspace_md_prompts": [
+    {
+      "heading": "Bắt đầu dự án mới",
+      "text": "Dùng mẫu này khi công việc không thuộc một nghề nghiệp/lĩnh vực cụ thể nào trong các mẫu còn lại -- một cấu trúc chung: nguồn, đang làm, bản nháp, sản phẩm giao. Không tự tạo thư mục project bằng tay -- luôn dùng `scaffold_workspace.py` (xem hướng dẫn phía trên) để đảm bảo đánh số thứ tự đúng và không ghi đè project đã có."
+    },
+    {
+      "heading": "Quy ước đặt tên",
+      "text": "Tên project theo dạng `<YYYYMMDD>-<name>` (ngày tạo + slug đặt qua `--name` khi chạy `scaffold_workspace.py`). Làm lại cùng một `<name>` sau này sẽ tự thêm hậu tố `-v2`, `-v3`... thay vì ghi đè bản trước."
+    },
+    {
+      "heading": "Khi cập nhật template",
+      "text": "Bản template dùng cho workspace này được sao chép vào `projects/_templates/general/` tại thời điểm khởi tạo -- sửa file đó nếu muốn đổi quy trình cho các project mới, không ảnh hưởng các project đã tạo trước đó."
+    }
+  ],
+  "subdirs": ["source", "work", "draft", "deliverables", "archives"],
+  "project_md_prompts": [
+    {
+      "heading": "Nạp tài liệu nguồn",
+      "text": "Đặt toàn bộ tài liệu/dữ liệu gốc của dự án vào `source/` (yêu cầu ban đầu, tài liệu tham khảo, file người dùng cung cấp). Không sửa file trong `source/` sau khi đã nạp -- đây là bản gốc tham chiếu."
+    },
+    {
+      "heading": "Xử lý",
+      "text": "Lưu các file trung gian, bản nháp thăm dò, ghi chú làm việc vào `work/` trong lúc xử lý."
+    },
+    {
+      "heading": "Bản nháp",
+      "text": "Khi nội dung đã đủ hoàn chỉnh để xem lại, lưu bản gần cuối vào `draft/` trước khi chốt."
+    },
+    {
+      "heading": "Sản phẩm giao",
+      "text": "Sản phẩm cuối cùng, đúng định dạng người dùng yêu cầu (docx/pdf/pptx/xlsx/... qua `office-doc-creator` nếu là văn bản) lưu vào `deliverables/` -- đây là phần thực sự giao lại cho người dùng."
+    },
+    {
+      "heading": "Lưu trữ",
+      "text": "Sau khi dự án kết thúc, chuyển nội dung không còn thao tác tiếp vào `archives/`."
+    }
+  ]
+}

@@ -2132,6 +2132,44 @@
       "elicited_from": "Grounded in K-Dense-AI/scientific-agent-skills peer-review (MIT, cleared via license-compliance-check) for the mandatory safety boundary (authorization/confidentiality gate, never send unpublished content externally, reviewer-recommends-editor-decides discipline) and intake-gate-first workflow; scoped down from the original's 7-script/5-reference-doc suite to 4 tools: intake validator, claim-evidence matrix validator, scaffold generator, tone/channel/decision-overreach linter"
     },
     {
+      "skill_id": "personal-memory-log",
+      "version": "0.1.0",
+      "source": {
+        "type": "self-authored"
+      },
+      "license": "MIT",
+      "tags": {
+        "domain": [
+          "general"
+        ],
+        "task_type": [
+          "coordination"
+        ],
+        "risk_tier": "N2",
+        "harness_compatibility": [
+          "claude-code"
+        ],
+        "grounding": "not_applicable",
+        "object_type": [
+          "memory-entry"
+        ]
+      },
+      "quality_score": {
+        "stage4_formal": null,
+        "content_grounding": "auto-verified",
+        "stage4_required": false,
+        "stage4_reason": "foundation/general-capability — exempt (local caller-supplied data only, no uncontrolled external input; entry+index shape ported directly from an already-deployed real memory mechanism, not invented)"
+      },
+      "security_audit": {
+        "status": "pending",
+        "date": null,
+        "note": "Not yet formally audited (stage 5). 2 scripts exist and were run for real end-to-end (happy path + all documented refusal cases -- see SKILL.md 'Verified'); stdlib only (argparse/re/pathlib), zero network calls, no dynamic execution (eval/exec/subprocess/os.system) confirmed by reading both scripts in full. Blocks skill-exporter inclusion by construction until a formal pass is recorded."
+      },
+      "dependencies": [],
+      "license_debt": null,
+      "elicited_from": "thatlq1812 direction 2026-08-20 (scriptorium_workspace/PROJECT.md, synced into this registry from that consuming app's own resources/skills copy): personal/ should also cover user preferences and daily habits/work patterns as a proactively-optimized \"Memory\", distinct from personal-profile-manager's fixed identity/org/contact schema. Entry+index shape (one dated file per entry, tagged user/feedback/project/reference, plus a MEMORY.md index of ~150-char one-line hooks) is a direct port of the memory mechanism already specified for this app's own Claude Code harness -- thatlq1812 confirmed reusing that exact taxonomy (2026-08-20, same thread)."
+    },
+    {
       "skill_id": "personal-profile-manager",
       "version": "0.2.0",
       "source": {
@@ -2298,7 +2336,7 @@
     },
     {
       "skill_id": "project-workspace-initializer",
-      "version": "0.5.0",
+      "version": "0.7.0",
       "source": {
         "type": "self-authored"
       },
@@ -2327,8 +2365,8 @@
       },
       "security_audit": {
         "status": "passed",
-        "date": "2026-08-15",
-        "note": "Re-audited at 0.5.0 (2026-08-15): naming-scheme change only (collision-triggered -v<N> suffix instead of always-on), same trust boundary as 0.3.1 audit -- stdlib-only, local filesystem scaffolder, no new external input path, no new script added."
+        "date": "2026-08-20",
+        "note": "Re-audited at 0.7.0 (2026-08-20): (1) 0.6.0 added a 6th bundled template (`general`, profession-agnostic default) and fixed the consuming app's own 'New Project' caller (unrelated to this skill's scripts, which already required --name correctly). (2) 0.7.0, same day: content-only change to the strings `_render_agents_md`/`_render_workspace_md` generate -- a root-cleanup rule (relocate a user-dropped root file into the right subdirectory as part of the task that touches it), documents/ dynamic-structure guidance (no fixed per-role taxonomy, organize per real task history instead), and a personal/memory pointer to the new `personal-memory-log` skill. Same trust boundary throughout -- stdlib-only, local filesystem scaffolder, no new external input path, no new script added, no change to any script's logic."
       },
       "dependencies": [],
       "license_debt": null,

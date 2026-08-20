@@ -101,8 +101,13 @@ def _render_workspace_md(template: dict, template_copy_path: Path) -> str:
         "`data/` and `documents/` hold reference material shared across projects "
         "(datasets, source documents that aren't specific to one matter) -- project-"
         "specific source material still belongs inside that project's own `source/` "
-        "subdirectory, not here. `personal/` is this workspace owner's profile store "
-        "(`personal-profile-manager`).",
+        "subdirectory, not here. `documents/` has no fixed subfolder structure -- "
+        "organize it into subfolders that fit what this specific workspace owner "
+        "actually deals with (inferred from the tasks done here, not assigned "
+        "upfront); check what's already there before adding a new top-level "
+        "subfolder. `personal/` is this workspace owner's profile store "
+        "(`personal-profile-manager`) and running memory log "
+        "(`personal-memory-log`, see `AGENTS.md`'s \"Personal memory\" section).",
         "",
         "## Starting a new project",
         "",
@@ -166,6 +171,26 @@ def _render_agents_md(template: dict, template_copy_path: Path) -> str:
         "it -- required inputs, invocation, and known limitations are documented there, "
         "not guessed.",
         "",
+        "## Root cleanup -- no file stays loose at this workspace's root",
+        "",
+        "This workspace's root is meant to hold only `data/`, `documents/`, `personal/`, "
+        "`projects/`, `AGENTS.md`/`WORKSPACE.md`, and housekeeping dot-directories -- "
+        "never a loose working file. A user commonly drops a file (or several) directly "
+        "at the root and then asks about it in chat instead of placing it somewhere "
+        "first; the moment such a file is involved in a task, relocate it as part of "
+        "doing that task, don't leave it at root:",
+        "",
+        "- Belongs to one specific matter (existing or new) -> move it into that "
+        "project's own `source/` subdirectory (reuse an existing project if it's a "
+        "continuation of that project's work, otherwise scaffold a new one first).",
+        "- Reusable raw material not specific to one project -> move it into `data/`.",
+        "- Already-processed/normalized material -> move it into `documents/`.",
+        "",
+        "Move the file (never copy -- a stray duplicate left at root defeats the "
+        "point), then report in your reply what was moved and where. Do this without "
+        "asking for confirmation first -- a cluttered root is a worse default than a "
+        "file moved somewhere sensible.",
+        "",
         "## Project structure -- mandatory, not a suggestion",
         "",
         "**Every piece of real work (a document, a dataset, a design, a deliverable of "
@@ -228,6 +253,19 @@ def _render_agents_md(template: dict, template_copy_path: Path) -> str:
         "letting the same detail get re-typed or re-asked next time. A skill producing "
         "reusable personal/org data as a side effect of its normal output should note "
         "that back into `personal/` too, not only whichever project it was working in.",
+        "",
+        "## Personal memory -- write it proactively, read it at the start of work",
+        "",
+        "`personal/memory/` (`personal-memory-log`) holds a running log of what you've "
+        "learned about this workspace owner beyond identity/org/contact data -- "
+        "preferences, working habits, ongoing project context, corrections to how you "
+        "should work. If `personal/memory/MEMORY.md` exists, read it before doing "
+        "non-trivial work, the same way you read this file. Write a new entry (via "
+        "`personal-memory-log`'s `write_memory.py`, initializing the directory first "
+        "with `init_memory.py` if it doesn't exist yet) whenever a task surfaces a "
+        "durable fact worth remembering next time -- don't wait for the user to "
+        "explicitly say \"remember this.\" Write only what was actually said or "
+        "actually observed, never a guess.",
         "",
         "## Shared resources (once per workspace, never per project)",
         "",
